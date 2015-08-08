@@ -1,0 +1,16 @@
+[
+{
+  "modid": "sekcphysics",
+  "name": "SekC Physics",
+  "description": "Adding realistic physics to mc",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["sekwah41"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
