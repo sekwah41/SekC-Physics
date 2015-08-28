@@ -12,6 +12,10 @@ public class EntityRagdoll extends Entity {
 
     public BaseRagdoll ragdoll;
 
+    public int ragdollLife = 200;
+
+    public int ragdollUpdate = 20;
+
     public EntityRagdoll(World p_i1582_1_) {
         super(p_i1582_1_);
         this.setSize(0.15F, 0.15F);
@@ -25,6 +29,21 @@ public class EntityRagdoll extends Entity {
     @Override
     protected void entityInit() {
 
+    }
+
+    public void onUpdate()
+    {
+        super.onUpdate();
+        if(ragdollLife-- < 0){
+            this.setDead();
+        }
+
+        /*if(ragdollUpdate-- < 0){
+            ragdollUpdate = 20;
+            ragdoll.update(this);
+        }*/
+        // Possibly change to update every render rather than entity update and add alpha time
+        ragdoll.update(this);
     }
 
     @Override

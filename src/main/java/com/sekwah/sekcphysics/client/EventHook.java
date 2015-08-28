@@ -18,6 +18,7 @@ public class EventHook {
         // TODO check entities for if they are in a list of registered mobs for ragdolls,
         //  and also check if the died is when the body is removed after death animation or if its
         //  as soon as it hits 0
+        SekCPhysics.LOGGER.info("Entity Died.");
         if(FMLCommonHandler.instance().getEffectiveSide().isClient()){
             SekCPhysics.LOGGER.info("Entity Died.");
 

@@ -1,5 +1,6 @@
 package com.sekwah.sekcphysics.ragdoll;
 
+import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.ragdoll.parts.Skeleton;
 import net.minecraft.client.model.ModelBase;
 
@@ -32,5 +33,10 @@ public class BaseRagdoll {
     public void rotateRagdoll(float rotYaw) {
         // add some matrix code to calaulate positions for all of the new points to be alligned with the rotation of
         // the entity
+    }
+
+    public void update(EntityRagdoll entity) {
+        skeleton.update(entity);
+
     }
 }

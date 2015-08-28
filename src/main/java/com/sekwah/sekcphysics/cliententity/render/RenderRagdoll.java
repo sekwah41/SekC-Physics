@@ -20,8 +20,8 @@ public class RenderRagdoll extends Render {
         glColor3f(0.0f, 1.0f, 0.2f);
         glBegin(GL_LINE_STRIP);
 
-        glVertex3f(point.getX(), point.getY(), point.getY());
-        glVertex3f(point2.getX(), point2.getY(), point2.getY());
+        glVertex3d(point.getX(), point.getY(), point.getY());
+        glVertex3d(point2.getX(), point2.getY(), point2.getY());
         glEnd();
         glColor3f(1f,1f,1f);
     }

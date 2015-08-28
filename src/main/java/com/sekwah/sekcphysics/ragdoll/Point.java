@@ -5,27 +5,39 @@ package com.sekwah.sekcphysics.ragdoll;
  */
 public class Point {
 
-    private final float x;
+    private double x;
 
-    private final float y;
+    private double y;
 
-    private final float z;
+    private double z;
 
-    public Point(float x, float y, float z){
+    public Point(double x, double y, double z){
         this.x = x;
         this.y = y;
         this.z = z;
     }
 
-    public float getX() {
+    public double getX() {
         return x;
     }
 
-    public float getY() {
+    public double getY() {
         return y;
     }
 
-    public float getZ() {
+    public double getZ() {
         return z;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
+    public void setZ(double z) {
+        this.z = z;
     }
 }

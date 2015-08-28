@@ -3,11 +3,15 @@ package com.sekwah.sekcphysics.ragdoll;
 import com.sekwah.sekcphysics.ragdoll.parts.Constraint;
 import com.sekwah.sekcphysics.ragdoll.parts.Skeleton;
 import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
+import com.sekwah.sekcphysics.ragdoll.parts.Triangle;
 
 /**
  * Created by sekawh on 8/5/2015.
  */
 public class BipedRagdoll extends BaseRagdoll {
+
+    public SkeletonPoint headLeft;
+    public SkeletonPoint headRight;
 
     public SkeletonPoint leftLegBot;
     public SkeletonPoint rightLegBot;
@@ -27,6 +31,10 @@ public class BipedRagdoll extends BaseRagdoll {
 
         centerTorso = new SkeletonPoint(0f,0f,0f);
 
+        headLeft = new SkeletonPoint(3f,7f,0f);
+
+        headRight = new SkeletonPoint(-3f,7f,0f);
+
         leftShoulder = new SkeletonPoint(5f,-2f,0f);
 
         rightShoulder = new SkeletonPoint(-5f,-2f,0f);
@@ -35,9 +43,13 @@ public class BipedRagdoll extends BaseRagdoll {
 
         rightLegTop = new SkeletonPoint(-2f,-12f,0f);
 
-        rightArm = new SkeletonPoint(-6f,-11f,0f);
+        /*rightArm = new SkeletonPoint(-6f,-11f,0f);
 
-        leftArm = new SkeletonPoint(6f,-11f,0f);
+        leftArm = new SkeletonPoint(6f,-11f,0f);*/
+
+        rightArm = new SkeletonPoint(-14f,-2f,1f);
+
+        leftArm = new SkeletonPoint(14f,-2f,1f);
 
         leftLegBot = new SkeletonPoint(2f, -23f, 0f);
 
@@ -55,6 +67,26 @@ public class BipedRagdoll extends BaseRagdoll {
         skeleton.points.add(leftLegBot);
         skeleton.points.add(rightLegBot);
 
+        skeleton.points.add(headLeft);
+        skeleton.points.add(headRight);
+
+
+
+
+
+        skeleton.constraints.add(new Constraint(centerTorso,headLeft));
+        skeleton.constraints.add(new Constraint(centerTorso,headRight));
+        skeleton.constraints.add(new Constraint(headLeft,headRight));
+
+        skeleton.constraints.add(new Constraint(leftShoulder, leftArm));
+        skeleton.constraints.add(new Constraint(rightShoulder, rightArm));
+
+        skeleton.constraints.add(new Constraint(leftLegTop, leftLegBot));
+        skeleton.constraints.add(new Constraint(rightLegTop, rightLegBot));
+
+
+
+
         skeleton.constraints.add(new Constraint(centerTorso, leftShoulder));
         skeleton.constraints.add(new Constraint(centerTorso, rightShoulder));
 
@@ -65,11 +97,15 @@ public class BipedRagdoll extends BaseRagdoll {
         skeleton.constraints.add(new Constraint(leftLegTop, leftShoulder));
         skeleton.constraints.add(new Constraint(rightLegTop, rightShoulder));
 
-        skeleton.constraints.add(new Constraint(leftShoulder, leftArm));
-        skeleton.constraints.add(new Constraint(rightShoulder, rightArm));
+        skeleton.constraints.add(new Constraint(leftShoulder, rightShoulder));
 
-        skeleton.constraints.add(new Constraint(leftLegTop, leftLegBot));
-        skeleton.constraints.add(new Constraint(rightLegTop, rightLegBot));
+        skeleton.triangles.add(new Triangle(centerTorso, headLeft, headRight));
+
+        skeleton.triangles.add(new Triangle(centerTorso, leftLegTop, rightLegTop));
+
+        skeleton.triangles.add(new Triangle(centerTorso, leftLegTop, leftShoulder));
+
+        skeleton.triangles.add(new Triangle(centerTorso, rightLegTop, rightShoulder));
 
 
 

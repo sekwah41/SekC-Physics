@@ -17,7 +17,9 @@ public class Ragdolls {
     // To get a list of ragdolls go through all the alive entities in the world and check for an instace of
     //public List currentRagdolls = new ArrayList();
 
-    public float gravity = 9.8F; // alter till it looks the best, also maybe add material values as mods use stuff like
+    public static float gravity = 0.05F; // alter till it looks the best, also maybe add material values as mods use stuff like
+
+    public static int[][] multitidirection = {{6,6},{6,2}};
 
 
     public void registerRagdoll(Class<? extends Entity> entityZombieClass, Class<? extends BaseRagdoll> zombieRagdollClass) {
