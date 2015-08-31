@@ -57,7 +57,7 @@ public class Skeleton {
 
         // update constraints
         for(Constraint constraint: constraints){
-            constraint.apply();
+            constraint.apply(entity);
             //point.movePoint(entity);
         }
     }
@@ -112,5 +112,12 @@ public class Skeleton {
         glVertex3d(point2.posX, point2.posY, point2.posZ);
         glVertex3d(point3.posX, point3.posY, point3.posZ);
         glEnd();
+    }
+
+    public void verifyPoints(EntityRagdoll entity) {
+        for(SkeletonPoint point : points){
+            point.verify(entity);
+            //point.movePoint(entity);
+        }
     }
 }

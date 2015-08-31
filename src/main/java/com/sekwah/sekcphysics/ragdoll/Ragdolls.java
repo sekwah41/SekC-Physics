@@ -17,10 +17,7 @@ public class Ragdolls {
     // To get a list of ragdolls go through all the alive entities in the world and check for an instace of
     //public List currentRagdolls = new ArrayList();
 
-    public static float gravity = 0.05F; // alter till it looks the best, also maybe add material values as mods use stuff like
-
-    public static int[][] multitidirection = {{6,6},{6,2}};
-
+    public static float gravity = 0.005F; // alter till it looks the best, also maybe add material values as mods use stuff like
 
     public void registerRagdoll(Class<? extends Entity> entityZombieClass, Class<? extends BaseRagdoll> zombieRagdollClass) {
         this.entityToRagdollHashmap.put(entityZombieClass, zombieRagdollClass);

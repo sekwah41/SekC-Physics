@@ -1,5 +1,6 @@
 package com.sekwah.sekcphysics.ragdoll.parts;
 
+import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.ragdoll.Point;
 
 /**
@@ -49,7 +50,7 @@ public class Constraint {
     }
 
 
-    public void apply() {
+    public void apply(EntityRagdoll entity) {
 
         Point averageLoc = new Point((end[0].posX + end[1].posX) / 2F,(end[0].posY + end[1].posY) / 2F,(end[0].posZ + end[1].posZ) / 2F);
 
@@ -66,10 +67,10 @@ public class Constraint {
 
         //System.out.println(length);
 
-        end[0].moveTo((float) (averageLoc.getX() + (direction.getX() * halfLength)), (float) (averageLoc.getY() + (direction.getY() * halfLength)),
+        end[0].moveTo(entity, (float) (averageLoc.getX() + (direction.getX() * halfLength)), (float) (averageLoc.getY() + (direction.getY() * halfLength)),
                 (float) (averageLoc.getZ() + (direction.getZ() * halfLength)));
 
-        end[1].moveTo((float) (averageLoc.getX() - (direction.getX() * halfLength)), (float) (averageLoc.getY() - (direction.getY() * halfLength)),
+        end[1].moveTo(entity, (float) (averageLoc.getX() - (direction.getX() * halfLength)), (float) (averageLoc.getY() - (direction.getY() * halfLength)),
                 (float) (averageLoc.getZ() - (direction.getZ() * halfLength)));
 
         //System.out.println(Math.sqrt(Math.pow(end[0].posX - end[1].posX, 2) + Math.pow(end[0].posY - end[1].posY, 2) + Math.pow(end[0].posZ - end[1].posZ, 2)));

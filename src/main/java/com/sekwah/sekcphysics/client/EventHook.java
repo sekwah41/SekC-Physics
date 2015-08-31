@@ -37,6 +37,8 @@ public class EventHook {
 
                 deadEntity.worldObj.spawnEntityInWorld(entityRagdoll);
 
+                entityRagdoll.ragdoll.skeleton.verifyPoints(entityRagdoll);
+
                 deadEntity.setDead();
             }
 

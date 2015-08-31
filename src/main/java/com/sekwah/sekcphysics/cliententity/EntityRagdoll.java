@@ -1,6 +1,7 @@
 package com.sekwah.sekcphysics.cliententity;
 
 import com.sekwah.sekcphysics.ragdoll.BaseRagdoll;
+import com.sekwah.sekcphysics.ragdoll.Point;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -12,7 +13,7 @@ public class EntityRagdoll extends Entity {
 
     public BaseRagdoll ragdoll;
 
-    public int ragdollLife = 200;
+    public int ragdollLife = 600;
 
     public int ragdollUpdate = 20;
 
@@ -44,6 +45,10 @@ public class EntityRagdoll extends Entity {
         }*/
         // Possibly change to update every render rather than entity update and add alpha time
         ragdoll.update(this);
+
+        Point ragdollPos = ragdoll.skeleton.points.get(0).toPoint();
+
+        this.setPosition(ragdollPos.getX(), ragdollPos.getY(), ragdollPos.getZ());
     }
 
     @Override

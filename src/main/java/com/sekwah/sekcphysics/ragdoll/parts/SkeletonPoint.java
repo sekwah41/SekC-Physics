@@ -75,22 +75,56 @@ public class SkeletonPoint {
         this.lastPosZ = z;
     }
 
-    public void movePoint(EntityRagdoll entity, double x, double y, double z) {
-        this.posX += x;
-        this.posY += y;
-        this.posZ += z;
+    public void movePoint(EntityRagdoll entity, double moveX, double moveY, double moveZ) {
+        /*this.posX += moveX;
+        this.posY += moveY;
+        this.posZ += moveZ;*/
 
         /*if(posY < -24f / 16f){
             posY = -24f / 16f;
         }*/
 
-        double pointPosX = entity.posX + this.posX;
-        double pointPosY = entity.posY + this.posY;
-        double pointPosZ = entity.posZ + this.posZ;
+        double pointPosX = /*entity.posX + */this.posX;
+        double pointPosY = /*entity.posY + */this.posY;
+        double pointPosZ = /*entity.posZ + */this.posZ;
 
-        AxisAlignedBB axisalignedbb = entity.boundingBox.copy();
+        AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox(pointPosX - size, pointPosY - size, pointPosZ - size,
+                pointPosX + size, pointPosY + size, pointPosZ + size);
 
-        List list = entity.worldObj.getCollidingBoundingBoxes(entity, entity.boundingBox.addCoord(x, y, z));
+        //axisalignedbb.offset(this.posX, this.posY, this.posZ);
+
+        List list = entity.worldObj.getCollidingBoundingBoxes(entity, axisalignedbb.addCoord(moveX, moveY, moveZ));
+
+        for (int k = 0; k < list.size(); ++k)
+        {
+            moveY = ((AxisAlignedBB)list.get(k)).calculateYOffset(axisalignedbb, moveY);
+        }
+
+        axisalignedbb.offset(0.0D, moveY, 0.0D);
+
+        for (int k = 0; k < list.size(); ++k)
+        {
+            moveX = ((AxisAlignedBB)list.get(k)).calculateXOffset(axisalignedbb, moveX);
+        }
+
+        axisalignedbb.offset(moveX, 0.0D, 0.0D);
+
+        for (int k = 0; k < list.size(); ++k)
+        {
+            moveZ = ((AxisAlignedBB)list.get(k)).calculateZOffset(axisalignedbb, moveZ);
+        }
+
+        axisalignedbb.offset(0.0D, 0.0D, moveZ);
+
+        this.posX = (axisalignedbb.minX + axisalignedbb.maxX) / 2.0D/* - entity.posX*/;
+        this.posY = (axisalignedbb.minY + axisalignedbb.maxY) / 2.0D/* - entity.posY*/;
+        this.posZ = (axisalignedbb.minZ + axisalignedbb.maxZ) / 2.0D/* - entity.posZ*/;
+
+        /*System.out.println(this.posX);*/
+
+        // TODO add collision checks for stuff, also try to animate ragdolls sliding between ticks or update each tick.
+        // First get the physics done
+
 
        /* double d3 = this.posX;
         double d4 = this.posY;
@@ -103,26 +137,55 @@ public class SkeletonPoint {
     }
 
     public void update(EntityRagdoll entity) {
+        this.velX = this.posX - this.lastPosX;
+        this.velY = this.posY - this.lastPosY;
+        this.velZ = this.posZ - this.lastPosZ;
+
+        float speedMulti = 0.9f;
+
+        this.velX *= speedMulti;
+        this.velY *= speedMulti;
+        this.velZ *= speedMulti;
+
         this.lastPosX = this.posX;
         this.lastPosY = this.posY;
         this.lastPosZ = this.posZ;
 
-        this.movePoint(entity, posX - lastPosX, posY - lastPosY - Ragdolls.gravity, posZ - lastPosZ);
+        this.movePoint(entity, this.velX, this.velY - Ragdolls.gravity, this.velZ);
 
         //next_old_position = position             // This position is the next frame's old_position
        // position += position - old_position;     // Verlet integration
         //position += gravity;                     // gravity == (0,-0.01,0)
     }
 
-    public void moveTo(double x, double y, double z) {
-        this.posX = x;
+    public void moveTo(EntityRagdoll entity, double x, double y, double z) {
+
+        this.movePoint(entity, x - this.posX, y - this.posY, z - this.posZ);
+
+        /*this.posX = x;
         this.posY = y;
-        this.posZ = z;
+        this.posZ = z;*/
 
     }
 
 
     public Point toPoint() {
         return new Point(this.posX, this.posY, this.posZ);
+    }
+
+    public void verify(EntityRagdoll entity) {
+        double tempPosX = this.posX;
+        double tempPosY = this.posY;
+        double tempPosZ = this.posZ;
+
+        this.posX = 0;
+        this.posY = 0;
+        this.posZ = 0;
+
+        this.moveTo(entity, tempPosX, tempPosY, tempPosZ);
+
+        this.lastPosX = this.posX;
+        this.lastPosY = this.posY;
+        this.lastPosZ = this.posZ;
     }
 }
