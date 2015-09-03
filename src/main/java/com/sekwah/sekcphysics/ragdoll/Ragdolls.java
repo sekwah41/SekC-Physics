@@ -26,6 +26,8 @@ public class Ragdolls {
     public BaseRagdoll createRagdoll(Entity entity){
         BaseRagdoll ragdoll = null;
 
+        gravity = 0.03F;
+
         // TODO add code to detect the baby versions and add new ragdolls
 
         try

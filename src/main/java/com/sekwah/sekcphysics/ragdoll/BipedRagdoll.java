@@ -99,6 +99,10 @@ public class BipedRagdoll extends BaseRagdoll {
 
         skeleton.constraints.add(new Constraint(leftShoulder, rightShoulder));
 
+        skeleton.constraints.add(new Constraint(rightLegTop, leftShoulder));
+
+        skeleton.constraints.add(new Constraint(leftLegTop, rightShoulder));
+
         skeleton.triangles.add(new Triangle(centerTorso, headLeft, headRight));
 
         skeleton.triangles.add(new Triangle(centerTorso, leftLegTop, rightLegTop));

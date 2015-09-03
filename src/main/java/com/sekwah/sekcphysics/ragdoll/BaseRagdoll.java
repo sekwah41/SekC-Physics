@@ -39,4 +39,8 @@ public class BaseRagdoll {
         skeleton.update(entity);
 
     }
+
+    public void shiftPos(double x, double y, double z) {
+        skeleton.shiftPos(x,y,z);
+    }
 }

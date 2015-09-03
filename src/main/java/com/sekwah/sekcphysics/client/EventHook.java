@@ -39,6 +39,8 @@ public class EventHook {
 
                 entityRagdoll.ragdoll.skeleton.verifyPoints(entityRagdoll);
 
+                entityRagdoll.ragdoll.skeleton.setVelocity(deadEntity.posX - deadEntity.lastTickPosX, deadEntity.posY - deadEntity.lastTickPosY, deadEntity.posZ - deadEntity.lastTickPosZ);
+
                 deadEntity.setDead();
             }
 

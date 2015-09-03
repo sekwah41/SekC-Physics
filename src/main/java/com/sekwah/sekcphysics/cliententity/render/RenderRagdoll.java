@@ -33,7 +33,7 @@ public class RenderRagdoll extends Render {
             GL11.glPushMatrix();
 
             // Sets the position offset for rendering
-            //GL11.glTranslated(p_76986_2_, p_76986_4_, p_76986_6_);
+            GL11.glTranslated(p_76986_2_, p_76986_4_, p_76986_6_);
 
             entityRagdoll.ragdoll.skeleton.renderSkeletonDebug();
 

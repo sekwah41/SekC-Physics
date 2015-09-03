@@ -48,7 +48,9 @@ public class EntityRagdoll extends Entity {
 
         Point ragdollPos = ragdoll.skeleton.points.get(0).toPoint();
 
-        this.setPosition(ragdollPos.getX(), ragdollPos.getY(), ragdollPos.getZ());
+        this.setPosition(this.posX + ragdollPos.getX(), this.posY + ragdollPos.getY(), this.posZ + ragdollPos.getZ());
+
+        ragdoll.shiftPos(-ragdollPos.getX(), -ragdollPos.getY(), -ragdollPos.getZ());
     }
 
     @Override

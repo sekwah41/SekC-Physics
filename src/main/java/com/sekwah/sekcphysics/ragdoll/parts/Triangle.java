@@ -40,6 +40,8 @@ public class Triangle {
         right = Normalize(CrossProduct(facing, up));
 
         orientation.calcFromBasis(right,up,facing);*/
+
+
     }
 
     private Point crossProduct(Point point1, Point point2) {

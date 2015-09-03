@@ -120,4 +120,18 @@ public class Skeleton {
             //point.movePoint(entity);
         }
     }
+
+    public void shiftPos(double x, double y, double z) {
+        for(SkeletonPoint point : points){
+            point.shiftPosition(x, y, z);
+            //point.movePoint(entity);
+        }
+    }
+
+    public void setVelocity(double motionX, double motionY, double motionZ) {
+        for(SkeletonPoint point : points){
+            point.setVelocity(motionX,motionY,motionZ);
+            //point.movePoint(entity);
+        }
+    }
 }
