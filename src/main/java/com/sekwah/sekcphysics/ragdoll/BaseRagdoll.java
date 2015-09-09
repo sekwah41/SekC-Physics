@@ -3,6 +3,7 @@ package com.sekwah.sekcphysics.ragdoll;
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.ragdoll.parts.Skeleton;
 import net.minecraft.client.model.ModelBase;
+import net.minecraft.entity.EntityLivingBase;
 
 /**
  * Created by sekawh on 8/4/2015.
@@ -42,5 +43,9 @@ public class BaseRagdoll {
 
     public void shiftPos(double x, double y, double z) {
         skeleton.shiftPos(x,y,z);
+    }
+
+    public void setStanceToEntity(EntityLivingBase entity) {
+
     }
 }
