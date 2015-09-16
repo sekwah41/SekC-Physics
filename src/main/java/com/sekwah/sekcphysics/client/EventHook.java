@@ -3,6 +3,7 @@ package com.sekwah.sekcphysics.client;
 import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.ragdoll.BaseRagdoll;
+import com.sekwah.sekcphysics.ragdoll.BipedRagdoll;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.EntityLivingBase;
@@ -20,7 +21,7 @@ public class EventHook {
         // TODO check entities for if they are in a list of registered mobs for ragdolls,
         //  and also check if the died is when the body is removed after death animation or if its
         //  as soon as it hits 0
-        SekCPhysics.LOGGER.info("Entity Died.");
+        //SekCPhysics.LOGGER.info("Entity Died.");
         if(FMLCommonHandler.instance().getEffectiveSide().isClient()){
             SekCPhysics.LOGGER.info("Entity Died.");
 
@@ -35,11 +36,13 @@ public class EventHook {
 
                 entityRagdoll.ragdoll = ragdoll;
 
-                entityRagdoll.ragdoll.setStanceToEntity(deadEntity);
+                //entityRagdoll.ragdoll.setStanceToEntity(deadEntity);
 
                 entityRagdoll.setSpawnPosition(deadEntity.posX, deadEntity.posY, deadEntity.posZ);
 
                 deadEntity.worldObj.spawnEntityInWorld(entityRagdoll);
+
+                entityRagdoll.ragdoll.setStanceToEntity(deadEntity);
 
                 entityRagdoll.ragdoll.skeleton.verifyPoints(entityRagdoll);
 
@@ -64,15 +67,17 @@ public class EventHook {
 
     }
 
+
+    // TODO find a client side version of this
     @SubscribeEvent
     public void playerInteraction(PlayerInteractEvent event) {
 
-        SekCPhysics.LOGGER.info("Test");
+        //SekCPhysics.LOGGER.info(event.entityPlayer.getItemInUse());
 
-        if(event.entityPlayer.getItemInUse().getItem() == Items.arrow){
+        if(event.entityPlayer.inventory.getCurrentItem() != null && event.entityPlayer.inventory.getCurrentItem().getItem() == Items.arrow){
             //event.entityLiving.
 
-            BaseRagdoll ragdoll = SekCPhysics.ragdolls.createRagdoll(event.entityPlayer);
+            BaseRagdoll ragdoll = new BipedRagdoll();
 
             EntityRagdoll entityRagdoll = new EntityRagdoll(event.entityPlayer.worldObj);
 
