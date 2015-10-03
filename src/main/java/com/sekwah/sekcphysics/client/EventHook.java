@@ -7,6 +7,7 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
 /**
  * Created by sekwah on 8/1/2015.
@@ -57,6 +58,10 @@ public class EventHook {
             //  possibly just do a test of concept video with the zombie and player to see how people act.
             //  ender dragon may be very hard... not sure if its rendered all as one or how the model is.
         }
+    }
+
+    @SubscribeEvent
+    public void playerInteract(PlayerInteractEvent event){
     }
 
 
