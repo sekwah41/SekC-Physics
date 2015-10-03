@@ -35,6 +35,10 @@ public class EntityRagdoll extends Entity {
     public void onUpdate()
     {
         super.onUpdate();
+        if(ragdoll == null){
+            this.setDead();
+            return;
+        }
         if(ragdollLife-- < 0){
             this.setDead();
         }
@@ -44,7 +48,7 @@ public class EntityRagdoll extends Entity {
             ragdoll.update(this);
         }*/
         // Possibly change to update every render rather than entity update and add alpha time
-        ragdoll.update(this);
+        //ragdoll.update(this);
 
         Point ragdollPos = ragdoll.skeleton.points.get(0).toPoint();
 

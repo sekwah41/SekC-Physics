@@ -19,8 +19,8 @@ public class Ragdolls {
 
     public static float gravity = 0.005F; // alter till it looks the best, also maybe add material values as mods use stuff like
 
-    public void registerRagdoll(Class<? extends Entity> entityZombieClass, Class<? extends BaseRagdoll> zombieRagdollClass) {
-        this.entityToRagdollHashmap.put(entityZombieClass, zombieRagdollClass);
+    public void registerRagdoll(Class<? extends Entity> entityClass, Class<? extends BaseRagdoll> ragdollClass) {
+        this.entityToRagdollHashmap.put(entityClass, ragdollClass);
     }
 
     public BaseRagdoll createRagdoll(Entity entity){

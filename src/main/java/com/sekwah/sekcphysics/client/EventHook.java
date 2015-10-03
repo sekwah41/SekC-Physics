@@ -3,9 +3,11 @@ package com.sekwah.sekcphysics.client;
 import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.ragdoll.BaseRagdoll;
+import com.sekwah.sekcphysics.ragdoll.BipedRagdoll;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Items;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
@@ -19,7 +21,7 @@ public class EventHook {
         // TODO check entities for if they are in a list of registered mobs for ragdolls,
         //  and also check if the died is when the body is removed after death animation or if its
         //  as soon as it hits 0
-        SekCPhysics.LOGGER.info("Entity Died.");
+        //SekCPhysics.LOGGER.info("Entity Died.");
         if(FMLCommonHandler.instance().getEffectiveSide().isClient()){
             SekCPhysics.LOGGER.info("Entity Died.");
 
@@ -34,9 +36,13 @@ public class EventHook {
 
                 entityRagdoll.ragdoll = ragdoll;
 
+                //entityRagdoll.ragdoll.setStanceToEntity(deadEntity);
+
                 entityRagdoll.setSpawnPosition(deadEntity.posX, deadEntity.posY, deadEntity.posZ);
 
                 deadEntity.worldObj.spawnEntityInWorld(entityRagdoll);
+
+                entityRagdoll.ragdoll.setStanceToEntity(deadEntity);
 
                 entityRagdoll.ragdoll.skeleton.verifyPoints(entityRagdoll);
 
@@ -58,6 +64,34 @@ public class EventHook {
             //  possibly just do a test of concept video with the zombie and player to see how people act.
             //  ender dragon may be very hard... not sure if its rendered all as one or how the model is.
         }
+
+    }
+
+
+    // TODO find a client side version of this
+    @SubscribeEvent
+    public void playerInteraction(PlayerInteractEvent event) {
+
+        //SekCPhysics.LOGGER.info(event.entityPlayer.getItemInUse());
+
+        if(event.entityPlayer.inventory.getCurrentItem() != null && event.entityPlayer.inventory.getCurrentItem().getItem() == Items.arrow){
+            //event.entityLiving.
+
+            BaseRagdoll ragdoll = new BipedRagdoll();
+
+            EntityRagdoll entityRagdoll = new EntityRagdoll(event.entityPlayer.worldObj);
+
+            entityRagdoll.ragdoll = ragdoll;
+
+            entityRagdoll.ragdoll.setStanceToEntity(event.entityPlayer);
+
+            entityRagdoll.setSpawnPosition(event.entityPlayer.posX, event.entityPlayer.posY, event.entityPlayer.posZ);
+
+            event.entityPlayer.worldObj.spawnEntityInWorld(entityRagdoll);
+
+            entityRagdoll.ragdoll.skeleton.verifyPoints(entityRagdoll);
+        }
+
     }
 
     @SubscribeEvent
