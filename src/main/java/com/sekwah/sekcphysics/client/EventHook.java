@@ -3,9 +3,12 @@ package com.sekwah.sekcphysics.client;
 import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.ragdoll.BaseRagdoll;
+import com.sekwah.sekcphysics.ragdoll.vanilla.ZombieRagdoll;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Items;
+import net.minecraft.util.Vec3;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
@@ -34,9 +37,13 @@ public class EventHook {
 
                 entityRagdoll.ragdoll = ragdoll;
 
+                entityRagdoll.ragdoll.setStanceToEntity(deadEntity);
+
                 entityRagdoll.setSpawnPosition(deadEntity.posX, deadEntity.posY, deadEntity.posZ);
 
                 deadEntity.worldObj.spawnEntityInWorld(entityRagdoll);
+
+                entityRagdoll.ragdoll.rotateRagdoll(deadEntity.rotationYaw);
 
                 entityRagdoll.ragdoll.skeleton.verifyPoints(entityRagdoll);
 
@@ -62,7 +69,25 @@ public class EventHook {
 
     @SubscribeEvent
     public void playerInteract(PlayerInteractEvent event){
-        //event.
+        SekCPhysics.LOGGER.info("Player Interact");
+
+        if(event.entityPlayer.capabilities.isCreativeMode && event.entityPlayer.getHeldItem() != null && event.entityPlayer.getHeldItem().getItem() == Items.nether_star){
+            EntityRagdoll entityRagdoll = new EntityRagdoll(event.entityPlayer.worldObj);
+
+            BaseRagdoll ragdoll = new ZombieRagdoll();
+
+            entityRagdoll.ragdoll = ragdoll;
+
+            Vec3 lookVec = event.entityPlayer.getLookVec();
+
+            entityRagdoll.setSpawnPosition(event.entityPlayer.posX + lookVec.xCoord, event.entityPlayer.posY + lookVec.yCoord - 0.5f, event.entityPlayer.posZ + lookVec.zCoord);
+
+            event.entityPlayer.worldObj.spawnEntityInWorld(entityRagdoll);
+
+            entityRagdoll.ragdoll.skeleton.verifyPoints(entityRagdoll);
+
+            entityRagdoll.ragdoll.skeleton.setVelocity(lookVec.xCoord, lookVec.yCoord,lookVec.zCoord );
+        }
     }
 
 

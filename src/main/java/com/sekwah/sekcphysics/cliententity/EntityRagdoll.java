@@ -2,6 +2,8 @@ package com.sekwah.sekcphysics.cliententity;
 
 import com.sekwah.sekcphysics.ragdoll.BaseRagdoll;
 import com.sekwah.sekcphysics.ragdoll.Point;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -48,7 +50,7 @@ public class EntityRagdoll extends Entity {
             ragdoll.update(this);
         }*/
         // Possibly change to update every render rather than entity update and add alpha time
-        //ragdoll.update(this);
+        ragdoll.update(this);
 
         Point ragdollPos = ragdoll.skeleton.points.get(0).toPoint();
 
@@ -87,6 +89,30 @@ public class EntityRagdoll extends Entity {
     {
         this.ragdoll.rotateRagdoll(rotYaw);
         //this.rotationPitch = p_70101_2_ % 360.0F;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public boolean isInRangeToRender3d(double p_145770_1_, double p_145770_3_, double p_145770_5_)
+    {
+        double d3 = this.posX - p_145770_1_;
+        double d4 = this.posY - p_145770_3_;
+        double d5 = this.posZ - p_145770_5_;
+        double d6 = d3 * d3 + d4 * d4 + d5 * d5;
+        return this.isInRangeToRenderDist(d6);
+    }
+
+    /**
+     * Checks if the entity is in range to render by using the past in distance and comparing it to its average edge
+     * length * 64 * renderDistanceWeight Args: distance
+     */
+    @SideOnly(Side.CLIENT)
+    public boolean isInRangeToRenderDist(double p_70112_1_)
+    {
+        /*double d1 = this.boundingBox.getAverageEdgeLength();
+        d1 *= 64.0D * this.renderDistanceWeight;*/
+        double d1 = 64;
+        //SekCPhysics.LOGGER.info(d1);
+        return p_70112_1_ < d1 * d1;
     }
 
     // TODO create objects for the entities containing the physics skeleton, positions and velocities

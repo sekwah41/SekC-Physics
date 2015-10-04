@@ -60,6 +60,13 @@ public class Skeleton {
             constraint.apply(entity);
             //point.movePoint(entity);
         }
+
+        // For finding the angle from the said norm use the dot product rearranged but base it on the angle between the reversed version
+        //  of the vector rather than 2 vectors. (for when a triangle wouldnt work or yould have to add too many points to make it work :D)
+        // formula 1  a · b = |a| × |b| × cos(?)
+        // formula 2  a · b = ax × bx + ay × by + az × bz
+
+
     }
 
     /**

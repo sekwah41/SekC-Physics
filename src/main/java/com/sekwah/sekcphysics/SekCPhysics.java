@@ -62,6 +62,7 @@ public class SekCPhysics {
 
         proxy.addEvents();
 
+
         EntityRegistry.registerModEntity(EntityRagdoll.class, "Ragdoll", 1, this, 64, 1, true);
 
         VanillaRagdolls.register();

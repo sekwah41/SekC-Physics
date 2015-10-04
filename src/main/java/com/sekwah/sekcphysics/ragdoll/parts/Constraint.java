@@ -55,7 +55,9 @@ public class Constraint {
         Point averageLoc = new Point((end[0].posX + end[1].posX) / 2F,(end[0].posY + end[1].posY) / 2F,(end[0].posZ + end[1].posZ) / 2F);
 
         double currentLength = Math.sqrt(Math.pow(end[0].posX - end[1].posX, 2) + Math.pow(end[0].posY - end[1].posY, 2) + Math.pow(end[0].posZ - end[1].posZ, 2));
-
+        if(currentLength == 0){
+            currentLength = 0.01;
+        }
         Point direction = new Point((end[0].posX - end[1].posX) / (float) currentLength,
                 (end[0].posY - end[1].posY) / (float) currentLength, (end[0].posZ - end[1].posZ) / (float) currentLength);
 

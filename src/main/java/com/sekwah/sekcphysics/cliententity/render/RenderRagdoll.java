@@ -35,6 +35,8 @@ public class RenderRagdoll extends Render {
             // Sets the position offset for rendering
             GL11.glTranslated(p_76986_2_, p_76986_4_, p_76986_6_);
 
+            //SekCPhysics.LOGGER.info(p_76986_9_);
+
             entityRagdoll.ragdoll.skeleton.renderSkeletonDebug();
 
             GL11.glPopMatrix();
