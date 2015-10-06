@@ -98,9 +98,10 @@ public class Skeleton {
         glEnable(GL_CULL_FACE);
         for(Constraint constraint : constraints){
             glDisable(GL11.GL_TEXTURE_2D);
-            glColor3f(0.0f, 1.0f, 0.2f);
+            // getBrightness(float p_70013_1_) from entity
+            glColor4f(0.0f, 1.0f, 0.2f, 1.0f);
             drawLine(constraint.end[0], constraint.end[1]);
-            glColor3f(1f,1f,1f);
+            glColor4f(1f,1f,1f, 1.0f);
             glEnable(GL11.GL_TEXTURE_2D);
         }
     }
