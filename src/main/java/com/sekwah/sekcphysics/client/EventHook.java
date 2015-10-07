@@ -76,6 +76,8 @@ public class EventHook {
 
             BaseRagdoll ragdoll = new ZombieRagdoll();
 
+            //BaseRagdoll ragdoll = new WreckingBallRagdoll();
+
             entityRagdoll.ragdoll = ragdoll;
 
             Vec3 lookVec = event.entityPlayer.getLookVec();
@@ -86,7 +88,7 @@ public class EventHook {
 
             entityRagdoll.ragdoll.skeleton.verifyPoints(entityRagdoll);
 
-            entityRagdoll.ragdoll.skeleton.setVelocity(lookVec.xCoord, lookVec.yCoord,lookVec.zCoord );
+            entityRagdoll.ragdoll.skeleton.setVelocity(lookVec.xCoord, lookVec.yCoord, lookVec.zCoord);
         }
     }
 

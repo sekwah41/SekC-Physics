@@ -44,6 +44,10 @@ public class SkeletonPoint {
         this(x,y,z,size,true);
     }
 
+    public SkeletonPoint(double x, double y, double z, boolean shouldDoModelScale){
+        this(x,y,z,0.15f,shouldDoModelScale);
+    }
+
     public SkeletonPoint(double x, double y, double z){
         this(x,y,z,0.15f,true);
     }
