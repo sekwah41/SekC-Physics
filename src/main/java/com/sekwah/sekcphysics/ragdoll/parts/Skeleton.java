@@ -1,6 +1,7 @@
 package com.sekwah.sekcphysics.ragdoll.parts;
 
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
+import com.sekwah.sekcphysics.ragdoll.Point;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
@@ -104,12 +105,29 @@ public class Skeleton {
             glColor4f(1f,1f,1f, 1.0f);
             glEnable(GL11.GL_TEXTURE_2D);
         }
+        for(Triangle triangle : triangles){
+            glDisable(GL11.GL_TEXTURE_2D);
+            // getBrightness(float p_70013_1_) from entity
+            glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
+            Point direction = triangle.getDirection();
+            Point pointTo = direction;
+            drawLine(triangle.points[0].toPoint(), triangle.points[0].toPoint());
+            glColor4f(1f,1f,1f, 1.0f);
+            glEnable(GL11.GL_TEXTURE_2D);
+        }
     }
 
     public void drawLine(SkeletonPoint point, SkeletonPoint point2){
         glBegin(GL_LINE_STRIP);
         glVertex3d(point.posX, point.posY, point.posZ);
         glVertex3d(point2.posX, point2.posY, point2.posZ);
+        glEnd();
+    }
+
+    public void drawLine(Point point, Point point2){
+        glBegin(GL_LINE_STRIP);
+        glVertex3d(point.getX(), point.getY(), point.getZ());
+        glVertex3d(point2.getX(), point2.getY(), point2.getZ());
         glEnd();
     }
 
@@ -138,7 +156,14 @@ public class Skeleton {
 
     public void setVelocity(double motionX, double motionY, double motionZ) {
         for(SkeletonPoint point : points){
-            point.setVelocity(motionX,motionY,motionZ);
+            point.setVelocity(motionX, motionY, motionZ);
+            //point.movePoint(entity);
+        }
+    }
+
+    public void addVelocity(double motionX, double motionY, double motionZ) {
+        for(SkeletonPoint point : points){
+            point.addVelocity(motionX,motionY,motionZ);
             //point.movePoint(entity);
         }
     }

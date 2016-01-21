@@ -6,7 +6,9 @@ import com.sekwah.sekcphysics.ragdoll.BaseRagdoll;
 import com.sekwah.sekcphysics.ragdoll.vanilla.ZombieRagdoll;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -46,6 +48,14 @@ public class EventHook {
                 entityRagdoll.ragdoll.rotateRagdoll(deadEntity.rotationYaw);
 
                 entityRagdoll.ragdoll.skeleton.verifyPoints(entityRagdoll);
+
+                if(event.source.getSourceOfDamage() != null){
+                    Entity attackingEntity = event.source.getSourceOfDamage();
+                    
+                    if(attackingEntity instanceof EntityPlayer){
+                        EntityPlayer attackingPlayer = (EntityPlayer) attackingEntity;
+                    }
+                }
 
                 entityRagdoll.ragdoll.skeleton.setVelocity(deadEntity.posX - deadEntity.lastTickPosX, deadEntity.posY - deadEntity.lastTickPosY, deadEntity.posZ - deadEntity.lastTickPosZ);
 

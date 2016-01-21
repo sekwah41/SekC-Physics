@@ -17,7 +17,7 @@ public class Ragdolls {
     // To get a list of ragdolls go through all the alive entities in the world and check for an instace of
     //public List currentRagdolls = new ArrayList();
 
-    public static float gravity = 0.005F; // alter till it looks the best, also maybe add material values as mods use stuff like
+    public static float gravity = 0.05F; // alter till it looks the best, also maybe add material values as mods use stuff like
 
     public void registerRagdoll(Class<? extends Entity> entityClass, Class<? extends BaseRagdoll> ragdollClass) {
         this.entityToRagdollHashmap.put(entityClass, ragdollClass);
@@ -25,8 +25,6 @@ public class Ragdolls {
 
     public BaseRagdoll createRagdoll(Entity entity){
         BaseRagdoll ragdoll = null;
-
-        gravity = 0.03F;
 
         // TODO add code to detect the baby versions and add new ragdolls
 

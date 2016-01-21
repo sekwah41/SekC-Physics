@@ -69,4 +69,27 @@ public class Triangle {
                 (point1.getY() - point2.getY()) / (float) currentLength, (point1.getZ() - point2.getZ()) / (float) currentLength);
     }
 
+    public Point getDirection(){
+        // Center between left and right
+        Point averageLoc = new Point((points[1].posX + points[2].posX) / 2F,(points[1].posY + points[2].posY) / 2F,(points[1].posZ + points[2].posZ) / 2F);
+
+        double currentLength = Math.sqrt(Math.pow(points[0].posX - averageLoc.getX(), 2) + Math.pow(points[0].posY - averageLoc.getY(), 2) + Math.pow(points[0].posZ - averageLoc.getZ(), 2));
+        // Direction from the base directly down the center of the triangle
+        Point direction = new Point((points[0].posX - averageLoc.getX()) / (float) currentLength,
+                (points[0].posY - averageLoc.getY()) / (float) currentLength, (points[0].posZ - averageLoc.getZ()) / (float) currentLength);
+
+        // Calculate angle around the direction, may be best way to calculate orentation and make basic constraints on
+        // but using the direction and getting an x and y(or whichever 2) to get the direction aligned before rotation
+        // would be great for rendering :)
+        return direction;
+    }
+
+    /**
+     * Calculate the rotated angle around the direction.
+     * @return angle, either 0 to 360 or 0 to 2Pi
+     */
+    public float getAngle(){
+        return 0;
+    }
+
 }
