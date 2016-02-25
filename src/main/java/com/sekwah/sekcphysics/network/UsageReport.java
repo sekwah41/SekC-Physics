@@ -70,8 +70,8 @@ public class UsageReport {
                         // it at all times to make sure the method isnt being run twice at once and 50 50 of each data
                     }
 
-                    SekCPhysics.LOGGER.info("Sending UsageReport data");
-                    SekCPhysics.LOGGER.info(sendData(reportURL, buildPostString(reportData)));
+                    SekCPhysics.logger.info("Sending UsageReport data");
+                    SekCPhysics.logger.info(sendData(reportURL, buildPostString(reportData)));
                 }
             }, 0L, 890000L); // Shorter than 15 mins by 10 seconds just to make sure its not on the border and online
             // players are missed
@@ -141,7 +141,7 @@ public class UsageReport {
             }
             catch (UnsupportedEncodingException e)
             {
-                SekCPhysics.LOGGER.error("Unsupported Encoding in report data");
+                SekCPhysics.logger.error("Unsupported Encoding in report data");
                 e.printStackTrace();
             }
 
@@ -155,7 +155,7 @@ public class UsageReport {
                 }
                 catch (UnsupportedEncodingException e)
                 {
-                    SekCPhysics.LOGGER.error("Unsupported Encoding in report data");
+                    SekCPhysics.logger.error("Unsupported Encoding in report data");
                     e.printStackTrace();
                 }
             }
@@ -197,7 +197,7 @@ public class UsageReport {
             bufferedreader.close();
             return stringbuffer.toString();
         } catch (Exception e) {
-            SekCPhysics.LOGGER.error("Error sending the usage report.");
+            SekCPhysics.logger.error("Error sending the usage report.");
             e.printStackTrace();
             return "";
         }

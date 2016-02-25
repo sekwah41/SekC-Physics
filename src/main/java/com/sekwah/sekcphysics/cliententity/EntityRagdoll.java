@@ -111,7 +111,7 @@ public class EntityRagdoll extends Entity {
         /*double d1 = this.boundingBox.getAverageEdgeLength();
         d1 *= 64.0D * this.renderDistanceWeight;*/
         double d1 = 64;
-        //SekCPhysics.LOGGER.info(d1);
+        //SekCPhysics.logger.info(d1);
         return p_70112_1_ < d1 * d1;
     }
 

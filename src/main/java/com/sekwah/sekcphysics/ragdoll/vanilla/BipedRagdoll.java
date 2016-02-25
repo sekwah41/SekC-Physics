@@ -1,5 +1,6 @@
-package com.sekwah.sekcphysics.ragdoll;
+package com.sekwah.sekcphysics.ragdoll.vanilla;
 
+import com.sekwah.sekcphysics.ragdoll.BaseRagdoll;
 import com.sekwah.sekcphysics.ragdoll.parts.Constraint;
 import com.sekwah.sekcphysics.ragdoll.parts.Skeleton;
 import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;

@@ -69,18 +69,30 @@ public class Triangle {
                 (point1.getY() - point2.getY()) / (float) currentLength, (point1.getZ() - point2.getZ()) / (float) currentLength);
     }
 
-    public Point getDirection(){
+    // Get the normalised vector for the direction.
+    public Point getDirectionNorm(){
         // Center between left and right
         Point averageLoc = new Point((points[1].posX + points[2].posX) / 2F,(points[1].posY + points[2].posY) / 2F,(points[1].posZ + points[2].posZ) / 2F);
 
         double currentLength = Math.sqrt(Math.pow(points[0].posX - averageLoc.getX(), 2) + Math.pow(points[0].posY - averageLoc.getY(), 2) + Math.pow(points[0].posZ - averageLoc.getZ(), 2));
         // Direction from the base directly down the center of the triangle
-        Point direction = new Point((points[0].posX - averageLoc.getX()) / (float) currentLength,
-                (points[0].posY - averageLoc.getY()) / (float) currentLength, (points[0].posZ - averageLoc.getZ()) / (float) currentLength);
+        Point direction = new Point((averageLoc.getX() - points[0].posX) / (float) currentLength,
+                (averageLoc.getY() - points[0].posY) / (float) currentLength, (averageLoc.getZ() - points[0].posZ) / (float) currentLength);
 
         // Calculate angle around the direction, may be best way to calculate orentation and make basic constraints on
         // but using the direction and getting an x and y(or whichever 2) to get the direction aligned before rotation
         // would be great for rendering :)
+        return direction;
+    }
+
+    public Point getDirection(){
+        // Center between left and right vector
+        Point averageLoc = new Point((points[1].posX + points[2].posX) / 2F,(points[1].posY + points[2].posY) / 2F,(points[1].posZ + points[2].posZ) / 2F);
+
+        // Direction from the base directly down the center of the triangle
+        Point direction = new Point((averageLoc.getX() - points[0].posX),
+                (averageLoc.getY() - points[0].posY), (averageLoc.getZ() - points[0].posZ));
+
         return direction;
     }
 
@@ -92,4 +104,15 @@ public class Triangle {
         return 0;
     }
 
+    public Point getNormal() {
+
+        Point basePoint = this.points[0].toPoint();
+        Point vec1 = basePoint.clone().sub(this.points[1].toPoint());
+        Point vec2 = basePoint.clone().sub(this.points[2].toPoint());
+        double normX = vec1.getY() * vec2.getZ() - vec1.getZ() * vec2.getY();
+        double normY = vec1.getZ() * vec2.getX() - vec1.getX() * vec2.getZ();
+        double normZ = vec1.getX() * vec2.getY() - vec1.getY() * vec2.getX();
+
+        return new Point(normX, normY, normZ);
+    }
 }

@@ -52,7 +52,7 @@ public class BaseRagdoll {
         for(SkeletonPoint point : skeleton.points){
             // Finish rotation maths
             //newPoint.translate(new Vector3f((float) point.posX, (float) point.posY, (float) point.posZ));
-            SekCPhysics.LOGGER.info(entity.rotationYaw);
+            //SekCPhysics.logger.info(entity.rotationYaw);
             Vec3 vec = Vec3.createVectorHelper(point.posX, point.posY, point.posZ);
             vec.rotateAroundY((float) Math.toRadians(-entity.rotationYaw));
             point.setPosition(vec.xCoord, vec.yCoord, vec.zCoord);

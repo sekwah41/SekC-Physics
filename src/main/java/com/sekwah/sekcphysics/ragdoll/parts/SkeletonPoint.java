@@ -62,6 +62,11 @@ public class SkeletonPoint {
         this.lastPosY = y;
         this.lastPosZ = z;
 
+        // Added to stop ragdolls becoming lines or acting in only 1 plane after hitting a wall
+        float sizeRandom = (float) Math.random();
+        float maxOffset = 0.001f;
+        size += -maxOffset + maxOffset * 2f * sizeRandom;
+
         this.size = size;
 
         if(shouldDoModelScale){

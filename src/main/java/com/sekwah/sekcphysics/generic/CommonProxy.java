@@ -1,5 +1,7 @@
 package com.sekwah.sekcphysics.generic;
 
+import com.sekwah.sekcphysics.ragdoll.RagdollGenerator;
+
 /**
  * Created by sekwah on 03/10/2015.
  */
@@ -12,4 +14,9 @@ public class CommonProxy {
 
     public void addEvents() {
     }
+
+    public void generateRagdolls() {
+
+    }
+
 }

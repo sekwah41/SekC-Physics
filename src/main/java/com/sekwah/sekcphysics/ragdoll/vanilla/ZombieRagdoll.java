@@ -1,7 +1,5 @@
 package com.sekwah.sekcphysics.ragdoll.vanilla;
 
-import com.sekwah.sekcphysics.ragdoll.BipedRagdoll;
-
 /**
  * Created by sekawh on 8/7/2015.
  */

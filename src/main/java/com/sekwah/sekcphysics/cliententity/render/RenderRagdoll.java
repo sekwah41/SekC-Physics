@@ -2,6 +2,7 @@ package com.sekwah.sekcphysics.cliententity.render;
 
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.ragdoll.Point;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
@@ -15,6 +16,8 @@ import static org.lwjgl.opengl.GL11.*;
 public class RenderRagdoll extends Render {
     // add code to render the lines between the links of nodes, and also the option to render boxes at each node.
     // this entity will never have any rotation from the entity but rather rotations based on the physics positions
+
+    private static Minecraft mc = Minecraft.getMinecraft();
 
     public void drawLine(Point point, Point point2){
         glColor3f(0.0f, 1.0f, 0.2f);
@@ -35,10 +38,11 @@ public class RenderRagdoll extends Render {
             // Sets the position offset for rendering
             GL11.glTranslated(p_76986_2_, p_76986_4_, p_76986_6_);
 
-            //SekCPhysics.LOGGER.info(p_76986_9_);
+            //SekCPhysics.logger.info(p_76986_9_);
 
-            entityRagdoll.ragdoll.skeleton.renderSkeletonDebug();
-
+            //if(mc.gameSettings.showDebugInfo){
+                entityRagdoll.ragdoll.skeleton.renderSkeletonDebug();
+            //}
             GL11.glPopMatrix();
         }
     }

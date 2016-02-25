@@ -1,13 +1,11 @@
 package com.sekwah.sekcphysics;
 
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
-import com.sekwah.sekcphysics.cliententity.render.RenderRagdoll;
 import com.sekwah.sekcphysics.generic.CommonProxy;
 import com.sekwah.sekcphysics.network.UsageReport;
 import com.sekwah.sekcphysics.ragdoll.Ragdolls;
 import com.sekwah.sekcphysics.ragdoll.vanilla.VanillaRagdolls;
 import com.sekwah.sekcphysics.settings.ModSettings;
-import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
@@ -17,6 +15,8 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.io.File;
 
 /**
  * Created by sekwah on 31/07/2015.
@@ -35,7 +35,7 @@ import org.apache.logging.log4j.Logger;
 public class SekCPhysics {
 
     public static final String modid = "sekcphysics";
-    public static final Logger LOGGER = LogManager.getLogger("SekC Physics");
+    public static final Logger logger = LogManager.getLogger("SekC Physics");
 
     public static final String version = "0.0.1";
 
@@ -46,19 +46,17 @@ public class SekCPhysics {
     @SidedProxy(clientSide = "com.sekwah.sekcphysics.client.ClientProxy", serverSide = "com.sekwah.sekcphysics.generic.CommonProxy")
     public static CommonProxy proxy;
 
-
+    public static File configFolder;
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
         if(FMLCommonHandler.instance().getSide().isServer()){
-            LOGGER.error("The mod so far contains only visual features, there is no point having it installed on anything other " +
+            logger.error("The mod so far contains only visual features, there is no point having it installed on anything other " +
                     "than a client for now.");
         }
 
-        if(proxy.isClient()){
-            usageReport = new UsageReport(true);
-            usageReport.startUsageReport();
-        }
+        SekCPhysics.usageReport = new UsageReport(proxy.isClient());
+        SekCPhysics.usageReport.startUsageReport();
 
         proxy.addEvents();
 
@@ -71,13 +69,13 @@ public class SekCPhysics {
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
 
-        RenderingRegistry.registerEntityRenderingHandler(EntityRagdoll.class, new RenderRagdoll());
+        proxy.generateRagdolls();
 
     }
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-
+        configFolder = event.getModConfigurationDirectory();
         ModSettings.preInit(event);
 
     }

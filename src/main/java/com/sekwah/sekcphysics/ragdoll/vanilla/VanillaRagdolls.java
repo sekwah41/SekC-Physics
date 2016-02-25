@@ -1,7 +1,6 @@
 package com.sekwah.sekcphysics.ragdoll.vanilla;
 
 import com.sekwah.sekcphysics.SekCPhysics;
-import com.sekwah.sekcphysics.ragdoll.BipedRagdoll;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 

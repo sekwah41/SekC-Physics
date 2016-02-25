@@ -3,6 +3,8 @@ package com.sekwah.sekcphysics.ragdoll.parts;
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.ragdoll.Point;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector3f;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +13,11 @@ import static org.lwjgl.opengl.GL11.*;
 
 /**
  * Created by sekawh on 8/4/2015.
+ *
+ * // TODO add some detection to contstraints for when they are massively disshaped or something similar and try reversing it
+ *  sometimes, should fix legs crossing over glitch but could be made worse if the entity is squashed for whatever reason.
+ *  just add some tests to see if they work.
+ *
  */
 public class Skeleton {
 
@@ -64,8 +71,8 @@ public class Skeleton {
 
         // For finding the angle from the said norm use the dot product rearranged but base it on the angle between the reversed version
         //  of the vector rather than 2 vectors. (for when a triangle wouldnt work or yould have to add too many points to make it work :D)
-        // formula 1  a · b = |a| × |b| × cos(?)
-        // formula 2  a · b = ax × bx + ay × by + az × bz
+        // formula 1  a ï¿½ b = |a| ï¿½ |b| ï¿½ cos(?)
+        // formula 2  a ï¿½ b = ax ï¿½ bx + ay ï¿½ by + az ï¿½ bz
 
 
     }
@@ -89,32 +96,34 @@ public class Skeleton {
      */
     public void renderSkeletonDebug(){
         glDisable(GL_CULL_FACE);
+        glDisable(GL11.GL_TEXTURE_2D);
         for(Triangle triangle : triangles){
-            glDisable(GL11.GL_TEXTURE_2D);
             glColor4f(0.0f, 0.8f, 0.1f, 0.5f);
             drawTriangle(triangle.points[0], triangle.points[1], triangle.points[2]);
             glColor3f(1f,1f,1f);
-            glEnable(GL11.GL_TEXTURE_2D);
         }
         glEnable(GL_CULL_FACE);
         for(Constraint constraint : constraints){
-            glDisable(GL11.GL_TEXTURE_2D);
             // getBrightness(float p_70013_1_) from entity
             glColor4f(0.0f, 1.0f, 0.2f, 1.0f);
             drawLine(constraint.end[0], constraint.end[1]);
             glColor4f(1f,1f,1f, 1.0f);
-            glEnable(GL11.GL_TEXTURE_2D);
+
         }
         for(Triangle triangle : triangles){
-            glDisable(GL11.GL_TEXTURE_2D);
             // getBrightness(float p_70013_1_) from entity
             glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
             Point direction = triangle.getDirection();
-            Point pointTo = direction;
-            drawLine(triangle.points[0].toPoint(), triangle.points[0].toPoint());
+            Point normal = triangle.getNormal();
+            Point basePoint = triangle.points[0].toPoint();
+            Point directionPoint = basePoint.clone().add(direction);
+            Point normalPoint = basePoint.clone().add(normal);
+            drawLine(basePoint, directionPoint);
+            glColor4f(0f,0f,1f, 1.0f);
+            drawLine(basePoint, normalPoint);
             glColor4f(1f,1f,1f, 1.0f);
-            glEnable(GL11.GL_TEXTURE_2D);
         }
+        glEnable(GL11.GL_TEXTURE_2D);
     }
 
     public void drawLine(SkeletonPoint point, SkeletonPoint point2){

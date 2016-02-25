@@ -6,10 +6,14 @@ import com.sekwah.sekcphysics.ragdoll.BaseRagdoll;
 import com.sekwah.sekcphysics.ragdoll.vanilla.ZombieRagdoll;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -24,9 +28,10 @@ public class EventHook {
         // TODO check entities for if they are in a list of registered mobs for ragdolls,
         //  and also check if the died is when the body is removed after death animation or if its
         //  as soon as it hits 0
-        SekCPhysics.LOGGER.info("Entity Died.");
-        if(FMLCommonHandler.instance().getEffectiveSide().isClient()){
-            SekCPhysics.LOGGER.info("Entity Died.");
+        //SekCPhysics.logger.info("Entity Died.");
+        // TODO Either add recalculation for the children or the option for a different model.
+        if(FMLCommonHandler.instance().getEffectiveSide().isClient() && !event.entityLiving.isChild()){
+            //SekCPhysics.logger.info("Entity Died.");
 
             // add checks for the ragolls and everything.
 
@@ -49,15 +54,22 @@ public class EventHook {
 
                 entityRagdoll.ragdoll.skeleton.verifyPoints(entityRagdoll);
 
-                if(event.source.getSourceOfDamage() != null){
+                entityRagdoll.ragdoll.skeleton.setVelocity(deadEntity.posX - deadEntity.lastTickPosX, deadEntity.posY - deadEntity.lastTickPosY, deadEntity.posZ - deadEntity.lastTickPosZ);
+
+                // Doesn't seem possible with client side only through just this event.
+                /*if(event.source.getEntity() != null){
                     Entity attackingEntity = event.source.getSourceOfDamage();
-                    
+                    SekCPhysics.logger.info(attackingEntity);
                     if(attackingEntity instanceof EntityPlayer){
                         EntityPlayer attackingPlayer = (EntityPlayer) attackingEntity;
+                        if(attackingPlayer.getCurrentEquippedItem() != null){
+                            // Try to add some other way such as finding the damage event and storing the knockback speed wanted.
+                            ItemStack playerItem = attackingPlayer.getCurrentEquippedItem();
+                            int knockback = EnchantmentHelper.getEnchantmentLevel(Enchantment.knockback.effectId, playerItem);
+                            SekCPhysics.logger.info("Test:" + knockback);
+                        }
                     }
-                }
-
-                entityRagdoll.ragdoll.skeleton.setVelocity(deadEntity.posX - deadEntity.lastTickPosX, deadEntity.posY - deadEntity.lastTickPosY, deadEntity.posZ - deadEntity.lastTickPosZ);
+                }*/
 
                 deadEntity.setDead();
             }
@@ -79,26 +91,27 @@ public class EventHook {
 
     @SubscribeEvent
     public void playerInteract(PlayerInteractEvent event){
-        SekCPhysics.LOGGER.info("Player Interact");
+        //SekCPhysics.logger.info("Player Interact");
+        if(FMLCommonHandler.instance().getEffectiveSide().isClient() && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR){
+            if(event.entityPlayer.capabilities.isCreativeMode && event.entityPlayer.getHeldItem() != null && event.entityPlayer.getHeldItem().getItem() == Items.nether_star){
+                EntityRagdoll entityRagdoll = new EntityRagdoll(event.entityPlayer.worldObj);
 
-        if(event.entityPlayer.capabilities.isCreativeMode && event.entityPlayer.getHeldItem() != null && event.entityPlayer.getHeldItem().getItem() == Items.nether_star){
-            EntityRagdoll entityRagdoll = new EntityRagdoll(event.entityPlayer.worldObj);
+                BaseRagdoll ragdoll = new ZombieRagdoll();
 
-            BaseRagdoll ragdoll = new ZombieRagdoll();
+                //BaseRagdoll ragdoll = new WreckingBallRagdoll();
 
-            //BaseRagdoll ragdoll = new WreckingBallRagdoll();
+                entityRagdoll.ragdoll = ragdoll;
 
-            entityRagdoll.ragdoll = ragdoll;
+                Vec3 lookVec = event.entityPlayer.getLookVec();
 
-            Vec3 lookVec = event.entityPlayer.getLookVec();
+                entityRagdoll.setSpawnPosition(event.entityPlayer.posX + lookVec.xCoord, event.entityPlayer.posY + lookVec.yCoord - 0.5f, event.entityPlayer.posZ + lookVec.zCoord);
 
-            entityRagdoll.setSpawnPosition(event.entityPlayer.posX + lookVec.xCoord, event.entityPlayer.posY + lookVec.yCoord - 0.5f, event.entityPlayer.posZ + lookVec.zCoord);
+                event.entityPlayer.worldObj.spawnEntityInWorld(entityRagdoll);
 
-            event.entityPlayer.worldObj.spawnEntityInWorld(entityRagdoll);
+                entityRagdoll.ragdoll.skeleton.verifyPoints(entityRagdoll);
 
-            entityRagdoll.ragdoll.skeleton.verifyPoints(entityRagdoll);
-
-            entityRagdoll.ragdoll.skeleton.setVelocity(lookVec.xCoord, lookVec.yCoord, lookVec.zCoord);
+                entityRagdoll.ragdoll.skeleton.setVelocity(lookVec.xCoord, lookVec.yCoord, lookVec.zCoord);
+            }
         }
     }
 
