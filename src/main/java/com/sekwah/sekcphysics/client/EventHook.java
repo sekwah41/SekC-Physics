@@ -4,19 +4,14 @@ import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.ragdoll.BaseRagdoll;
 import com.sekwah.sekcphysics.ragdoll.vanilla.ZombieRagdoll;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
  * Created by sekwah on 8/1/2015.
@@ -25,17 +20,18 @@ public class EventHook {
 
     @SubscribeEvent
     public void onJoinWorld(LivingDeathEvent event) {
+        SekCPhysics.logger.info("Entity Death");
         // TODO check entities for if they are in a list of registered mobs for ragdolls,
         //  and also check if the died is when the body is removed after death animation or if its
         //  as soon as it hits 0
         //SekCPhysics.logger.info("Entity Died.");
         // TODO Either add recalculation for the children or the option for a different model.
-        if(FMLCommonHandler.instance().getEffectiveSide().isClient() && !event.entityLiving.isChild()){
+        if(FMLCommonHandler.instance().getEffectiveSide().isClient() && !event.getEntityLiving().isChild()){
             //SekCPhysics.logger.info("Entity Died.");
 
             // add checks for the ragolls and everything.
 
-            EntityLivingBase deadEntity = event.entityLiving;
+            EntityLivingBase deadEntity = event.getEntityLiving();
 
             BaseRagdoll ragdoll = SekCPhysics.ragdolls.createRagdoll(deadEntity);
             if(ragdoll != null) {
@@ -89,12 +85,13 @@ public class EventHook {
         }
     }
 
+    // TODO still being readded atm for forge, looks like it should be done but they need to recode for 1.9 changes.
     @SubscribeEvent
     public void playerInteract(PlayerInteractEvent event){
-        //SekCPhysics.logger.info("Player Interact");
-        if(FMLCommonHandler.instance().getEffectiveSide().isClient() && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR){
-            if(event.entityPlayer.capabilities.isCreativeMode && event.entityPlayer.getHeldItem() != null && event.entityPlayer.getHeldItem().getItem() == Items.nether_star){
-                EntityRagdoll entityRagdoll = new EntityRagdoll(event.entityPlayer.worldObj);
+        SekCPhysics.logger.info("Player Interact");
+        if(FMLCommonHandler.instance().getEffectiveSide().isClient() && event.getAction() == PlayerInteractEvent.Action.RIGHT_CLICK_AIR){
+            if(event.getEntityPlayer().capabilities.isCreativeMode && event.getEntityPlayer().getHeldItem(EnumHand.MAIN_HAND) != null && event.getEntityPlayer().getHeldItem(EnumHand.MAIN_HAND).getItem() == Items.nether_star){
+                EntityRagdoll entityRagdoll = new EntityRagdoll(event.getEntityPlayer().worldObj);
 
                 BaseRagdoll ragdoll = new ZombieRagdoll();
 
@@ -102,11 +99,11 @@ public class EventHook {
 
                 entityRagdoll.ragdoll = ragdoll;
 
-                Vec3 lookVec = event.entityPlayer.getLookVec();
+                Vec3d lookVec = event.getEntityPlayer().getLookVec();
 
-                entityRagdoll.setSpawnPosition(event.entityPlayer.posX + lookVec.xCoord, event.entityPlayer.posY + lookVec.yCoord - 0.5f, event.entityPlayer.posZ + lookVec.zCoord);
+                entityRagdoll.setSpawnPosition(event.getEntityPlayer().posX + lookVec.xCoord, event.getEntityPlayer().posY + lookVec.yCoord - 0.5f, event.getEntityPlayer().posZ + lookVec.zCoord);
 
-                event.entityPlayer.worldObj.spawnEntityInWorld(entityRagdoll);
+                event.getEntityPlayer().worldObj.spawnEntityInWorld(entityRagdoll);
 
                 entityRagdoll.ragdoll.skeleton.verifyPoints(entityRagdoll);
 

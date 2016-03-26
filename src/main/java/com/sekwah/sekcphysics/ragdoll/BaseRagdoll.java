@@ -1,12 +1,11 @@
 package com.sekwah.sekcphysics.ragdoll;
 
-import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.ragdoll.parts.Skeleton;
 import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.Vec3d;
 
 /**
  * Created by sekawh on 8/4/2015.
@@ -53,8 +52,8 @@ public class BaseRagdoll {
             // Finish rotation maths
             //newPoint.translate(new Vector3f((float) point.posX, (float) point.posY, (float) point.posZ));
             //SekCPhysics.logger.info(entity.rotationYaw);
-            Vec3 vec = Vec3.createVectorHelper(point.posX, point.posY, point.posZ);
-            vec.rotateAroundY((float) Math.toRadians(-entity.rotationYaw));
+            Vec3d vec = new Vec3d(point.posX, point.posY, point.posZ);
+            vec.rotateYaw((float) Math.toRadians(-entity.rotationYaw));
             point.setPosition(vec.xCoord, vec.yCoord, vec.zCoord);
         }
     }

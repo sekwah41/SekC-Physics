@@ -1,5 +1,6 @@
 package com.sekwah.sekcphysics.ragdoll.parts;
 
+import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.ragdoll.Point;
 import org.lwjgl.opengl.GL11;
@@ -58,6 +59,7 @@ public class Skeleton {
      * @param entity
      */
     public void update(EntityRagdoll entity){
+
         for(SkeletonPoint point : points){
             point.update(entity);
             //point.movePoint(entity);

@@ -1,14 +1,14 @@
 package com.sekwah.sekcphysics.ragdoll.parts;
 
+import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.ragdoll.Point;
 import com.sekwah.sekcphysics.ragdoll.Ragdolls;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -93,6 +93,7 @@ public class SkeletonPoint {
     }
 
     public void movePoint(EntityRagdoll entity, double moveX, double moveY, double moveZ) {
+
         /*this.posX += moveX;
         this.posY += moveY;
         this.posZ += moveZ;*/
@@ -105,43 +106,53 @@ public class SkeletonPoint {
         double pointPosY = entity.posY + this.posY;
         double pointPosZ = entity.posZ + this.posZ;
 
-        AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox(pointPosX - size, pointPosY - size, pointPosZ - size,
+        /*SekCPhysics.logger.info(pointPosX);*/
+
+        AxisAlignedBB axisalignedbb = new AxisAlignedBB(pointPosX - size, pointPosY - size, pointPosZ - size,
                 pointPosX + size, pointPosY + size, pointPosZ + size);
 
         //axisalignedbb.offset(this.posX, this.posY, this.posZ);
 
-        List list = entity.worldObj.getCollidingBoundingBoxes(entity, axisalignedbb.addCoord(moveX, moveY, moveZ));
+        // TODO Not very well named function, rename using the forge bot.
+        List<AxisAlignedBB> list = entity.worldObj.getCubes(entity, axisalignedbb.addCoord(moveX, moveY, moveZ));
 
         double oMoveY = moveY;
 
         for (int k = 0; k < list.size(); ++k)
         {
-            moveY = ((AxisAlignedBB)list.get(k)).calculateYOffset(axisalignedbb, moveY);
+            moveY = (list.get(k)).calculateYOffset(axisalignedbb, moveY);
         }
+
+        //SekCPhysics.logger.info(" ");
+        //SekCPhysics.logger.info(moveY);
 
         if(oMoveY < 0 && moveY != oMoveY){
             onGround = true;
         }
 
-        axisalignedbb.offset(0.0D, moveY, 0.0D);
+        axisalignedbb = axisalignedbb.offset(0.0D, moveY, 0.0D);
 
         for (int k = 0; k < list.size(); ++k)
         {
             moveX = ((AxisAlignedBB)list.get(k)).calculateXOffset(axisalignedbb, moveX);
         }
 
-        axisalignedbb.offset(moveX, 0.0D, 0.0D);
+        axisalignedbb = axisalignedbb.offset(moveX, 0.0D, 0.0D);
 
         for (int k = 0; k < list.size(); ++k)
         {
             moveZ = ((AxisAlignedBB)list.get(k)).calculateZOffset(axisalignedbb, moveZ);
         }
 
-        axisalignedbb.offset(0.0D, 0.0D, moveZ);
+        //axisalignedbb = axisalignedbb.offset(0.0D, 0.0D, moveZ);
 
-        this.posX = (axisalignedbb.minX + axisalignedbb.maxX) / 2.0D - entity.posX;
-        this.posY = (axisalignedbb.minY + axisalignedbb.maxY) / 2.0D - entity.posY;
-        this.posZ = (axisalignedbb.minZ + axisalignedbb.maxZ) / 2.0D - entity.posZ;
+        // TODO Find out why it wobbles a bit now(needs to be rendered first
+
+        this.posX += moveX;
+        this.posY += moveY;
+        this.posZ += moveZ;
+
+        //SekCPhysics.logger.info(this.posY);
 
         /*System.out.println(this.posX);*/
 
@@ -189,12 +200,12 @@ public class SkeletonPoint {
         double pointPosY = entity.posY + this.posY;
         double pointPosZ = entity.posZ + this.posZ;
 
-        AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox(pointPosX - size, pointPosY - size, pointPosZ - size,
+        AxisAlignedBB axisalignedbb = new AxisAlignedBB(pointPosX - size, pointPosY - size, pointPosZ - size,
                 pointPosX + size, pointPosY + size, pointPosZ + size);
 
 
         // TODO add code to properly do water velocity
-        if (moveInWater(entity.worldObj, axisalignedbb.expand(0.0D, -0.4000000059604645D, 0.0D).contract(0.001D, 0.001D, 0.001D), Material.water, entity)){
+        if (entity.worldObj.handleMaterialAcceleration(axisalignedbb.expand(0.0D, -0.4000000059604645D, 0.0D).func_186664_h(0.001D), Material.water, entity)){
             this.addVelocity(0, 0.1f, 0);
             if(this.posY - this.lastPosY > 0.5){
                 this.lastPosY = this.posY - 0.5;
@@ -207,56 +218,6 @@ public class SkeletonPoint {
         //next_old_position = position             // This position is the next frame's old_position
        // position += position - old_position;     // Verlet integration
         //position += gravity;                     // gravity == (0,-0.01,0)
-    }
-
-    private boolean moveInWater(World worldObj, AxisAlignedBB boundingBox, Material material, EntityRagdoll entity) {
-        int i = MathHelper.floor_double(boundingBox.minX);
-        int j = MathHelper.floor_double(boundingBox.maxX + 1.0D);
-        int k = MathHelper.floor_double(boundingBox.minY);
-        int l = MathHelper.floor_double(boundingBox.maxY + 1.0D);
-        int i1 = MathHelper.floor_double(boundingBox.minZ);
-        int j1 = MathHelper.floor_double(boundingBox.maxZ + 1.0D);
-
-        if (!worldObj.checkChunksExist(i, k, i1, j, l, j1))
-        {
-            return false;
-        }
-        else
-        {
-            boolean flag = false;
-            Vec3 vec3 = Vec3.createVectorHelper(0.0D, 0.0D, 0.0D);
-
-            for (int k1 = i; k1 < j; ++k1)
-            {
-                for (int l1 = k; l1 < l; ++l1)
-                {
-                    for (int i2 = i1; i2 < j1; ++i2)
-                    {
-                        Block block = worldObj.getBlock(k1, l1, i2);
-
-                        if (block.getMaterial() == material)
-                        {
-                            double d0 = (double)((float)(l1 + 1) - BlockLiquid.getLiquidHeightPercent(worldObj.getBlockMetadata(k1, l1, i2)));
-
-                            if ((double)l >= d0)
-                            {
-                                flag = true;
-                                block.velocityToAddToEntity(worldObj, k1, l1, i2, entity, vec3);
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (vec3.lengthVector() > 0.0D)
-            {
-                vec3 = vec3.normalize();
-                double d1 = 0.014D;
-                this.addVelocity(vec3.xCoord * d1, vec3.yCoord * d1,vec3.zCoord * d1);
-            }
-
-            return flag;
-        }
     }
 
     public void moveTo(EntityRagdoll entity, double x, double y, double z) {

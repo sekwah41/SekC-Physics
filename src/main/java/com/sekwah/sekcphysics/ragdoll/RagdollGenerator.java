@@ -1,8 +1,8 @@
 package com.sekwah.sekcphysics.ragdoll;
 
 import com.sekwah.sekcphysics.SekCPhysics;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.ModContainer;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.ModContainer;
 
 import java.io.*;
 import java.util.List;
@@ -23,6 +23,10 @@ public class RagdollGenerator {
         }
     }
 
+    /**
+     * Finds the data for the mobs in the json data and generates it on startup.
+     * TODO Try to find how to make a progress bar on the loading or make one appear like the chickenbones core
+     */
     public static void loadRagdolls() {
         generateRagdollsFrom("vanilla");
         List<ModContainer> modlist = Loader.instance().getActiveModList();

@@ -6,13 +6,13 @@ import com.sekwah.sekcphysics.network.UsageReport;
 import com.sekwah.sekcphysics.ragdoll.Ragdolls;
 import com.sekwah.sekcphysics.ragdoll.vanilla.VanillaRagdolls;
 import com.sekwah.sekcphysics.settings.ModSettings;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.registry.EntityRegistry;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -64,6 +64,7 @@ public class SekCPhysics {
         EntityRegistry.registerModEntity(EntityRagdoll.class, "Ragdoll", 1, this, 64, 1, true);
 
         VanillaRagdolls.register();
+
     }
 
     @Mod.EventHandler
@@ -77,6 +78,8 @@ public class SekCPhysics {
     public void preInit(FMLPreInitializationEvent event) {
         configFolder = event.getModConfigurationDirectory();
         ModSettings.preInit(event);
+
+        proxy.ragdollRenderer();
 
     }
 

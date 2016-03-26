@@ -1,12 +1,14 @@
 package com.sekwah.sekcphysics.cliententity;
 
+import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.ragdoll.BaseRagdoll;
 import com.sekwah.sekcphysics.ragdoll.Point;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * Created by sekawh on 8/1/2015.
@@ -36,6 +38,7 @@ public class EntityRagdoll extends Entity {
 
     public void onUpdate()
     {
+        //SekCPhysics.logger.info("Update");
         super.onUpdate();
         if(ragdoll == null){
             this.setDead();
@@ -76,7 +79,8 @@ public class EntityRagdoll extends Entity {
         this.posZ = posZ;
         float f = this.width / 2.0F;
         float f1 = this.height;
-        this.boundingBox.setBounds(posX - (double)f, posY - (double)this.yOffset + (double)this.ySize, posZ - (double)f, posX + (double)f, posY - (double)this.yOffset + (double)this.ySize + (double)f1, posZ + (double)f);
+        this.setEntityBoundingBox(new AxisAlignedBB(posX - (double)f, posY, posZ - (double)f, posX + (double)f, posY + (double)f1, posZ + (double)f));
+                //.boundingBox.setBounds(posX - (double)f, posY - (double)this.yOffset + (double)this.ySize, posZ - (double)f, posX + (double)f, posY - (double)this.yOffset + (double)this.ySize + (double)f1, posZ + (double)f);
 
         // the entity position will probably follow the simulated ragdoll position and not the other way.
         //this.ragdoll.setRagdollPos(this.posX, this.posY, this.posZ);
