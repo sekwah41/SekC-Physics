@@ -86,10 +86,12 @@ public class EventHook {
     }
 
     // TODO still being readded atm for forge, looks like it should be done but they need to recode for 1.9 changes.
+    // Using soley PlayerInteractEvent activates on all of the different sub events
     @SubscribeEvent
-    public void playerInteract(PlayerInteractEvent event){
+    public void playerInteract(/*PlayerInteractEvent*/PlayerInteractEvent.RightClickItem event){
         SekCPhysics.logger.info("Player Interact");
-        if(FMLCommonHandler.instance().getEffectiveSide().isClient() && event.getAction() == PlayerInteractEvent.Action.RIGHT_CLICK_AIR){
+        System.out.println(event);
+        if(event.getWorld().isRemote){
             if(event.getEntityPlayer().capabilities.isCreativeMode && event.getEntityPlayer().getHeldItem(EnumHand.MAIN_HAND) != null && event.getEntityPlayer().getHeldItem(EnumHand.MAIN_HAND).getItem() == Items.nether_star){
                 EntityRagdoll entityRagdoll = new EntityRagdoll(event.getEntityPlayer().worldObj);
 

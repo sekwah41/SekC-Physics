@@ -12,6 +12,9 @@ buildscript {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
     }
 }
+
+def root = project.projectDir.parentFile
+
 apply plugin: 'net.minecraftforge.gradle.forge'
 
 /*
@@ -25,7 +28,7 @@ group= "com.yourname.modid" // http://maven.apache.org/guides/mini/guide-naming-
 archivesBaseName = "modid"
 
 minecraft {
-    version = "1.9-12.16.0.1811-1.9"
+    version = "1.9-12.16.0.1865-1.9"
     runDir = "run"
     
     // the mappings can be changed at any time, and must be in the following format.
