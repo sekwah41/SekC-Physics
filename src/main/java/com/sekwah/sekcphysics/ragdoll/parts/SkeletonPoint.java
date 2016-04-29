@@ -130,27 +130,31 @@ public class SkeletonPoint {
             onGround = true;
         }
 
-        //axisalignedbb = axisalignedbb.offset(0.0D, moveY, 0.0D);
+        axisalignedbb = axisalignedbb.offset(0.0D, moveY, 0.0D);
 
         for (int k = 0; k < list.size(); ++k)
         {
-            moveX = ((AxisAlignedBB)list.get(k)).calculateXOffset(axisalignedbb, moveX);
+            moveX = (list.get(k)).calculateXOffset(axisalignedbb, moveX);
         }
 
         axisalignedbb = axisalignedbb.offset(moveX, 0.0D, 0.0D);
 
         for (int k = 0; k < list.size(); ++k)
         {
-            moveZ = ((AxisAlignedBB)list.get(k)).calculateZOffset(axisalignedbb, moveZ);
+            moveZ = (list.get(k)).calculateZOffset(axisalignedbb, moveZ);
         }
 
-        //axisalignedbb = axisalignedbb.offset(0.0D, 0.0D, moveZ);
+        axisalignedbb = axisalignedbb.offset(0.0D, 0.0D, moveZ);
+
+        this.posX = (axisalignedbb.minX + axisalignedbb.maxX) / 2.0D - entity.posX;
+        this.posY = (axisalignedbb.minY + axisalignedbb.maxY) / 2.0D - entity.posY;
+        this.posZ = (axisalignedbb.minZ + axisalignedbb.maxZ) / 2.0D - entity.posZ;
 
         // TODO Find out why it wobbles a bit now(needs to be rendered first
 
-        this.posX += moveX;
+        /*this.posX += moveX;
         this.posY += moveY;
-        this.posZ += moveZ;
+        this.posZ += moveZ;*/
 
         //SekCPhysics.logger.info(this.posY);
 
