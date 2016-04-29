@@ -6,6 +6,8 @@ import com.sekwah.sekcphysics.network.UsageReport;
 import com.sekwah.sekcphysics.ragdoll.Ragdolls;
 import com.sekwah.sekcphysics.ragdoll.vanilla.VanillaRagdolls;
 import com.sekwah.sekcphysics.settings.ModSettings;
+import net.minecraft.client.Minecraft;
+import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -50,6 +52,8 @@ public class SekCPhysics {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
+
+
         if(FMLCommonHandler.instance().getSide().isServer()){
             logger.error("The mod so far contains only visual features, there is no point having it installed on anything other " +
                     "than a client for now.");

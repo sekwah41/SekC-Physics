@@ -130,7 +130,7 @@ public class SkeletonPoint {
             onGround = true;
         }
 
-        axisalignedbb = axisalignedbb.offset(0.0D, moveY, 0.0D);
+        //axisalignedbb = axisalignedbb.offset(0.0D, moveY, 0.0D);
 
         for (int k = 0; k < list.size(); ++k)
         {
