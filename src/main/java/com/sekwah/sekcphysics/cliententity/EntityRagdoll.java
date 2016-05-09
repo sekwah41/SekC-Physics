@@ -36,6 +36,20 @@ public class EntityRagdoll extends Entity {
 
     }
 
+    @SideOnly(Side.CLIENT)
+    public int getBrightnessForRender(float partialTicks)
+    {
+        return 15728880;
+    }
+
+    /**
+     * Gets how bright this entity is.
+     */
+    public float getBrightness(float partialTicks)
+    {
+        return 1.0F;
+    }
+
     public void onUpdate()
     {
         //SekCPhysics.logger.info("Update");
@@ -50,9 +64,9 @@ public class EntityRagdoll extends Entity {
 
         /*if(ragdollUpdate-- < 0){
             ragdollUpdate = 20;
-            ragdoll.update(this);
+            ragdoll.oldUpdate(this);
         }*/
-        // Possibly change to update every render rather than entity update and add alpha time
+        // Possibly change to oldUpdate every render rather than entity oldUpdate and add alpha time
         ragdoll.update(this);
 
         Point ragdollPos = ragdoll.skeleton.points.get(0).toPoint();

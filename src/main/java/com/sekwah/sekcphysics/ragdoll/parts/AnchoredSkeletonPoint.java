@@ -41,6 +41,10 @@ public class AnchoredSkeletonPoint extends SkeletonPoint {
 
     }
 
+    public void setNewPos(double x, double y, double z){
+
+    }
+
     public void update(EntityRagdoll entity) {
         this.velX = 0;
         this.velY = 0;

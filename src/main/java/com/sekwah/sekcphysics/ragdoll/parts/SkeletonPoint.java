@@ -24,6 +24,10 @@ public class SkeletonPoint {
     public double posY;
     public double posZ;
 
+    public double newPosX;
+    public double newPosY;
+    public double newPosZ;
+
     public double lastPosX;
     public double lastPosY;
     public double lastPosZ;
@@ -54,13 +58,9 @@ public class SkeletonPoint {
 
     // note the position is in blocks not the model locations, and every 1 block is split into 16 for the model positions(i think)
     public SkeletonPoint(double x, double y, double z, float size, boolean shouldDoModelScale){
-        this.posX = x;
-        this.posY = y;
-        this.posZ = z;
-
-        this.lastPosX = x;
-        this.lastPosY = y;
-        this.lastPosZ = z;
+        this.lastPosX = this.newPosX = this.posX = x;
+        this.lastPosY = this.newPosY = this.posY = y;
+        this.lastPosZ = this.newPosZ = this.posZ = z;
 
         // Added to stop ragdolls becoming lines or acting in only 1 plane after hitting a wall
         float sizeRandom = (float) Math.random();
@@ -83,13 +83,13 @@ public class SkeletonPoint {
     }
 
     public void setPosition(double x, double y, double z){
-        this.posX = x;
-        this.posY = y;
-        this.posZ = z;
+        this.lastPosX = this.newPosX = this.posX = x;
+        this.lastPosY = this.newPosY = this.posY = y;
+        this.lastPosZ = this.newPosZ = this.posZ = z;
+    }
 
-        this.lastPosX = x;
-        this.lastPosY = y;
-        this.lastPosZ = z;
+    public void updatePos(EntityRagdoll entity){
+        moveTo(entity, this.newPosX, this.newPosY, this.newPosZ);
     }
 
     public void movePoint(EntityRagdoll entity, double moveX, double moveY, double moveZ) {
@@ -160,7 +160,7 @@ public class SkeletonPoint {
 
         /*System.out.println(this.posX);*/
 
-        // TODO add collision checks for stuff, also try to animate ragdolls sliding between ticks or update each tick.
+        // TODO add collision checks for stuff, also try to animate ragdolls sliding between ticks or oldUpdate each tick.
         // First get the physics done
 
 
@@ -222,6 +222,16 @@ public class SkeletonPoint {
         //next_old_position = position             // This position is the next frame's old_position
        // position += position - old_position;     // Verlet integration
         //position += gravity;                     // gravity == (0,-0.01,0)
+
+        this.newPosX = this.posX;
+        this.newPosY = this.posY;
+        this.newPosZ = this.posZ;
+    }
+
+    public void setNewPos(double x, double y, double z){
+        this.newPosX = x;
+        this.newPosY = y;
+        this.newPosZ = z;
     }
 
     public void moveTo(EntityRagdoll entity, double x, double y, double z) {

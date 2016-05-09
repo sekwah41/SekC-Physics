@@ -38,6 +38,15 @@ public class BaseRagdoll {
         // the entity
     }
 
+    /**
+     * The old oldUpdate means
+     * @param entity
+     */
+    public void oldUpdate(EntityRagdoll entity) {
+        skeleton.oldUpdate(entity);
+
+    }
+
     public void update(EntityRagdoll entity) {
         skeleton.update(entity);
 

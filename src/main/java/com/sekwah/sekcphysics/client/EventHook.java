@@ -3,6 +3,7 @@ package com.sekwah.sekcphysics.client;
 import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.ragdoll.BaseRagdoll;
+import com.sekwah.sekcphysics.ragdoll.testragdolls.WreckingBallRagdoll;
 import com.sekwah.sekcphysics.ragdoll.vanilla.ZombieRagdoll;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
@@ -72,7 +73,7 @@ public class EventHook {
                 deadEntity.setDead();
             }
 
-            // Look at the events and see when the world update and other ticks are, if you cant do it as a client entity
+            // Look at the events and see when the world oldUpdate and other ticks are, if you cant do it as a client entity
             //  you may need to trigger it each time.
 
             // This will only fire once, even in single player. Gather data such as rotation and spawn the ragdoll.
@@ -97,9 +98,9 @@ public class EventHook {
             if(event.getEntityPlayer().capabilities.isCreativeMode && event.getEntityPlayer().getHeldItem(EnumHand.MAIN_HAND) != null && event.getEntityPlayer().getHeldItem(EnumHand.MAIN_HAND).getItem() == Items.nether_star){
                 EntityRagdoll entityRagdoll = new EntityRagdoll(event.getEntityPlayer().worldObj);
 
-                BaseRagdoll ragdoll = new ZombieRagdoll();
+                //BaseRagdoll ragdoll = new ZombieRagdoll();
 
-                //BaseRagdoll ragdoll = new WreckingBallRagdoll();
+                BaseRagdoll ragdoll = new WreckingBallRagdoll();
 
                 entityRagdoll.ragdoll = ragdoll;
 
@@ -111,7 +112,7 @@ public class EventHook {
 
                 entityRagdoll.ragdoll.skeleton.verifyPoints(entityRagdoll);
 
-                entityRagdoll.ragdoll.skeleton.setVelocity(lookVec.xCoord, lookVec.yCoord, lookVec.zCoord);
+                //entityRagdoll.ragdoll.skeleton.setVelocity(lookVec.xCoord, lookVec.yCoord, lookVec.zCoord);
             }
         }
     }
