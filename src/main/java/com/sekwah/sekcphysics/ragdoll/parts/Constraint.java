@@ -96,4 +96,34 @@ public class Constraint {
         //end[0]->add_new_position(avg-dir*(length/2));
         //end[1]->add_new_position(avg+dir*(length/2));
     }
+
+    public void calc(EntityRagdoll entity) {
+
+        Point averageLoc = new Point((end[0].newPosX + end[1].newPosX) / 2F,(end[0].newPosY + end[1].newPosY) / 2F,(end[0].newPosZ + end[1].newPosZ) / 2F);
+
+        double currentLength = Math.sqrt(Math.pow(end[0].newPosX - end[1].newPosX, 2) + Math.pow(end[0].newPosY - end[1].newPosY, 2) + Math.pow(end[0].newPosZ - end[1].newPosZ, 2));
+        // If its already the correct length theres no point in recalculating
+        if(currentLength == length){
+            return;
+        }
+        if(currentLength == 0){
+            currentLength = 0.01;
+        }
+        Point direction = new Point((end[0].newPosX - end[1].newPosX) / (float) currentLength,
+                (end[0].newPosY - end[1].newPosY) / (float) currentLength, (end[0].newPosZ - end[1].newPosZ) / (float) currentLength);
+
+        //System.out.println(averageLoc);
+
+        double halfLength = length / 2F;
+
+        //System.out.println("");
+
+        //System.out.println(length);
+
+        end[0].setNewPos((float) (averageLoc.getX() + (direction.getX() * halfLength)), (float) (averageLoc.getY() + (direction.getY() * halfLength)),
+                (float) (averageLoc.getZ() + (direction.getZ() * halfLength)));
+
+        end[1].setNewPos((float) (averageLoc.getX() - (direction.getX() * halfLength)), (float) (averageLoc.getY() - (direction.getY() * halfLength)),
+                (float) (averageLoc.getZ() - (direction.getZ() * halfLength)));
+    }
 }

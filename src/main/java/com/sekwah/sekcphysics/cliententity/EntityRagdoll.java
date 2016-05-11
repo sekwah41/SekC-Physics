@@ -29,6 +29,20 @@ public class EntityRagdoll extends Entity {
         this.ignoreFrustumCheck = true;
     }
 
+    @SideOnly(Side.CLIENT)
+    public int getBrightnessForRender(float partialTicks)
+    {
+        return 15728880;
+    }
+
+    /**
+     * Gets how bright this entity is.
+     */
+    public float getBrightness(float partialTicks)
+    {
+        return 1.0F;
+    }
+
     @Override
     protected void entityInit() {
 

@@ -2,9 +2,8 @@ package com.sekwah.sekcphysics.ragdoll.parts;
 
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.ragdoll.Point;
+import com.sekwah.sekcphysics.ragdoll.Ragdolls;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector3f;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,14 +57,22 @@ public class Skeleton {
      * @param entity
      */
     public void update(EntityRagdoll entity){
+
         for(SkeletonPoint point : points){
             point.update(entity);
             //point.movePoint(entity);
         }
 
-        // update constraints
-        for(Constraint constraint: constraints){
-            constraint.apply(entity);
+        // oldUpdate constraints
+        for(int i = 0; i <= Ragdolls.updateCount; i++){
+            for(Constraint constraint: constraints){
+                constraint.calc(entity);
+                //point.movePoint(entity);
+            }
+        }
+
+        for(SkeletonPoint point : points){
+            point.updatePos(entity);
             //point.movePoint(entity);
         }
 
@@ -97,6 +104,8 @@ public class Skeleton {
     public void renderSkeletonDebug(){
         glDisable(GL_CULL_FACE);
         glDisable(GL11.GL_TEXTURE_2D);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GL11.glDisable(GL11.GL_LIGHTING);
         for(Triangle triangle : triangles){
             glColor4f(0.0f, 0.8f, 0.1f, 0.5f);
             drawTriangle(triangle.points[0], triangle.points[1], triangle.points[2]);
@@ -124,6 +133,9 @@ public class Skeleton {
             glColor4f(1f,1f,1f, 1.0f);
         }
         glEnable(GL11.GL_TEXTURE_2D);
+        GL11.glEnable(GL11.GL_ALPHA_TEST);
+
+        GL11.glEnable(GL11.GL_LIGHTING);
     }
 
     public void drawLine(SkeletonPoint point, SkeletonPoint point2){

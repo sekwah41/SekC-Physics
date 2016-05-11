@@ -6,6 +6,7 @@ import com.sekwah.sekcphysics.ragdoll.Ragdolls;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
@@ -27,6 +28,10 @@ public class SkeletonPoint {
     public double lastPosX;
     public double lastPosY;
     public double lastPosZ;
+
+    public double newPosX;
+    public double newPosY;
+    public double newPosZ;
 
 
     // basically distance from last point, just sounds nicer for when other forces interact with it or if you wanna set it
@@ -54,13 +59,7 @@ public class SkeletonPoint {
 
     // note the position is in blocks not the model locations, and every 1 block is split into 16 for the model positions(i think)
     public SkeletonPoint(double x, double y, double z, float size, boolean shouldDoModelScale){
-        this.posX = x;
-        this.posY = y;
-        this.posZ = z;
-
-        this.lastPosX = x;
-        this.lastPosY = y;
-        this.lastPosZ = z;
+        this.setPosition(x,y,z);
 
         // Added to stop ragdolls becoming lines or acting in only 1 plane after hitting a wall
         float sizeRandom = (float) Math.random();
@@ -83,13 +82,9 @@ public class SkeletonPoint {
     }
 
     public void setPosition(double x, double y, double z){
-        this.posX = x;
-        this.posY = y;
-        this.posZ = z;
-
-        this.lastPosX = x;
-        this.lastPosY = y;
-        this.lastPosZ = z;
+        this.lastPosX = this.newPosX = this.posX = x;
+        this.lastPosY = this.newPosY = this.posY = y;
+        this.lastPosZ = this.newPosZ = this.posZ = z;
     }
 
     public void movePoint(EntityRagdoll entity, double moveX, double moveY, double moveZ) {
@@ -179,6 +174,7 @@ public class SkeletonPoint {
             this.velZ *= speedMulti;
         }
 
+
         this.onGround = false;
 
         this.lastPosX = this.posX;
@@ -202,11 +198,81 @@ public class SkeletonPoint {
             //entity.setVelocity(0,0,0);
         }
 
+        this.updateCollisions(entity);
+
         this.movePoint(entity, this.velX, this.velY - Ragdolls.gravity, this.velZ);
 
         //next_old_position = position             // This position is the next frame's old_position
        // position += position - old_position;     // Verlet integration
         //position += gravity;                     // gravity == (0,-0.01,0)
+
+        this.newPosX = this.posX;
+        this.newPosY = this.posY;
+        this.newPosZ = this.posZ;
+    }
+
+    // Wont push other entities but make it get pushed by others.
+    private void updateCollisions(EntityRagdoll entity) {
+        double pointPosX = entity.posX + this.posX;
+        double pointPosY = entity.posY + this.posY;
+        double pointPosZ = entity.posZ + this.posZ;
+
+        AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox(pointPosX - size, pointPosY - size, pointPosZ - size,
+                pointPosX + size, pointPosY + size, pointPosZ + size);
+
+        List list = entity.worldObj.getEntitiesWithinAABBExcludingEntity(entity, axisalignedbb.expand(0.20000000298023224D, 0.0D, 0.20000000298023224D));
+
+        if (list != null && !list.isEmpty())
+        {
+            for (int i = 0; i < list.size(); ++i)
+            {
+                Entity entityCol = (Entity)list.get(i);
+
+                if(entityCol.canBePushed()){
+                    collideWithEntity(entity, entityCol);
+                }
+            }
+        }
+    }
+
+    private void collideWithEntity(EntityRagdoll entity, Entity entityCol) {
+        double pointPosX = entity.posX + this.posX;
+        double pointPosZ = entity.posZ + this.posZ;
+        double d0 = pointPosX - entityCol.posX;
+        double d1 = pointPosZ - entityCol.posZ;
+        double d2 = MathHelper.abs_max(d0, d1);
+
+        if (d2 >= 0.009999999776482582D)
+        {
+            d2 = (double)MathHelper.sqrt_double(d2);
+            d0 /= d2;
+            d1 /= d2;
+            double d3 = 1.0D / d2;
+
+            if (d3 > 1.0D)
+            {
+                d3 = 1.0D;
+            }
+
+            d0 *= d3;
+            d1 *= d3;
+            d0 *= 0.05000000074505806D;
+            d1 *= 0.05000000074505806D;
+            d0 *= (double)(1.0F - entityCol.entityCollisionReduction);
+            d1 *= (double)(1.0F - entityCol.entityCollisionReduction);
+            //entityCol.addVelocity(-d0, 0.0D, -d1);
+            this.addVelocity(d0, 0.0D, d1);
+        }
+    }
+
+    public void setNewPos(double x, double y, double z){
+        this.newPosX = x;
+        this.newPosY = y;
+        this.newPosZ = z;
+    }
+
+    public void updatePos(EntityRagdoll entity){
+        moveTo(entity, this.newPosX, this.newPosY, this.newPosZ);
     }
 
     private boolean moveInWater(World worldObj, AxisAlignedBB boundingBox, Material material, EntityRagdoll entity) {

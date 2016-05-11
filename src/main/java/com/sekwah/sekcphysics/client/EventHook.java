@@ -3,17 +3,11 @@ package com.sekwah.sekcphysics.client;
 import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.ragdoll.BaseRagdoll;
-import com.sekwah.sekcphysics.ragdoll.vanilla.ZombieRagdoll;
+import com.sekwah.sekcphysics.ragdoll.testragdolls.ClothRagdoll;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -96,9 +90,11 @@ public class EventHook {
             if(event.entityPlayer.capabilities.isCreativeMode && event.entityPlayer.getHeldItem() != null && event.entityPlayer.getHeldItem().getItem() == Items.nether_star){
                 EntityRagdoll entityRagdoll = new EntityRagdoll(event.entityPlayer.worldObj);
 
-                BaseRagdoll ragdoll = new ZombieRagdoll();
+                //BaseRagdoll ragdoll = new ZombieRagdoll();
 
                 //BaseRagdoll ragdoll = new WreckingBallRagdoll();
+
+                BaseRagdoll ragdoll = new ClothRagdoll();
 
                 entityRagdoll.ragdoll = ragdoll;
 
@@ -110,7 +106,7 @@ public class EventHook {
 
                 entityRagdoll.ragdoll.skeleton.verifyPoints(entityRagdoll);
 
-                entityRagdoll.ragdoll.skeleton.setVelocity(lookVec.xCoord, lookVec.yCoord, lookVec.zCoord);
+                //entityRagdoll.ragdoll.skeleton.setVelocity(lookVec.xCoord, lookVec.yCoord, lookVec.zCoord);
             }
         }
     }
