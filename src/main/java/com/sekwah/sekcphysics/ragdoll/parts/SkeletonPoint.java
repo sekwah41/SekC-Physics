@@ -1,5 +1,6 @@
 package com.sekwah.sekcphysics.ragdoll.parts;
 
+import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.ragdoll.Point;
 import com.sekwah.sekcphysics.ragdoll.Ragdolls;
@@ -32,6 +33,9 @@ public class SkeletonPoint {
     public double newPosX;
     public double newPosY;
     public double newPosZ;
+
+    // Push force multiplier
+    public float pushability = 1;
 
 
     // basically distance from last point, just sounds nicer for when other forces interact with it or if you wanna set it
@@ -260,8 +264,9 @@ public class SkeletonPoint {
             d1 *= 0.05000000074505806D;
             d0 *= (double)(1.0F - entityCol.entityCollisionReduction);
             d1 *= (double)(1.0F - entityCol.entityCollisionReduction);
+            SekCPhysics.logger.info(entityCol.motionX);
             //entityCol.addVelocity(-d0, 0.0D, -d1);
-            this.addVelocity(d0, 0.0D, d1);
+            this.addVelocity(d0 + entityCol.motionX, 0.0D, d1 + entityCol.motionZ);
         }
     }
 

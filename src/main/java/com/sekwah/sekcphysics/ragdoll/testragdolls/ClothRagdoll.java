@@ -11,9 +11,9 @@ import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
  */
 public class ClothRagdoll extends BaseRagdoll {
 
-    private int width = 20;
+    private int width = 30;
 
-    private int height = 20;
+    private int height = 30;
 
     private float spacing = 0.20f;
 
