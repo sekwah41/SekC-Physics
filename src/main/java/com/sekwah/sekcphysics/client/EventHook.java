@@ -4,6 +4,7 @@ import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.ragdoll.BaseRagdoll;
 import com.sekwah.sekcphysics.ragdoll.testragdolls.ClothRagdoll;
+import com.sekwah.sekcphysics.ragdoll.testragdolls.CurtainRagdoll;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.EntityLivingBase;
@@ -94,7 +95,8 @@ public class EventHook {
 
                 //BaseRagdoll ragdoll = new WreckingBallRagdoll();
 
-                BaseRagdoll ragdoll = new ClothRagdoll();
+                //BaseRagdoll ragdoll = new ClothRagdoll();
+                BaseRagdoll ragdoll = new CurtainRagdoll();
 
                 entityRagdoll.ragdoll = ragdoll;
 
