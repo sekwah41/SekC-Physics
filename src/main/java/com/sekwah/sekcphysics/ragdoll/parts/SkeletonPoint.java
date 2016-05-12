@@ -8,6 +8,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
@@ -232,7 +233,8 @@ public class SkeletonPoint {
             {
                 Entity entityCol = (Entity)list.get(i);
 
-                if(entityCol.canBePushed()){
+                // Cant directly detect if in ground sadly. Try stuff like arrows though ;3
+                if(entityCol.canBePushed()/* || (entityCol instanceof EntityArrow && entityCol.motionY != 0)*/){
                     collideWithEntity(entity, entityCol);
                 }
             }
