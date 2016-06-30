@@ -1,6 +1,6 @@
 package com.sekwah.sekcphysics.ragdoll.parts;
 
-import com.sekwah.sekcphysics.ragdoll.Point;
+import com.sekwah.sekcphysics.ragdoll.PointD;
 
 /**
  * Created by sekawh on 8/4/2015.
@@ -28,10 +28,10 @@ public class Triangle {
 
         // points being used to store vectors
 
-        Point up = normalize(points[1].toPoint(), points[0].toPoint());
-        Point right = subtract(points[2].toPoint(), points[0].toPoint()); // temporarily stores a value
-        Point facing = normalize(new Point(0,0,0), crossProduct(up, right));
-        right = normalize(new Point(0, 0, 0), crossProduct(facing, right));
+        PointD up = normalize(points[1].toPoint(), points[0].toPoint());
+        PointD right = subtract(points[2].toPoint(), points[0].toPoint()); // temporarily stores a value
+        PointD facing = normalize(new PointD(0,0,0), crossProduct(up, right));
+        right = normalize(new PointD(0, 0, 0), crossProduct(facing, right));
 
        /* XYZ up, right, facing;
         up = Normalize(points[1]->position - points[0]->position);
@@ -44,7 +44,7 @@ public class Triangle {
 
     }
 
-    private Point crossProduct(Point point1, Point point2) {
+    private PointD crossProduct(PointD point1, PointD point2) {
         double currentLength1 = Math.sqrt(Math.pow(point1.getX(), 2) + Math.pow(point1.getY(), 2) + Math.pow(point1.getZ(), 2));
 
         double currentLength2 = Math.sqrt(Math.pow(point2.getX(), 2) + Math.pow(point2.getY(), 2) + Math.pow(point2.getZ(), 2));
@@ -55,28 +55,28 @@ public class Triangle {
 
         double posZ = point1.getX() * point2.getY() - point1.getY() * point2.getX();
 
-        return new Point(posX, posY, posZ);
+        return new PointD(posX, posY, posZ);
     }
 
-    private Point subtract(Point point1, Point point2) {
-        return new Point(point1.getX() - point2.getX(), point1.getY() - point2.getZ(), point1.getZ() - point2.getZ());
+    private PointD subtract(PointD point1, PointD point2) {
+        return new PointD(point1.getX() - point2.getX(), point1.getY() - point2.getZ(), point1.getZ() - point2.getZ());
     }
 
-    private Point normalize(Point point1, Point point2) {
+    private PointD normalize(PointD point1, PointD point2) {
         double currentLength = Math.sqrt(Math.pow(point1.getX() - point2.getX(), 2) + Math.pow(point1.getY() - point2.getY(), 2) + Math.pow(point1.getZ() - point2.getZ(), 2));
 
-        return new Point((point1.getX() - point2.getX()) / (float) currentLength,
+        return new PointD((point1.getX() - point2.getX()) / (float) currentLength,
                 (point1.getY() - point2.getY()) / (float) currentLength, (point1.getZ() - point2.getZ()) / (float) currentLength);
     }
 
     // Get the normalised vector for the direction.
-    public Point getDirectionNorm(){
+    public PointD getDirectionNorm(){
         // Center between left and right
-        Point averageLoc = new Point((points[1].posX + points[2].posX) / 2F,(points[1].posY + points[2].posY) / 2F,(points[1].posZ + points[2].posZ) / 2F);
+        PointD averageLoc = new PointD((points[1].posX + points[2].posX) / 2F,(points[1].posY + points[2].posY) / 2F,(points[1].posZ + points[2].posZ) / 2F);
 
         double currentLength = Math.sqrt(Math.pow(points[0].posX - averageLoc.getX(), 2) + Math.pow(points[0].posY - averageLoc.getY(), 2) + Math.pow(points[0].posZ - averageLoc.getZ(), 2));
         // Direction from the base directly down the center of the triangle
-        Point direction = new Point((averageLoc.getX() - points[0].posX) / (float) currentLength,
+        PointD direction = new PointD((averageLoc.getX() - points[0].posX) / (float) currentLength,
                 (averageLoc.getY() - points[0].posY) / (float) currentLength, (averageLoc.getZ() - points[0].posZ) / (float) currentLength);
 
         // Calculate angle around the direction, may be best way to calculate orentation and make basic constraints on
@@ -85,12 +85,12 @@ public class Triangle {
         return direction;
     }
 
-    public Point getDirection(){
+    public PointD getDirection(){
         // Center between left and right vector
-        Point averageLoc = new Point((points[1].posX + points[2].posX) / 2F,(points[1].posY + points[2].posY) / 2F,(points[1].posZ + points[2].posZ) / 2F);
+        PointD averageLoc = new PointD((points[1].posX + points[2].posX) / 2F,(points[1].posY + points[2].posY) / 2F,(points[1].posZ + points[2].posZ) / 2F);
 
         // Direction from the base directly down the center of the triangle
-        Point direction = new Point((averageLoc.getX() - points[0].posX),
+        PointD direction = new PointD((averageLoc.getX() - points[0].posX),
                 (averageLoc.getY() - points[0].posY), (averageLoc.getZ() - points[0].posZ));
 
         return direction;
@@ -104,15 +104,15 @@ public class Triangle {
         return 0;
     }
 
-    public Point getNormal() {
+    public PointD getNormal() {
 
-        Point basePoint = this.points[0].toPoint();
-        Point vec1 = basePoint.clone().sub(this.points[1].toPoint());
-        Point vec2 = basePoint.clone().sub(this.points[2].toPoint());
+        PointD basePoint = this.points[0].toPoint();
+        PointD vec1 = basePoint.clone().sub(this.points[1].toPoint());
+        PointD vec2 = basePoint.clone().sub(this.points[2].toPoint());
         double normX = vec1.getY() * vec2.getZ() - vec1.getZ() * vec2.getY();
         double normY = vec1.getZ() * vec2.getX() - vec1.getX() * vec2.getZ();
         double normZ = vec1.getX() * vec2.getY() - vec1.getY() * vec2.getX();
 
-        return new Point(normX, normY, normZ);
+        return new PointD(normX, normY, normZ);
     }
 }

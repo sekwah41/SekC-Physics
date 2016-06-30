@@ -1,8 +1,7 @@
 package com.sekwah.sekcphysics.cliententity.render;
 
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
-import com.sekwah.sekcphysics.ragdoll.BaseRagdoll;
-import com.sekwah.sekcphysics.ragdoll.Point;
+import com.sekwah.sekcphysics.ragdoll.PointD;
 import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
 import com.sekwah.sekcphysics.ragdoll.vanilla.BipedRagdoll;
 import com.sekwah.sekcphysics.ragdoll.vanilla.ZombieRagdoll;
@@ -35,9 +34,10 @@ public class RenderRagdoll extends Render {
 
     public RenderRagdoll(){
         bipedModel = new ModelBiped();
+        zombieModel = new ModelBiped(0.0f, 0, 64, 64);
     }
 
-    public void drawLine(Point point, Point point2){
+    public void drawLine(PointD point, PointD point2){
         glColor3f(0.0f, 1.0f, 0.2f);
         glBegin(GL_LINE_STRIP);
 
@@ -51,6 +51,11 @@ public class RenderRagdoll extends Render {
     public void doRender(Entity entity, double p_76986_2_, double p_76986_4_, double p_76986_6_, float p_76986_8_, float p_76986_9_) {
         if(entity instanceof EntityRagdoll){
             EntityRagdoll entityRagdoll = (EntityRagdoll) entity;
+
+            if(entityRagdoll.ragdoll.trackerHashmap.size() == 0){
+                entityRagdoll.ragdoll.initTrackers(bipedModel);
+            }
+
             GL11.glPushMatrix();
 
             // Sets the position offset for rendering
@@ -61,25 +66,28 @@ public class RenderRagdoll extends Render {
             if(entityRagdoll.ragdoll instanceof BipedRagdoll){
                 if(entityRagdoll.ragdoll instanceof ZombieRagdoll){
                     this.bindTexture(zombieTexture);
+                    currentModel = this.zombieModel;
 
                 }
                 else{
                     this.bindTexture(steveTextures);
+                    currentModel = this.bipedModel;
                 }
 
                 BipedRagdoll bipedRagdoll = (BipedRagdoll) entityRagdoll.ragdoll;
 
-                setPartLocation(this.bipedModel.bipedRightArm, bipedRagdoll.leftShoulder);
+                //for
 
-                setPartLocation(this.bipedModel.bipedRightArm, bipedRagdoll.rightShoulder);
+                /*setPartLocation(currentModel.bipedRightArm, bipedRagdoll.leftShoulder);
 
-                setPartLocation(this.bipedModel.bipedHead, bipedRagdoll.centerTorso);
-                setPartLocation(this.bipedModel.bipedBody, bipedRagdoll.centerTorso);
+                setPartLocation(currentModel.bipedRightArm, bipedRagdoll.rightShoulder);
 
-                setPartLocation(this.bipedModel.bipedLeftLeg, bipedRagdoll.leftLegTop);
+                setPartLocation(currentModel.bipedHead, bipedRagdoll.centerTorso);
+                setPartLocation(currentModel.bipedBody, bipedRagdoll.centerTorso);
 
-                setPartLocation(this.bipedModel.bipedRightLeg, bipedRagdoll.rightLegTop);
+                setPartLocation(currentModel.bipedLeftLeg, bipedRagdoll.leftLegTop);
 
+                setPartLocation(currentModel.bipedRightLeg, bipedRagdoll.rightLegTop);*/
 
             }
 
@@ -95,6 +103,7 @@ public class RenderRagdoll extends Render {
     public void setPartLocation(ModelRenderer trackPart, SkeletonPoint skeletonPart){
         trackPart.setRotationPoint((float) skeletonPart.posX * 16, (float) skeletonPart.posY * 16, (float) skeletonPart.posZ * 16);
         trackPart.render(0.0625F);
+        //trackPart.rotateAngleZ=1;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.sekwah.sekcphysics.cliententity;
 
 import com.sekwah.sekcphysics.ragdoll.BaseRagdoll;
-import com.sekwah.sekcphysics.ragdoll.Point;
+import com.sekwah.sekcphysics.ragdoll.PointD;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.Entity;
@@ -55,9 +55,9 @@ public class EntityRagdoll extends Entity {
             this.setDead();
             return;
         }
-        if(ragdollLife-- < 0){
+        /*if(ragdollLife-- < 0){
             this.setDead();
-        }
+        }*/
 
         /*if(ragdollUpdate-- < 0){
             ragdollUpdate = 20;
@@ -66,7 +66,7 @@ public class EntityRagdoll extends Entity {
         // Possibly change to update every render rather than entity update and add alpha time
         ragdoll.update(this);
 
-        Point ragdollPos = ragdoll.skeleton.points.get(0).toPoint();
+        PointD ragdollPos = ragdoll.skeleton.points.get(0).toPoint();
 
         this.setPosition(this.posX + ragdollPos.getX(), this.posY + ragdollPos.getY(), this.posZ + ragdollPos.getZ());
 

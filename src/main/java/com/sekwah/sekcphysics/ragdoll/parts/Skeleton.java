@@ -1,7 +1,7 @@
 package com.sekwah.sekcphysics.ragdoll.parts;
 
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
-import com.sekwah.sekcphysics.ragdoll.Point;
+import com.sekwah.sekcphysics.ragdoll.PointD;
 import com.sekwah.sekcphysics.ragdoll.Ragdolls;
 import org.lwjgl.opengl.GL11;
 
@@ -122,11 +122,11 @@ public class Skeleton {
         for(Triangle triangle : triangles){
             // getBrightness(float p_70013_1_) from entity
             glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
-            Point direction = triangle.getDirection();
-            Point normal = triangle.getNormal();
-            Point basePoint = triangle.points[0].toPoint();
-            Point directionPoint = basePoint.clone().add(direction);
-            Point normalPoint = basePoint.clone().add(normal);
+            PointD direction = triangle.getDirection();
+            PointD normal = triangle.getNormal();
+            PointD basePoint = triangle.points[0].toPoint();
+            PointD directionPoint = basePoint.clone().add(direction);
+            PointD normalPoint = basePoint.clone().add(normal);
             drawLine(basePoint, directionPoint);
             glColor4f(0f,0f,1f, 1.0f);
             drawLine(basePoint, normalPoint);
@@ -145,7 +145,7 @@ public class Skeleton {
         glEnd();
     }
 
-    public void drawLine(Point point, Point point2){
+    public void drawLine(PointD point, PointD point2){
         glBegin(GL_LINE_STRIP);
         glVertex3d(point.getX(), point.getY(), point.getZ());
         glVertex3d(point2.getX(), point2.getY(), point2.getZ());

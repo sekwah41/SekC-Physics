@@ -2,13 +2,12 @@ package com.sekwah.sekcphysics.ragdoll.parts;
 
 import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
-import com.sekwah.sekcphysics.ragdoll.Point;
+import com.sekwah.sekcphysics.ragdoll.PointD;
 import com.sekwah.sekcphysics.ragdoll.Ragdolls;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
@@ -343,8 +342,8 @@ public class SkeletonPoint {
     }
 
 
-    public Point toPoint() {
-        return new Point(this.posX, this.posY, this.posZ);
+    public PointD toPoint() {
+        return new PointD(this.posX, this.posY, this.posZ);
     }
 
     public void verify(EntityRagdoll entity) {

@@ -5,6 +5,8 @@ import com.sekwah.sekcphysics.ragdoll.parts.Constraint;
 import com.sekwah.sekcphysics.ragdoll.parts.Skeleton;
 import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
 import com.sekwah.sekcphysics.ragdoll.parts.Triangle;
+import com.sekwah.sekcphysics.ragdoll.parts.tracker.Tracker;
+import com.sekwah.sekcphysics.ragdoll.parts.tracker.TrackerVertex;
 
 /**
  * Created by sekawh on 8/5/2015.
@@ -111,6 +113,8 @@ public class BipedRagdoll extends BaseRagdoll {
         skeleton.triangles.add(new Triangle(centerTorso, leftLegTop, leftShoulder));
 
         skeleton.triangles.add(new Triangle(centerTorso, rightLegTop, rightShoulder));
+
+        //trackers.add(new TrackerVertex())
 
 
 

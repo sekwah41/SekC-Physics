@@ -4,14 +4,28 @@ import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.ragdoll.parts.Skeleton;
 import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
+import com.sekwah.sekcphysics.ragdoll.parts.tracker.Tracker;
 import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.Vec3;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by sekawh on 8/4/2015.
  */
 public class BaseRagdoll {
+
+
+    public Map<ModelRenderer, Tracker> trackerHashmap = new HashMap<ModelRenderer, Tracker>();
+
+    public boolean trackersRegistered = true;
+
 
     // Current skeleton position and shape
     public Skeleton skeleton;
@@ -57,5 +71,9 @@ public class BaseRagdoll {
             vec.rotateAroundY((float) Math.toRadians(-entity.rotationYaw));
             point.setPosition(vec.xCoord, vec.yCoord, vec.zCoord);
         }
+    }
+
+    public void initTrackers(ModelBiped bipedModel) {
+        trackersRegistered = true;
     }
 }

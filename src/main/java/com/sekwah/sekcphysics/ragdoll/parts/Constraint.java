@@ -1,7 +1,7 @@
 package com.sekwah.sekcphysics.ragdoll.parts;
 
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
-import com.sekwah.sekcphysics.ragdoll.Point;
+import com.sekwah.sekcphysics.ragdoll.PointD;
 
 /**
  * Created by sekawh on 8/6/2015.
@@ -52,7 +52,7 @@ public class Constraint {
 
     public void apply(EntityRagdoll entity) {
 
-        Point averageLoc = new Point((end[0].posX + end[1].posX) / 2F,(end[0].posY + end[1].posY) / 2F,(end[0].posZ + end[1].posZ) / 2F);
+        PointD averageLoc = new PointD((end[0].posX + end[1].posX) / 2F,(end[0].posY + end[1].posY) / 2F,(end[0].posZ + end[1].posZ) / 2F);
 
         double currentLength = Math.sqrt(Math.pow(end[0].posX - end[1].posX, 2) + Math.pow(end[0].posY - end[1].posY, 2) + Math.pow(end[0].posZ - end[1].posZ, 2));
         // If its already the correct length theres no point in recalculating
@@ -62,7 +62,7 @@ public class Constraint {
         if(currentLength == 0){
             currentLength = 0.01;
         }
-        Point direction = new Point((end[0].posX - end[1].posX) / (float) currentLength,
+        PointD direction = new PointD((end[0].posX - end[1].posX) / (float) currentLength,
                 (end[0].posY - end[1].posY) / (float) currentLength, (end[0].posZ - end[1].posZ) / (float) currentLength);
 
         //System.out.println(averageLoc);
@@ -99,7 +99,7 @@ public class Constraint {
 
     public void calc(EntityRagdoll entity) {
 
-        Point averageLoc = new Point((end[0].newPosX + end[1].newPosX) / 2F,(end[0].newPosY + end[1].newPosY) / 2F,(end[0].newPosZ + end[1].newPosZ) / 2F);
+        PointD averageLoc = new PointD((end[0].newPosX + end[1].newPosX) / 2F,(end[0].newPosY + end[1].newPosY) / 2F,(end[0].newPosZ + end[1].newPosZ) / 2F);
 
         double currentLength = Math.sqrt(Math.pow(end[0].newPosX - end[1].newPosX, 2) + Math.pow(end[0].newPosY - end[1].newPosY, 2) + Math.pow(end[0].newPosZ - end[1].newPosZ, 2));
         // If its already the correct length theres no point in recalculating
@@ -109,7 +109,7 @@ public class Constraint {
         if(currentLength == 0){
             currentLength = 0.01;
         }
-        Point direction = new Point((end[0].newPosX - end[1].newPosX) / (float) currentLength,
+        PointD direction = new PointD((end[0].newPosX - end[1].newPosX) / (float) currentLength,
                 (end[0].newPosY - end[1].newPosY) / (float) currentLength, (end[0].newPosZ - end[1].newPosZ) / (float) currentLength);
 
         //System.out.println(averageLoc);

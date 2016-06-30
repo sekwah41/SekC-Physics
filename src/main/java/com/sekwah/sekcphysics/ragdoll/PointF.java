@@ -1,74 +1,79 @@
 package com.sekwah.sekcphysics.ragdoll;
 
 /**
- * Created by sekawh on 8/4/2015.
+ * Created by on 30/06/2016.
+ *
+ * @author sekwah41
  */
-public class Point {
+public class PointF {
+    private float x;
 
-    private double x;
+    private float y;
 
-    private double y;
+    private float z;
 
-    private double z;
-
-    public Point(double x, double y, double z){
+    public PointF(float x, float y, float z){
         this.x = x;
         this.y = y;
         this.z = z;
     }
 
-    public double getX() {
+    public PointF(double v, double v1, double v2) {
+
+    }
+
+    public float getX() {
         return x;
     }
 
-    public double getY() {
+    public float getY() {
         return y;
     }
 
-    public double getZ() {
+    public float getZ() {
         return z;
     }
 
-    public void setX(double x) {
+    public void setX(float x) {
         this.x = x;
     }
 
-    public void setY(double y) {
+    public void setY(float y) {
         this.y = y;
     }
 
-    public void setZ(double z) {
+    public void setZ(float z) {
         this.z = z;
     }
 
-    public void add(double x, double y, double z){
+    public void add(float x, float y, float z){
         this.x += x;
         this.y += y;
         this.z += z;
     }
 
-    public Point add(Point vector){
+    public PointF add(PointF vector){
         this.x += vector.x;
         this.y += vector.y;
         this.z += vector.z;
         return this;
     }
 
-    public Point sub(Point vector){
+    public PointF sub(PointF vector){
         this.x -= vector.x;
         this.y -= vector.y;
         this.z -= vector.z;
         return this;
     }
 
-    public Point multiply(double multi){
+    public PointF multiply(float multi){
         this.x *= multi;
         this.y *= multi;
         this.z *= multi;
         return this;
     }
 
-    public Point clone() {
-        return new Point(x,y,z);
+    public PointF clone() {
+        return new PointF(x,y,z);
     }
 }
