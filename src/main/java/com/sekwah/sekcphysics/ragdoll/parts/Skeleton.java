@@ -126,7 +126,7 @@ public class Skeleton {
             PointD normal = triangle.getNormal();
             PointD basePoint = triangle.points[0].toPoint();
             PointD directionPoint = basePoint.clone().add(direction);
-            PointD normalPoint = basePoint.clone().add(normal);
+            PointD normalPoint = basePoint.clone().add(normal.multiply(4));
             drawLine(basePoint, directionPoint);
             glColor4f(0f,0f,1f, 1.0f);
             drawLine(basePoint, normalPoint);

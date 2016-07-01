@@ -65,7 +65,7 @@ public class TrackerVertex extends Tracker {
         }
 
         if(axis1 == 0){
-            axis1 = 0.001f;
+            axis1 = 0.0f;
         }
 
 

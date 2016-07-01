@@ -21,7 +21,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 public class EventHook {
 
     @SubscribeEvent
-    public void onJoinWorld(LivingDeathEvent event) {
+    public void deathEvent(LivingDeathEvent event) {
         // TODO check entities for if they are in a list of registered mobs for ragdolls,
         //  and also check if the died is when the body is removed after death animation or if its
         //  as soon as it hits 0

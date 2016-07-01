@@ -1,11 +1,13 @@
 package com.sekwah.sekcphysics.ragdoll.parts.tracker;
 
+import com.sekwah.sekcphysics.ragdoll.PointD;
 import com.sekwah.sekcphysics.ragdoll.PointF;
-import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
 import com.sekwah.sekcphysics.ragdoll.parts.Triangle;
 import net.minecraft.client.model.ModelRenderer;
-
-import javax.sound.midi.Track;
+import net.minecraft.util.Vec3;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector3f;
 
 /**
  * Created by on 30/06/2016.
@@ -19,10 +21,16 @@ public class TrackerTriangle extends Tracker {
     private final Triangle triangle;
 
     public float rotationZ = 0;
+
     public TrackerTriangle(ModelRenderer part, Triangle triangle){
         super(part);
         this.triangle = triangle;
 
+    }
+
+    public TrackerTriangle(ModelRenderer part, Triangle triangle, float rotateOffsetX, float rotateOffsetY, float rotateOffsetZ){
+        super(part, rotateOffsetX, rotateOffsetY, rotateOffsetZ);
+        this.triangle = triangle;
     }
 
     public void render() {
@@ -32,24 +40,62 @@ public class TrackerTriangle extends Tracker {
 
         //SekCPhysics.logger.info((float) anchor.posX * 16);
 
-        this.part.rotateAngleX = rotationX;
-        this.part.rotateAngleY = rotationY;
-        this.part.rotateAngleZ = rotationZ;
+        GL11.glPushMatrix();
+
+
+
+        //GL11.glRotatef((float) Math.toDegrees(this.rotationZ + this.rotateOffsetZ), 0,0,1);
+        //GL11.glRotatef((float) Math.toDegrees(this.rotationY + this.rotateOffsetY), 0,1,0);
+        //GL11.glRotatef((float) Math.toDegrees(this.rotationX + this.rotateOffsetX), 1,0,0);
+
+        this.part.rotateAngleX = this.rotationX + this.rotateOffsetX;
+        this.part.rotateAngleY = this.rotationY + this.rotateOffsetY;
+        this.part.rotateAngleZ = this.rotationZ + this.rotateOffsetZ;
+
+        //GL11.glRotatef((float) (Math.random() * 180), 0,1,0);
+
+        //this.part.rotateAngleY = 0;
+        //GL11.glRotatef((float) Math.toDegrees(this.axisRotation), 0,1,0);
+
+
+        // TODO calculate wanted rotation and the rotation added from getting to the correct direction.
+
 
         this.part.render(0.0625f);
+
+        GL11.glPopMatrix();
 
         // TODO Look at the length in comparison (store it when calculating physics) and stretch it based on the percentage xD
         //GL11.glScalef(1,scaleFactorStretch,0);
     }
 
     public void calcRotation() {
-        PointF triangleDir = triangle.getDirection().convertToF();
+        // TODO Find out why convertToF is broken
+        PointD triangleDir = triangle.getDirection();
+
+        //SekCPhysics.logger.info(triangle.getDirection().getX());
 
        // rotationZ = basicRotation(constraintVert.getX(), constraintVert.getY());
 
-        rotationX = piFloat / 2 + basicRotation(-triangleDir.getY(), (float) Math.sqrt(Math.pow(triangleDir.getX(),2) + Math.pow(triangleDir.getZ(),2)));
+        rotationX = piFloat / 2 + basicRotation((float) -triangleDir.getY(), (float) Math.sqrt(Math.pow(triangleDir.getX(),2) + Math.pow(triangleDir.getZ(),2)));
 
-        rotationY = basicRotation(-triangleDir.getX(), -triangleDir.getZ());
+        rotationY = basicRotation((float) -triangleDir.getX(), (float) -triangleDir.getZ());
+
+        PointD trangleNorm = triangle.getNormal();
+
+        Vec3 normVec = Vec3.createVectorHelper(trangleNorm.getX(), trangleNorm.getY(), trangleNorm.getZ());
+
+        //normVec.rotateAroundZ(-rotationZ);
+
+        normVec.rotateAroundY(-rotationY);
+
+        normVec.rotateAroundX(-rotationX);
+
+        axisRotation = basicRotation((float) normVec.xCoord, (float) normVec.zCoord);
+
+        /*Matrix4f rotMatrix = new Matrix4f();
+        rotMatrix.rotate(-rotationX, new Vector3f(1, 0, 0));
+        rotMatrix.rotate(-rotationY, new Vector3f(0, 1, 0));*/
 
     }
 
@@ -59,7 +105,7 @@ public class TrackerTriangle extends Tracker {
         }
 
         if(axis1 == 0){
-            axis1 = 0.001f;
+            axis1 = 0f;
         }
 
 

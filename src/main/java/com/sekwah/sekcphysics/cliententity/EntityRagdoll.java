@@ -26,7 +26,7 @@ public class EntityRagdoll extends Entity {
         // the actual entity instance will be used mostly for lighting and a reference,
         //  the entities position will follow the first point added to the skeleton.
 
-        this.ignoreFrustumCheck = true;
+        //this.ignoreFrustumCheck = true;
     }
 
     @SideOnly(Side.CLIENT)
@@ -55,15 +55,29 @@ public class EntityRagdoll extends Entity {
             this.setDead();
             return;
         }
-        /*if(ragdollLife-- < 0){
+
+        if(ragdollLife-- < 0){
+
+            for (int i = 0; i < 10; ++i) {
+                float poofSize = 1.0f;
+                double d0 = this.rand.nextGaussian() * 0.04D;
+                double d1 = this.rand.nextGaussian() * 0.04D;
+                double d2 = this.rand.nextGaussian() * 0.04D;
+                this.worldObj.spawnParticle("explode", this.posX + (double) (this.rand.nextFloat() * poofSize * 2.0F) - (double) poofSize, this.posY + this.height / 2 + (double) (this.rand.nextFloat() * this.height), this.posZ + (double) (this.rand.nextFloat() * poofSize * 2.0F) - (double) poofSize, d0, d1, d2);
+            }
+
             this.setDead();
-        }*/
+        }
+
 
         /*if(ragdollUpdate-- < 0){
             ragdollUpdate = 20;
             ragdoll.update(this);
         }*/
         // Possibly change to update every render rather than entity update and add alpha time
+
+
+
         ragdoll.update(this);
 
         PointD ragdollPos = ragdoll.skeleton.points.get(0).toPoint();

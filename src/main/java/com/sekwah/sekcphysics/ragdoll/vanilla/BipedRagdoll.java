@@ -6,7 +6,7 @@ import com.sekwah.sekcphysics.ragdoll.parts.Constraint;
 import com.sekwah.sekcphysics.ragdoll.parts.Skeleton;
 import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
 import com.sekwah.sekcphysics.ragdoll.parts.Triangle;
-import com.sekwah.sekcphysics.ragdoll.parts.tracker.Tracker;
+import com.sekwah.sekcphysics.ragdoll.parts.tracker.TrackerTriangle;
 import com.sekwah.sekcphysics.ragdoll.parts.tracker.TrackerVertex;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBiped;
@@ -16,6 +16,10 @@ import net.minecraft.client.model.ModelRenderer;
  * Created by sekawh on 8/5/2015.
  */
 public class BipedRagdoll extends BaseRagdoll {
+
+    private final Triangle headTriangle;
+
+    private final Triangle bodyTriangle;
 
     public SkeletonPoint headLeft;
     public SkeletonPoint headRight;
@@ -110,9 +114,13 @@ public class BipedRagdoll extends BaseRagdoll {
 
         skeleton.constraints.add(new Constraint(leftLegTop, rightShoulder));
 
-        skeleton.triangles.add(new Triangle(centerTorso, headLeft, headRight));
+        headTriangle = new Triangle(centerTorso, headLeft, headRight);
 
-        skeleton.triangles.add(new Triangle(centerTorso, leftLegTop, rightLegTop));
+        skeleton.triangles.add(headTriangle);
+
+        bodyTriangle = new Triangle(centerTorso, leftLegTop, rightLegTop);
+
+        skeleton.triangles.add(bodyTriangle);
 
         skeleton.triangles.add(new Triangle(centerTorso, leftLegTop, leftShoulder));
 
@@ -130,19 +138,31 @@ public class BipedRagdoll extends BaseRagdoll {
         super.initTrackers(model);
         if(model instanceof ModelBiped){
             ModelBiped modelBiped = (ModelBiped) model;
-            this.addTracker(modelBiped.bipedRightArm, this.rightShoulder, this.rightArm);
-            this.addTracker(modelBiped.bipedLeftArm, this.leftShoulder, this.leftArm);
+            this.addVertexTracker(modelBiped.bipedRightArm, this.rightShoulder, this.rightArm);
+            this.addVertexTracker(modelBiped.bipedLeftArm, this.leftShoulder, this.leftArm);
 
-            this.addTracker(modelBiped.bipedRightLeg, this.rightLegTop, this.rightLegBot);
-            this.addTracker(modelBiped.bipedLeftLeg, this.leftLegTop, this.leftLegBot);
+            this.addVertexTracker(modelBiped.bipedRightLeg, this.rightLegTop, this.rightLegBot);
+            this.addVertexTracker(modelBiped.bipedLeftLeg, this.leftLegTop, this.leftLegBot);
+
+            this.addTriangleTrackerRot(modelBiped.bipedBody, this.bodyTriangle, (float) Math.PI, 0, 0);
+            this.addTriangleTrackerRot(modelBiped.bipedHead, this.headTriangle, 0, 0, 0);
+            //this.addTriangleTracker(modelBiped.bipedHead, this.headTriangle);
         }
         else{
             SekCPhysics.logger.error("Model type invalid!");
         }
     }
 
-    private void addTracker(ModelRenderer part, SkeletonPoint anchor, SkeletonPoint pointTo){
+    private void addVertexTracker(ModelRenderer part, SkeletonPoint anchor, SkeletonPoint pointTo){
         trackerHashmap.put(part, new TrackerVertex(part, anchor, pointTo));
+    }
+
+    private void addTriangleTracker(ModelRenderer part, Triangle triangle){
+        trackerHashmap.put(part, new TrackerTriangle(part, triangle));
+    }
+
+    private void addTriangleTrackerRot(ModelRenderer part, Triangle triangle, float rotateOffsetX, float rotateOffsetY, float rotateOffsetZ){
+        trackerHashmap.put(part, new TrackerTriangle(part, triangle, rotateOffsetX, rotateOffsetY, rotateOffsetZ));
     }
 
 }
