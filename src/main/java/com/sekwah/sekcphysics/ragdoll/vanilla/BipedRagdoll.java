@@ -1,5 +1,6 @@
 package com.sekwah.sekcphysics.ragdoll.vanilla;
 
+import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.ragdoll.BaseRagdoll;
 import com.sekwah.sekcphysics.ragdoll.parts.Constraint;
 import com.sekwah.sekcphysics.ragdoll.parts.Skeleton;
@@ -7,6 +8,9 @@ import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
 import com.sekwah.sekcphysics.ragdoll.parts.Triangle;
 import com.sekwah.sekcphysics.ragdoll.parts.tracker.Tracker;
 import com.sekwah.sekcphysics.ragdoll.parts.tracker.TrackerVertex;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.model.ModelRenderer;
 
 /**
  * Created by sekawh on 8/5/2015.
@@ -120,6 +124,25 @@ public class BipedRagdoll extends BaseRagdoll {
 
         // write code to add a list to the array, it makes it easier.
 
+    }
+
+    public void initTrackers(ModelBase model) {
+        super.initTrackers(model);
+        if(model instanceof ModelBiped){
+            ModelBiped modelBiped = (ModelBiped) model;
+            this.addTracker(modelBiped.bipedRightArm, this.rightShoulder, this.rightArm);
+            this.addTracker(modelBiped.bipedLeftArm, this.leftShoulder, this.leftArm);
+
+            this.addTracker(modelBiped.bipedRightLeg, this.rightLegTop, this.rightLegBot);
+            this.addTracker(modelBiped.bipedLeftLeg, this.leftLegTop, this.leftLegBot);
+        }
+        else{
+            SekCPhysics.logger.error("Model type invalid!");
+        }
+    }
+
+    private void addTracker(ModelRenderer part, SkeletonPoint anchor, SkeletonPoint pointTo){
+        trackerHashmap.put(part, new TrackerVertex(part, anchor, pointTo));
     }
 
 }

@@ -9,6 +9,8 @@ import net.minecraft.client.model.ModelRenderer;
  */
 public class Tracker {
 
+    protected final ModelRenderer part;
+
     public ModelRenderer bodyPart = null;
 
     public float rotateOffsetX = 0;
@@ -29,8 +31,12 @@ public class Tracker {
 
     public float offsetZ = 0;
 
-    public void render(ModelRenderer modelPart){
+    public Tracker(ModelRenderer part) {
+        this.part = part;
+    }
 
+    public void render(){
+        this.part.render(0.0625f);
     }
 
     public void calcRotation(){

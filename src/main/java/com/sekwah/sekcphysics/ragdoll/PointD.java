@@ -68,6 +68,10 @@ public class PointD {
         return this;
     }
 
+    public PointF convertToF(){
+        return new PointF(x,y,z);
+    }
+
     public PointD clone() {
         return new PointD(x,y,z);
     }

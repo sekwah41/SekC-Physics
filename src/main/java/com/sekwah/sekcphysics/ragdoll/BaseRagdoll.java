@@ -24,7 +24,7 @@ public class BaseRagdoll {
 
     public Map<ModelRenderer, Tracker> trackerHashmap = new HashMap<ModelRenderer, Tracker>();
 
-    public boolean trackersRegistered = true;
+    public boolean trackersRegistered = false;
 
 
     // Current skeleton position and shape
@@ -73,7 +73,7 @@ public class BaseRagdoll {
         }
     }
 
-    public void initTrackers(ModelBiped bipedModel) {
+    public void initTrackers(ModelBase model) {
         trackersRegistered = true;
     }
 }

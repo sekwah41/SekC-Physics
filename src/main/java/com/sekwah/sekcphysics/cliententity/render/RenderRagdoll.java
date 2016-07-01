@@ -1,8 +1,10 @@
 package com.sekwah.sekcphysics.cliententity.render;
 
+import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.ragdoll.PointD;
 import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
+import com.sekwah.sekcphysics.ragdoll.parts.tracker.Tracker;
 import com.sekwah.sekcphysics.ragdoll.vanilla.BipedRagdoll;
 import com.sekwah.sekcphysics.ragdoll.vanilla.ZombieRagdoll;
 import net.minecraft.client.Minecraft;
@@ -52,10 +54,6 @@ public class RenderRagdoll extends Render {
         if(entity instanceof EntityRagdoll){
             EntityRagdoll entityRagdoll = (EntityRagdoll) entity;
 
-            if(entityRagdoll.ragdoll.trackerHashmap.size() == 0){
-                entityRagdoll.ragdoll.initTrackers(bipedModel);
-            }
-
             GL11.glPushMatrix();
 
             // Sets the position offset for rendering
@@ -64,7 +62,18 @@ public class RenderRagdoll extends Render {
             ModelBiped currentModel;
 
             if(entityRagdoll.ragdoll instanceof BipedRagdoll){
+
+                if(!entityRagdoll.ragdoll.trackersRegistered){
+                    if(entityRagdoll.ragdoll instanceof ZombieRagdoll){
+                        entityRagdoll.ragdoll.initTrackers(zombieModel);
+                    }
+                    else{
+                        entityRagdoll.ragdoll.initTrackers(bipedModel);
+                    }
+                }
+
                 if(entityRagdoll.ragdoll instanceof ZombieRagdoll){
+
                     this.bindTexture(zombieTexture);
                     currentModel = this.zombieModel;
 
@@ -76,7 +85,11 @@ public class RenderRagdoll extends Render {
 
                 BipedRagdoll bipedRagdoll = (BipedRagdoll) entityRagdoll.ragdoll;
 
-                //for
+                for(Tracker tracker : bipedRagdoll.trackerHashmap.values()){
+                    //SekCPhysics.logger.info("Test");
+                    tracker.calcRotation();
+                    tracker.render();
+                }
 
                 /*setPartLocation(currentModel.bipedRightArm, bipedRagdoll.leftShoulder);
 
