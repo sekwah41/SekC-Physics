@@ -1,5 +1,6 @@
 package com.sekwah.sekcphysics.ragdoll.parts.tracker;
 
+import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.ragdoll.PointD;
 import com.sekwah.sekcphysics.ragdoll.PointF;
 import com.sekwah.sekcphysics.ragdoll.parts.Triangle;
@@ -44,13 +45,15 @@ public class TrackerTriangle extends Tracker {
 
 
 
-        //GL11.glRotatef((float) Math.toDegrees(this.rotationZ + this.rotateOffsetZ), 0,0,1);
-        //GL11.glRotatef((float) Math.toDegrees(this.rotationY + this.rotateOffsetY), 0,1,0);
-        //GL11.glRotatef((float) Math.toDegrees(this.rotationX + this.rotateOffsetX), 1,0,0);
+        GL11.glRotatef((float) Math.toDegrees(this.rotationZ + this.rotateOffsetZ), 0,0,1);
+        GL11.glRotatef((float) Math.toDegrees(this.rotationY + this.rotateOffsetY), 0,1,0);
+        GL11.glRotatef((float) Math.toDegrees(this.rotationX + this.rotateOffsetX), 1,0,0);
 
-        this.part.rotateAngleX = this.rotationX + this.rotateOffsetX;
-        this.part.rotateAngleY = this.rotationY + this.rotateOffsetY;
-        this.part.rotateAngleZ = this.rotationZ + this.rotateOffsetZ;
+        //GL11.glRotatef((float) Math.toDegrees(this.rotationY + this.rotateOffsetY), 0,1,0);
+
+        //this.part.rotateAngleX = this.rotationX + this.rotateOffsetX;
+        //this.part.rotateAngleY = this.rotationY + this.rotateOffsetY;
+        //this.part.rotateAngleZ = this.rotationZ + this.rotateOffsetZ;
 
         //GL11.glRotatef((float) (Math.random() * 180), 0,1,0);
 
@@ -73,11 +76,41 @@ public class TrackerTriangle extends Tracker {
         // TODO Find out why convertToF is broken
         PointD triangleDir = triangle.getDirection();
 
+        PointD trangleNorm = triangle.getNormal();
+
+        // Works and gets it aligned
+
+        rotationX = piFloat / 2 + basicRotation((float) -triangleDir.getY(), (float) Math.sqrt(Math.pow(triangleDir.getX(),2) + Math.pow(triangleDir.getZ(),2)));
+
+        rotationY = basicRotation((float) -triangleDir.getX(), (float) -triangleDir.getZ());
+
+
+
+        // TODO figure out the rotation to get it to the right location.
+
+
+        // Calculate what the vertex would be if it was just rotated to the direction, then find the angle between the two points.
+        // Find a way to calculate if it should be positive or negative.
+
+        // Or rotate the angle to the default and find it using the same way you find rotationX (will be a lot easier if it works)
+
+        /*Matrix4f rotMatrix = new Matrix4f();
+        rotMatrix.rotate(-rotationX, new Vector3f(1, 0, 0));
+        rotMatrix.rotate(-rotationY, new Vector3f(0, 1, 0));*/
+
+    }
+
+    public void calcOldRotation() {
+        // TODO Find out why convertToF is broken
+        PointD triangleDir = triangle.getDirection();
+
         //SekCPhysics.logger.info(triangle.getDirection().getX());
 
        // rotationZ = basicRotation(constraintVert.getX(), constraintVert.getY());
 
         rotationX = piFloat / 2 + basicRotation((float) -triangleDir.getY(), (float) Math.sqrt(Math.pow(triangleDir.getX(),2) + Math.pow(triangleDir.getZ(),2)));
+
+        SekCPhysics.logger.info(rotationX);
 
         rotationY = basicRotation((float) -triangleDir.getX(), (float) -triangleDir.getZ());
 
@@ -85,11 +118,21 @@ public class TrackerTriangle extends Tracker {
 
         Vec3 normVec = Vec3.createVectorHelper(trangleNorm.getX(), trangleNorm.getY(), trangleNorm.getZ());
 
-        //normVec.rotateAroundZ(-rotationZ);
+        ////normVec.rotateAroundZ(-rotationZ);
 
         normVec.rotateAroundY(-rotationY);
 
         normVec.rotateAroundX(-rotationX);
+
+        /*GL11.glBegin(GL11.GL_LINE_STRIP);
+        GL11.glVertex3d(0,0,0);
+        GL11.glVertex3d(trangleNorm.getX() * 40, trangleNorm.getY() * 40, trangleNorm.getZ() * 40);
+        GL11.glEnd();
+
+        GL11.glBegin(GL11.GL_LINE_STRIP);
+        GL11.glVertex3d(0,0,0);
+        GL11.glVertex3d(normVec.xCoord * 40, normVec.yCoord * 40, normVec.zCoord * 40);
+        GL11.glEnd();*/
 
         axisRotation = basicRotation((float) normVec.xCoord, (float) normVec.zCoord);
 
