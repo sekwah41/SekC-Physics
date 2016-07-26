@@ -12,14 +12,12 @@ public class Ragdolls {
     // add code to store a hashmap of all entities to ragdolls
 
     // Key is entity class and stores a ragdoll class
-    private static Map entityToRagdollHashmap = new HashMap();
+    private static Map<Class, Class> entityToRagdollHashmap = new HashMap<Class, Class>();
 
     // To get a list of ragdolls go through all the alive entities in the world and check for an instace of
     //public List currentRagdolls = new ArrayList();
 
-    // The number of times to process the distances each oldUpdate.
-    // The ragdoll applies these a few times then moves the points
-    public static int updateCount = 5;
+    public static int updateCount = 10;
 
     public static float gravity = 0.05F; // alter till it looks the best, also maybe add material values as mods use stuff like
 

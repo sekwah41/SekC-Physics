@@ -1,10 +1,10 @@
 package com.sekwah.sekcphysics.cliententity;
 
-import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.ragdoll.BaseRagdoll;
-import com.sekwah.sekcphysics.ragdoll.Point;
+import com.sekwah.sekcphysics.ragdoll.PointD;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -28,12 +28,7 @@ public class EntityRagdoll extends Entity {
         // the actual entity instance will be used mostly for lighting and a reference,
         //  the entities position will follow the first point added to the skeleton.
 
-        this.ignoreFrustumCheck = true;
-    }
-
-    @Override
-    protected void entityInit() {
-
+        //this.ignoreFrustumCheck = true;
     }
 
     @SideOnly(Side.CLIENT)
@@ -50,26 +45,44 @@ public class EntityRagdoll extends Entity {
         return 1.0F;
     }
 
+    @Override
+    protected void entityInit() {
+
+    }
+
     public void onUpdate()
     {
-        //SekCPhysics.logger.info("Update");
         super.onUpdate();
         if(ragdoll == null){
             this.setDead();
             return;
         }
+
         if(ragdollLife-- < 0){
+
+            for (int i = 0; i < 10; ++i) {
+                float poofSize = 1.0f;
+                double d0 = this.rand.nextGaussian() * 0.04D;
+                double d1 = this.rand.nextGaussian() * 0.04D;
+                double d2 = this.rand.nextGaussian() * 0.04D;
+                this.worldObj.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, this.posX + (double) (this.rand.nextFloat() * poofSize * 2.0F) - (double) poofSize, this.posY + this.height / 2 + (double) (this.rand.nextFloat() * this.height), this.posZ + (double) (this.rand.nextFloat() * poofSize * 2.0F) - (double) poofSize, d0, d1, d2);
+            }
+
             this.setDead();
         }
 
+
         /*if(ragdollUpdate-- < 0){
             ragdollUpdate = 20;
-            ragdoll.oldUpdate(this);
+            ragdoll.update(this);
         }*/
-        // Possibly change to oldUpdate every render rather than entity oldUpdate and add alpha time
+        // Possibly change to update every render rather than entity update and add alpha time
+
+
+
         ragdoll.update(this);
 
-        Point ragdollPos = ragdoll.skeleton.points.get(0).toPoint();
+        PointD ragdollPos = ragdoll.skeleton.points.get(0).toPoint();
 
         this.setPosition(this.posX + ragdollPos.getX(), this.posY + ragdollPos.getY(), this.posZ + ragdollPos.getZ());
 
@@ -94,7 +107,6 @@ public class EntityRagdoll extends Entity {
         float f = this.width / 2.0F;
         float f1 = this.height;
         this.setEntityBoundingBox(new AxisAlignedBB(posX - (double)f, posY, posZ - (double)f, posX + (double)f, posY + (double)f1, posZ + (double)f));
-                //.boundingBox.setBounds(posX - (double)f, posY - (double)this.yOffset + (double)this.ySize, posZ - (double)f, posX + (double)f, posY - (double)this.yOffset + (double)this.ySize + (double)f1, posZ + (double)f);
 
         // the entity position will probably follow the simulated ragdoll position and not the other way.
         //this.ragdoll.setRagdollPos(this.posX, this.posY, this.posZ);

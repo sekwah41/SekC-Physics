@@ -1,12 +1,9 @@
 package com.sekwah.sekcphysics.ragdoll.parts;
 
-import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
-import com.sekwah.sekcphysics.ragdoll.Point;
+import com.sekwah.sekcphysics.ragdoll.PointD;
 import com.sekwah.sekcphysics.ragdoll.Ragdolls;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector3f;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +35,7 @@ public class Skeleton {
     private boolean frozen = false;
 
     // Store a velocity which is the last position take away the current position but also add it so you can add velocity
-    //  because if its added for a single oldUpdate itll carry on that motion. So stuff like explosions or an arrow to the
+    //  because if its added for a single update itll carry on that motion. So stuff like explosions or an arrow to the
     //  knee. Also if a player walks around a ragdoll you can add sorta a magnetic push for parts near entities away from the player.
     //  but do that after all physics works :3 (also for collisions with blocks, use the moving points like arrows do and stuff
     //  try to use current mc stuff to figure out where it can and cant go.
@@ -53,31 +50,6 @@ public class Skeleton {
 
     public void setFrozen(boolean isFrozen) {
         this.frozen = isFrozen;
-    }
-
-    /**
-     * Applies the physics before constraints are taken into account.
-     * @param entity
-     */
-    public void oldUpdate(EntityRagdoll entity){
-
-        for(SkeletonPoint point : points){
-            point.update(entity);
-            //point.movePoint(entity);
-        }
-
-        // oldUpdate constraints
-        for(Constraint constraint: constraints){
-            constraint.apply(entity);
-            //point.movePoint(entity);
-        }
-
-        // For finding the angle from the said norm use the dot product rearranged but base it on the angle between the reversed version
-        //  of the vector rather than 2 vectors. (for when a triangle wouldnt work or yould have to add too many points to make it work :D)
-        // formula 1  a � b = |a| � |b| � cos(?)
-        // formula 2  a � b = ax � bx + ay � by + az � bz
-
-
     }
 
     /**
@@ -150,11 +122,11 @@ public class Skeleton {
         for(Triangle triangle : triangles){
             // getBrightness(float p_70013_1_) from entity
             glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
-            Point direction = triangle.getDirection();
-            Point normal = triangle.getNormal();
-            Point basePoint = triangle.points[0].toPoint();
-            Point directionPoint = basePoint.clone().add(direction);
-            Point normalPoint = basePoint.clone().add(normal);
+            PointD direction = triangle.getDirection();
+            PointD normal = triangle.getNormal();
+            PointD basePoint = triangle.points[0].toPoint();
+            PointD directionPoint = basePoint.clone().add(direction);
+            PointD normalPoint = basePoint.clone().add(normal.multiply(4));
             drawLine(basePoint, directionPoint);
             glColor4f(0f,0f,1f, 1.0f);
             drawLine(basePoint, normalPoint);
@@ -173,7 +145,7 @@ public class Skeleton {
         glEnd();
     }
 
-    public void drawLine(Point point, Point point2){
+    public void drawLine(PointD point, PointD point2){
         glBegin(GL_LINE_STRIP);
         glVertex3d(point.getX(), point.getY(), point.getZ());
         glVertex3d(point2.getX(), point2.getY(), point2.getZ());

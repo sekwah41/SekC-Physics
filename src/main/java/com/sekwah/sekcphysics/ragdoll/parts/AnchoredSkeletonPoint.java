@@ -27,6 +27,10 @@ public class AnchoredSkeletonPoint extends SkeletonPoint {
         this(x,y,z,size,true);
     }
 
+    public AnchoredSkeletonPoint(double x, double y, double z, boolean shouldDoModelScale){
+        this(x,y,z,0.15f,shouldDoModelScale);
+    }
+
     public AnchoredSkeletonPoint(double x, double y, double z){
         this(x,y,z,0.15f,true);
     }
@@ -38,10 +42,17 @@ public class AnchoredSkeletonPoint extends SkeletonPoint {
 
     public void movePoint(EntityRagdoll entity, double moveX, double moveY, double moveZ) {
 
+    }
+
+    public void verify(EntityRagdoll entity) {
 
     }
 
     public void setNewPos(double x, double y, double z){
+
+    }
+
+    public void moveTo(EntityRagdoll entity, double x, double y, double z) {
 
     }
 

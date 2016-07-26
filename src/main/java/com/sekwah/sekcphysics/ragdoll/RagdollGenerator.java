@@ -23,10 +23,6 @@ public class RagdollGenerator {
         }
     }
 
-    /**
-     * Finds the data for the mobs in the json data and generates it on startup.
-     * TODO Try to find how to make a progress bar on the loading or make one appear like the chickenbones core
-     */
     public static void loadRagdolls() {
         generateRagdollsFrom("vanilla");
         List<ModContainer> modlist = Loader.instance().getActiveModList();

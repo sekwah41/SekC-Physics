@@ -3,14 +3,25 @@ package com.sekwah.sekcphysics.ragdoll;
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.ragdoll.parts.Skeleton;
 import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
+import com.sekwah.sekcphysics.ragdoll.parts.tracker.Tracker;
 import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.Vec3d;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by sekawh on 8/4/2015.
  */
 public class BaseRagdoll {
+
+
+    public Map<ModelRenderer, Tracker> trackerHashmap = new HashMap<ModelRenderer, Tracker>();
+
+    public boolean trackersRegistered = false;
+
 
     // Current skeleton position and shape
     public Skeleton skeleton;
@@ -38,15 +49,6 @@ public class BaseRagdoll {
         // the entity
     }
 
-    /**
-     * The old oldUpdate means
-     * @param entity
-     */
-    public void oldUpdate(EntityRagdoll entity) {
-        skeleton.oldUpdate(entity);
-
-    }
-
     public void update(EntityRagdoll entity) {
         skeleton.update(entity);
 
@@ -65,5 +67,9 @@ public class BaseRagdoll {
             vec.rotateYaw((float) Math.toRadians(-entity.rotationYaw));
             point.setPosition(vec.xCoord, vec.yCoord, vec.zCoord);
         }
+    }
+
+    public void initTrackers(ModelBase model) {
+        trackersRegistered = true;
     }
 }

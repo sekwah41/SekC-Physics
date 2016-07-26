@@ -3,6 +3,7 @@ package com.sekwah.sekcphysics.network;
 import com.google.common.collect.Maps;
 import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.settings.ModSettings;
+import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
 import java.io.BufferedReader;
@@ -61,7 +62,7 @@ public class UsageReport {
                         }
 
                         addData("reportCounter", ++reportCounter); // Will show how long the mod has been running as
-                        // each oldUpdate is 14 mins 50 seconds(to make sure its 100% inside the refresh time and doesnt
+                        // each update is 14 mins 50 seconds(to make sure its 100% inside the refresh time and doesnt
                         // count a player as offline when they are on, the only time it will is if they have no
                         // connection or have opted out of using this. The report counter will be mostly used to
                         // track how memory is being used over time to see how the mod is performing.

@@ -3,16 +3,13 @@ package com.sekwah.sekcphysics.client;
 import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.ragdoll.BaseRagdoll;
-import com.sekwah.sekcphysics.ragdoll.testragdolls.WreckingBallRagdoll;
-import com.sekwah.sekcphysics.ragdoll.vanilla.ZombieRagdoll;
-import net.minecraft.client.Minecraft;
+import com.sekwah.sekcphysics.ragdoll.vanilla.BipedRagdoll;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Items;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -22,8 +19,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class EventHook {
 
     @SubscribeEvent
-    public void onJoinWorld(LivingDeathEvent event) {
-        SekCPhysics.logger.info("Entity Death");
+    public void deathEvent(LivingDeathEvent event) {
         // TODO check entities for if they are in a list of registered mobs for ragdolls,
         //  and also check if the died is when the body is removed after death animation or if its
         //  as soon as it hits 0
@@ -73,7 +69,7 @@ public class EventHook {
                 deadEntity.setDead();
             }
 
-            // Look at the events and see when the world oldUpdate and other ticks are, if you cant do it as a client entity
+            // Look at the events and see when the world update and other ticks are, if you cant do it as a client entity
             //  you may need to trigger it each time.
 
             // This will only fire once, even in single player. Gather data such as rotation and spawn the ragdoll.
@@ -88,19 +84,20 @@ public class EventHook {
         }
     }
 
-    // TODO still being readded atm for forge, looks like it should be done but they need to recode for 1.9 changes.
-    // Using soley PlayerInteractEvent activates on all of the different sub events
     @SubscribeEvent
-    public void playerInteract(/*PlayerInteractEvent*/PlayerInteractEvent.RightClickItem event){
-        SekCPhysics.logger.info("Player Interact");
-        System.out.println(event);
+    public void playerInteract(PlayerInteractEvent.RightClickItem event){
+        //SekCPhysics.logger.info("Player Interact");
+
         if(event.getWorld().isRemote){
-            if(event.getEntityPlayer().capabilities.isCreativeMode && event.getEntityPlayer().getHeldItem(EnumHand.MAIN_HAND) != null && event.getEntityPlayer().getHeldItem(EnumHand.MAIN_HAND).getItem() == Items.nether_star){
+            if(event.getEntityPlayer().capabilities.isCreativeMode && event.getEntityPlayer().getHeldItem(EnumHand.MAIN_HAND) != null && event.getEntityPlayer().getHeldItem(EnumHand.MAIN_HAND).getItem() == Items.NETHER_STAR){
                 EntityRagdoll entityRagdoll = new EntityRagdoll(event.getEntityPlayer().worldObj);
 
-                //BaseRagdoll ragdoll = new ZombieRagdoll();
+                BaseRagdoll ragdoll = new BipedRagdoll();
 
-                BaseRagdoll ragdoll = new WreckingBallRagdoll();
+                //BaseRagdoll ragdoll = new WreckingBallRagdoll();
+
+                //BaseRagdoll ragdoll = new ClothRagdoll();
+                //BaseRagdoll ragdoll = new CurtainRagdoll();
 
                 entityRagdoll.ragdoll = ragdoll;
 
@@ -112,8 +109,9 @@ public class EventHook {
 
                 entityRagdoll.ragdoll.skeleton.verifyPoints(entityRagdoll);
 
-                //entityRagdoll.ragdoll.skeleton.setVelocity(lookVec.xCoord, lookVec.yCoord, lookVec.zCoord);
+                entityRagdoll.ragdoll.skeleton.setVelocity(lookVec.xCoord, lookVec.yCoord, lookVec.zCoord);
             }
+
         }
     }
 

@@ -1,7 +1,7 @@
 package com.sekwah.sekcphysics.ragdoll.parts;
 
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
-import com.sekwah.sekcphysics.ragdoll.Point;
+import com.sekwah.sekcphysics.ragdoll.PointD;
 
 /**
  * Created by sekawh on 8/6/2015.
@@ -39,11 +39,11 @@ public class AngleLimitConstraint {
 
     public void apply(EntityRagdoll entity) {
         // Center between left and right
-        Point averageLoc = new Point((end[1].posX + end[2].posX) / 2F,(end[1].posY + end[2].posY) / 2F,(end[1].posZ + end[2].posZ) / 2F);
+        PointD averageLoc = new PointD((end[1].posX + end[2].posX) / 2F,(end[1].posY + end[2].posY) / 2F,(end[1].posZ + end[2].posZ) / 2F);
 
         double currentLength = Math.sqrt(Math.pow(end[0].posX - averageLoc.getX(), 2) + Math.pow(end[0].posY - averageLoc.getY(), 2) + Math.pow(end[0].posZ - averageLoc.getZ(), 2));
         // Direction from the base directly down the center of the triangle
-        Point direction = new Point((end[0].posX - averageLoc.getX()) / (float) currentLength,
+        PointD direction = new PointD((end[0].posX - averageLoc.getX()) / (float) currentLength,
                 (end[0].posY - averageLoc.getY()) / (float) currentLength, (end[0].posZ - averageLoc.getZ()) / (float) currentLength);
 
         // Calculate angle around the direction, may be best way to calculate orentation and make basic constraints on
