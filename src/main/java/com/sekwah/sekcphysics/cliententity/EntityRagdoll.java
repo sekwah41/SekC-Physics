@@ -80,7 +80,10 @@ public class EntityRagdoll extends Entity {
 
 
 
-        ragdoll.update(this);
+//        if(--ragdollUpdate < 0){
+//            ragdollUpdate = 4;
+            ragdoll.update(this);
+//        }
 
         PointD ragdollPos = ragdoll.skeleton.points.get(0).toPoint();
 
@@ -115,7 +118,7 @@ public class EntityRagdoll extends Entity {
     /**
      * Sets the rotation of the entity
      */
-   public void setRotation(float rotYaw/*, float p_70101_2_*/)
+    public void setRotation(float rotYaw/*, float p_70101_2_*/)
     {
         this.ragdoll.rotateRagdoll(rotYaw);
         //this.rotationPitch = p_70101_2_ % 360.0F;

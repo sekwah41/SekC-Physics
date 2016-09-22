@@ -20,6 +20,7 @@ public class ClientProxy extends CommonProxy {
     }
 
     public void addEvents() {
+        super.addEvents();
         MinecraftForge.EVENT_BUS.register(new EventHook());
     }
 

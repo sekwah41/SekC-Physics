@@ -10,6 +10,7 @@ import com.sekwah.sekcphysics.ragdoll.vanilla.ZombieRagdoll;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
@@ -91,10 +92,29 @@ public class RenderRagdoll<T extends EntityRagdoll> extends Render<T> {
 
                 BipedRagdoll bipedRagdoll = (BipedRagdoll) entityRagdoll.ragdoll;
 
+                if(mc.gameSettings.showDebugInfo){
+                    GL11.glPushMatrix();
+                    GL11.glDepthMask(false);
+                    GL11.glEnable(GL11.GL_BLEND);
+                    //GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+                    GL11.glAlphaFunc(GL11.GL_GREATER, 0.003921569F);
+
+                    GL11.glColor4f(1,1,1,0.5f);
+                }
+
+
                 for(Tracker tracker : bipedRagdoll.trackerHashmap.values()){
                     //SekCPhysics.logger.info("Test");
                     tracker.calcRotation();
                     tracker.render();
+                }
+
+                if(mc.gameSettings.showDebugInfo) {
+                    GL11.glColor4f(1, 1, 1, 1);
+
+                    GL11.glDepthMask(true);
+
+                    GL11.glPopMatrix();
                 }
 
                 /*setPartLocation(currentModel.bipedRightArm, bipedRagdoll.leftShoulder);

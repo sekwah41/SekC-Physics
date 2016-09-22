@@ -39,6 +39,12 @@ public class SekCPhysics {
 
     public static final String version = "0.0.1";
 
+    /**
+     * Start using interfaces more
+     */
+    @Mod.Instance
+	public static SekCPhysics instance;
+
     public static UsageReport usageReport;
 
     public static Ragdolls ragdolls = new Ragdolls();
@@ -77,6 +83,8 @@ public class SekCPhysics {
     public void preInit(FMLPreInitializationEvent event) {
         configFolder = event.getModConfigurationDirectory();
         ModSettings.preInit(event);
+
+        // Add ProgressManager data for generating and other steps.
 
         proxy.ragdollRenderer();
 

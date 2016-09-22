@@ -49,7 +49,7 @@ public class EventHook {
 
                 entityRagdoll.ragdoll.skeleton.verifyPoints(entityRagdoll);
 
-                entityRagdoll.ragdoll.skeleton.setVelocity(deadEntity.posX - deadEntity.lastTickPosX, deadEntity.posY - deadEntity.lastTickPosY, deadEntity.posZ - deadEntity.lastTickPosZ);
+                //entityRagdoll.ragdoll.skeleton.setVelocity(deadEntity.posX - deadEntity.lastTickPosX, deadEntity.posY - deadEntity.lastTickPosY, deadEntity.posZ - deadEntity.lastTickPosZ);
 
                 // Doesn't seem possible with client side only through just this event.
                 /*if(event.source.getEntity() != null){

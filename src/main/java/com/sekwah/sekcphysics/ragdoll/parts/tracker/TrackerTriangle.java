@@ -107,7 +107,7 @@ public class TrackerTriangle extends Tracker {
 
         rotationX = piFloat / 2 + basicRotation((float) -triangleDir.getY(), (float) Math.sqrt(Math.pow(triangleDir.getX(),2) + Math.pow(triangleDir.getZ(),2)));
 
-        SekCPhysics.logger.info(rotationX);
+        //SekCPhysics.logger.info(rotationX);
 
         rotationY = basicRotation((float) -triangleDir.getX(), (float) -triangleDir.getZ());
 
