@@ -1,6 +1,5 @@
 package com.sekwah.sekcphysics.ragdoll.parts.tracker;
 
-import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.ragdoll.PointD;
 import com.sekwah.sekcphysics.ragdoll.PointF;
 import com.sekwah.sekcphysics.ragdoll.parts.Triangle;
@@ -140,29 +139,7 @@ public class TrackerTriangle extends Tracker {
     }
 
     public float basicRotation(float axis1, float axis2){
-        if(axis2 == 0){
-            axis2 = 0.001f;
-        }
-
-        if(axis1 == 0){
-            axis1 = 0f;
-        }
-
-
-       /* float mod1 = Math.abs(axis1);
-        float mod2 = Math.abs(axis2);
-
-        if(axis1 < 0 && axis2 > 0){
-
-        }*/
-
-        if(axis2 < 0){
-            return (float) Math.atan(axis1/axis2);
-        }
-        else{
-            return (float) (Math.PI + Math.atan(axis1/axis2));
-        }
-
+        return (float) (Math.PI + Math.atan2(axis1, axis2));
     }
 
 
