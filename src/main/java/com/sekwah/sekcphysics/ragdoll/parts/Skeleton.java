@@ -11,7 +11,7 @@ import java.util.List;
 import static org.lwjgl.opengl.GL11.*;
 
 /**
- * Created by sekawh on 8/4/2015.
+ * Created by sekwah on 8/4/2015.
  *
  * // TODO add some detection to contstraints for when they are massively disshaped or something similar and try reversing it
  *  sometimes, should fix legs crossing over glitch but could be made worse if the entity is squashed for whatever reason.

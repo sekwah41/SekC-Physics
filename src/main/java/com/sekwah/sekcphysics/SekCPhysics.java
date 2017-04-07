@@ -28,6 +28,10 @@ import java.io.File;
  *   Also can add something to add warnings to the server console(itll also stop crashes on a server if someone doesnt pay
  *   attention)
  *
+ *   http://wiki.lwjgl.org/wiki/OpenCL_in_LWJGL.html
+ *
+ *   lwjgl has opencl built in, take a look for future reference :D
+ *
  *   Also potentially add physics to the cloak, even if its as a giant square, but maybe split to small blocks and do it like
  *   real cloth
  */
