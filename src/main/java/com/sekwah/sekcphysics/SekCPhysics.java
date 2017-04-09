@@ -68,10 +68,8 @@ public class SekCPhysics {
         SekCPhysics.usageReport = new UsageReport(proxy.isClient());
         SekCPhysics.usageReport.startUsageReport();
 
-        proxy.addEvents();
 
-
-        EntityRegistry.registerModEntity(EntityRagdoll.class, "Ragdoll", 1, this, 64, 1, true);
+        proxy.init();
 
         VanillaRagdolls.register();
     }
@@ -79,7 +77,7 @@ public class SekCPhysics {
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
 
-        proxy.generateRagdolls();
+        proxy.postInit();
 
     }
 
@@ -90,8 +88,11 @@ public class SekCPhysics {
 
         // Add ProgressManager data for generating and other steps.
 
-        proxy.ragdollRenderer();
+        proxy.preInit();
 
+    }
+
+    public void preInit() {
     }
 
 

@@ -35,7 +35,7 @@ public class EventHook {
             BaseRagdoll ragdoll = SekCPhysics.ragdolls.createRagdoll(deadEntity);
             if(ragdoll != null) {
 
-                EntityRagdoll entityRagdoll = new EntityRagdoll(deadEntity.worldObj);
+                EntityRagdoll entityRagdoll = new EntityRagdoll(deadEntity.world);
 
                 entityRagdoll.ragdoll = ragdoll;
 
@@ -43,7 +43,7 @@ public class EventHook {
 
                 entityRagdoll.setSpawnPosition(deadEntity.posX, deadEntity.posY, deadEntity.posZ);
 
-                deadEntity.worldObj.spawnEntityInWorld(entityRagdoll);
+                deadEntity.world.spawnEntity(entityRagdoll);
 
                 entityRagdoll.ragdoll.rotateRagdoll(deadEntity.rotationYaw);
 
@@ -90,7 +90,7 @@ public class EventHook {
 
         if(event.getWorld().isRemote){
             if(event.getEntityPlayer().capabilities.isCreativeMode && event.getEntityPlayer().getHeldItem(EnumHand.MAIN_HAND) != null && event.getEntityPlayer().getHeldItem(EnumHand.MAIN_HAND).getItem() == Items.NETHER_STAR){
-                EntityRagdoll entityRagdoll = new EntityRagdoll(event.getEntityPlayer().worldObj);
+                EntityRagdoll entityRagdoll = new EntityRagdoll(event.getEntityPlayer().world);
 
                 BaseRagdoll ragdoll = new BipedRagdoll();
 
@@ -105,7 +105,7 @@ public class EventHook {
 
                 entityRagdoll.setSpawnPosition(event.getEntityPlayer().posX + lookVec.xCoord, event.getEntityPlayer().posY + lookVec.yCoord - 0.5f, event.getEntityPlayer().posZ + lookVec.zCoord);
 
-                event.getEntityPlayer().worldObj.spawnEntityInWorld(entityRagdoll);
+                event.getEntityPlayer().world.spawnEntity(entityRagdoll);
 
                 entityRagdoll.ragdoll.skeleton.verifyPoints(entityRagdoll);
 

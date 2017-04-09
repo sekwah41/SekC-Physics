@@ -8,6 +8,9 @@ import net.minecraft.entity.Entity;
 import net.minecraftforge.client.IRenderHandler;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
 /**
  * Created by on 25/03/2016.
  *
@@ -19,8 +22,23 @@ import net.minecraftforge.fml.client.registry.IRenderFactory;
  */
 public class RenderFac<T extends EntityRagdoll> implements IRenderFactory<T> {
 
+    private Constructor<Render<T>> constructor;
+
+    public RenderFac(Class<Render<T>> renderClass){
+        try {
+            this.constructor = renderClass.getConstructor(RenderManager.class);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
-    public Render<? super T> createRenderFor(RenderManager manager) {
+    public Render<T> createRenderFor(RenderManager manager) {
+        try {
+            this.constructor.newInstance(manager);
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
         manager.entityRenderMap.put(EntityRagdoll.class, new RenderRagdoll(manager));
         return new RenderRagdoll(manager);
     }

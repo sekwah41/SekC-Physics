@@ -1,5 +1,6 @@
 package com.sekwah.sekcphysics.generic;
 
+import com.sekwah.sekcphysics.handler.EntityHandler;
 import com.sekwah.sekcphysics.ragdoll.RagdollGenerator;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -12,16 +13,15 @@ public class CommonProxy {
         return false;
     }
 
-
-    public void addEvents() {
+    public void init() {
         MinecraftForge.EVENT_BUS.register(new EventHook());
+
+        EntityHandler.instance.registerEntities();
     }
 
-    public void generateRagdolls() {
-
+    public void postInit() {
     }
 
-    public void ragdollRenderer() {
+    public void preInit() {
     }
-
 }

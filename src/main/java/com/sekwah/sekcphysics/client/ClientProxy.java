@@ -19,18 +19,22 @@ public class ClientProxy extends CommonProxy {
         return true;
     }
 
-    public void addEvents() {
-        super.addEvents();
+    public void init() {
+        super.init();
         MinecraftForge.EVENT_BUS.register(new EventHook());
+
+
     }
 
-    public void generateRagdolls() {
+    public void postInit() {
+        super.init();
         RagdollGenerator.loadRagdolls();
         VanillaRagdolls.register();
     }
 
-    public void ragdollRenderer() {
-        RenderingRegistry.registerEntityRenderingHandler(EntityRagdoll.class, new RenderFac());
+    public void preInit() {
+        super.preInit();
+        RenderingRegistry.registerEntityRenderingHandler(EntityRagdoll.class, new RenderFac(RenderRagdoll.class));
     }
 
 }

@@ -108,7 +108,7 @@ public class SkeletonPoint {
 
         //axisalignedbb.offset(this.posX, this.posY, this.posZ);
 
-        List<AxisAlignedBB> list = entity.worldObj.getCollisionBoxes(entity, axisalignedbb.addCoord(moveX, moveY, moveZ));
+        List<AxisAlignedBB> list = entity.world.getCollisionBoxes(entity, axisalignedbb.addCoord(moveX, moveY, moveZ));
 
         double oMoveY = moveY;
 
@@ -192,7 +192,7 @@ public class SkeletonPoint {
                 pointPosX + size, pointPosY + size, pointPosZ + size);
 
         // TODO add code to properly do water velocity
-        if (entity.worldObj.handleMaterialAcceleration(axisalignedbb.expand(0.0D, -0.4000000059604645D, 0.0D).contract(0.001D), Material.WATER, entity)){
+        if (entity.world.handleMaterialAcceleration(axisalignedbb.expand(0.0D, -0.4000000059604645D, 0.0D).contract(0.001D), Material.WATER, entity)){
             this.addVelocity(0, 0.1f, 0);
             if(this.posY - this.lastPosY > 0.5){
                 this.lastPosY = this.posY - 0.5;
@@ -222,7 +222,7 @@ public class SkeletonPoint {
         AxisAlignedBB axisalignedbb = new AxisAlignedBB(pointPosX - size, pointPosY - size, pointPosZ - size,
                 pointPosX + size, pointPosY + size, pointPosZ + size);
 
-        List list = entity.worldObj.getEntitiesWithinAABBExcludingEntity(entity, axisalignedbb.expand(0.20000000298023224D, 0.0D, 0.20000000298023224D));
+        List list = entity.world.getEntitiesWithinAABBExcludingEntity(entity, axisalignedbb.expand(0.20000000298023224D, 0.0D, 0.20000000298023224D));
 
         if (list != null && !list.isEmpty())
         {
@@ -243,11 +243,11 @@ public class SkeletonPoint {
         double pointPosZ = entity.posZ + this.posZ;
         double d0 = pointPosX - entityCol.posX;
         double d1 = pointPosZ - entityCol.posZ;
-        double d2 = MathHelper.abs_max(d0, d1);
+        double d2 = MathHelper.absMax(d0, d1);
 
         if (d2 >= 0.009999999776482582D)
         {
-            d2 = (double)MathHelper.sqrt_double(d2);
+            d2 = (double)MathHelper.sqrt(d2);
             d0 /= d2;
             d1 /= d2;
             double d3 = 1.0D / d2;
