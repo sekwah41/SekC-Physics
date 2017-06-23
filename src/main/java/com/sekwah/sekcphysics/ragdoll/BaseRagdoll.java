@@ -65,7 +65,7 @@ public class BaseRagdoll {
             //SekCPhysics.logger.info(entity.rotationYaw);
             Vec3d vec = new Vec3d(point.posX, point.posY, point.posZ);
             vec.rotateYaw((float) Math.toRadians(-entity.rotationYaw));
-            point.setPosition(vec.xCoord, vec.yCoord, vec.zCoord);
+            point.setPosition(vec.x, vec.y, vec.z);
         }
     }
 

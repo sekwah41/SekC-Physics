@@ -103,13 +103,13 @@ public class EventHook {
 
                 Vec3d lookVec = event.getEntityPlayer().getLookVec();
 
-                entityRagdoll.setSpawnPosition(event.getEntityPlayer().posX + lookVec.xCoord, event.getEntityPlayer().posY + lookVec.yCoord - 0.5f, event.getEntityPlayer().posZ + lookVec.zCoord);
+                entityRagdoll.setSpawnPosition(event.getEntityPlayer().posX + lookVec.x, event.getEntityPlayer().posY + lookVec.y - 0.5f, event.getEntityPlayer().posZ + lookVec.z);
 
                 event.getEntityPlayer().world.spawnEntity(entityRagdoll);
 
                 entityRagdoll.ragdoll.skeleton.verifyPoints(entityRagdoll);
 
-                entityRagdoll.ragdoll.skeleton.setVelocity(lookVec.xCoord, lookVec.yCoord, lookVec.zCoord);
+                entityRagdoll.ragdoll.skeleton.setVelocity(lookVec.x, lookVec.y, lookVec.z);
             }
 
         }

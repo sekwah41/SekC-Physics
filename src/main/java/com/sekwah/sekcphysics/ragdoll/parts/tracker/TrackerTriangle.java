@@ -127,10 +127,10 @@ public class TrackerTriangle extends Tracker {
 
         GL11.glBegin(GL11.GL_LINE_STRIP);
         GL11.glVertex3d(0,0,0);
-        GL11.glVertex3d(normVec.xCoord * 40, normVec.yCoord * 40, normVec.zCoord * 40);
+        GL11.glVertex3d(normVec.x * 40, normVec.y * 40, normVec.z * 40);
         GL11.glEnd();*/
 
-        axisRotation = basicRotation((float) normVec.xCoord, (float) normVec.zCoord);
+        axisRotation = basicRotation((float) normVec.x, (float) normVec.z);
 
         /*Matrix4f rotMatrix = new Matrix4f();
         rotMatrix.rotate(-rotationX, new Vector3f(1, 0, 0));

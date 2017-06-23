@@ -108,7 +108,7 @@ public class SkeletonPoint {
 
         //axisalignedbb.offset(this.posX, this.posY, this.posZ);
 
-        List<AxisAlignedBB> list = entity.world.getCollisionBoxes(entity, axisalignedbb.addCoord(moveX, moveY, moveZ));
+        List<AxisAlignedBB> list = entity.world.getCollisionBoxes(entity, axisalignedbb.expand(moveX, moveY, moveZ));
 
         double oMoveY = moveY;
 
@@ -192,7 +192,7 @@ public class SkeletonPoint {
                 pointPosX + size, pointPosY + size, pointPosZ + size);
 
         // TODO add code to properly do water velocity
-        if (entity.world.handleMaterialAcceleration(axisalignedbb.expand(0.0D, -0.4000000059604645D, 0.0D).contract(0.001D), Material.WATER, entity)){
+        if (entity.world.handleMaterialAcceleration(axisalignedbb.expand(0.0D, -0.4000000059604645D, 0.0D).contract(0.001D, 0.001D, 0.001D), Material.WATER, entity)){
             this.addVelocity(0, 0.1f, 0);
             if(this.posY - this.lastPosY > 0.5){
                 this.lastPosY = this.posY - 0.5;
