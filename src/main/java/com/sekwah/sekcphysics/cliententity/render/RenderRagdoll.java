@@ -28,6 +28,8 @@ public class RenderRagdoll<T extends EntityRagdoll> extends Render<T> {
 
     private static final ResourceLocation zombieTexture = new ResourceLocation("textures/entity/zombie/zombie.png");
 
+    private static final ResourceLocation huskTexture = new ResourceLocation("textures/entity/zombie/husk.png");
+
     private static final ResourceLocation steveTextures = new ResourceLocation("textures/entity/steve.png");
 
     private ModelBiped bipedModel;
@@ -79,6 +81,7 @@ public class RenderRagdoll<T extends EntityRagdoll> extends Render<T> {
                     }
                 }
 
+                // add husk texure and also some other stuff for rendering properly
                 if(entityRagdoll.ragdoll instanceof ZombieRagdoll){
 
                     this.bindTexture(zombieTexture);
