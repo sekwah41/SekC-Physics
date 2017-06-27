@@ -12,7 +12,7 @@ public class Ragdolls {
     // add code to store a hashmap of all entities to ragdolls
 
     // Key is entity class and stores a ragdoll class
-    private static Map<Class, Class> entityToRagdollHashmap = new HashMap<Class, Class>();
+    private static Map<String, Class> entityToRagdollHashmap = new HashMap<String, Class>();
 
     // To get a list of ragdolls go through all the alive entities in the world and check for an instace of
     //public List currentRagdolls = new ArrayList();
@@ -22,7 +22,7 @@ public class Ragdolls {
     public static float gravity = 0.05F; // alter till it looks the best, also maybe add material values as mods use stuff like
 
     public void registerRagdoll(Class<? extends Entity> entityClass, Class<? extends BaseRagdoll> ragdollClass) {
-        this.entityToRagdollHashmap.put(entityClass, ragdollClass);
+        this.entityToRagdollHashmap.put(entityClass.getName(), ragdollClass);
     }
 
     public BaseRagdoll createRagdoll(Entity entity){
@@ -32,7 +32,7 @@ public class Ragdolls {
 
         try
         {
-            Class rClass = (Class)entityToRagdollHashmap.get(entity.getClass());
+            Class rClass = entityToRagdollHashmap.get(entity.getClass().getName());
 
             if (rClass != null)
             {
