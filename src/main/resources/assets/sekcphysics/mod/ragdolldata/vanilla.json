@@ -1,5 +1,69 @@
 {
+  "EntityBiped" : {
+    "template" : true,
+    "skeletonPoints":{
+      "centerTorso" : [0,0,0],
+      "headLeft" : [3,7,0],
+      "headRight" : [-3,7,0],
+      "leftShoulder" : [5,-2,0],
+      "rightShoulder" : [5,-2,0],
+      "leftLegTop" : [-5,-2,0],
+      "rightLegTop" : [2,-12,0],
+      "rightArm" : [-14,-2,1],
+      "leftArm" : [14,-2,1],
+      "leftLegBot" : [2, -23, 0],
+      "rightLegBot" : [-2, -23, 0]
+    },
+    "constraints":[
+      ["centerTorso", "headLeft"],
+      ["centerTorso", "headRight"],
+      ["headLeft", "headRight"],
+      ["leftShoulder", "leftArm"],
+      ["rightShoulder", "rightArm"],
+      ["leftLegTop", "leftLegBot"],
+      ["rightLegTop", "rightLegBot"],
+      ["centerTorso", "leftShoulder"],
+      ["centerTorso", "rightShoulder"],
+      ["centerTorso", "leftLegTop"],
+      ["centerTorso", "rightLegTop"],
+      ["leftLegTop", "rightLegTop"],
+      ["leftLegTop", "leftShoulder"],
+      ["rightLegTop", "rightShoulder"],
+      ["rightLegTop", "leftShoulder"],
+      ["leftLegTop", "rightShoulder"]
+    ],
+    "triangleConstraints":[
+      ["centerTorso", "headLeft", "headRight"],
+      ["centerTorso", "leftLegTop", "rightLegTop"],
+      ["centerTorso", "leftLegTop", "leftShoulder"],
+      ["centerTorso", "rightLegTop", "rightShoulder"]
+    ]
+  },
   "net.minecraft.entity.monster.EntityZombie" : {
+    "inherit" : "EntityBiped",
+    "skeletonPoints":{
+
+    },
+    "constraints":{
+
+    },
+    "triangleConstraints":{
+
+    }
+  },
+  "net.minecraft.entity.monster.EntityHusk" : {
+    "inherit" : "net.minecraft.entity.monster.EntityZombie",
+    "skeletonPoints":{
+
+    },
+    "constraints":{
+
+    },
+    "triangleConstraints":{
+
+    }
+  },
+  "net.minecraft.entity.monster.EntityHusk" : {
     "skeletonPoints":{
 
     },
