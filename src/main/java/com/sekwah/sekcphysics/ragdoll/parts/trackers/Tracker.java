@@ -1,4 +1,4 @@
-package com.sekwah.sekcphysics.ragdoll.parts.tracker;
+package com.sekwah.sekcphysics.ragdoll.parts.trackers;
 
 import net.minecraft.client.model.ModelRenderer;
 

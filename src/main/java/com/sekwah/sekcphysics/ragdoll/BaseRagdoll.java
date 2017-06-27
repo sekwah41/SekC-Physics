@@ -3,7 +3,7 @@ package com.sekwah.sekcphysics.ragdoll;
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.ragdoll.parts.Skeleton;
 import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
-import com.sekwah.sekcphysics.ragdoll.parts.tracker.Tracker;
+import com.sekwah.sekcphysics.ragdoll.parts.trackers.Tracker;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.EntityLivingBase;

@@ -1,4 +1,4 @@
-package com.sekwah.sekcphysics.ragdoll.parts.tracker;
+package com.sekwah.sekcphysics.ragdoll.parts.trackers;
 
 import com.sekwah.sekcphysics.ragdoll.PointD;
 import com.sekwah.sekcphysics.ragdoll.PointF;
