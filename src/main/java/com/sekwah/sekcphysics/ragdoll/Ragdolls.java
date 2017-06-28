@@ -26,6 +26,10 @@ public class Ragdolls {
         this.entityToRagdollHashmap.put(entityClass.getName(), ragdollClass);
     }
 
+    public void registerRagdoll(String entityClass, Class<? extends BaseRagdoll> ragdollClass) {
+        this.entityToRagdollHashmap.put(entityClass, ragdollClass);
+    }
+
     public BaseRagdoll createRagdoll(Entity entity){
         BaseRagdoll ragdoll = null;
 

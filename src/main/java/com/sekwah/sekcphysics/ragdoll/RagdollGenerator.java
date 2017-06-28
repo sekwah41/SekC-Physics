@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.sekwah.sekcphysics.SekCPhysics;
+import com.sekwah.sekcphysics.ragdoll.generation.RagdollData;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.ProgressManager;
@@ -30,14 +31,30 @@ public class RagdollGenerator {
             ProgressManager.ProgressBar bar = ProgressManager.push("Constructing", entityEnteries.size());
             for(Map.Entry<String, JsonElement> entry : entityEnteries){
                 bar.step(entry.getKey());
-                System.out.println(entry);
+                RagdollData ragdollData = new RagdollData();
+                ragdollData = addRagdollSkeletonPointData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
             }
             ProgressManager.pop(bar);
             SekCPhysics.logger.info("Data loaded for: " + modid);
         }
-        catch(NullPointerException e){
+        catch(NullPointerException | UnsupportedOperationException e){
             SekCPhysics.logger.info("No ragdoll data found for: " + modid);
         }
+    }
+
+    private static RagdollData addRagdollSkeletonPointData(JsonObject ragdollJsonData, RagdollData ragdollData,
+                                                           JsonObject ragdollFileJson) throws UnsupportedOperationException {
+        if(ragdollJsonData.has("inherit")){
+            String inherit = ragdollJsonData.get("inherit").getAsString();
+            if(ragdollFileJson.has(inherit)){
+                ragdollData = addRagdollSkeletonPointData(ragdollFileJson.get(inherit).getAsJsonObject(), ragdollData,
+                        ragdollFileJson);
+            }
+            else{
+                SekCPhysics.logger.debug("Inherit data not found");
+            }
+        }
+        return ragdollData;
     }
 
     public static void loadRagdolls() {

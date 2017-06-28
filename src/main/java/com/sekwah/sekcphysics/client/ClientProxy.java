@@ -29,7 +29,7 @@ public class ClientProxy extends CommonProxy {
     public void postInit() {
         super.init();
         RagdollGenerator.loadRagdolls();
-        VanillaRagdolls.register();
+        //VanillaRagdolls.register();
     }
 
     public void preInit() {
