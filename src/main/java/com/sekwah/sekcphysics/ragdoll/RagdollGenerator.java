@@ -23,7 +23,7 @@ public class RagdollGenerator {
 
     public static void generateRagdollsFrom(String modid) {
         // TODO check for the mod id and if not found then report false. If found generate ragdolls.
-        try{
+        try {
             Reader fileIn = new InputStreamReader(SekCPhysics.class.getResourceAsStream("/assets/sekcphysics/ragdolldata/" + modid + ".json"));
             Gson jsonFile = new Gson();
             JsonObject ragdollFileJson = jsonFile.fromJson(fileIn, JsonObject.class);
@@ -37,16 +37,16 @@ public class RagdollGenerator {
             ProgressManager.pop(bar);
             SekCPhysics.logger.info("Data loaded for: " + modid);
         }
-        catch(NullPointerException | UnsupportedOperationException e){
+        catch(NullPointerException | UnsupportedOperationException e) {
             SekCPhysics.logger.info("No ragdoll data found for: " + modid);
         }
     }
 
     private static RagdollData addRagdollSkeletonPointData(JsonObject ragdollJsonData, RagdollData ragdollData,
                                                            JsonObject ragdollFileJson) throws UnsupportedOperationException {
-        if(ragdollJsonData.has("inherit")){
+        if(ragdollJsonData.has("inherit")) {
             String inherit = ragdollJsonData.get("inherit").getAsString();
-            if(ragdollFileJson.has(inherit)){
+            if(ragdollFileJson.has(inherit)) {
                 ragdollData = addRagdollSkeletonPointData(ragdollFileJson.get(inherit).getAsJsonObject(), ragdollData,
                         ragdollFileJson);
             }
@@ -61,7 +61,7 @@ public class RagdollGenerator {
         SekCPhysics.logger.debug("Loading ragdolls and checking for supported mods");
         List<ModContainer> modlist = Loader.instance().getActiveModList();
         ProgressManager.ProgressBar bar = ProgressManager.push("SekCPhysics", modlist.size());
-        for(ModContainer mod : modlist){
+        for(ModContainer mod : modlist) {
             bar.step("Processing " + mod.getModId());
             generateRagdollsFrom(mod.getModId());
         }
