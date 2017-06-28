@@ -1,6 +1,7 @@
 {
   "EntityBiped" : {
-    "template" : true,
+    "textureDomain": "minecraft",
+    "texture": "textures/entity/steve.png",
     "skeletonPoints":{
       "centerTorso" : [0,0,0],
       "headLeft" : [3,7,0],
@@ -11,8 +12,8 @@
       "rightLegTop" : [2,-12,0],
       "rightArm" : [-14,-2,1],
       "leftArm" : [14,-2,1],
-      "leftLegBot" : [2, -23, 0],
-      "rightLegBot" : [-2, -23, 0]
+      "leftLegBot" : [2,-23,0],
+      "rightLegBot" : [-2,-23,0]
     },
     "constraints":[
       ["centerTorso", "headLeft"],
@@ -33,45 +34,64 @@
       ["leftLegTop", "rightShoulder"]
     ],
     "triangleConstraints":[
-      ["centerTorso", "headLeft", "headRight"],
-      ["centerTorso", "leftLegTop", "rightLegTop"],
+      ["head", "centerTorso", "headLeft", "headRight"],
+      ["body", "centerTorso", "leftLegTop", "rightLegTop"],
       ["centerTorso", "leftLegTop", "leftShoulder"],
       ["centerTorso", "rightLegTop", "rightShoulder"]
-    ]
+    ],
+    "modelData":{
+      "class" : "net.minecraft.client.model.ModelBiped",
+      "vertexTrackers" : {
+        "bipedRightArm":{
+          "anchor" : "rightShoulder",
+          "pointTo" : "rightShoulder"
+        },
+        "bipedLeftArm":{
+          "anchor" : "leftShoulder",
+          "pointTo" : "leftArm"
+        },
+        "bipedRightLeg":{
+          "anchor" : "rightLegTop",
+          "pointTo" : "rightLegBot"
+        },
+        "bipedLeftLeg":{
+          "anchor" : "leftLegTop",
+          "pointTo" : "leftLegBot"
+        }
+      },
+      "triangleTrackers" : {
+        "bipedBody":{
+          "tracker" : "bodyTriangle",
+          "rotOffX" : 180
+        },
+        "bipedHead":{
+          "tracker" : "headTriangle"
+        }
+      }
+    }
   },
   "net.minecraft.entity.monster.EntityZombie" : {
     "inherit" : "EntityBiped",
+    "textureDomain": "minecraft",
+    "texture": "textures/entity/zombie/zombie.png",
     "skeletonPoints":{
-
+      "rightArm" : [-6,-2,8],
+      "leftArm" : [6,-2,8]
     },
     "constraints":{
-
     },
     "triangleConstraints":{
-
     }
   },
   "net.minecraft.entity.monster.EntityHusk" : {
     "inherit" : "net.minecraft.entity.monster.EntityZombie",
+    "textureDomain": "minecraft",
+    "texture": "textures/entity/zombie/husk.png",
     "skeletonPoints":{
-
     },
     "constraints":{
-
     },
     "triangleConstraints":{
-
-    }
-  },
-  "net.minecraft.entity.monster.EntityHusk" : {
-    "skeletonPoints":{
-
-    },
-    "constraints":{
-
-    },
-    "triangleConstraints":{
-
     }
   }
 }

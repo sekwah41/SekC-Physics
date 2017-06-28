@@ -17,6 +17,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
+import java.io.InputStream;
 
 /**
  * Created by sekwah on 31/07/2015.
@@ -67,7 +68,6 @@ public class SekCPhysics {
 
         SekCPhysics.usageReport = new UsageReport(proxy.isClient());
         SekCPhysics.usageReport.startUsageReport();
-
 
         proxy.init();
 

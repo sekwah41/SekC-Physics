@@ -1,0 +1,69 @@
+{
+  "class location (or just put something invalid if you really need one to clone but not inherit all" : {
+    "textureDomain": "modid or minecraft",
+    "texture": "texture location",
+    "skeletonPoints":{
+      "pointname" : [x,y,z],
+    },
+    "constraints":[
+      ["skelepoint 1", "skelepoint 2"]
+    ],
+    "triangleConstraints" : [
+      ["partname", "base", "point 2", "point 3"],
+      ["or put"],
+      ["base", "point 2", "point 3"]
+    ],
+    "modelData":{
+      "class" : "net.minecraft.client.model.ModelBiped",
+      "vertexTrackers" : {
+        "bipedRightArm":{
+          "anchor" : "rightShoulder",
+          "pointTo" : "rightShoulder"
+        },
+        "bipedLeftArm":{
+          "anchor" : "leftShoulder",
+          "pointTo" : "leftArm"
+        },
+        "bipedRightLeg":{
+          "anchor" : "rightLegTop",
+          "pointTo" : "rightLegBot"
+        },
+        "bipedLeftLeg":{
+          "anchor" : "leftLegTop",
+          "pointTo" : "leftLegBot"
+        }
+      },
+      "triangleTrackers" : {
+        "bipedBody":{
+          "tracker" : "bodyTriangle",
+          "posOffX" : applied before rot,
+          "rotOffX" : in degrees
+        }
+      }
+    }
+  },
+  "net.minecraft.entity.monster.EntityZombie" : {
+    "inherit" : "add if you want to inherit data from another ragdoll, same named parts will just move the point and keep all constraints",
+    "textureDomain": "minecraft",
+    "texture": "textures/entity/zombie/zombie.png",
+    "skeletonPoints":{
+      "rightArm" : [-6,-2,8],
+      "leftArm" : [6,-2,8]
+    },
+    "constraints":{
+    },
+    "triangleConstraints":{
+    }
+  },
+  "net.minecraft.entity.monster.EntityHusk" : {
+    "inherit" : "net.minecraft.entity.monster.EntityZombie",
+    "textureDomain": "minecraft",
+    "texture": "textures/entity/zombie/husk.png",
+    "skeletonPoints":{
+    },
+    "constraints":{
+    },
+    "triangleConstraints":{
+    }
+  }
+}

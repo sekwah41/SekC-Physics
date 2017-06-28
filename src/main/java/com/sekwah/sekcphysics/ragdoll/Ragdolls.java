@@ -2,6 +2,7 @@ package com.sekwah.sekcphysics.ragdoll;
 
 import net.minecraft.entity.Entity;
 
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,7 +50,6 @@ public class Ragdolls {
 
         return ragdoll;
     }
-
 
 
     // Material.rock for the sounds, could add a bit of bouncing from materials rather than instantly losing velocity when it hits soemthing.
