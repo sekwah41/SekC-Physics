@@ -33,12 +33,10 @@
       ["rightLegTop", "leftShoulder"],
       ["leftLegTop", "rightShoulder"]
     ],
-    "triangleConstraints":[
-      ["head", "centerTorso", "headLeft", "headRight"],
-      ["body", "centerTorso", "leftLegTop", "rightLegTop"],
-      ["centerTorso", "leftLegTop", "leftShoulder"],
-      ["centerTorso", "rightLegTop", "rightShoulder"]
-    ],
+    "triangles":{
+      "head": ["centerTorso", "headLeft", "headRight"],
+      "body": ["centerTorso", "leftLegTop", "rightLegTop"]
+    },
     "modelData":{
       "class" : "net.minecraft.client.model.ModelBiped",
       "vertexTrackers" : {

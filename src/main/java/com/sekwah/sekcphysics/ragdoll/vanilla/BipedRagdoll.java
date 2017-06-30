@@ -122,9 +122,9 @@ public class BipedRagdoll extends BaseRagdoll {
 
         skeleton.triangles.add(bodyTriangle);
 
-        skeleton.triangles.add(new Triangle(centerTorso, leftLegTop, leftShoulder));
+        //skeleton.triangles.add(new Triangle(centerTorso, leftLegTop, leftShoulder));
 
-        skeleton.triangles.add(new Triangle(centerTorso, rightLegTop, rightShoulder));
+        //skeleton.triangles.add(new Triangle(centerTorso, rightLegTop, rightShoulder));
 
         //trackers.add(new TrackerVertex())
 

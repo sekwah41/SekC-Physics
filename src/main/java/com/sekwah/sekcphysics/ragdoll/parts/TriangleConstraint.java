@@ -2,6 +2,8 @@ package com.sekwah.sekcphysics.ragdoll.parts;
 
 /**
  * Created by sekawh on 8/4/2015.
+ *
+ * Not implemented yet
  */
 public class TriangleConstraint {
 

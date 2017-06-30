@@ -4,12 +4,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.sekwah.sekcphysics.SekCPhysics;
+import com.sekwah.sekcphysics.ragdoll.generation.RagdollInvalidDataException;
 import com.sekwah.sekcphysics.ragdoll.generation.RagdollData;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.ProgressManager;
-import net.minecraftforge.fml.relauncher.FMLLaunchHandler;
-import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 
 import java.io.*;
 import java.util.List;
@@ -29,15 +28,19 @@ public class RagdollGenerator {
             JsonObject ragdollFileJson = jsonFile.fromJson(fileIn, JsonObject.class);
             Set<Map.Entry<String, JsonElement>> entityEnteries = ragdollFileJson.entrySet();
             ProgressManager.ProgressBar bar = ProgressManager.push("Constructing", entityEnteries.size());
-            for(Map.Entry<String, JsonElement> entry : entityEnteries){
+            for(Map.Entry<String, JsonElement> entry : entityEnteries) {
                 bar.step(entry.getKey());
+                try {
+                    RagdollData ragdollData = new RagdollData();
+                    ragdollData = addRagdollSkeletonPointData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
+                    ragdollData = addRagdollConstraintData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
+                    ragdollData = addRagdollTrackerData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
 
-                RagdollData ragdollData = new RagdollData();
-                ragdollData = addRagdollSkeletonPointData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
-                ragdollData = addRagdollConstraintData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
-                ragdollData = addRagdollTrackerData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
-
-                SekCPhysics.ragdolls.registerRagdoll(entry.getKey(), ragdollData);
+                    SekCPhysics.ragdolls.registerRagdoll(entry.getKey(), ragdollData);
+                }
+                catch(RagdollInvalidDataException e){
+                    SekCPhysics.logger.info("Invalid data for " + entry.getKey());
+                }
             }
             ProgressManager.pop(bar);
             SekCPhysics.logger.info("Data loaded for: " + modid);
