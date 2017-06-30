@@ -1,5 +1,6 @@
 package com.sekwah.sekcphysics.ragdoll;
 
+import com.sekwah.sekcphysics.ragdoll.generation.RagdollData;
 import net.minecraft.entity.Entity;
 
 import java.io.InputStream;
@@ -13,7 +14,7 @@ public class Ragdolls {
     // add code to store a hashmap of all entities to ragdolls
 
     // Key is entity class and stores a ragdoll class
-    private static Map<String, Class> entityToRagdollHashmap = new HashMap<String, Class>();
+    private static Map<String, RagdollData> entityToRagdollHashmap = new HashMap<String, RagdollData>();
 
     // To get a list of ragdolls go through all the alive entities in the world and check for an instace of
     //public List currentRagdolls = new ArrayList();
@@ -22,29 +23,31 @@ public class Ragdolls {
 
     public static float gravity = 0.05F; // alter till it looks the best, also maybe add material values as mods use stuff like
 
-    public void registerRagdoll(Class<? extends Entity> entityClass, Class<? extends BaseRagdoll> ragdollClass) {
-        this.entityToRagdollHashmap.put(entityClass.getName(), ragdollClass);
+    public void registerRagdoll(Class<? extends Entity> entityClass, RagdollData ragdollData) {
+        this.entityToRagdollHashmap.put(entityClass.getName(), ragdollData);
     }
 
-    public void registerRagdoll(String entityClass, Class<? extends BaseRagdoll> ragdollClass) {
-        this.entityToRagdollHashmap.put(entityClass, ragdollClass);
+    /**
+     * Will overwrite ragdolls if there is one already there
+     * @param entityClass
+     * @param ragdollData
+     */
+    public void registerRagdoll(String entityClass, RagdollData ragdollData) {
+        this.entityToRagdollHashmap.put(entityClass, ragdollData);
     }
 
-    public BaseRagdoll createRagdoll(Entity entity){
-        BaseRagdoll ragdoll = null;
+    public FromDataRagdoll createRagdoll(Entity entity){
+        FromDataRagdoll ragdoll = null;
 
         // TODO add code to detect the baby versions and add new ragdolls
 
         try
         {
-            Class rClass = entityToRagdollHashmap.get(entity.getClass().getName());
+            RagdollData ragdollData = entityToRagdollHashmap.get(entity.getClass().getName());
 
-            if (rClass != null)
+            if (ragdollData != null)
             {
-                // in case needed to add arguments to constructor in the future
-                // it can be done like this for stuff like entities
-                // (Entity)rClass.getConstructor(new Class[] {World.class}).newInstance(new Object[] {worldObj});
-                ragdoll = (BaseRagdoll)rClass.getConstructor(new Class[] {}).newInstance(new Object[]{});
+                ragdoll = new FromDataRagdoll(ragdollData);
             }
         }
         catch (Exception exception)

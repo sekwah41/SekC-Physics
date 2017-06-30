@@ -16,8 +16,9 @@ public class VanillaRagdolls {
     }
 
     public static void register() {
-        SekCPhysics.ragdolls.registerRagdoll(EntityHusk.class, ZombieRagdoll.class);
+        // Old code
+        /*SekCPhysics.ragdolls.registerRagdoll(EntityHusk.class, ZombieRagdoll.class);
         SekCPhysics.ragdolls.registerRagdoll(EntityZombie.class, ZombieRagdoll.class);
-        SekCPhysics.ragdolls.registerRagdoll(EntityPlayer.class, BipedRagdoll.class);
+        SekCPhysics.ragdolls.registerRagdoll(EntityPlayer.class, BipedRagdoll.class);*/
     }
 }

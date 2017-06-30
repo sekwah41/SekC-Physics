@@ -31,8 +31,13 @@ public class RagdollGenerator {
             ProgressManager.ProgressBar bar = ProgressManager.push("Constructing", entityEnteries.size());
             for(Map.Entry<String, JsonElement> entry : entityEnteries){
                 bar.step(entry.getKey());
+
                 RagdollData ragdollData = new RagdollData();
                 ragdollData = addRagdollSkeletonPointData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
+                ragdollData = addRagdollConstraintData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
+                ragdollData = addRagdollTrackerData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
+
+                SekCPhysics.ragdolls.registerRagdoll(entry.getKey(), ragdollData);
             }
             ProgressManager.pop(bar);
             SekCPhysics.logger.info("Data loaded for: " + modid);
@@ -48,6 +53,37 @@ public class RagdollGenerator {
             String inherit = ragdollJsonData.get("inherit").getAsString();
             if(ragdollFileJson.has(inherit)){
                 ragdollData = addRagdollSkeletonPointData(ragdollFileJson.get(inherit).getAsJsonObject(), ragdollData,
+                        ragdollFileJson);
+            }
+            else{
+                SekCPhysics.logger.debug("Inherit data not found");
+            }
+        }
+        return ragdollData;
+    }
+
+    private static RagdollData addRagdollConstraintData(JsonObject ragdollJsonData, RagdollData ragdollData,
+                                                           JsonObject ragdollFileJson) throws UnsupportedOperationException {
+        if(ragdollJsonData.has("inherit")){
+            String inherit = ragdollJsonData.get("inherit").getAsString();
+            if(ragdollFileJson.has(inherit)){
+                ragdollData = addRagdollConstraintData(ragdollFileJson.get(inherit).getAsJsonObject(), ragdollData,
+                        ragdollFileJson);
+            }
+            else{
+                SekCPhysics.logger.debug("Inherit data not found");
+            }
+        }
+        return ragdollData;
+    }
+
+    private static RagdollData addRagdollTrackerData(JsonObject ragdollJsonData, RagdollData ragdollData,
+                                                             JsonObject ragdollFileJson) throws UnsupportedOperationException {
+        if(ragdollJsonData.has("inherit")){
+            String inherit = ragdollJsonData.get("inherit").getAsString();
+            if(ragdollFileJson.has(inherit)){
+                System.out.println(inherit);
+                ragdollData = addRagdollTrackerData(ragdollFileJson.get(inherit).getAsJsonObject(), ragdollData,
                         ragdollFileJson);
             }
             else{
