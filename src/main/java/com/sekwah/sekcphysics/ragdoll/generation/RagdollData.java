@@ -3,6 +3,8 @@ package com.sekwah.sekcphysics.ragdoll.generation;
 import com.sekwah.sekcphysics.ragdoll.parts.Constraint;
 import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
 import com.sekwah.sekcphysics.ragdoll.parts.Triangle;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.util.ResourceLocation;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -13,6 +15,10 @@ import java.util.LinkedList;
 public class RagdollData {
 
     private HashMap<String, SkeletonPoint> skeletonPointHashMap = new HashMap<>();
+
+    private ModelBase ragdollModel;
+
+    private ResourceLocation entityTexture;
 
     /**
      * Has no references back so best to do it this way for quick use.

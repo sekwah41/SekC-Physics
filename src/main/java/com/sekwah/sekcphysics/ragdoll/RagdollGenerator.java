@@ -30,17 +30,17 @@ public class RagdollGenerator {
             ProgressManager.ProgressBar bar = ProgressManager.push("Constructing", entityEnteries.size());
             for(Map.Entry<String, JsonElement> entry : entityEnteries) {
                 bar.step(entry.getKey());
-                try {
+                //try {
                     RagdollData ragdollData = new RagdollData();
                     ragdollData = addRagdollSkeletonPointData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
                     ragdollData = addRagdollConstraintData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
                     ragdollData = addRagdollTrackerData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
 
-                    SekCPhysics.ragdolls.registerRagdoll(entry.getKey(), ragdollData);
-                }
+
+                /*}
                 catch(RagdollInvalidDataException e){
                     SekCPhysics.logger.info("Invalid data for " + entry.getKey());
-                }
+                }*/
             }
             ProgressManager.pop(bar);
             SekCPhysics.logger.info("Data loaded for: " + modid);
@@ -58,9 +58,13 @@ public class RagdollGenerator {
                 ragdollData = addRagdollSkeletonPointData(ragdollFileJson.get(inherit).getAsJsonObject(), ragdollData,
                         ragdollFileJson);
             }
-            else{
-                SekCPhysics.logger.debug("Inherit data not found");
-            }
+
+            System.out.println(ragdollJsonData);
+            System.out.println(ragdollJsonData);
+            System.out.println(ragdollJsonData);
+            System.out.println(ragdollJsonData);
+            System.out.println(ragdollJsonData);
+            System.out.println(ragdollJsonData);
         }
         return ragdollData;
     }
@@ -73,9 +77,7 @@ public class RagdollGenerator {
                 ragdollData = addRagdollConstraintData(ragdollFileJson.get(inherit).getAsJsonObject(), ragdollData,
                         ragdollFileJson);
             }
-            else{
-                SekCPhysics.logger.debug("Inherit data not found");
-            }
+
         }
         return ragdollData;
     }
@@ -89,9 +91,7 @@ public class RagdollGenerator {
                 ragdollData = addRagdollTrackerData(ragdollFileJson.get(inherit).getAsJsonObject(), ragdollData,
                         ragdollFileJson);
             }
-            else{
-                SekCPhysics.logger.debug("Inherit data not found");
-            }
+
         }
         return ragdollData;
     }
