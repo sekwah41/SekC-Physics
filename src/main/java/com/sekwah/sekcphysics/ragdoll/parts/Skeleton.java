@@ -98,23 +98,31 @@ public class Skeleton {
 
     }
 
+    public void renderSkeletonDebug(){
+        renderSkeletonDebug(true);
+    }
+
     /**
      * Renders all the constraints as lines, also maybe add the linked triangles next. Create a skleton for the
+     * @param isActive
      */
-    public void renderSkeletonDebug(){
+    public void renderSkeletonDebug(boolean isActive){
         glDisable(GL_CULL_FACE);
         glDisable(GL11.GL_TEXTURE_2D);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glDisable(GL11.GL_LIGHTING);
         for(Triangle triangle : triangles){
-            glColor4f(0.0f, 0.8f, 0.1f, 0.5f);
+            if(isActive) glColor4f(0.0f, 0.8f, 0.1f, 0.5f);
+            else glColor4f(0.8f, 0.0f, 0.0f, 0.5f);
+
             drawTriangle(triangle.points[0], triangle.points[1], triangle.points[2]);
             glColor3f(1f,1f,1f);
         }
         glEnable(GL_CULL_FACE);
         for(Constraint constraint : constraints){
             // getBrightness(float p_70013_1_) from entity
-            glColor4f(0.0f, 1.0f, 0.2f, 1.0f);
+            if(isActive) glColor4f(0.0f, 1.0f, 0.2f, 1.0f);
+            else glColor4f(1.0f, 0.0f, 0.0f, 0.5f);
             drawLine(constraint.end[0], constraint.end[1]);
             glColor4f(1f,1f,1f, 1.0f);
 

@@ -30,7 +30,7 @@ public class RagdollData {
     public RagdollData() {
     }
 
-    public void setSkeletonPoint(String pointName, float x, float y, float z){
+    public void setSkeletonPoint(String pointName, double x, double y, double z){
         this.skeletonPointHashMap.put(pointName, new SkeletonPoint(x,y,z));
     }
 

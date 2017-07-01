@@ -133,7 +133,7 @@ public class RenderRagdoll<T extends EntityRagdoll> extends Render<T> {
             //SekCPhysics.logger.info(p_76986_9_);
 
             if(mc.gameSettings.showDebugInfo){
-                entityRagdoll.ragdoll.skeleton.renderSkeletonDebug();
+                entityRagdoll.ragdoll.skeleton.renderSkeletonDebug(entityRagdoll.ragdoll.isActive);
             }
             GL11.glPopMatrix();
         }

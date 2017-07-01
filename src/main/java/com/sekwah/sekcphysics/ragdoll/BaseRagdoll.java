@@ -22,6 +22,11 @@ public class BaseRagdoll {
 
     public boolean trackersRegistered = false;
 
+    /**
+     * If it is doing full updates or if it has settled on the floor waiting for larger amounts of updates
+     */
+    public boolean isActive = true;
+
 
     // Current skeleton position and shape
     public Skeleton skeleton;

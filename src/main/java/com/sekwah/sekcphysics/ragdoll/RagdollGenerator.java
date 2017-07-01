@@ -1,6 +1,7 @@
 package com.sekwah.sekcphysics.ragdoll;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.sekwah.sekcphysics.SekCPhysics;
@@ -9,6 +10,7 @@ import com.sekwah.sekcphysics.ragdoll.generation.RagdollData;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.ProgressManager;
+import org.apache.logging.log4j.Level;
 
 import java.io.*;
 import java.util.List;
@@ -30,17 +32,18 @@ public class RagdollGenerator {
             ProgressManager.ProgressBar bar = ProgressManager.push("Constructing", entityEnteries.size());
             for(Map.Entry<String, JsonElement> entry : entityEnteries) {
                 bar.step(entry.getKey());
-                //try {
+                try {
                     RagdollData ragdollData = new RagdollData();
                     ragdollData = addRagdollSkeletonPointData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
                     ragdollData = addRagdollConstraintData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
                     ragdollData = addRagdollTrackerData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
 
-
-                /*}
-                catch(RagdollInvalidDataException e){
-                    SekCPhysics.logger.info("Invalid data for " + entry.getKey());
-                }*/
+                    SekCPhysics.ragdolls.registerRagdoll(entry.getKey(), ragdollData);
+                }
+                catch(/*RagdollInvalidDataException |*/ IllegalStateException | UnsupportedOperationException e){
+                    SekCPhysics.logger.error("Invalid data for " + entry.getKey());
+                    SekCPhysics.logger.catching(Level.ERROR, e);
+                }
             }
             ProgressManager.pop(bar);
             SekCPhysics.logger.info("Data loaded for: " + modid);
@@ -53,28 +56,33 @@ public class RagdollGenerator {
     private static RagdollData addRagdollSkeletonPointData(JsonObject ragdollJsonData, RagdollData ragdollData,
                                                            JsonObject ragdollFileJson) throws UnsupportedOperationException {
         if(ragdollJsonData.has("inherit")) {
-            String inherit = ragdollJsonData.get("inherit").getAsString();
-            if(ragdollFileJson.has(inherit)) {
-                ragdollData = addRagdollSkeletonPointData(ragdollFileJson.get(inherit).getAsJsonObject(), ragdollData,
+            JsonElement inherit = ragdollFileJson.get(ragdollJsonData.get("inherit").getAsString());
+            if(inherit != null) {
+                ragdollData = addRagdollSkeletonPointData(inherit.getAsJsonObject(), ragdollData,
                         ragdollFileJson);
             }
-
-            System.out.println(ragdollJsonData);
-            System.out.println(ragdollJsonData);
-            System.out.println(ragdollJsonData);
-            System.out.println(ragdollJsonData);
-            System.out.println(ragdollJsonData);
-            System.out.println(ragdollJsonData);
         }
+
+        JsonElement skeletonPoints = ragdollJsonData.get("skeletonPoints");
+        if(skeletonPoints != null) {
+            JsonObject skelePoints = skeletonPoints.getAsJsonObject();
+            Set<Map.Entry<String, JsonElement>> pointNames = skelePoints.entrySet();
+            for(Map.Entry<String, JsonElement> pointName : pointNames) {
+                JsonArray pointPosArray = skelePoints.get(pointName.getKey()).getAsJsonArray();
+                ragdollData.setSkeletonPoint(pointName.getKey(), pointPosArray.get(0).getAsDouble(),
+                        pointPosArray.get(1).getAsDouble(), pointPosArray.get(2).getAsDouble());
+            }
+        }
+
         return ragdollData;
     }
 
     private static RagdollData addRagdollConstraintData(JsonObject ragdollJsonData, RagdollData ragdollData,
                                                            JsonObject ragdollFileJson) throws UnsupportedOperationException {
         if(ragdollJsonData.has("inherit")){
-            String inherit = ragdollJsonData.get("inherit").getAsString();
-            if(ragdollFileJson.has(inherit)){
-                ragdollData = addRagdollConstraintData(ragdollFileJson.get(inherit).getAsJsonObject(), ragdollData,
+            JsonElement inherit = ragdollFileJson.get(ragdollJsonData.get("inherit").getAsString());
+            if(inherit != null) {
+                ragdollData = addRagdollConstraintData(inherit.getAsJsonObject(), ragdollData,
                         ragdollFileJson);
             }
 
@@ -85,10 +93,9 @@ public class RagdollGenerator {
     private static RagdollData addRagdollTrackerData(JsonObject ragdollJsonData, RagdollData ragdollData,
                                                              JsonObject ragdollFileJson) throws UnsupportedOperationException {
         if(ragdollJsonData.has("inherit")){
-            String inherit = ragdollJsonData.get("inherit").getAsString();
-            if(ragdollFileJson.has(inherit)){
-                System.out.println(inherit);
-                ragdollData = addRagdollTrackerData(ragdollFileJson.get(inherit).getAsJsonObject(), ragdollData,
+            JsonElement inherit = ragdollFileJson.get(ragdollJsonData.get("inherit").getAsString());
+            if(inherit != null) {
+                ragdollData = addRagdollTrackerData(inherit.getAsJsonObject(), ragdollData,
                         ragdollFileJson);
             }
 
