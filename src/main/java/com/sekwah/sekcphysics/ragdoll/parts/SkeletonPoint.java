@@ -48,20 +48,20 @@ public class SkeletonPoint {
     /**
      * this will set positions to scale in terms of the model, also y coordinates on models are negative so reverse it manually
      */
-    public SkeletonPoint(double x, double y, double z, float size){
+    public SkeletonPoint(double x, double y, double z, float size) {
         this(x,y,z,size,true);
     }
 
-    public SkeletonPoint(double x, double y, double z, boolean shouldDoModelScale){
+    public SkeletonPoint(double x, double y, double z, boolean shouldDoModelScale) {
         this(x,y,z,0.15f,shouldDoModelScale);
     }
 
-    public SkeletonPoint(double x, double y, double z){
+    public SkeletonPoint(double x, double y, double z) {
         this(x,y,z,0.15f,true);
     }
 
     // note the position is in blocks not the model locations, and every 1 block is split into 16 for the model positions(i think)
-    public SkeletonPoint(double x, double y, double z, float size, boolean shouldDoModelScale){
+    public SkeletonPoint(double x, double y, double z, float size, boolean shouldDoModelScale) {
         this.setPosition(x,y,z);
 
         // Added to stop ragdolls becoming lines or acting in only 1 plane after hitting a wall
@@ -71,20 +71,20 @@ public class SkeletonPoint {
 
         this.size = size;
 
-        if(shouldDoModelScale){
+        if(shouldDoModelScale) {
             shiftPositionToModelScale();
         }
     }
 
-    public void shiftPositionToModelScale(){
+    public void shiftPositionToModelScale() {
         this.setPosition(this.posX / 16f, this.posY / 16f, this.posZ / 16f);
     }
 
-    public void shiftPositionToWorldScale(){
+    public void shiftPositionToWorldScale() {
         this.setPosition(this.posX * 16f, this.posY * 16f, this.posZ * 16f);
     }
 
-    public void setPosition(double x, double y, double z){
+    public void setPosition(double x, double y, double z) {
         this.lastPosX = this.newPosX = this.posX = x;
         this.lastPosY = this.newPosY = this.posY = y;
         this.lastPosZ = this.newPosZ = this.posZ = z;
@@ -95,7 +95,7 @@ public class SkeletonPoint {
         this.posY += moveY;
         this.posZ += moveZ;*/
 
-        /*if(posY < -24f / 16f){
+        /*if(posY < -24f / 16f) {
             posY = -24f / 16f;
         }*/
 
@@ -117,7 +117,7 @@ public class SkeletonPoint {
             moveY = list.get(k).calculateYOffset(axisalignedbb, moveY);
         }
 
-        if(oMoveY < 0 && moveY != oMoveY){
+        if(oMoveY < 0 && moveY != oMoveY) {
             onGround = true;
         }
 
@@ -166,7 +166,7 @@ public class SkeletonPoint {
 
         this.velY *= speedMulti;
 
-        if(onGround){
+        if(onGround) {
 
             float groundMulti = 0.93f;
             this.velX *= groundMulti;
@@ -192,9 +192,9 @@ public class SkeletonPoint {
                 pointPosX + size, pointPosY + size, pointPosZ + size);
 
         // TODO add code to properly do water velocity
-        if (entity.world.handleMaterialAcceleration(axisalignedbb.expand(0.0D, -0.4000000059604645D, 0.0D).contract(0.001D, 0.001D, 0.001D), Material.WATER, entity)){
+        if (entity.world.handleMaterialAcceleration(axisalignedbb.expand(0.0D, -0.4000000059604645D, 0.0D).contract(0.001D, 0.001D, 0.001D), Material.WATER, entity)) {
             this.addVelocity(0, 0.1f, 0);
-            if(this.posY - this.lastPosY > 0.5){
+            if(this.posY - this.lastPosY > 0.5) {
                 this.lastPosY = this.posY - 0.5;
             }
             //entity.setVelocity(0,0,0);
@@ -231,7 +231,7 @@ public class SkeletonPoint {
                 Entity entityCol = (Entity)list.get(i);
 
                 // Cant directly detect if in ground sadly. Try stuff like arrows though ;3
-                if(entityCol.canBePushed()/* || (entityCol instanceof EntityArrow && entityCol.motionY != 0)*/){
+                if(entityCol.canBePushed()/* || (entityCol instanceof EntityArrow && entityCol.motionY != 0)*/) {
                     collideWithEntity(entity, entityCol);
                 }
             }
@@ -269,13 +269,13 @@ public class SkeletonPoint {
         }
     }
 
-    public void setNewPos(double x, double y, double z){
+    public void setNewPos(double x, double y, double z) {
         this.newPosX = x;
         this.newPosY = y;
         this.newPosZ = z;
     }
 
-    public void updatePos(EntityRagdoll entity){
+    public void updatePos(EntityRagdoll entity) {
         moveTo(entity, this.newPosX, this.newPosY, this.newPosZ);
     }
 

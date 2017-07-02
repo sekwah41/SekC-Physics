@@ -43,7 +43,7 @@ public class Constraint {
      */
     public SkeletonPoint[] end = new SkeletonPoint[2];
 
-    public Constraint(SkeletonPoint start, SkeletonPoint end){
+    public Constraint(SkeletonPoint start, SkeletonPoint end) {
         this.end[0] = start;
         this.end[1] = end;
         this.length = Math.sqrt(Math.pow(start.posX - end.posX, 2) + Math.pow(start.posY - end.posY, 2) + Math.pow(start.posZ - end.posZ, 2));
@@ -56,10 +56,10 @@ public class Constraint {
 
         double currentLength = Math.sqrt(Math.pow(end[0].posX - end[1].posX, 2) + Math.pow(end[0].posY - end[1].posY, 2) + Math.pow(end[0].posZ - end[1].posZ, 2));
         // If its already the correct length theres no point in recalculating
-        if(currentLength == length){
+        if(currentLength == length) {
             return;
         }
-        if(currentLength == 0){
+        if(currentLength == 0) {
             currentLength = 0.01;
         }
         PointD direction = new PointD((end[0].posX - end[1].posX) / (float) currentLength,
@@ -103,10 +103,10 @@ public class Constraint {
 
         double currentLength = Math.sqrt(Math.pow(end[0].newPosX - end[1].newPosX, 2) + Math.pow(end[0].newPosY - end[1].newPosY, 2) + Math.pow(end[0].newPosZ - end[1].newPosZ, 2));
         // If its already the correct length theres no point in recalculating
-        if(currentLength == length){
+        if(currentLength == length) {
             return;
         }
-        if(currentLength == 0){
+        if(currentLength == 0) {
             currentLength = 0.01;
         }
         PointD direction = new PointD((end[0].newPosX - end[1].newPosX) / (float) currentLength,

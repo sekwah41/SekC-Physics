@@ -53,12 +53,12 @@ public class EntityRagdoll extends Entity {
     public void onUpdate()
     {
         super.onUpdate();
-        if(ragdoll == null){
+        if(ragdoll == null) {
             this.setDead();
             return;
         }
 
-        if(ragdollLife-- < 0){
+        if(ragdollLife-- < 0) {
 
             for (int i = 0; i < 10; ++i) {
                 float poofSize = 1.0f;
@@ -72,7 +72,7 @@ public class EntityRagdoll extends Entity {
         }
 
 
-        /*if(ragdollUpdate-- < 0){
+        /*if(ragdollUpdate-- < 0) {
             ragdollUpdate = 20;
             ragdoll.update(this);
         }*/
@@ -80,7 +80,7 @@ public class EntityRagdoll extends Entity {
 
 
 
-//        if(--ragdollUpdate < 0){
+//        if(--ragdollUpdate < 0) {
 //            ragdollUpdate = 4;
             ragdoll.update(this);
 //        }

@@ -12,7 +12,7 @@ public class EntityHandler {
     public static ResourceLocation ragdollResLoc;
 
 
-    public void registerEntities(){
+    public void registerEntities() {
 
         ragdollResLoc = new ResourceLocation(SekCPhysics.modid,"ragdoll");
 

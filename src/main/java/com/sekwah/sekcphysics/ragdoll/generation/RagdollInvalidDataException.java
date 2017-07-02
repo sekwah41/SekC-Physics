@@ -5,7 +5,7 @@ package com.sekwah.sekcphysics.ragdoll.generation;
  */
 public class RagdollInvalidDataException extends Exception {
 
-    public RagdollInvalidDataException(String message){
+    public RagdollInvalidDataException(String message) {
         super(message);
     }
 

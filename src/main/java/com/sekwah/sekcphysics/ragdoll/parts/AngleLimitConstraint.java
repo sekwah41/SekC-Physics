@@ -30,7 +30,7 @@ public class AngleLimitConstraint {
      */
     public SkeletonPoint[] end = new SkeletonPoint[2];
 
-    public AngleLimitConstraint(SkeletonPoint base, SkeletonPoint left, SkeletonPoint right){
+    public AngleLimitConstraint(SkeletonPoint base, SkeletonPoint left, SkeletonPoint right) {
         this.end[0] = base;
         this.end[1] = left;
         this.end[2] = right;

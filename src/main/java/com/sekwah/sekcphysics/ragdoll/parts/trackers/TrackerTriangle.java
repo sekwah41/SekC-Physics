@@ -19,13 +19,13 @@ public class TrackerTriangle extends Tracker {
 
     public float rotationZ = 0;
 
-    public TrackerTriangle(ModelRenderer part, Triangle triangle){
+    public TrackerTriangle(ModelRenderer part, Triangle triangle) {
         super(part);
         this.triangle = triangle;
 
     }
 
-    public TrackerTriangle(ModelRenderer part, Triangle triangle, float rotateOffsetX, float rotateOffsetY, float rotateOffsetZ){
+    public TrackerTriangle(ModelRenderer part, Triangle triangle, float rotateOffsetX, float rotateOffsetY, float rotateOffsetZ) {
         super(part, rotateOffsetX, rotateOffsetY, rotateOffsetZ);
         this.triangle = triangle;
     }
@@ -138,12 +138,12 @@ public class TrackerTriangle extends Tracker {
 
     }
 
-    public float basicRotation(float axis1, float axis2){
+    public float basicRotation(float axis1, float axis2) {
         return (float) (Math.PI + Math.atan2(axis1, axis2));
     }
 
 
-    public float angleBetween(PointF point1, PointF point2){
+    public float angleBetween(PointF point1, PointF point2) {
 
         return 0;
     }

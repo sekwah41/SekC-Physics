@@ -61,7 +61,7 @@ public class SekCPhysics {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        if(FMLCommonHandler.instance().getSide().isServer()){
+        if(FMLCommonHandler.instance().getSide().isServer()) {
             logger.error("The mod so far contains only visual features, there is no point having it installed on anything other " +
                     "than a client for now.");
         }

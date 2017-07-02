@@ -25,7 +25,7 @@ public class EventHook {
         //  as soon as it hits 0
         //SekCPhysics.logger.info("Entity Died.");
         // TODO Either add recalculation for the children or the option for a different model.
-        if(FMLCommonHandler.instance().getEffectiveSide().isClient() && !event.getEntityLiving().isChild()){
+        if(FMLCommonHandler.instance().getEffectiveSide().isClient() && !event.getEntityLiving().isChild()) {
             //SekCPhysics.logger.info("Entity Died.");
 
             // add checks for the ragolls and everything.
@@ -52,12 +52,12 @@ public class EventHook {
                 //entityRagdoll.ragdoll.skeleton.setVelocity(deadEntity.posX - deadEntity.lastTickPosX, deadEntity.posY - deadEntity.lastTickPosY, deadEntity.posZ - deadEntity.lastTickPosZ);
 
                 // Doesn't seem possible with client side only through just this event.
-                /*if(event.source.getEntity() != null){
+                /*if(event.source.getEntity() != null) {
                     Entity attackingEntity = event.source.getSourceOfDamage();
                     SekCPhysics.logger.info(attackingEntity);
-                    if(attackingEntity instanceof EntityPlayer){
+                    if(attackingEntity instanceof EntityPlayer) {
                         EntityPlayer attackingPlayer = (EntityPlayer) attackingEntity;
-                        if(attackingPlayer.getCurrentEquippedItem() != null){
+                        if(attackingPlayer.getCurrentEquippedItem() != null) {
                             // Try to add some other way such as finding the damage event and storing the knockback speed wanted.
                             ItemStack playerItem = attackingPlayer.getCurrentEquippedItem();
                             int knockback = EnchantmentHelper.getEnchantmentLevel(Enchantment.knockback.effectId, playerItem);
@@ -85,11 +85,11 @@ public class EventHook {
     }
 
     @SubscribeEvent
-    public void playerInteract(PlayerInteractEvent.RightClickItem event){
+    public void playerInteract(PlayerInteractEvent.RightClickItem event) {
         //SekCPhysics.logger.info("Player Interact");
 
-        if(event.getWorld().isRemote){
-            if(event.getEntityPlayer().capabilities.isCreativeMode && event.getEntityPlayer().getHeldItem(EnumHand.MAIN_HAND) != null && event.getEntityPlayer().getHeldItem(EnumHand.MAIN_HAND).getItem() == Items.NETHER_STAR){
+        if(event.getWorld().isRemote) {
+            if(event.getEntityPlayer().capabilities.isCreativeMode && event.getEntityPlayer().getHeldItem(EnumHand.MAIN_HAND) != null && event.getEntityPlayer().getHeldItem(EnumHand.MAIN_HAND).getItem() == Items.NETHER_STAR) {
                 EntityRagdoll entityRagdoll = new EntityRagdoll(event.getEntityPlayer().world);
 
                 BaseRagdoll ragdoll = new BipedRagdoll();

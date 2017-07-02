@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
  */
 public class ClientProxy extends CommonProxy {
 
-    public boolean isClient(){
+    public boolean isClient() {
         return true;
     }
 

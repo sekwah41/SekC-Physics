@@ -9,7 +9,7 @@ import net.minecraftforge.common.MinecraftForge;
  */
 public class CommonProxy {
 
-    public boolean isClient(){
+    public boolean isClient() {
         return false;
     }
 

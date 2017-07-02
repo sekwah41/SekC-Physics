@@ -24,7 +24,7 @@ public class RenderFac<T extends EntityRagdoll> implements IRenderFactory<T> {
 
     private Constructor<Render<T>> constructor;
 
-    public RenderFac(Class<Render<T>> renderClass){
+    public RenderFac(Class<Render<T>> renderClass) {
         try {
             this.constructor = renderClass.getConstructor(RenderManager.class);
         } catch (NoSuchMethodException e) {

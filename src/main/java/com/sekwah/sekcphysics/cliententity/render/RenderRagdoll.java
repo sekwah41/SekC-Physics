@@ -36,7 +36,7 @@ public class RenderRagdoll<T extends EntityRagdoll> extends Render<T> {
 
     private static Minecraft mc = Minecraft.getMinecraft();
 
-    public RenderRagdoll(RenderManager renderManager){
+    public RenderRagdoll(RenderManager renderManager) {
         super(renderManager);
         bipedModel = new ModelBiped();
 
@@ -45,7 +45,7 @@ public class RenderRagdoll<T extends EntityRagdoll> extends Render<T> {
         zombieModel = new ModelBiped(0.0f, 0, 64, 64);
     }
 
-    public void drawLine(PointD point, PointD point2){
+    public void drawLine(PointD point, PointD point2) {
         glColor3f(0.0f, 1.0f, 0.2f);
         glBegin(GL_LINE_STRIP);
 
@@ -57,7 +57,7 @@ public class RenderRagdoll<T extends EntityRagdoll> extends Render<T> {
 
     @Override
     public void doRender(T entity, double x, double y, double z, float entityYaw, float partialTicks) {
-        if(entity instanceof EntityRagdoll){
+        if(entity instanceof EntityRagdoll) {
             EntityRagdoll entityRagdoll = (EntityRagdoll) entity;
 
             GL11.glPushMatrix();
@@ -67,10 +67,10 @@ public class RenderRagdoll<T extends EntityRagdoll> extends Render<T> {
 
             ModelBiped currentModel;
 
-            if(entityRagdoll.ragdoll instanceof BipedRagdoll){
+            if(entityRagdoll.ragdoll instanceof BipedRagdoll) {
 
-                if(!entityRagdoll.ragdoll.trackersRegistered){
-                    if(entityRagdoll.ragdoll instanceof ZombieRagdoll){
+                if(!entityRagdoll.ragdoll.trackersRegistered) {
+                    if(entityRagdoll.ragdoll instanceof ZombieRagdoll) {
                         entityRagdoll.ragdoll.initTrackers(zombieModel);
                     }
                     else{
@@ -79,7 +79,7 @@ public class RenderRagdoll<T extends EntityRagdoll> extends Render<T> {
                 }
 
                 // add husk texure and also some other stuff for rendering properly
-                if(entityRagdoll.ragdoll instanceof ZombieRagdoll){
+                if(entityRagdoll.ragdoll instanceof ZombieRagdoll) {
 
                     this.bindTexture(zombieTexture);
                     currentModel = this.zombieModel;
@@ -92,7 +92,7 @@ public class RenderRagdoll<T extends EntityRagdoll> extends Render<T> {
 
                 BipedRagdoll bipedRagdoll = (BipedRagdoll) entityRagdoll.ragdoll;
 
-                if(mc.gameSettings.showDebugInfo){
+                if(mc.gameSettings.showDebugInfo) {
                     GL11.glPushMatrix();
                     GL11.glDepthMask(false);
                     GL11.glEnable(GL11.GL_BLEND);
@@ -103,7 +103,7 @@ public class RenderRagdoll<T extends EntityRagdoll> extends Render<T> {
                 }
 
 
-                for(Tracker tracker : bipedRagdoll.trackerHashmap.values()){
+                for(Tracker tracker : bipedRagdoll.trackerHashmap.values()) {
                     //SekCPhysics.logger.info("Test");
                     tracker.calcRotation();
                     tracker.render();
@@ -132,14 +132,14 @@ public class RenderRagdoll<T extends EntityRagdoll> extends Render<T> {
 
             //SekCPhysics.logger.info(p_76986_9_);
 
-            if(mc.gameSettings.showDebugInfo){
+            if(mc.gameSettings.showDebugInfo) {
                 entityRagdoll.ragdoll.skeleton.renderSkeletonDebug(entityRagdoll.ragdoll.isActive);
             }
             GL11.glPopMatrix();
         }
     }
 
-    public void setPartLocation(ModelRenderer trackPart, SkeletonPoint skeletonPart){
+    public void setPartLocation(ModelRenderer trackPart, SkeletonPoint skeletonPart) {
         trackPart.setRotationPoint((float) skeletonPart.posX * 16, (float) skeletonPart.posY * 16, (float) skeletonPart.posZ * 16);
         trackPart.render(0.0625F);
         //trackPart.rotateAngleZ=1;

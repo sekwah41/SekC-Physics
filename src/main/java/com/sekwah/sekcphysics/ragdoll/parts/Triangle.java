@@ -18,13 +18,13 @@ public class Triangle {
 
     public SkeletonPoint[] points = new SkeletonPoint[3];
 
-    public Triangle(SkeletonPoint pos1, SkeletonPoint pos2, SkeletonPoint pos3){
+    public Triangle(SkeletonPoint pos1, SkeletonPoint pos2, SkeletonPoint pos3) {
         this.points[0] = pos1;
         this.points[1] = pos2;
         this.points[2] = pos3;
     }
 
-    public void calcRotation(){
+    public void calcRotation() {
 
         // points being used to store vectors
 
@@ -70,7 +70,7 @@ public class Triangle {
     }
 
     // Get the normalised vector for the direction.
-    public PointD getDirectionNorm(){
+    public PointD getDirectionNorm() {
         // Center between left and right
         PointD averageLoc = new PointD((points[1].posX + points[2].posX) / 2F,(points[1].posY + points[2].posY) / 2F,(points[1].posZ + points[2].posZ) / 2F);
 
@@ -85,7 +85,7 @@ public class Triangle {
         return direction;
     }
 
-    public PointD getDirection(){
+    public PointD getDirection() {
         // Center between left and right vector
         PointD averageLoc = new PointD((points[1].posX + points[2].posX) / 2F,(points[1].posY + points[2].posY) / 2F,(points[1].posZ + points[2].posZ) / 2F);
 
@@ -100,7 +100,7 @@ public class Triangle {
      * Calculate the rotated angle around the direction.
      * @return angle, either 0 to 360 or 0 to 2Pi
      */
-    public float getAngle(){
+    public float getAngle() {
         return 0;
     }
 

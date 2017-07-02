@@ -16,7 +16,7 @@ public class ModSettings {
 
     /**
      * public static void changeSettingBoolean(EnumNarutoOptions setting, boolean bool) {
-     * if(setting == EnumNarutoOptions.FIRSTPERSON){
+     * if(setting == EnumNarutoOptions.FIRSTPERSON) {
      * experimentalFirstPerson = bool;
      * config.get(Configuration.CATEGORY_GENERAL, "experimentalFirstPersonEnabled", false).set(bool);
      * }

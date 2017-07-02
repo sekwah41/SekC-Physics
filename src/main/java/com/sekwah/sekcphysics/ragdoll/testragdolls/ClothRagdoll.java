@@ -19,16 +19,16 @@ public class ClothRagdoll extends BaseRagdoll {
 
     SkeletonPoint[][] points = new SkeletonPoint[width][height];
 
-    public ClothRagdoll(){
+    public ClothRagdoll() {
         super(1.4f);
         skeleton = new Skeleton();
 
         centerHeightOffset = 24;
 
         // Top row (anchor points)
-        for(int x = 0; x < width; x++){
-            for(int y = 0; y < height; y++){
-                if(y == 0){
+        for(int x = 0; x < width; x++) {
+            for(int y = 0; y < height; y++) {
+                if(y == 0) {
                     points[x][y] = new AnchoredSkeletonPoint(x * spacing, -y * spacing, 0, false);
                 }
                 else{
@@ -38,12 +38,12 @@ public class ClothRagdoll extends BaseRagdoll {
             }
         }
 
-        for(int x = 0; x < width; x++){
-            for(int y = 0; y < height; y++){
-                if(x < width - 1){
+        for(int x = 0; x < width; x++) {
+            for(int y = 0; y < height; y++) {
+                if(x < width - 1) {
                     skeleton.constraints.add(new Constraint(points[x][y],points[x + 1][y]));
                 }
-                if(y < height - 1){
+                if(y < height - 1) {
                     skeleton.constraints.add(new Constraint(points[x][y],points[x][y + 1]));
                 }
             }

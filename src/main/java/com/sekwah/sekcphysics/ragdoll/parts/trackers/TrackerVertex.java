@@ -20,7 +20,7 @@ public class TrackerVertex extends Tracker {
     private final float piFloat = (float) (Math.PI);
 
     public float rotationZ = 0;
-    public TrackerVertex(ModelRenderer part, SkeletonPoint anchor, SkeletonPoint pointsTo){
+    public TrackerVertex(ModelRenderer part, SkeletonPoint anchor, SkeletonPoint pointsTo) {
         super(part);
         this.anchor = anchor;
         this.pointsTo = pointsTo;
@@ -61,12 +61,12 @@ public class TrackerVertex extends Tracker {
      * @param axis2
      * @return
      */
-    public float basicRotation(float axis1, float axis2){
+    public float basicRotation(float axis1, float axis2) {
         return (float) (Math.PI + Math.atan2(axis1, axis2));
     }
 
 
-    public float angleBetween(PointF point1, PointF point2){
+    public float angleBetween(PointF point1, PointF point2) {
 
         return 0;
     }

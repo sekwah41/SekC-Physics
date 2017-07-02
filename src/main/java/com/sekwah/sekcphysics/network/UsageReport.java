@@ -42,9 +42,9 @@ public class UsageReport {
     }
 
     public void startUsageReport() {
-        if(ModSettings.usageReportMod == 0 || ModSettings.usageReportMod == 1){
+        if(ModSettings.usageReportMod == 0 || ModSettings.usageReportMod == 1) {
             addBase();
-            if(ModSettings.usageReportMod == 0){
+            if(ModSettings.usageReportMod == 0) {
                 addStats();
             }
 
@@ -57,7 +57,7 @@ public class UsageReport {
                     HashMap hashmap;
                     synchronized (UsageReport.this.syncLock) {
 
-                        if(ModSettings.usageReportMod == 0){
+                        if(ModSettings.usageReportMod == 0) {
                             addMemoryStats();
                         }
 
@@ -97,7 +97,7 @@ public class UsageReport {
         }
     }
 
-    public void addBase(){
+    public void addBase() {
         this.addData("uuid", uniqueID);// not the players uuid but a randomly generated one, more like a session token
         this.addData("version", SekCPhysics.version);
     }
@@ -122,7 +122,7 @@ public class UsageReport {
 
     }
 
-    public String buildPostString(Map map){
+    public String buildPostString(Map map) {
         StringBuilder stringbuilder = new StringBuilder();
         Iterator iterator = map.entrySet().iterator();
 

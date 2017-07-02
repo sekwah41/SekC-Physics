@@ -37,10 +37,10 @@ public class BaseRagdoll {
     // offset from the bottom of the desired entity to the main point of the ragdoll
     public double centerHeightOffset;
 
-    public BaseRagdoll(){
+    public BaseRagdoll() {
     }
 
-    public BaseRagdoll(float centerHeightOffset){
+    public BaseRagdoll(float centerHeightOffset) {
         this.centerHeightOffset = centerHeightOffset;
     }
 
@@ -64,7 +64,7 @@ public class BaseRagdoll {
     }
 
     public void setStanceToEntity(EntityLivingBase entity) {
-        for(SkeletonPoint point : skeleton.points){
+        for(SkeletonPoint point : skeleton.points) {
             // Finish rotation maths
             //newPoint.translate(new Vector3f((float) point.posX, (float) point.posY, (float) point.posZ));
             //SekCPhysics.logger.info(entity.rotationYaw);

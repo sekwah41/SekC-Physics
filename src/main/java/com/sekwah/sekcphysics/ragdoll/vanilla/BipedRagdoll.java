@@ -34,7 +34,7 @@ public class BipedRagdoll extends BaseRagdoll {
     public SkeletonPoint rightArm;
     public SkeletonPoint leftArm;
 
-    public BipedRagdoll(){
+    public BipedRagdoll() {
         super(1.4f);
         skeleton = new Skeleton();
 
@@ -136,7 +136,7 @@ public class BipedRagdoll extends BaseRagdoll {
 
     public void initTrackers(ModelBase model) {
         super.initTrackers(model);
-        if(model instanceof ModelBiped){
+        if(model instanceof ModelBiped) {
             ModelBiped modelBiped = (ModelBiped) model;
             this.addVertexTracker(modelBiped.bipedRightArm, this.rightShoulder, this.rightArm);
             this.addVertexTracker(modelBiped.bipedLeftArm, this.leftShoulder, this.leftArm);
@@ -153,15 +153,15 @@ public class BipedRagdoll extends BaseRagdoll {
         }
     }
 
-    private void addVertexTracker(ModelRenderer part, SkeletonPoint anchor, SkeletonPoint pointTo){
+    private void addVertexTracker(ModelRenderer part, SkeletonPoint anchor, SkeletonPoint pointTo) {
         trackerHashmap.put(part, new TrackerVertex(part, anchor, pointTo));
     }
 
-    private void addTriangleTracker(ModelRenderer part, Triangle triangle){
+    private void addTriangleTracker(ModelRenderer part, Triangle triangle) {
         trackerHashmap.put(part, new TrackerTriangle(part, triangle));
     }
 
-    private void addTriangleTrackerRot(ModelRenderer part, Triangle triangle, float rotateOffsetX, float rotateOffsetY, float rotateOffsetZ){
+    private void addTriangleTrackerRot(ModelRenderer part, Triangle triangle, float rotateOffsetX, float rotateOffsetY, float rotateOffsetZ) {
         trackerHashmap.put(part, new TrackerTriangle(part, triangle, rotateOffsetX, rotateOffsetY, rotateOffsetZ));
     }
 

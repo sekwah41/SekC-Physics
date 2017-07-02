@@ -12,7 +12,7 @@ public class PointF {
 
     private float z;
 
-    public PointF(float x, float y, float z){
+    public PointF(float x, float y, float z) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -46,34 +46,34 @@ public class PointF {
         this.z = z;
     }
 
-    public void add(float x, float y, float z){
+    public void add(float x, float y, float z) {
         this.x += x;
         this.y += y;
         this.z += z;
     }
 
-    public PointF add(PointF vector){
+    public PointF add(PointF vector) {
         this.x += vector.x;
         this.y += vector.y;
         this.z += vector.z;
         return this;
     }
 
-    public PointF sub(PointF vector){
+    public PointF sub(PointF vector) {
         this.x -= vector.x;
         this.y -= vector.y;
         this.z -= vector.z;
         return this;
     }
 
-    public PointF multiply(float multi){
+    public PointF multiply(float multi) {
         this.x *= multi;
         this.y *= multi;
         this.z *= multi;
         return this;
     }
 
-    public PointD convertToD(){
+    public PointD convertToD() {
         return new PointD(x,y,z);
     }
 

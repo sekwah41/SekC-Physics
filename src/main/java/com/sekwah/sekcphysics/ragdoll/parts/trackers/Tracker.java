@@ -44,11 +44,11 @@ public class Tracker {
         this.rotateOffsetZ = rotateOffsetZ;
     }
 
-    public void render(){
+    public void render() {
         this.part.render(0.0625f);
     }
 
-    public void calcRotation(){
+    public void calcRotation() {
 
     }
 

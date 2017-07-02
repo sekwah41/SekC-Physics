@@ -36,7 +36,7 @@ public class Ragdolls {
         this.entityToRagdollHashmap.put(entityClass, ragdollData);
     }
 
-    public FromDataRagdoll createRagdoll(Entity entity){
+    public FromDataRagdoll createRagdoll(Entity entity) {
         FromDataRagdoll ragdoll = null;
 
         // TODO add code to detect the baby versions and add new ragdolls
@@ -71,18 +71,18 @@ public class Ragdolls {
 
     // This is all going to be called from the entities and renders.
 
-    /*public void updateRagdolls(){
-        for(Object ragdollObj : currentRagdolls){
-            if(ragdollObj instanceof BaseRagdoll){
+    /*public void updateRagdolls() {
+        for(Object ragdollObj : currentRagdolls) {
+            if(ragdollObj instanceof BaseRagdoll) {
                 BaseRagdoll ragdoll = (BaseRagdoll) ragdollObj;
 
             }
         }
     }
     // May be needed if you cant do it as seperate entities although it could be more efficient.
-    public void renderRagdolls(){
-        for(Object ragdollObj : currentRagdolls){
-            if(ragdollObj instanceof BaseRagdoll){
+    public void renderRagdolls() {
+        for(Object ragdollObj : currentRagdolls) {
+            if(ragdollObj instanceof BaseRagdoll) {
                 BaseRagdoll ragdoll = (BaseRagdoll) ragdollObj;
                 ragdoll.skeleton.renderSkeletonDebug();
             }

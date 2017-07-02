@@ -21,16 +21,16 @@ public class CurtainRagdoll extends BaseRagdoll {
 
     SkeletonPoint[][] rightPoints = new SkeletonPoint[width][height];
 
-    public CurtainRagdoll(){
+    public CurtainRagdoll() {
         super(1.4f);
         skeleton = new Skeleton();
 
         centerHeightOffset = 24;
 
         // Top row (anchor points)
-        for(int x = 0; x < width; x++){
-            for(int y = 0; y < height; y++){
-                if(y == 0){
+        for(int x = 0; x < width; x++) {
+            for(int y = 0; y < height; y++) {
+                if(y == 0) {
                     leftPoints[x][y] = new AnchoredSkeletonPoint(x * spacing, -y * spacing, 0, false);
                 }
                 else{
@@ -40,21 +40,21 @@ public class CurtainRagdoll extends BaseRagdoll {
             }
         }
 
-        for(int x = 0; x < width; x++){
-            for(int y = 0; y < height; y++){
-                if(x < width - 1){
+        for(int x = 0; x < width; x++) {
+            for(int y = 0; y < height; y++) {
+                if(x < width - 1) {
                     skeleton.constraints.add(new Constraint(leftPoints[x][y],leftPoints[x + 1][y]));
                 }
-                if(y < height - 1){
+                if(y < height - 1) {
                     skeleton.constraints.add(new Constraint(leftPoints[x][y],leftPoints[x][y + 1]));
                 }
             }
         }
 
         // Top row (anchor points)
-        for(int x = 0; x < width; x++){
-            for(int y = 0; y < height; y++){
-                if(y == 0){
+        for(int x = 0; x < width; x++) {
+            for(int y = 0; y < height; y++) {
+                if(y == 0) {
                     rightPoints[x][y] = new AnchoredSkeletonPoint(-x * spacing, -y * spacing, 0, false);
                 }
                 else{
@@ -64,12 +64,12 @@ public class CurtainRagdoll extends BaseRagdoll {
             }
         }
 
-        for(int x = 0; x < width; x++){
-            for(int y = 0; y < height; y++){
-                if(x < width - 1){
+        for(int x = 0; x < width; x++) {
+            for(int y = 0; y < height; y++) {
+                if(x < width - 1) {
                     skeleton.constraints.add(new Constraint(rightPoints[x][y],rightPoints[x + 1][y]));
                 }
-                if(y < height - 1){
+                if(y < height - 1) {
                     skeleton.constraints.add(new Constraint(rightPoints[x][y],rightPoints[x][y + 1]));
                 }
             }

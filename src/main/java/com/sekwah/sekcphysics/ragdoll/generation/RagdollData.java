@@ -30,7 +30,7 @@ public class RagdollData {
     public RagdollData() {
     }
 
-    public void setSkeletonPoint(String pointName, double x, double y, double z){
+    public void setSkeletonPoint(String pointName, double x, double y, double z) {
         this.skeletonPointHashMap.put(pointName, new SkeletonPoint(x,y,z));
     }
 
@@ -39,10 +39,14 @@ public class RagdollData {
                 this.getSkeletonPoint(point2), this.getSkeletonPoint(point3)));
     }
 
+    public void addConstraint(String point1, String point2) throws RagdollInvalidDataException {
+        this.constraintLinkedList.add(new Constraint(this.getSkeletonPoint(point1), this.getSkeletonPoint(point2)));
+    }
+
     public SkeletonPoint getSkeletonPoint(String point) throws RagdollInvalidDataException {
         SkeletonPoint skeletonPoint = this.skeletonPointHashMap.get(point);
         if(skeletonPoint == null) {
-            throw new RagdollInvalidDataException("Invalid Skeleton Point");
+            throw new RagdollInvalidDataException("Invalid Skeleton Point Selected");
         }
         return skeletonPoint;
     }

@@ -11,7 +11,7 @@ public class PointD {
 
     private double z;
 
-    public PointD(double x, double y, double z){
+    public PointD(double x, double y, double z) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -41,34 +41,34 @@ public class PointD {
         this.z = z;
     }
 
-    public void add(double x, double y, double z){
+    public void add(double x, double y, double z) {
         this.x += x;
         this.y += y;
         this.z += z;
     }
 
-    public PointD add(PointD vector){
+    public PointD add(PointD vector) {
         this.x += vector.x;
         this.y += vector.y;
         this.z += vector.z;
         return this;
     }
 
-    public PointD sub(PointD vector){
+    public PointD sub(PointD vector) {
         this.x -= vector.x;
         this.y -= vector.y;
         this.z -= vector.z;
         return this;
     }
 
-    public PointD multiply(double multi){
+    public PointD multiply(double multi) {
         this.x *= multi;
         this.y *= multi;
         this.z *= multi;
         return this;
     }
 
-    public PointF convertToF(){
+    public PointF convertToF() {
         return new PointF(x,y,z);
     }
 

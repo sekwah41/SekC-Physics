@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class WreckingBallRagdoll extends BaseRagdoll {
 
-    public WreckingBallRagdoll(){
+    public WreckingBallRagdoll() {
         super(1.4f);
         skeleton = new Skeleton();
 
@@ -72,9 +72,9 @@ public class WreckingBallRagdoll extends BaseRagdoll {
         pointsInBox.add(rightbox);
 
         // Is rather rough and repeats constraints so takes longer but should be fine.
-        for(SkeletonPoint point1 : pointsInBox){
-            for(SkeletonPoint point2 : pointsInBox){
-                if(point1 != point2){
+        for(SkeletonPoint point1 : pointsInBox) {
+            for(SkeletonPoint point2 : pointsInBox) {
+                if(point1 != point2) {
                     skeleton.constraints.add(new Constraint(point1, point2));
                 }
             }
