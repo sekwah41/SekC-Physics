@@ -3,7 +3,10 @@ package com.sekwah.sekcphysics.ragdoll;
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.ragdoll.parts.Skeleton;
 import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
+import com.sekwah.sekcphysics.ragdoll.parts.Triangle;
 import com.sekwah.sekcphysics.ragdoll.parts.trackers.Tracker;
+import com.sekwah.sekcphysics.ragdoll.parts.trackers.TrackerTriangle;
+import com.sekwah.sekcphysics.ragdoll.parts.trackers.TrackerVertex;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.EntityLivingBase;
@@ -27,7 +30,6 @@ public class BaseRagdoll {
      */
     public boolean isActive = true;
 
-
     // Current skeleton position and shape
     public Skeleton skeleton;
 
@@ -37,16 +39,8 @@ public class BaseRagdoll {
     // offset from the bottom of the desired entity to the main point of the ragdoll
     public double centerHeightOffset;
 
-    public BaseRagdoll() {
-    }
-
     public BaseRagdoll(float centerHeightOffset) {
         this.centerHeightOffset = centerHeightOffset;
-    }
-
-
-    private void updateRagdoll() {
-
     }
 
     public void rotateRagdoll(float rotYaw) {
@@ -54,6 +48,10 @@ public class BaseRagdoll {
         // the entity
     }
 
+    /**
+     * Called whenever an update is needed
+     * @param entity
+     */
     public void update(EntityRagdoll entity) {
         skeleton.update(entity);
 
@@ -76,5 +74,17 @@ public class BaseRagdoll {
 
     public void initTrackers(ModelBase model) {
         trackersRegistered = true;
+    }
+
+    protected void addVertexTracker(ModelRenderer part, SkeletonPoint anchor, SkeletonPoint pointTo) {
+        trackerHashmap.put(part, new TrackerVertex(part, anchor, pointTo));
+    }
+
+    private void addTriangleTracker(ModelRenderer part, Triangle triangle) {
+        trackerHashmap.put(part, new TrackerTriangle(part, triangle));
+    }
+
+    protected void addTriangleTrackerRot(ModelRenderer part, Triangle triangle, float rotateOffsetX, float rotateOffsetY, float rotateOffsetZ) {
+        trackerHashmap.put(part, new TrackerTriangle(part, triangle, rotateOffsetX, rotateOffsetY, rotateOffsetZ));
     }
 }

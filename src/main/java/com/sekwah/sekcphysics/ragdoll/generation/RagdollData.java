@@ -27,6 +27,8 @@ public class RagdollData {
 
     private HashMap<String, Triangle> trangleHashMap = new HashMap<>();
 
+    public float centerHeightOffset;
+
     public RagdollData() {
     }
 

@@ -8,6 +8,8 @@ import com.sekwah.sekcphysics.ragdoll.generation.RagdollData;
 public class FromDataRagdoll extends BaseRagdoll {
 
     public FromDataRagdoll(RagdollData creationData) {
+        super(creationData.centerHeightOffset);
+
 
     }
 

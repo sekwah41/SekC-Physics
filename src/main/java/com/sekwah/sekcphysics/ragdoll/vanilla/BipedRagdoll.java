@@ -153,16 +153,4 @@ public class BipedRagdoll extends BaseRagdoll {
         }
     }
 
-    private void addVertexTracker(ModelRenderer part, SkeletonPoint anchor, SkeletonPoint pointTo) {
-        trackerHashmap.put(part, new TrackerVertex(part, anchor, pointTo));
-    }
-
-    private void addTriangleTracker(ModelRenderer part, Triangle triangle) {
-        trackerHashmap.put(part, new TrackerTriangle(part, triangle));
-    }
-
-    private void addTriangleTrackerRot(ModelRenderer part, Triangle triangle, float rotateOffsetX, float rotateOffsetY, float rotateOffsetZ) {
-        trackerHashmap.put(part, new TrackerTriangle(part, triangle, rotateOffsetX, rotateOffsetY, rotateOffsetZ));
-    }
-
 }

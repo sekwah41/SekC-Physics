@@ -2,6 +2,7 @@
   "EntityBiped" : {
     "textureDomain": "minecraft",
     "texture": "textures/entity/steve.png",
+    "heightOffset" : 1.4,
     "skeletonPoints":{
       "centerTorso" : [0,0,0],
       "headLeft" : [3,7,0],
