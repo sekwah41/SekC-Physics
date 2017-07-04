@@ -38,7 +38,8 @@ public class RagdollGenerator {
 
                     SekCPhysics.ragdolls.registerRagdoll(entry.getKey(), ragdollData);
                 }
-                catch(RagdollInvalidDataException | IllegalStateException | UnsupportedOperationException e) {
+                catch(ClassCastException | RagdollInvalidDataException | IllegalStateException
+                        | UnsupportedOperationException e) {
                     SekCPhysics.logger.error("Invalid data for: " + entry.getKey());
                     SekCPhysics.logger.error("Error message: " + e.getMessage());
                     SekCPhysics.logger.catching(Level.ERROR, e);
@@ -47,11 +48,14 @@ public class RagdollGenerator {
             ProgressManager.pop(bar);
             SekCPhysics.logger.info("Data loaded for: " + modid);
         }
-        catch(JsonSyntaxException e) {
+        catch(JsonSyntaxException | UnsupportedOperationException  e) {
             SekCPhysics.logger.info("Error with data for: " + modid);
+            SekCPhysics.logger.catching(Level.ERROR, e);
         }
-        catch(JsonIOException | NullPointerException | UnsupportedOperationException e) {
+        catch(JsonIOException | NullPointerException e) {
             SekCPhysics.logger.info("No ragdoll data found for: " + modid);
+            // Use for finding errors in program when file should be found
+            //e.printStackTrace();
         }
     }
 
@@ -143,6 +147,12 @@ public class RagdollGenerator {
             ragdollData = addRagdollOtherData(inherit.getAsJsonObject(), ragdollData,
                     ragdollFileJson);
         }
+
+        JsonElement heightOffset = ragdollJsonData.get("centerHeightOffset");
+        if(heightOffset != null){
+            ragdollData.centerHeightOffset = heightOffset.getAsFloat();
+        }
+
         return ragdollData;
     }
 
@@ -153,9 +163,9 @@ public class RagdollGenerator {
      * @return
      */
     private static JsonElement getInheritData(JsonObject enteryJson, JsonObject ragdollFileJson) {
-        String inherit = enteryJson.get("inherit").getAsString();
+        JsonElement inherit = enteryJson.get("inherit");
         if(inherit == null) return null;
-        return ragdollFileJson.get(inherit);
+        return ragdollFileJson.get(inherit.getAsString());
     }
 
     public static void loadRagdolls() {

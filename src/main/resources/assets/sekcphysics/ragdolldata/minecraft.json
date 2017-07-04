@@ -2,7 +2,7 @@
   "EntityBiped" : {
     "textureDomain": "minecraft",
     "texture": "textures/entity/steve.png",
-    "heightOffset" : 1.4,
+    "centerHeightOffset" : 1.4,
     "skeletonPoints":{
       "centerTorso" : [0,0,0],
       "headLeft" : [3,7,0],
@@ -77,8 +77,8 @@
       "rightArm" : [-6,-2,8],
       "leftArm" : [6,-2,8]
     },
-    "constraints":{
-    },
+    "constraints":[
+    ],
     "triangleConstraints":{
     }
   },
@@ -88,8 +88,8 @@
     "texture": "textures/entity/zombie/husk.png",
     "skeletonPoints":{
     },
-    "constraints":{
-    },
+    "constraints":[
+    ],
     "triangleConstraints":{
     }
   }
