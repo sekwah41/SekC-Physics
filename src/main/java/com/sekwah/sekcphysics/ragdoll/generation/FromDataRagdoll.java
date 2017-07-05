@@ -13,7 +13,7 @@ public class FromDataRagdoll extends BaseRagdoll {
         super(creationData.centerHeightOffset);
 
         for(SkeletonPoint point : creationData.getSkeletonPoints()) {
-            this.skeleton.points.add(point);
+            this.skeleton.points.add(point.clone());
         }
 
         for(Constraint constraint : creationData.getConstraints()) {

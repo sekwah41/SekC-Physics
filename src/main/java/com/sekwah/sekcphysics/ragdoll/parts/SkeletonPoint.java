@@ -378,7 +378,15 @@ public class SkeletonPoint {
 
     public void addVelocity(double motionX, double motionY, double motionZ) {
         this.lastPosX -= motionX;
+
+
+
+
+
+
         this.lastPosY -= motionY;
         this.lastPosZ -= motionZ;
     }
+
+
 }

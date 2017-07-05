@@ -58,7 +58,7 @@ public class EntityRagdoll extends Entity {
             return;
         }
 
-        if(ragdollLife-- < 0) {
+        /*if(ragdollLife-- < 0) {
 
             for (int i = 0; i < 10; ++i) {
                 float poofSize = 1.0f;
@@ -69,7 +69,7 @@ public class EntityRagdoll extends Entity {
             }
 
             this.setDead();
-        }
+        }*/
 
 
         /*if(ragdollUpdate-- < 0) {
@@ -82,7 +82,7 @@ public class EntityRagdoll extends Entity {
 
 //        if(--ragdollUpdate < 0) {
 //            ragdollUpdate = 4;
-            ragdoll.update(this);
+            //ragdoll.update(this);
 //        }
 
         PointD ragdollPos = ragdoll.skeleton.points.get(0).toPoint();
