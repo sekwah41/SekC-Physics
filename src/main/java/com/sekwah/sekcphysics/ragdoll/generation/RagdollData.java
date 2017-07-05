@@ -53,4 +53,12 @@ public class RagdollData {
         return skeletonPoint;
     }
 
+    public SkeletonPoint[] getSkeletonPoints() {
+        return this.skeletonPointHashMap.values().toArray(new SkeletonPoint[0]);
+    }
+
+    public Constraint[] getConstraints() {
+        return this.constraintLinkedList.toArray(new Constraint[0]);
+    }
+
 }

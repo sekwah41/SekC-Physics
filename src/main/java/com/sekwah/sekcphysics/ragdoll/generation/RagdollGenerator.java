@@ -1,4 +1,4 @@
-package com.sekwah.sekcphysics.ragdoll;
+package com.sekwah.sekcphysics.ragdoll.generation;
 
 import com.google.gson.*;
 import com.sekwah.sekcphysics.SekCPhysics;

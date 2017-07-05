@@ -1,6 +1,6 @@
 package com.sekwah.sekcphysics.cliententity;
 
-import com.sekwah.sekcphysics.ragdoll.BaseRagdoll;
+import com.sekwah.sekcphysics.ragdoll.ragdolls.BaseRagdoll;
 import com.sekwah.sekcphysics.ragdoll.PointD;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;

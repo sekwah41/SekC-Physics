@@ -1,4 +1,4 @@
-package com.sekwah.sekcphysics.ragdoll;
+package com.sekwah.sekcphysics.ragdoll.ragdolls;
 
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.ragdoll.parts.Skeleton;
@@ -27,6 +27,7 @@ public class BaseRagdoll {
 
     /**
      * If it is doing full updates or if it has settled on the floor waiting for larger amounts of updates
+     * NOT IMPLEMENTED YET
      */
     public boolean isActive = true;
 
@@ -40,6 +41,9 @@ public class BaseRagdoll {
     public double centerHeightOffset;
 
     public BaseRagdoll(float centerHeightOffset) {
+
+        this.skeleton = new Skeleton();
+
         this.centerHeightOffset = centerHeightOffset;
     }
 

@@ -4,11 +4,9 @@ import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.cliententity.render.RenderRagdoll;
 import com.sekwah.sekcphysics.cliententity.render.renderfactory.RenderFac;
 import com.sekwah.sekcphysics.generic.CommonProxy;
-import com.sekwah.sekcphysics.ragdoll.RagdollGenerator;
-import com.sekwah.sekcphysics.ragdoll.vanilla.VanillaRagdolls;
+import com.sekwah.sekcphysics.ragdoll.generation.RagdollGenerator;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 
 /**
  * Created by sekwah on 03/10/2015.

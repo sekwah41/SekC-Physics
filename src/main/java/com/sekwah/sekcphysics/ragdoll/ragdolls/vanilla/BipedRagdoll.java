@@ -1,16 +1,12 @@
-package com.sekwah.sekcphysics.ragdoll.vanilla;
+package com.sekwah.sekcphysics.ragdoll.ragdolls.vanilla;
 
 import com.sekwah.sekcphysics.SekCPhysics;
-import com.sekwah.sekcphysics.ragdoll.BaseRagdoll;
+import com.sekwah.sekcphysics.ragdoll.ragdolls.BaseRagdoll;
 import com.sekwah.sekcphysics.ragdoll.parts.Constraint;
-import com.sekwah.sekcphysics.ragdoll.parts.Skeleton;
 import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
 import com.sekwah.sekcphysics.ragdoll.parts.Triangle;
-import com.sekwah.sekcphysics.ragdoll.parts.trackers.TrackerTriangle;
-import com.sekwah.sekcphysics.ragdoll.parts.trackers.TrackerVertex;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.model.ModelRenderer;
 
 /**
  * Created by sekawh on 8/5/2015.
@@ -35,10 +31,7 @@ public class BipedRagdoll extends BaseRagdoll {
     public SkeletonPoint leftArm;
 
     public BipedRagdoll() {
-        super(1.4f);
-        skeleton = new Skeleton();
-
-        centerHeightOffset = 24;
+        super(24);
 
         centerTorso = new SkeletonPoint(0f,0f,0f);
 
@@ -80,10 +73,6 @@ public class BipedRagdoll extends BaseRagdoll {
 
         skeleton.points.add(headLeft);
         skeleton.points.add(headRight);
-
-
-
-
 
         skeleton.constraints.add(new Constraint(centerTorso,headLeft));
         skeleton.constraints.add(new Constraint(centerTorso,headRight));

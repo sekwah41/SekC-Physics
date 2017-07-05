@@ -1,7 +1,6 @@
 package com.sekwah.sekcphysics.generic;
 
 import com.sekwah.sekcphysics.handler.EntityHandler;
-import com.sekwah.sekcphysics.ragdoll.RagdollGenerator;
 import net.minecraftforge.common.MinecraftForge;
 
 /**

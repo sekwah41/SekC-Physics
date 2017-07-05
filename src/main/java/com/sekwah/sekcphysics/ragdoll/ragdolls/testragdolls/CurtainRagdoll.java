@@ -1,9 +1,8 @@
-package com.sekwah.sekcphysics.ragdoll.testragdolls;
+package com.sekwah.sekcphysics.ragdoll.ragdolls.testragdolls;
 
-import com.sekwah.sekcphysics.ragdoll.BaseRagdoll;
+import com.sekwah.sekcphysics.ragdoll.ragdolls.BaseRagdoll;
 import com.sekwah.sekcphysics.ragdoll.parts.AnchoredSkeletonPoint;
 import com.sekwah.sekcphysics.ragdoll.parts.Constraint;
-import com.sekwah.sekcphysics.ragdoll.parts.Skeleton;
 import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
 
 /**
@@ -23,7 +22,6 @@ public class CurtainRagdoll extends BaseRagdoll {
 
     public CurtainRagdoll() {
         super(1.4f);
-        skeleton = new Skeleton();
 
         centerHeightOffset = 24;
 

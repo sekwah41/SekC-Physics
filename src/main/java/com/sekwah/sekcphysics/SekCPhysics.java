@@ -1,10 +1,9 @@
 package com.sekwah.sekcphysics;
 
-import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.generic.CommonProxy;
 import com.sekwah.sekcphysics.network.UsageReport;
 import com.sekwah.sekcphysics.ragdoll.Ragdolls;
-import com.sekwah.sekcphysics.ragdoll.vanilla.VanillaRagdolls;
+import com.sekwah.sekcphysics.ragdoll.ragdolls.vanilla.VanillaRagdolls;
 import com.sekwah.sekcphysics.settings.ModSettings;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
@@ -12,12 +11,10 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.registry.EntityRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
-import java.io.InputStream;
 
 /**
  * Created by sekwah on 31/07/2015.

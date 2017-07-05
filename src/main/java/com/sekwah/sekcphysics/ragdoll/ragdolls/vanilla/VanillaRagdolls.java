@@ -1,9 +1,4 @@
-package com.sekwah.sekcphysics.ragdoll.vanilla;
-
-import com.sekwah.sekcphysics.SekCPhysics;
-import net.minecraft.entity.monster.EntityHusk;
-import net.minecraft.entity.monster.EntityZombie;
-import net.minecraft.entity.player.EntityPlayer;
+package com.sekwah.sekcphysics.ragdoll.ragdolls.vanilla;
 
 /**
  * Created by sekawh on 8/7/2015.
