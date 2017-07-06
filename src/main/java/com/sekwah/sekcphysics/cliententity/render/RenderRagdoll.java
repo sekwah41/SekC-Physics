@@ -1,7 +1,7 @@
 package com.sekwah.sekcphysics.cliententity.render;
 
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
-import com.sekwah.sekcphysics.ragdoll.PointD;
+import com.sekwah.sekcphysics.ragdoll.location.PointD;
 import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
 import com.sekwah.sekcphysics.ragdoll.parts.trackers.Tracker;
 import com.sekwah.sekcphysics.ragdoll.ragdolls.vanilla.BipedRagdoll;

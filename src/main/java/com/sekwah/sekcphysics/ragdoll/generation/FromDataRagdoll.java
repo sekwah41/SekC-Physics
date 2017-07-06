@@ -12,11 +12,13 @@ public class FromDataRagdoll extends BaseRagdoll {
     public FromDataRagdoll(RagdollData creationData) {
         super(creationData.centerHeightOffset);
 
-        for(SkeletonPoint point : creationData.getSkeletonPoints()) {
-            this.skeleton.points.add(point.clone());
+        RagdollConstructor ragdoll = new RagdollConstructor(creationData);
+
+        for(SkeletonPoint point : ragdoll.getSkeletonPoints()) {
+            this.skeleton.points.add(point);
         }
 
-        for(Constraint constraint : creationData.getConstraints()) {
+        for(Constraint constraint : ragdoll.getConstraints()) {
             this.skeleton.constraints.add(constraint);
         }
 

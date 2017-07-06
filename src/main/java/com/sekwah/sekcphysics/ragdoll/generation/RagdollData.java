@@ -1,7 +1,6 @@
 package com.sekwah.sekcphysics.ragdoll.generation;
 
-import com.sekwah.sekcphysics.ragdoll.parts.Constraint;
-import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
+import com.sekwah.sekcphysics.ragdoll.location.PointD;
 import com.sekwah.sekcphysics.ragdoll.parts.Triangle;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.util.ResourceLocation;
@@ -14,7 +13,7 @@ import java.util.LinkedList;
  */
 public class RagdollData {
 
-    private HashMap<String, SkeletonPoint> skeletonPointHashMap = new HashMap<>();
+    private HashMap<String, PointD> pointHashMap = new HashMap<>();
 
     private ModelBase ragdollModel;
 
@@ -23,7 +22,7 @@ public class RagdollData {
     /**
      * Has no references back so best to do it this way for quick use.
      */
-    private LinkedList<Constraint> constraintLinkedList = new LinkedList<>();
+    private LinkedList<ConstraintData> constraintLinkedList = new LinkedList<ConstraintData>();
 
     private HashMap<String, Triangle> trangleHashMap = new HashMap<>();
 
@@ -33,32 +32,44 @@ public class RagdollData {
     }
 
     public void setSkeletonPoint(String pointName, double x, double y, double z) {
-        this.skeletonPointHashMap.put(pointName, new SkeletonPoint(x,y,z));
+        this.pointHashMap.put(pointName, new PointD(x,y,z));
     }
 
-    public void setTriangle(String triangleName, String point1, String point2, String point3) throws RagdollInvalidDataException {
-        this.trangleHashMap.put(triangleName, new Triangle(this.getSkeletonPoint(point1),
-                this.getSkeletonPoint(point2), this.getSkeletonPoint(point3)));
-    }
+    /*public void setTriangle(String triangleName, String point1, String point2, String point3) throws RagdollInvalidDataException {
+        this.trangleHashMap.put(triangleName, new Triangle(this.getPoint(point1),
+                this.getPoint(point2), this.getPoint(point3)));
+    }*/
 
     public void addConstraint(String point1, String point2) throws RagdollInvalidDataException {
-        this.constraintLinkedList.add(new Constraint(this.getSkeletonPoint(point1), this.getSkeletonPoint(point2)));
+        this.constraintLinkedList.add(new ConstraintData(this.checkPoint(point1), this.checkPoint(point2)));
     }
 
-    public SkeletonPoint getSkeletonPoint(String point) throws RagdollInvalidDataException {
-        SkeletonPoint skeletonPoint = this.skeletonPointHashMap.get(point);
+    public PointD getPoint(String point) throws RagdollInvalidDataException {
+        PointD skeletonPoint = this.pointHashMap.get(point);
         if(skeletonPoint == null) {
             throw new RagdollInvalidDataException("Invalid Skeleton Point Selected");
         }
         return skeletonPoint;
     }
 
-    public SkeletonPoint[] getSkeletonPoints() {
-        return this.skeletonPointHashMap.values().toArray(new SkeletonPoint[0]);
+    public String checkPoint(String point) throws RagdollInvalidDataException {
+        PointD skeletonPoint = this.pointHashMap.get(point);
+        if(skeletonPoint == null) {
+            throw new RagdollInvalidDataException("Invalid Skeleton Point Selected");
+        }
+        return point;
     }
 
-    public Constraint[] getConstraints() {
-        return this.constraintLinkedList.toArray(new Constraint[0]);
+    public PointD[] getPoints() {
+        return this.pointHashMap.values().toArray(new PointD[0]);
+    }
+
+    public ConstraintData[] getConstraints() {
+        return this.constraintLinkedList.toArray(new ConstraintData[0]);
+    }
+
+    public HashMap<String, PointD> getPointMap(){
+        return this.pointHashMap;
     }
 
 }

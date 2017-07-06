@@ -1,6 +1,6 @@
 package com.sekwah.sekcphysics.ragdoll.parts.trackers;
 
-import com.sekwah.sekcphysics.ragdoll.PointF;
+import com.sekwah.sekcphysics.ragdoll.location.PointF;
 import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
 import net.minecraft.client.model.ModelRenderer;
 

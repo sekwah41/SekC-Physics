@@ -1,10 +1,9 @@
 package com.sekwah.sekcphysics.cliententity;
 
 import com.sekwah.sekcphysics.ragdoll.ragdolls.BaseRagdoll;
-import com.sekwah.sekcphysics.ragdoll.PointD;
+import com.sekwah.sekcphysics.ragdoll.location.PointD;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;

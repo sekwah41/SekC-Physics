@@ -1,4 +1,4 @@
-package com.sekwah.sekcphysics.ragdoll;
+package com.sekwah.sekcphysics.ragdoll.location;
 
 /**
  * Created by sekawh on 8/4/2015.

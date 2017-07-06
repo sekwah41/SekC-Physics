@@ -1,7 +1,7 @@
 package com.sekwah.sekcphysics.ragdoll.parts;
 
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
-import com.sekwah.sekcphysics.ragdoll.PointD;
+import com.sekwah.sekcphysics.ragdoll.location.PointD;
 import com.sekwah.sekcphysics.ragdoll.Ragdolls;
 import org.lwjgl.opengl.GL11;
 
