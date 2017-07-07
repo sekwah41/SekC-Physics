@@ -2,7 +2,7 @@ package com.sekwah.sekcphysics.ragdoll.parts;
 
 import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
-import com.sekwah.sekcphysics.ragdoll.location.PointD;
+import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.ragdoll.Ragdolls;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;

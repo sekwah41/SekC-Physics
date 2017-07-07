@@ -1,6 +1,6 @@
 package com.sekwah.sekcphysics.ragdoll.generation;
 
-import com.sekwah.sekcphysics.ragdoll.location.PointD;
+import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.ragdoll.parts.Triangle;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.util.ResourceLocation;

@@ -1,7 +1,7 @@
 package com.sekwah.sekcphysics.ragdoll.parts.trackers;
 
-import com.sekwah.sekcphysics.ragdoll.location.PointD;
-import com.sekwah.sekcphysics.ragdoll.location.PointF;
+import com.sekwah.sekcphysics.maths.PointD;
+import com.sekwah.sekcphysics.maths.PointF;
 import com.sekwah.sekcphysics.ragdoll.parts.Triangle;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.util.math.Vec3d;
@@ -76,9 +76,9 @@ public class TrackerTriangle extends Tracker {
 
         // Works and gets it aligned
 
-        rotationX = piFloat / 2 + basicRotation((float) -triangleDir.getY(), (float) Math.sqrt(Math.pow(triangleDir.getX(),2) + Math.pow(triangleDir.getZ(),2)));
+        rotationX = piFloat / 2 + basicRotation((float) -triangleDir.y, (float) Math.sqrt(Math.pow(triangleDir.x,2) + Math.pow(triangleDir.z,2)));
 
-        rotationY = basicRotation((float) -triangleDir.getX(), (float) -triangleDir.getZ());
+        rotationY = basicRotation((float) -triangleDir.x, (float) -triangleDir.z);
 
 
 
@@ -100,19 +100,19 @@ public class TrackerTriangle extends Tracker {
         // TODO Find out why convertToF is broken
         PointD triangleDir = triangle.getDirection();
 
-        //SekCPhysics.logger.info(triangle.getDirection().getX());
+        //SekCPhysics.logger.info(triangle.getDirection().x);
 
-       // rotationZ = basicRotation(constraintVert.getX(), constraintVert.getY());
+       // rotationZ = basicRotation(constraintVert.x, constraintVert.y);
 
-        rotationX = piFloat / 2 + basicRotation((float) -triangleDir.getY(), (float) Math.sqrt(Math.pow(triangleDir.getX(),2) + Math.pow(triangleDir.getZ(),2)));
+        rotationX = piFloat / 2 + basicRotation((float) -triangleDir.y, (float) Math.sqrt(Math.pow(triangleDir.x,2) + Math.pow(triangleDir.z,2)));
 
         //SekCPhysics.logger.info(rotationX);
 
-        rotationY = basicRotation((float) -triangleDir.getX(), (float) -triangleDir.getZ());
+        rotationY = basicRotation((float) -triangleDir.x, (float) -triangleDir.z);
 
         PointD trangleNorm = triangle.getNormal();
 
-        Vec3d normVec = new Vec3d(trangleNorm.getX(), trangleNorm.getY(), trangleNorm.getZ());
+        Vec3d normVec = new Vec3d(trangleNorm.x, trangleNorm.y, trangleNorm.z);
 
         ////normVec.rotateAroundZ(-rotationZ);
 
@@ -122,7 +122,7 @@ public class TrackerTriangle extends Tracker {
 
         /*GL11.glBegin(GL11.GL_LINE_STRIP);
         GL11.glVertex3d(0,0,0);
-        GL11.glVertex3d(trangleNorm.getX() * 40, trangleNorm.getY() * 40, trangleNorm.getZ() * 40);
+        GL11.glVertex3d(trangleNorm.x * 40, trangleNorm.y * 40, trangleNorm.z * 40);
         GL11.glEnd();
 
         GL11.glBegin(GL11.GL_LINE_STRIP);

@@ -1,7 +1,7 @@
 package com.sekwah.sekcphysics.ragdoll.parts;
 
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
-import com.sekwah.sekcphysics.ragdoll.location.PointD;
+import com.sekwah.sekcphysics.maths.PointD;
 
 /**
  * Created by sekawh on 8/6/2015.
@@ -41,10 +41,10 @@ public class AngleLimitConstraint {
         // Center between left and right
         PointD averageLoc = new PointD((end[1].posX + end[2].posX) / 2F,(end[1].posY + end[2].posY) / 2F,(end[1].posZ + end[2].posZ) / 2F);
 
-        double currentLength = Math.sqrt(Math.pow(end[0].posX - averageLoc.getX(), 2) + Math.pow(end[0].posY - averageLoc.getY(), 2) + Math.pow(end[0].posZ - averageLoc.getZ(), 2));
+        double currentLength = Math.sqrt(Math.pow(end[0].posX - averageLoc.x, 2) + Math.pow(end[0].posY - averageLoc.y, 2) + Math.pow(end[0].posZ - averageLoc.z, 2));
         // Direction from the base directly down the center of the triangle
-        PointD direction = new PointD((end[0].posX - averageLoc.getX()) / (float) currentLength,
-                (end[0].posY - averageLoc.getY()) / (float) currentLength, (end[0].posZ - averageLoc.getZ()) / (float) currentLength);
+        PointD direction = new PointD((end[0].posX - averageLoc.x) / (float) currentLength,
+                (end[0].posY - averageLoc.y) / (float) currentLength, (end[0].posZ - averageLoc.z) / (float) currentLength);
 
         // Calculate angle around the direction, may be best way to calculate orentation and make basic constraints on
         // but using the direction and getting an x and y(or whichever 2) to get the direction aligned before rotation

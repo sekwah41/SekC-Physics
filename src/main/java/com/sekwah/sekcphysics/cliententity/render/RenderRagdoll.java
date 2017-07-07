@@ -1,7 +1,7 @@
 package com.sekwah.sekcphysics.cliententity.render;
 
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
-import com.sekwah.sekcphysics.ragdoll.location.PointD;
+import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
 import com.sekwah.sekcphysics.ragdoll.parts.trackers.Tracker;
 import com.sekwah.sekcphysics.ragdoll.ragdolls.vanilla.BipedRagdoll;
@@ -43,16 +43,6 @@ public class RenderRagdoll<T extends EntityRagdoll> extends Render<T> {
         bipedModel64 = new ModelBiped(0.0f, 0, 64, 64);
 
         zombieModel = new ModelBiped(0.0f, 0, 64, 64);
-    }
-
-    public void drawLine(PointD point, PointD point2) {
-        glColor3f(0.0f, 1.0f, 0.2f);
-        glBegin(GL_LINE_STRIP);
-
-        glVertex3d(point.getX(), point.getY(), point.getY());
-        glVertex3d(point2.getX(), point2.getY(), point2.getY());
-        glEnd();
-        glColor3f(1f,1f,1f);
     }
 
     @Override

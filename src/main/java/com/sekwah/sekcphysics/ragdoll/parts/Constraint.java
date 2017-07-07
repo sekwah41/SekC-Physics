@@ -1,7 +1,7 @@
 package com.sekwah.sekcphysics.ragdoll.parts;
 
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
-import com.sekwah.sekcphysics.ragdoll.location.PointD;
+import com.sekwah.sekcphysics.maths.PointD;
 
 /**
  * Created by sekawh on 8/6/2015.
@@ -73,16 +73,16 @@ public class Constraint {
 
         //System.out.println(length);
 
-        end[0].moveTo(entity, (float) (averageLoc.getX() + (direction.getX() * halfLength)), (float) (averageLoc.getY() + (direction.getY() * halfLength)),
-                (float) (averageLoc.getZ() + (direction.getZ() * halfLength)));
+        end[0].moveTo(entity, (float) (averageLoc.x + (direction.x * halfLength)), (float) (averageLoc.y + (direction.y * halfLength)),
+                (float) (averageLoc.z + (direction.z * halfLength)));
 
-        end[1].moveTo(entity, (float) (averageLoc.getX() - (direction.getX() * halfLength)), (float) (averageLoc.getY() - (direction.getY() * halfLength)),
-                (float) (averageLoc.getZ() - (direction.getZ() * halfLength)));
+        end[1].moveTo(entity, (float) (averageLoc.x - (direction.x * halfLength)), (float) (averageLoc.y - (direction.y * halfLength)),
+                (float) (averageLoc.z - (direction.z * halfLength)));
 
         //System.out.println(Math.sqrt(Math.pow(end[0].posX - end[1].posX, 2) + Math.pow(end[0].posY - end[1].posY, 2) + Math.pow(end[0].posZ - end[1].posZ, 2)));
 
         /*System.out.println("");
-        System.out.println(direction.getX());
+        System.out.println(direction.x);
         System.out.println();*/
 
 
@@ -120,10 +120,10 @@ public class Constraint {
 
         //System.out.println(length);
 
-        end[0].setNewPos((float) (averageLoc.getX() + (direction.getX() * halfLength)), (float) (averageLoc.getY() + (direction.getY() * halfLength)),
-                (float) (averageLoc.getZ() + (direction.getZ() * halfLength)));
+        end[0].setNewPos((float) (averageLoc.x + (direction.x * halfLength)), (float) (averageLoc.y + (direction.y * halfLength)),
+                (float) (averageLoc.z + (direction.z * halfLength)));
 
-        end[1].setNewPos((float) (averageLoc.getX() - (direction.getX() * halfLength)), (float) (averageLoc.getY() - (direction.getY() * halfLength)),
-                (float) (averageLoc.getZ() - (direction.getZ() * halfLength)));
+        end[1].setNewPos((float) (averageLoc.x - (direction.x * halfLength)), (float) (averageLoc.y - (direction.y * halfLength)),
+                (float) (averageLoc.z - (direction.z * halfLength)));
     }
 }

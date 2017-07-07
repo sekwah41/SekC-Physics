@@ -1,10 +1,9 @@
 package com.sekwah.sekcphysics.ragdoll.parts;
 
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
-import com.sekwah.sekcphysics.ragdoll.location.PointD;
+import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.ragdoll.Ragdolls;
 import org.lwjgl.opengl.GL11;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -133,8 +132,8 @@ public class Skeleton {
             PointD direction = triangle.getDirection();
             PointD normal = triangle.getNormal();
             PointD basePoint = triangle.points[0].toPoint();
-            PointD directionPoint = basePoint.clone().add(direction);
-            PointD normalPoint = basePoint.clone().add(normal.multiply(4));
+            PointD directionPoint = basePoint.add(direction);
+            PointD normalPoint = basePoint.add(normal.multiply(4));
             drawLine(basePoint, directionPoint);
             glColor4f(0f,0f,1f, 1.0f);
             drawLine(basePoint, normalPoint);
@@ -155,8 +154,8 @@ public class Skeleton {
 
     public void drawLine(PointD point, PointD point2) {
         glBegin(GL_LINE_STRIP);
-        glVertex3d(point.getX(), point.getY(), point.getZ());
-        glVertex3d(point2.getX(), point2.getY(), point2.getZ());
+        glVertex3d(point.x, point.x, point.x);
+        glVertex3d(point2.x, point2.x, point2.x);
         glEnd();
     }
 
@@ -194,6 +193,12 @@ public class Skeleton {
         for(SkeletonPoint point : points) {
             point.addVelocity(motionX,motionY,motionZ);
             //point.movePoint(entity);
+        }
+    }
+
+    public void rotate(float rotYaw) {
+        for(SkeletonPoint point : this.points) {
+
         }
     }
 }

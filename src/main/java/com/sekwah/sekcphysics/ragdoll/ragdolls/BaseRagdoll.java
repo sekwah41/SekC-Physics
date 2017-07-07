@@ -48,8 +48,7 @@ public class BaseRagdoll {
     }
 
     public void rotateRagdoll(float rotYaw) {
-        // add some matrix code to calaulate positions for all of the new points to be alligned with the rotation of
-        // the entity
+        this.skeleton.rotate(rotYaw);
     }
 
     /**

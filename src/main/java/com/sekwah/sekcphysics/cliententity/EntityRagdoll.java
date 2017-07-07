@@ -1,7 +1,7 @@
 package com.sekwah.sekcphysics.cliententity;
 
 import com.sekwah.sekcphysics.ragdoll.ragdolls.BaseRagdoll;
-import com.sekwah.sekcphysics.ragdoll.location.PointD;
+import com.sekwah.sekcphysics.maths.PointD;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -86,9 +86,9 @@ public class EntityRagdoll extends Entity {
 
         PointD ragdollPos = ragdoll.skeleton.points.get(0).toPoint();
 
-        this.setPosition(this.posX + ragdollPos.getX(), this.posY + ragdollPos.getY(), this.posZ + ragdollPos.getZ());
+        this.setPosition(this.posX + ragdollPos.x, this.posY + ragdollPos.y, this.posZ + ragdollPos.z);
 
-        ragdoll.shiftPos(-ragdollPos.getX(), -ragdollPos.getY(), -ragdollPos.getZ());
+        ragdoll.shiftPos(-ragdollPos.x, -ragdollPos.y, -ragdollPos.z);
     }
 
     @Override

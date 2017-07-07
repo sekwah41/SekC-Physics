@@ -1,6 +1,6 @@
 package com.sekwah.sekcphysics.ragdoll.generation;
 
-import com.sekwah.sekcphysics.ragdoll.location.PointD;
+import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.ragdoll.parts.Constraint;
 import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
 
@@ -11,21 +11,23 @@ import java.util.Map;
 /**
  * Build the data for the ragdoll from the RagdollData into new ragdoll data
  *
+ * Only constructs the data that needs to be cloned though such as constraints. The rest of the data which is immutable
+ * is from the RagdollData
+ *
  * Created by sekwah41 on 06/07/2017.
  */
 public class RagdollConstructor {
 
     private HashMap<String, SkeletonPoint> skeletonPointHashMap = new HashMap<>();
 
-    private LinkedList<Constraint> constraintLinkedList = new LinkedList<Constraint>();
+    private LinkedList<Constraint> constraintLinkedList = new LinkedList<>();
 
     public RagdollConstructor(RagdollData creationData) {
 
         for(Map.Entry<String, PointD> entry : creationData.getPointMap().entrySet()) {
             PointD point = entry.getValue();
-            this.skeletonPointHashMap.put(entry.getKey(), new SkeletonPoint(point.getX(), point.getY(), point.getZ()));
+            this.skeletonPointHashMap.put(entry.getKey(), new SkeletonPoint(point.x, point.y, point.z));
         }
-
 
         for(ConstraintData constraintData : creationData.getConstraints()) {
             this.constraintLinkedList.add(new Constraint(this.getSkeletonPoint(constraintData.part1),
