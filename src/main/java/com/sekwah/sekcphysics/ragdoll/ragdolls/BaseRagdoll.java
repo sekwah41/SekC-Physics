@@ -1,6 +1,6 @@
 package com.sekwah.sekcphysics.ragdoll.ragdolls;
 
-import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
+import com.sekwah.sekcphysics.client.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.ragdoll.parts.Skeleton;
 import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
 import com.sekwah.sekcphysics.ragdoll.parts.Triangle;

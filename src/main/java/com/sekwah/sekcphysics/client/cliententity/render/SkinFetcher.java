@@ -1,4 +1,4 @@
-package com.sekwah.sekcphysics.cliententity.render;
+package com.sekwah.sekcphysics.client.cliententity.render;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ImageBufferDownload;

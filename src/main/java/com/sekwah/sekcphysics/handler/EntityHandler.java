@@ -1,7 +1,7 @@
 package com.sekwah.sekcphysics.handler;
 
 import com.sekwah.sekcphysics.SekCPhysics;
-import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
+import com.sekwah.sekcphysics.client.cliententity.EntityRagdoll;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 

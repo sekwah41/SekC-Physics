@@ -1,9 +1,8 @@
 package com.sekwah.sekcphysics.ragdoll.parts;
 
-import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
+import com.sekwah.sekcphysics.client.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.maths.VectorMaths;
-import com.sekwah.sekcphysics.ragdoll.Ragdolls;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
@@ -32,6 +31,8 @@ public class Skeleton {
     //public Triangle[] triangles;
 
     public List<Triangle> triangles = new ArrayList<Triangle>();
+
+    public int maxUpdateCount = 5;
 
     // Store a velocity which is the last position take away the current position but also add it so you can add velocity
     //  because if its added for a single update itll carry on that motion. So stuff like explosions or an arrow to the
@@ -64,7 +65,7 @@ public class Skeleton {
         }
 
         // oldUpdate constraints
-        for(int i = 0; i <= Ragdolls.maxUpdateCount; i++) {
+        for(int i = 0; i <= this.maxUpdateCount; i++) {
             if(!this.isActive()){
                 break;
             }

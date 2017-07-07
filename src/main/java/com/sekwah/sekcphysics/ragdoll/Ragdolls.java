@@ -19,7 +19,7 @@ public class Ragdolls {
     /**
      * Need to add update counts to the ragdoll data rather than global also 10 is for cloths
      */
-    public static int maxUpdateCount = 10;
+    //public static int maxUpdateCount = 10;
 
     public static float gravity = 0.05F; // alter till it looks the best, also maybe add material values as mods use stuff like
 

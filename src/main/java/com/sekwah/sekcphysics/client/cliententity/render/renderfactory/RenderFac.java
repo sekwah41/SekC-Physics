@@ -1,11 +1,9 @@
-package com.sekwah.sekcphysics.cliententity.render.renderfactory;
+package com.sekwah.sekcphysics.client.cliententity.render.renderfactory;
 
-import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
-import com.sekwah.sekcphysics.cliententity.render.RenderRagdoll;
+import com.sekwah.sekcphysics.client.cliententity.EntityRagdoll;
+import com.sekwah.sekcphysics.client.cliententity.render.RenderRagdoll;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.entity.Entity;
-import net.minecraftforge.client.IRenderHandler;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 import java.lang.reflect.Constructor;

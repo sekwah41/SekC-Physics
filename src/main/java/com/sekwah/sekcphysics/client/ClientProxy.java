@@ -1,8 +1,8 @@
 package com.sekwah.sekcphysics.client;
 
-import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
-import com.sekwah.sekcphysics.cliententity.render.RenderRagdoll;
-import com.sekwah.sekcphysics.cliententity.render.renderfactory.RenderFac;
+import com.sekwah.sekcphysics.client.cliententity.EntityRagdoll;
+import com.sekwah.sekcphysics.client.cliententity.render.RenderRagdoll;
+import com.sekwah.sekcphysics.client.cliententity.render.renderfactory.RenderFac;
 import com.sekwah.sekcphysics.generic.CommonProxy;
 import com.sekwah.sekcphysics.ragdoll.generation.RagdollGenerator;
 import net.minecraftforge.common.MinecraftForge;

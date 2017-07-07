@@ -1,7 +1,6 @@
-package com.sekwah.sekcphysics.cliententity.render;
+package com.sekwah.sekcphysics.client.cliententity.render;
 
-import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
-import com.sekwah.sekcphysics.maths.PointD;
+import com.sekwah.sekcphysics.client.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
 import com.sekwah.sekcphysics.ragdoll.parts.trackers.Tracker;
 import com.sekwah.sekcphysics.ragdoll.ragdolls.vanilla.BipedRagdoll;
@@ -13,8 +12,6 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
-
-import static org.lwjgl.opengl.GL11.*;
 
 /**
  * Created by sekawh on 8/2/2015.

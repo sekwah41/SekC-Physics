@@ -1,4 +1,4 @@
-package com.sekwah.sekcphysics.cliententity;
+package com.sekwah.sekcphysics.client.cliententity;
 
 import com.sekwah.sekcphysics.ragdoll.ragdolls.BaseRagdoll;
 import com.sekwah.sekcphysics.maths.PointD;

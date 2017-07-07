@@ -1,7 +1,7 @@
 package com.sekwah.sekcphysics.client;
 
 import com.sekwah.sekcphysics.SekCPhysics;
-import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
+import com.sekwah.sekcphysics.client.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.ragdoll.ragdolls.BaseRagdoll;
 import com.sekwah.sekcphysics.ragdoll.ragdolls.vanilla.BipedRagdoll;
 import net.minecraft.entity.EntityLivingBase;
