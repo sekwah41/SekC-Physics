@@ -14,7 +14,7 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 /**
- * Created by sekawh on 8/2/2015.
+ * Ragdoll renderer file
  */
 public class RenderRagdoll<T extends EntityRagdoll> extends Render<T> {
     // add code to render the lines between the links of nodes, and also the option to render boxes at each node.
@@ -44,86 +44,68 @@ public class RenderRagdoll<T extends EntityRagdoll> extends Render<T> {
 
     @Override
     public void doRender(T entity, double x, double y, double z, float entityYaw, float partialTicks) {
-        if(entity instanceof EntityRagdoll) {
-            EntityRagdoll entityRagdoll = entity;
+        GL11.glPushMatrix();
 
-            GL11.glPushMatrix();
+        // Sets the position offset for rendering
+        GL11.glTranslated(x, y, z);
 
-            // Sets the position offset for rendering
-            GL11.glTranslated(x, y, z);
+        ModelBiped currentModel;
 
-            ModelBiped currentModel;
+        if(entity.ragdoll instanceof BipedRagdoll) {
 
-            if(entityRagdoll.ragdoll instanceof BipedRagdoll) {
-
-                if(!entityRagdoll.ragdoll.trackersRegistered) {
-                    if(entityRagdoll.ragdoll instanceof ZombieRagdoll) {
-                        entityRagdoll.ragdoll.initTrackers(zombieModel);
-                    }
-                    else{
-                        entityRagdoll.ragdoll.initTrackers(bipedModel64);
-                    }
-                }
-
-                // add husk texure and also some other stuff for rendering properly
-                if(entityRagdoll.ragdoll instanceof ZombieRagdoll) {
-
-                    this.bindTexture(zombieTexture);
-                    currentModel = this.zombieModel;
-
+            if(!entity.ragdoll.trackersRegistered) {
+                if(entity.ragdoll instanceof ZombieRagdoll) {
+                    entity.ragdoll.initTrackers(zombieModel);
                 }
                 else{
-                    this.bindTexture(steveTextures);
-                    currentModel = this.bipedModel;
+                    entity.ragdoll.initTrackers(bipedModel64);
                 }
-
-                BipedRagdoll bipedRagdoll = (BipedRagdoll) entityRagdoll.ragdoll;
-
-                if(mc.gameSettings.showDebugInfo) {
-                    GL11.glPushMatrix();
-                    GL11.glDepthMask(false);
-                    GL11.glEnable(GL11.GL_BLEND);
-                    //GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-                    GL11.glAlphaFunc(GL11.GL_GREATER, 0.003921569F);
-
-                    GL11.glColor4f(1,1,1,0.5f);
-                }
-
-
-                for(Tracker tracker : bipedRagdoll.trackerHashmap.values()) {
-                    //SekCPhysics.logger.info("Test");
-                    tracker.calcRotation();
-                    tracker.render();
-                }
-
-                if(mc.gameSettings.showDebugInfo) {
-                    GL11.glColor4f(1, 1, 1, 1);
-
-                    GL11.glDepthMask(true);
-
-                    GL11.glPopMatrix();
-                }
-
-                /*setPartLocation(currentModel.bipedRightArm, bipedRagdoll.leftShoulder);
-
-                setPartLocation(currentModel.bipedRightArm, bipedRagdoll.rightShoulder);
-
-                setPartLocation(currentModel.bipedHead, bipedRagdoll.centerTorso);
-                setPartLocation(currentModel.bipedBody, bipedRagdoll.centerTorso);
-
-                setPartLocation(currentModel.bipedLeftLeg, bipedRagdoll.leftLegTop);
-
-                setPartLocation(currentModel.bipedRightLeg, bipedRagdoll.rightLegTop);*/
-
             }
 
-            //SekCPhysics.logger.info(p_76986_9_);
+            // add husk texure and also some other stuff for rendering properly
+            if(entity.ragdoll instanceof ZombieRagdoll) {
+
+                this.bindTexture(zombieTexture);
+                currentModel = this.zombieModel;
+
+            }
+            else{
+                this.bindTexture(steveTextures);
+                currentModel = this.bipedModel;
+            }
+
+            BipedRagdoll bipedRagdoll = (BipedRagdoll) entity.ragdoll;
 
             if(mc.gameSettings.showDebugInfo) {
-                entityRagdoll.ragdoll.skeleton.renderSkeletonDebug(entityRagdoll.ragdoll.isActive());
+                GL11.glPushMatrix();
+                GL11.glDepthMask(false);
+                GL11.glEnable(GL11.GL_BLEND);
+                //GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+                GL11.glAlphaFunc(GL11.GL_GREATER, 0.003921569F);
+
+                GL11.glColor4f(1,1,1,0.5f);
             }
-            GL11.glPopMatrix();
+
+
+            for(Tracker tracker : bipedRagdoll.trackerHashmap.values()) {
+                //SekCPhysics.logger.info("Test");
+                tracker.calcRotation();
+                tracker.render();
+            }
+
+            if(mc.gameSettings.showDebugInfo) {
+                GL11.glColor4f(1, 1, 1, 1);
+
+                GL11.glDepthMask(true);
+
+                GL11.glPopMatrix();
+            }
         }
+
+        if(mc.gameSettings.showDebugInfo) {
+            entity.ragdoll.skeleton.renderSkeletonDebug(entity.ragdoll.activeStatus());
+        }
+        GL11.glPopMatrix();
     }
 
     public void setPartLocation(ModelRenderer trackPart, SkeletonPoint skeletonPart) {

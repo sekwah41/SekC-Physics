@@ -88,4 +88,14 @@ public class BaseRagdoll {
     public boolean isActive() {
         return this.skeleton.isActive();
     }
+
+    public int activeStatus() {
+        System.out.println(this.skeleton.updateCount);
+        if(this.isActive()) {
+            return 0;
+        }
+        else {
+            return this.skeleton.updateCount == 1 ? 2 : 1;
+        }
+    }
 }

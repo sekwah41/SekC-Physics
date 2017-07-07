@@ -34,6 +34,8 @@ public class Skeleton {
 
     public int maxUpdateCount = 5;
 
+    public int updateCount = 0;
+
     // Store a velocity which is the last position take away the current position but also add it so you can add velocity
     //  because if its added for a single update itll carry on that motion. So stuff like explosions or an arrow to the
     //  knee. Also if a player walks around a ragdoll you can add sorta a magnetic push for parts near entities away from the player.
@@ -65,7 +67,8 @@ public class Skeleton {
         }
 
         // oldUpdate constraints
-        for(int i = 0; i <= this.maxUpdateCount; i++) {
+        int updates = 0;
+        for(; updates <= this.maxUpdateCount; updates++) {
             if(!this.isActive()){
                 break;
             }
@@ -74,6 +77,7 @@ public class Skeleton {
                 //point.movePoint(entity);
             }
         }
+        this.updateCount = updates;
 
         for(SkeletonPoint point : points) {
             point.updatePos(entity);
@@ -103,30 +107,35 @@ public class Skeleton {
     }
 
     public void renderSkeletonDebug() {
-        renderSkeletonDebug(true);
+        renderSkeletonDebug(0);
     }
 
     /**
      * Renders all the constraints as lines, also maybe add the linked triangles next. Create a skleton for the
-     * @param isActive
+     * @param activeStatus
      */
-    public void renderSkeletonDebug(boolean isActive) {
+    public void renderSkeletonDebug(int activeStatus) {
         glDisable(GL_CULL_FACE);
         glDisable(GL11.GL_TEXTURE_2D);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glDisable(GL11.GL_LIGHTING);
         for(Triangle triangle : triangles) {
-            if(isActive) glColor4f(0.0f, 0.8f, 0.1f, 0.5f);
-            else glColor4f(0.8f, 0.0f, 0.0f, 0.5f);
-
+            switch(activeStatus) {
+                case 0: glColor4f(0.0f, 0.8f, 0.1f, 0.5f); break;
+                case 1: glColor4f(0.8f, 0.6f, 0.0f, 0.5f); break;
+                case 2: glColor4f(0.8f, 0.0f, 0.0f, 0.5f); break;
+            }
             drawTriangle(triangle.points[0], triangle.points[1], triangle.points[2]);
             glColor3f(1f,1f,1f);
         }
         glEnable(GL_CULL_FACE);
         for(Constraint constraint : constraints) {
             // getBrightness(float p_70013_1_) from entity
-            if(isActive) glColor4f(0.0f, 1.0f, 0.2f, 1.0f);
-            else glColor4f(1.0f, 0.0f, 0.0f, 0.5f);
+            switch(activeStatus) {
+                case 0: glColor4f(0.0f, 1.0f, 0.2f, 0.8f); break;
+                case 1: glColor4f(1.0f, 0.7f, 0.0f, 0.5f); break;
+                case 2: glColor4f(1.0f, 0.0f, 0.0f, 0.5f); break;
+            }
             drawLine(constraint.end[0], constraint.end[1]);
             glColor4f(1f,1f,1f, 1.0f);
 

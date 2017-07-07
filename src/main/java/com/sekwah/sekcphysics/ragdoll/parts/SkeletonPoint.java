@@ -144,7 +144,7 @@ public class SkeletonPoint {
      * @return
      */
     private boolean checkWillMove() {
-        this.nonMoveThresh = 0.00001f;
+        this.nonMoveThresh = 0.0001f;
 
         double move = this.newPosX - this.posX + this.newPosY - this.posY + this.newPosZ - this.posZ;
         boolean moved = (move < -this.nonMoveThresh || move > this.nonMoveThresh);
@@ -152,8 +152,8 @@ public class SkeletonPoint {
         //System.out.println(moved);
         if(!moved) {
             this.newPosX = this.posX;
-            this.newPosX = this.posX;
-            this.newPosX = this.posX;
+            this.newPosY = this.posY;
+            this.newPosZ = this.posZ;
         }
         return this.hasMoved = moved;
     }
@@ -269,7 +269,7 @@ public class SkeletonPoint {
             d1 *= 0.05000000074505806D;
             d0 *= (double)(1.0F - entityCol.entityCollisionReduction);
             d1 *= (double)(1.0F - entityCol.entityCollisionReduction);
-            SekCPhysics.logger.info(entityCol.motionX);
+            //SekCPhysics.logger.info(entityCol.motionX);
             //entityCol.addVelocity(-d0, 0.0D, -d1);
             this.addVelocity(d0 + entityCol.motionX, 0.0D, d1 + entityCol.motionZ);
         }
