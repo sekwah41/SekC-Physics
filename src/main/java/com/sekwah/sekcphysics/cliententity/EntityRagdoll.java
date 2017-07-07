@@ -4,6 +4,7 @@ import com.sekwah.sekcphysics.ragdoll.ragdolls.BaseRagdoll;
 import com.sekwah.sekcphysics.maths.PointD;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -57,7 +58,7 @@ public class EntityRagdoll extends Entity {
             return;
         }
 
-        /*if(ragdollLife-- < 0) {
+        if(ragdollLife-- < 0) {
 
             for (int i = 0; i < 10; ++i) {
                 float poofSize = 1.0f;
@@ -68,21 +69,14 @@ public class EntityRagdoll extends Entity {
             }
 
             this.setDead();
-        }*/
+        }
 
 
-        /*if(ragdollUpdate-- < 0) {
-            ragdollUpdate = 20;
+        //if(ragdollUpdate-- < 0) {
+            //ragdollUpdate = 20;
             ragdoll.update(this);
-        }*/
+       // }
         // Possibly change to update every render rather than entity update and add alpha time
-
-
-
-//        if(--ragdollUpdate < 0) {
-//            ragdollUpdate = 4;
-            //ragdoll.update(this);
-//        }
 
         PointD ragdollPos = ragdoll.skeleton.points.get(0).toPoint();
 

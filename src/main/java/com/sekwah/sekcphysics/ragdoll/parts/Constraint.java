@@ -49,57 +49,15 @@ public class Constraint {
         this.length = Math.sqrt(Math.pow(start.posX - end.posX, 2) + Math.pow(start.posY - end.posY, 2) + Math.pow(start.posZ - end.posZ, 2));
     }
 
-
-    public void apply(EntityRagdoll entity) {
-
-        PointD averageLoc = new PointD((end[0].posX + end[1].posX) / 2F,(end[0].posY + end[1].posY) / 2F,(end[0].posZ + end[1].posZ) / 2F);
-
-        double currentLength = Math.sqrt(Math.pow(end[0].posX - end[1].posX, 2) + Math.pow(end[0].posY - end[1].posY, 2) + Math.pow(end[0].posZ - end[1].posZ, 2));
-        // If its already the correct length theres no point in recalculating
-        if(currentLength == length) {
-            return;
-        }
-        if(currentLength == 0) {
-            currentLength = 0.01;
-        }
-        PointD direction = new PointD((end[0].posX - end[1].posX) / (float) currentLength,
-                (end[0].posY - end[1].posY) / (float) currentLength, (end[0].posZ - end[1].posZ) / (float) currentLength);
-
-        //System.out.println(averageLoc);
-
-        double halfLength = length / 2F;
-
-        //System.out.println("");
-
-        //System.out.println(length);
-
-        end[0].moveTo(entity, (float) (averageLoc.x + (direction.x * halfLength)), (float) (averageLoc.y + (direction.y * halfLength)),
-                (float) (averageLoc.z + (direction.z * halfLength)));
-
-        end[1].moveTo(entity, (float) (averageLoc.x - (direction.x * halfLength)), (float) (averageLoc.y - (direction.y * halfLength)),
-                (float) (averageLoc.z - (direction.z * halfLength)));
-
-        //System.out.println(Math.sqrt(Math.pow(end[0].posX - end[1].posX, 2) + Math.pow(end[0].posY - end[1].posY, 2) + Math.pow(end[0].posZ - end[1].posZ, 2)));
-
-        /*System.out.println("");
-        System.out.println(direction.x);
-        System.out.println();*/
-
-
-        // double check all the maths and everything, write it all out and find what is happening. Im not sure if its just a faulty physics system or what but somethings wrong
-        // The length isnt worksing correct
-        // Try taking 2 example points and write the working on paper and check them against it
-
-        // end[0] and end[1] are pointers to the points at each end of the constraint
-        //XYZ dir = Normalize(end[1]->position - end[0]->position);
-        //XYZ avg = (end[1]->position + end[0]->position)/2;
-        //end[0]->add_new_position(avg-dir*(length/2));
-        //end[1]->add_new_position(avg+dir*(length/2));
-    }
-
     public void calc(EntityRagdoll entity) {
 
-        PointD averageLoc = new PointD((end[0].newPosX + end[1].newPosX) / 2F,(end[0].newPosY + end[1].newPosY) / 2F,(end[0].newPosZ + end[1].newPosZ) / 2F);
+        if(!(end[0].hasMoved || end[1].hasMoved)) {
+            //System.out.println("Cancel");
+            return;
+        }
+
+        PointD averageLoc = new PointD((end[0].newPosX + end[1].newPosX) * 0.5f,
+                (end[0].newPosY + end[1].newPosY) * 0.5f,(end[0].newPosZ + end[1].newPosZ) * 0.5f);
 
         double currentLength = Math.sqrt(Math.pow(end[0].newPosX - end[1].newPosX, 2) + Math.pow(end[0].newPosY - end[1].newPosY, 2) + Math.pow(end[0].newPosZ - end[1].newPosZ, 2));
         // If its already the correct length theres no point in recalculating

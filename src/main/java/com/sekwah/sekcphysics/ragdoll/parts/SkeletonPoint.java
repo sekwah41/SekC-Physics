@@ -30,6 +30,10 @@ public class SkeletonPoint {
     public double newPosY;
     public double newPosZ;
 
+    private double nonMoveThresh = 0.001;
+
+    public boolean hasMoved = false;
+
     // Push force multiplier
     public float pushability = 1;
 
@@ -85,16 +89,10 @@ public class SkeletonPoint {
         this.lastPosX = this.newPosX = this.posX = x;
         this.lastPosY = this.newPosY = this.posY = y;
         this.lastPosZ = this.newPosZ = this.posZ = z;
+        this.checkWillMove();
     }
 
     public void movePoint(EntityRagdoll entity, double moveX, double moveY, double moveZ) {
-        /*this.posX += moveX;
-        this.posY += moveY;
-        this.posZ += moveZ;*/
-
-        /*if(posY < -24f / 16f) {
-            posY = -24f / 16f;
-        }*/
 
         double pointPosX = entity.posX + this.posX;
         double pointPosY = entity.posY + this.posY;
@@ -138,20 +136,26 @@ public class SkeletonPoint {
         this.posY = (axisalignedbb.minY + axisalignedbb.maxY) / 2.0D - entity.posY;
         this.posZ = (axisalignedbb.minZ + axisalignedbb.maxZ) / 2.0D - entity.posZ;
 
-        /*System.out.println(this.posX);*/
+        this.checkWillMove();
+    }
 
-        // TODO add collision checks for stuff, also try to animate ragdolls sliding between ticks or update each tick.
-        // First get the physics done
+    /**
+     * Check if it will move and store a variable saying if it has. and set a min move amount
+     * @return
+     */
+    private boolean checkWillMove() {
+        this.nonMoveThresh = 0.00001f;
 
-
-       /* double d3 = this.posX;
-        double d4 = this.posY;
-        double d5 = this.posZ;
-
-        AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox(this.posX - size, this.posY - size,this.posZ - size, this.posX + size, this.posY + size,this.posZ + size);
-*/
-
-
+        double move = this.newPosX - this.posX + this.newPosY - this.posY + this.newPosZ - this.posZ;
+        boolean moved = (move < -this.nonMoveThresh || move > this.nonMoveThresh);
+        //System.out.println(move);
+        //System.out.println(moved);
+        if(!moved) {
+            this.newPosX = this.posX;
+            this.newPosX = this.posX;
+            this.newPosX = this.posX;
+        }
+        return this.hasMoved = moved;
     }
 
     public void update(EntityRagdoll entity) {
@@ -205,9 +209,11 @@ public class SkeletonPoint {
        // position += position - old_position;     // Verlet integration
         //position += gravity;                     // gravity == (0,-0.01,0)
 
-        this.newPosX = this.posX;
-        this.newPosY = this.posY;
-        this.newPosZ = this.posZ;
+        if(this.checkWillMove()) {
+            this.newPosX = this.posX;
+            this.newPosY = this.posY;
+            this.newPosZ = this.posZ;
+        }
     }
 
     // Wont push other entities but make it get pushed by others.
@@ -229,10 +235,13 @@ public class SkeletonPoint {
 
                 // Cant directly detect if in ground sadly. Try stuff like arrows though ;3
                 if(entityCol.canBePushed()/* || (entityCol instanceof EntityArrow && entityCol.motionY != 0)*/) {
-                    collideWithEntity(entity, entityCol);
+                    this.collideWithEntity(entity, entityCol);
                 }
             }
         }
+
+        this.checkWillMove();
+
     }
 
     private void collideWithEntity(EntityRagdoll entity, Entity entityCol) {
@@ -375,15 +384,12 @@ public class SkeletonPoint {
 
     public void addVelocity(double motionX, double motionY, double motionZ) {
         this.lastPosX -= motionX;
-
-
-
-
-
-
         this.lastPosY -= motionY;
         this.lastPosZ -= motionZ;
     }
 
 
+    public void setNewPos(PointD newLoc) {
+        this.setNewPos(newLoc.x, newLoc.y, newLoc.y);
+    }
 }

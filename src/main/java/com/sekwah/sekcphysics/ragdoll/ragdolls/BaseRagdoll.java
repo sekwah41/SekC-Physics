@@ -25,12 +25,6 @@ public class BaseRagdoll {
 
     public boolean trackersRegistered = false;
 
-    /**
-     * If it is doing full updates or if it has settled on the floor waiting for larger amounts of updates
-     * NOT IMPLEMENTED YET
-     */
-    public boolean isActive = true;
-
     // Current skeleton position and shape
     public Skeleton skeleton;
 
@@ -89,5 +83,9 @@ public class BaseRagdoll {
 
     protected void addTriangleTrackerRot(ModelRenderer part, Triangle triangle, float rotateOffsetX, float rotateOffsetY, float rotateOffsetZ) {
         trackerHashmap.put(part, new TrackerTriangle(part, triangle, rotateOffsetX, rotateOffsetY, rotateOffsetZ));
+    }
+
+    public boolean isActive() {
+        return this.skeleton.isActive();
     }
 }

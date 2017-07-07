@@ -1,6 +1,7 @@
 package com.sekwah.sekcphysics.ragdoll.parts;
 
 import com.sekwah.sekcphysics.maths.PointD;
+import com.sekwah.sekcphysics.maths.VectorMaths;
 
 /**
  * Created by sekawh on 8/4/2015.
@@ -103,14 +104,6 @@ public class Triangle {
     }
 
     public PointD getNormal() {
-
-        PointD basePoint = this.points[0].toPoint();
-        PointD vec1 = basePoint.sub(this.points[1].toPoint());
-        PointD vec2 = basePoint.sub(this.points[2].toPoint());
-        double normX = vec1.y * vec2.z - vec1.z * vec2.y;
-        double normY = vec1.z * vec2.x - vec1.x * vec2.z;
-        double normZ = vec1.x * vec2.y - vec1.y * vec2.x;
-
-        return new PointD(normX, normY, normZ);
+        return VectorMaths.getTriangleNormal(this.points[0].toPoint(), this.points[1].toPoint(), this.points[2].toPoint());
     }
 }

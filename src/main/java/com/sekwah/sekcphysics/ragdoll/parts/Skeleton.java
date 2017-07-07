@@ -2,8 +2,10 @@ package com.sekwah.sekcphysics.ragdoll.parts;
 
 import com.sekwah.sekcphysics.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.maths.PointD;
+import com.sekwah.sekcphysics.maths.VectorMaths;
 import com.sekwah.sekcphysics.ragdoll.Ragdolls;
 import org.lwjgl.opengl.GL11;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,8 +33,6 @@ public class Skeleton {
 
     public List<Triangle> triangles = new ArrayList<Triangle>();
 
-    private boolean frozen = false;
-
     // Store a velocity which is the last position take away the current position but also add it so you can add velocity
     //  because if its added for a single update itll carry on that motion. So stuff like explosions or an arrow to the
     //  knee. Also if a player walks around a ragdoll you can add sorta a magnetic push for parts near entities away from the player.
@@ -43,12 +43,13 @@ public class Skeleton {
 
     }
 
-    public boolean isFrozen() {
-        return frozen;
-    }
-
-    public void setFrozen(boolean isFrozen) {
-        this.frozen = isFrozen;
+    public boolean isActive() {
+        for(SkeletonPoint point : this.points) {
+            if(point.hasMoved) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -63,8 +64,11 @@ public class Skeleton {
         }
 
         // oldUpdate constraints
-        for(int i = 0; i <= Ragdolls.updateCount; i++) {
-            for(Constraint constraint: constraints) {
+        for(int i = 0; i <= Ragdolls.maxUpdateCount; i++) {
+            if(!this.isActive()){
+                break;
+            }
+            for(Constraint constraint : constraints) {
                 constraint.calc(entity);
                 //point.movePoint(entity);
             }
@@ -198,7 +202,8 @@ public class Skeleton {
 
     public void rotate(float rotYaw) {
         for(SkeletonPoint point : this.points) {
-
+            PointD newLoc = VectorMaths.rotateOriginX(rotYaw, point.toPoint());
+            point.setNewPos(newLoc);
         }
     }
 }

@@ -16,10 +16,10 @@ public class Ragdolls {
     // Key is entity class and stores a ragdoll class
     private static Map<String, RagdollData> entityToRagdollHashmap = new HashMap<String, RagdollData>();
 
-    // To get a list of ragdolls go through all the alive entities in the world and check for an instace of
-    //public List currentRagdolls = new ArrayList();
-
-    public static int updateCount = 10;
+    /**
+     * Need to add update counts to the ragdoll data rather than global also 10 is for cloths
+     */
+    public static int maxUpdateCount = 10;
 
     public static float gravity = 0.05F; // alter till it looks the best, also maybe add material values as mods use stuff like
 
