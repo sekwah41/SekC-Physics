@@ -1,4 +1,4 @@
-# SekC-Physics
+# SekC-Physics ![Build Status](https://travis-ci.org/sekwah41/SekC-Physics.svg?branch=master)
 A mod which will add various features simulating physics inside of mc.
 
 Potentially will support addons so not all features have to be included and other modders can make features using available resources.
