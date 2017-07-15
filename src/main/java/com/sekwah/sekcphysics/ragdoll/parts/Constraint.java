@@ -67,8 +67,10 @@ public class Constraint {
         if(currentLength == 0) {
             currentLength = 0.01;
         }
-        PointD direction = new PointD((end[0].newPosX - end[1].newPosX) / (float) currentLength,
-                (end[0].newPosY - end[1].newPosY) / (float) currentLength, (end[0].newPosZ - end[1].newPosZ) / (float) currentLength);
+        double currentLengthInvert = 1.0/currentLength;
+
+        PointD direction = new PointD((end[0].newPosX - end[1].newPosX) * currentLengthInvert,
+                (end[0].newPosY - end[1].newPosY) * currentLengthInvert, (end[0].newPosZ - end[1].newPosZ) * currentLengthInvert);
 
         //System.out.println(averageLoc);
 

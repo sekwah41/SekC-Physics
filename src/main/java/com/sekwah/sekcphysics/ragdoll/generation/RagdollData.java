@@ -14,7 +14,7 @@ import java.util.LinkedList;
 public class RagdollData {
 
     private HashMap<String, PointD> pointHashMap = new HashMap<>();
-
+    
     private ModelBase ragdollModel;
 
     private ResourceLocation entityTexture;
