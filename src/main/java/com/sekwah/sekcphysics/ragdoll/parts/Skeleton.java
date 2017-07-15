@@ -77,6 +77,7 @@ public class Skeleton {
                 //point.movePoint(entity);
             }
         }
+
         this.updateCount = updates;
 
         for(SkeletonPoint point : points) {
