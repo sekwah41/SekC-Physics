@@ -63,8 +63,8 @@ public class SekCPhysics {
                     "than a client for now.");
         }
 
-        SekCPhysics.usageReport = new UsageReport(proxy.isClient());
-        SekCPhysics.usageReport.startUsageReport();
+        //SekCPhysics.usageReport = new UsageReport(proxy.isClient());
+        //SekCPhysics.usageReport.startUsageReport();
 
         proxy.init();
 

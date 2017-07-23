@@ -58,7 +58,7 @@ public class EntityRagdoll extends Entity {
             return;
         }
 
-        if(ragdollLife-- < 0) {
+        /*if(ragdollLife-- < 0) {
 
             for (int i = 0; i < 10; ++i) {
                 float poofSize = 1.0f;
@@ -69,13 +69,15 @@ public class EntityRagdoll extends Entity {
             }
 
             this.setDead();
-        }
+        }*/
 
+
+        //ragdoll.update(this);
 
         //if(ragdollUpdate-- < 0) {
             //ragdollUpdate = 20;
-            ragdoll.update(this);
-       // }
+            //ragdoll.update(this);
+        //}
         // Possibly change to update every render rather than entity update and add alpha time
 
         PointD ragdollPos = ragdoll.skeleton.points.get(0).toPoint();
@@ -132,12 +134,10 @@ public class EntityRagdoll extends Entity {
      * length * 64 * renderDistanceWeight Args: distance
      */
     @SideOnly(Side.CLIENT)
-    public boolean isInRangeToRenderDist(double p_70112_1_)
-    {
+    public boolean isInRangeToRenderDist(double p_70112_1_) {
         /*double d1 = this.boundingBox.getAverageEdgeLength();
         d1 *= 64.0D * this.renderDistanceWeight;*/
         double d1 = 64;
-        //SekCPhysics.logger.info(d1);
         return p_70112_1_ < d1 * d1;
     }
 

@@ -90,7 +90,7 @@ public class BaseRagdoll {
     }
 
     public int activeStatus() {
-        System.out.println(this.skeleton.updateCount);
+        //System.out.println(this.skeleton.updateCount);
         if(this.isActive()) {
             return 0;
         }
