@@ -58,7 +58,7 @@ public class EntityRagdoll extends Entity {
             return;
         }
 
-        /*if(ragdollLife-- < 0) {
+        if(ragdollLife-- < 0) {
 
             for (int i = 0; i < 10; ++i) {
                 float poofSize = 1.0f;
@@ -69,8 +69,7 @@ public class EntityRagdoll extends Entity {
             }
 
             this.setDead();
-        }*/
-
+        }
 
         //ragdoll.update(this);
 

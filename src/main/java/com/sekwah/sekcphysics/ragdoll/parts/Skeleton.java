@@ -22,15 +22,15 @@ public class Skeleton {
 
     //public SkeletonPoint[] points;
 
-    public List<SkeletonPoint> points = new ArrayList<SkeletonPoint>();
+    public List<SkeletonPoint> points = new ArrayList<>();
 
     //public Constraint[] constraints;
 
-    public List<Constraint> constraints = new ArrayList<Constraint>();
+    public List<Constraint> constraints = new ArrayList<>();
 
     //public Triangle[] triangles;
 
-    public List<Triangle> triangles = new ArrayList<Triangle>();
+    public List<Triangle> triangles = new ArrayList<>();
 
     public int maxUpdateCount = 5;
 
@@ -89,7 +89,6 @@ public class Skeleton {
         //  of the vector rather than 2 vectors. (for when a triangle wouldnt work or yould have to add too many points to make it work :D)
         // formula 1  a � b = |a| � |b| � cos(?)
         // formula 2  a � b = ax � bx + ay � by + az � bz
-
 
     }
 
@@ -213,8 +212,8 @@ public class Skeleton {
 
     public void rotate(float rotYaw) {
         for(SkeletonPoint point : this.points) {
-            PointD newLoc = VectorMaths.rotateOriginX(rotYaw, point.toPoint());
-            point.setNewPos(newLoc);
+            PointD newLoc = VectorMaths.rotateOriginY(rotYaw, point.toPoint());
+            point.setPosition(newLoc);
         }
     }
 }

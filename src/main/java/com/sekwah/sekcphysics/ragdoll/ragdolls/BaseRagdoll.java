@@ -77,7 +77,7 @@ public class BaseRagdoll {
         trackerHashmap.put(part, new TrackerVertex(part, anchor, pointTo));
     }
 
-    private void addTriangleTracker(ModelRenderer part, Triangle triangle) {
+    protected void addTriangleTracker(ModelRenderer part, Triangle triangle) {
         trackerHashmap.put(part, new TrackerTriangle(part, triangle));
     }
 

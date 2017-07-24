@@ -28,14 +28,55 @@ public final class VectorMaths {
         return new PointD(normX, normY, normZ);
     }
 
-    public static PointD rotateOriginX(double angle, PointD point) {
+    /**
+     * Rotate the point anticlockwise around the origin
+     * @param angle
+     * @param p
+     * @return
+     */
+    public static PointD rotateOriginX(double angle, PointD p) {
         double sin = Math.sin(angle);
         double cos = Math.cos(angle);
 
-        double y = point.y * cos + point.y * sin;
-        double z = point.z * -sin + point.z * cos;
+        double y = p.y * cos + p.z * -sin;
+        double z = p.y * sin + p.z * cos;
 
-        return new PointD(point.x, y, z);
+        return new PointD(p.x, y, z);
+    }
+
+    /**
+     * Rotate the point anticlockwise around the origin
+     * @param angle
+     * @param p
+     * @return
+     */
+    public static PointD rotateOriginY(double angle, PointD p) {
+
+        double sin = Math.sin(angle);
+        double cos = Math.cos(angle);
+
+        System.out.println(angle);
+        double x = p.x * cos + p.z * sin;
+        double z = p.x * -sin + p.z * cos;
+
+        //return new PointD(p.x, p.y, p.z);
+        return new PointD(x, p.y, z);
+    }
+
+    /**
+     * Rotate the point anticlockwise around the origin
+     * @param angle
+     * @param p
+     * @return
+     */
+    public static PointD rotateOriginZ(double angle, PointD p) {
+        double sin = Math.sin(angle);
+        double cos = Math.cos(angle);
+
+        double x = p.x * cos + p.y * -sin;
+        double y = p.x * sin + p.y * cos;
+
+        return new PointD(x, y, p.z);
     }
 
 }

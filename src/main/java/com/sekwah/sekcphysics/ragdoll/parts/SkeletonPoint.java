@@ -278,7 +278,7 @@ public class SkeletonPoint {
     public void setNewPos(double x, double y, double z) {
         this.newPosX = x;
         this.newPosY = y;
-        this.newPosZ = z;
+        //this.newPosZ = z;
     }
 
     public void updatePos(EntityRagdoll entity) {
@@ -390,6 +390,10 @@ public class SkeletonPoint {
 
 
     public void setNewPos(PointD newLoc) {
-        this.setNewPos(newLoc.x, newLoc.y, newLoc.y);
+        this.setNewPos(newLoc.x, newLoc.y, newLoc.z);
+    }
+
+    public void setPosition(PointD newLoc) {
+        this.setPosition(newLoc.x, newLoc.y, newLoc.z);
     }
 }
