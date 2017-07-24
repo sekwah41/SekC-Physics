@@ -212,7 +212,7 @@ public class Skeleton {
 
     public void rotate(float rotYaw) {
         for(SkeletonPoint point : this.points) {
-            PointD newLoc = VectorMaths.rotateOriginY(rotYaw, point.toPoint());
+            PointD newLoc = VectorMaths.rotateOriginY(Math.toRadians(-rotYaw), point.toPoint());
             point.setPosition(newLoc);
         }
     }

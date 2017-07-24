@@ -54,8 +54,7 @@ public final class VectorMaths {
 
         double sin = Math.sin(angle);
         double cos = Math.cos(angle);
-
-        System.out.println(angle);
+        
         double x = p.x * cos + p.z * sin;
         double z = p.x * -sin + p.z * cos;
 
