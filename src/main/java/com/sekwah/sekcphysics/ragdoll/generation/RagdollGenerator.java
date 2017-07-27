@@ -130,6 +130,7 @@ public class RagdollGenerator {
             ragdollData = addRagdollTrackerData(inherit.getAsJsonObject(), ragdollData,
                     ragdollFileJson);
         }
+
         return ragdollData;
     }
 

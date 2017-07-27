@@ -30,6 +30,9 @@ import java.io.File;
  *
  *   lwjgl has opencl built in, take a look for future reference :D
  *
+ *   Also take a look at maybe making the ragdolls not based on entities and soley their own thing to stop strange interactions.
+ *  (For now use entities)
+ *
  *   Also potentially add physics to the cloak, even if its as a giant square, but maybe split to small blocks and do it like
  *   real cloth
  */
