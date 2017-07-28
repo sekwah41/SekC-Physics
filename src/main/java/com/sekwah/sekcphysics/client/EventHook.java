@@ -50,6 +50,8 @@ public class EventHook {
 
                 entityRagdoll.ragdoll.skeleton.verifyPoints(entityRagdoll);
 
+                deadEntity.setDead();
+
                 //entityRagdoll.ragdoll.skeleton.setVelocity(deadEntity.posX - deadEntity.lastTickPosX, deadEntity.posY - deadEntity.lastTickPosY, deadEntity.posZ - deadEntity.lastTickPosZ);
 
                 // Doesn't seem possible with client side only through just this event.
@@ -66,8 +68,6 @@ public class EventHook {
                         }
                     }
                 }*/
-
-                deadEntity.setDead();
             }
 
             // Look at the events and see when the world update and other ticks are, if you cant do it as a client entity
