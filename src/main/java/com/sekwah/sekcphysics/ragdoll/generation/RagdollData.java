@@ -9,11 +9,15 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 /**
+ * Stores Ragdoll data for creation
+ *
  * Created by sekwah41 on 28/06/2017.
  */
 public class RagdollData {
 
     private HashMap<String, PointD> pointHashMap = new HashMap<>();
+
+    private HashMap<String, TriangleData> triangleHashMap = new HashMap<>();
     
     private ModelBase ragdollModel;
 
@@ -53,8 +57,7 @@ public class RagdollData {
     }
 
     public String checkPoint(String point) throws RagdollInvalidDataException {
-        PointD skeletonPoint = this.pointHashMap.get(point);
-        if(skeletonPoint == null) {
+        if(this.pointHashMap.get(point) == null) {
             throw new RagdollInvalidDataException("Invalid Skeleton Point Selected");
         }
         return point;
@@ -72,4 +75,14 @@ public class RagdollData {
         return this.pointHashMap;
     }
 
+    public void addTriangle(String name, String point1, String point2, String point3) throws RagdollInvalidDataException {
+        if(this.triangleHashMap.get(name) != null) {
+            throw new RagdollInvalidDataException("Already triangle with that name");
+        }
+        this.triangleHashMap.put(name, new TriangleData(point1, point2, point3));
+    }
+
+    public TriangleData[] getTriangles() {
+        return this.triangleHashMap.values().toArray(new TriangleData[0]);
+    }
 }

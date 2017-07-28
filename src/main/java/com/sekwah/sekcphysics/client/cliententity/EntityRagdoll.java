@@ -71,7 +71,7 @@ public class EntityRagdoll extends Entity {
             this.setDead();
         }
 
-        //ragdoll.update(this);
+        ragdoll.update(this);
 
         //if(ragdollUpdate-- < 0) {
             //ragdollUpdate = 20;

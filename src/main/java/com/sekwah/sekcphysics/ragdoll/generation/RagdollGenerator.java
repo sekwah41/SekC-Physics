@@ -2,8 +2,8 @@ package com.sekwah.sekcphysics.ragdoll.generation;
 
 import com.google.gson.*;
 import com.sekwah.sekcphysics.SekCPhysics;
-import com.sekwah.sekcphysics.ragdoll.generation.RagdollInvalidDataException;
-import com.sekwah.sekcphysics.ragdoll.generation.RagdollData;
+import com.sekwah.sekcphysics.ragdoll.ragdolls.BaseRagdoll;
+import net.minecraft.client.model.ModelBase;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.ProgressManager;
@@ -15,11 +15,12 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * Ragdoll data generator
  * Created by Alastair on 24/01/2016.
  */
 public class RagdollGenerator {
 
-    public static void generateRagdollsFrom(String modid) {
+    private void generateRagdollsFrom(String modid) {
         // TODO check for the mod id and if not found then report false. If found generate ragdolls.
         try {
             Reader fileIn = new InputStreamReader(SekCPhysics.class.getResourceAsStream("/assets/sekcphysics/ragdolldata/" + modid + ".json"));
@@ -34,6 +35,7 @@ public class RagdollGenerator {
                     ragdollData = addRagdollSkeletonPointData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
                     ragdollData = addRagdollConstraintData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
                     ragdollData = addRagdollTrackerData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
+                    ragdollData = addRagdollModel(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
                     ragdollData = addRagdollOtherData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
 
                     SekCPhysics.ragdolls.registerRagdoll(entry.getKey(), ragdollData);
@@ -68,7 +70,7 @@ public class RagdollGenerator {
      * @throws UnsupportedOperationException
      * @throws RagdollInvalidDataException
      */
-    private static RagdollData addRagdollSkeletonPointData(JsonObject ragdollJsonData, RagdollData ragdollData,
+    private RagdollData addRagdollSkeletonPointData(JsonObject ragdollJsonData, RagdollData ragdollData,
                                                            JsonObject ragdollFileJson) throws UnsupportedOperationException, RagdollInvalidDataException {
         JsonElement inherit = getInheritData(ragdollJsonData, ragdollFileJson);
         if(inherit != null) {
@@ -92,7 +94,7 @@ public class RagdollGenerator {
         return ragdollData;
     }
 
-    private static RagdollData addRagdollConstraintData(JsonObject ragdollJsonData, RagdollData ragdollData,
+    private RagdollData addRagdollConstraintData(JsonObject ragdollJsonData, RagdollData ragdollData,
                                                         JsonObject ragdollFileJson) throws UnsupportedOperationException, RagdollInvalidDataException {
         JsonElement inherit = getInheritData(ragdollJsonData, ragdollFileJson);
         if(inherit != null) {
@@ -116,21 +118,89 @@ public class RagdollGenerator {
     }
 
     /**
-     * Add the data about the trackers
+     * Add the data about the trackers (constraints are used as the other trackers atm)
      * @param ragdollJsonData
      * @param ragdollData
      * @param ragdollFileJson
      * @return
      * @throws UnsupportedOperationException
      */
-    private static RagdollData addRagdollTrackerData(JsonObject ragdollJsonData, RagdollData ragdollData,
-                                                     JsonObject ragdollFileJson) throws UnsupportedOperationException {
+    private RagdollData addRagdollTrackerData(JsonObject ragdollJsonData, RagdollData ragdollData,
+                                                     JsonObject ragdollFileJson) throws UnsupportedOperationException, RagdollInvalidDataException {
         JsonElement inherit = getInheritData(ragdollJsonData, ragdollFileJson);
         if(inherit != null) {
             ragdollData = addRagdollTrackerData(inherit.getAsJsonObject(), ragdollData,
                     ragdollFileJson);
         }
+
+        JsonObject triangleJSON = ragdollJsonData.getAsJsonObject("triangles");
+        if(triangleJSON != null) {
+            Set<Map.Entry<String, JsonElement>> triangleNames = triangleJSON.entrySet();
+            for(Map.Entry<String, JsonElement> triangleName : triangleNames) {
+                JsonArray pointPosArray = triangleJSON.get(triangleName.getKey()).getAsJsonArray();
+                ragdollData.addTriangle(triangleName.getKey(), pointPosArray.get(0).getAsString(),
+                        pointPosArray.get(1).getAsString(), pointPosArray.get(2).getAsString());
+            }
+        }
+
         return ragdollData;
+    }
+
+    /**
+     * Fetches the data from the ragdoll json and creates the model for rendering them all.
+     *
+     * @param ragdollJsonData
+     * @param ragdollData
+     * @param ragdollFileJson
+     * @return
+     * @throws UnsupportedOperationException
+     */
+    private RagdollData addRagdollModel(JsonObject ragdollJsonData, RagdollData ragdollData,
+                                               JsonObject ragdollFileJson) throws UnsupportedOperationException, RagdollInvalidDataException {
+        JsonElement inherit = getInheritData(ragdollJsonData, ragdollFileJson);
+        if(inherit != null) {
+            ragdollData = addRagdollModel(inherit.getAsJsonObject(), ragdollData,
+                    ragdollFileJson);
+        }
+
+        JsonObject modelJSON = ragdollJsonData.getAsJsonObject("modelData");
+        if(modelJSON != null) {
+            ModelBase model = createModelObject(modelJSON.get("class").getAsString());
+        }
+
+        return ragdollData;
+    }
+
+    private ModelBase createModelObject(String classLoc) throws RagdollInvalidDataException {
+
+        try
+        {
+            Class rClass = Class.forName(classLoc);
+
+            if (rClass != null)
+            {
+                // Need to make a set of construction data for the model in the json.
+
+                // Extra data trackers can come later.
+
+
+
+                // in case needed to add arguments to constructor in the future
+                // it can be done like this for stuff like entities
+                // (Entity)rClass.getConstructor(new Class[] {World.class}).newInstance(new Object[] {worldObj});
+                //ragdoll = (BaseRagdoll)rClass.getConstructor(new Class[] {}).newInstance(new Object[]{});
+            }
+            else{
+
+            }
+        }
+        catch (Exception exception)
+        {
+            exception.printStackTrace();
+            throw new RagdollInvalidDataException("Could not find specified class");
+        }
+
+        return null;
     }
 
     /**
@@ -140,7 +210,7 @@ public class RagdollGenerator {
      * @param ragdollFileJson
      * @return
      */
-    private static RagdollData addRagdollOtherData(JsonObject ragdollJsonData, RagdollData ragdollData,
+    private RagdollData addRagdollOtherData(JsonObject ragdollJsonData, RagdollData ragdollData,
                                                    JsonObject ragdollFileJson) throws UnsupportedOperationException, RagdollInvalidDataException {
         JsonElement inherit = getInheritData(ragdollJsonData, ragdollFileJson);
         if(inherit != null) {
@@ -162,19 +232,19 @@ public class RagdollGenerator {
      * @param ragdollFileJson
      * @return
      */
-    private static JsonElement getInheritData(JsonObject enteryJson, JsonObject ragdollFileJson) {
+    private JsonElement getInheritData(JsonObject enteryJson, JsonObject ragdollFileJson) {
         JsonElement inherit = enteryJson.get("inherit");
         if(inherit == null) return null;
         return ragdollFileJson.get(inherit.getAsString());
     }
 
-    public static void loadRagdolls() {
+    public void loadRagdolls() {
         SekCPhysics.logger.debug("Loading ragdolls and checking for supported mods");
         List<ModContainer> modlist = Loader.instance().getActiveModList();
         ProgressManager.ProgressBar bar = ProgressManager.push("SekCPhysics", modlist.size());
         for(ModContainer mod : modlist) {
             bar.step("Processing " + mod.getModId());
-            generateRagdollsFrom(mod.getModId());
+            this.generateRagdollsFrom(mod.getModId());
         }
         ProgressManager.pop(bar);
     }
