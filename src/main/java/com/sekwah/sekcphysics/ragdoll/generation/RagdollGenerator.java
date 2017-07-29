@@ -233,6 +233,10 @@ public class RagdollGenerator {
 
             JsonObject vertexTrackers = ragdollJsonData.getAsJsonObject("vertexTrackers");
 
+            if(vertexTrackers != null) {
+                Set<Map.Entry<String, JsonElement>> pointNames =
+            }
+
 
             JsonObject triangleTrackers = ragdollJsonData.getAsJsonObject("triangleTrackers");
 
