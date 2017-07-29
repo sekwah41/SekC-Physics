@@ -2,7 +2,6 @@ package com.sekwah.sekcphysics.ragdoll.generation;
 
 import com.google.gson.*;
 import com.sekwah.sekcphysics.SekCPhysics;
-import com.sekwah.sekcphysics.ragdoll.ragdolls.BaseRagdoll;
 import net.minecraft.client.model.ModelBase;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
@@ -35,8 +34,9 @@ public class RagdollGenerator {
                     ragdollData = addRagdollSkeletonPointData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
                     ragdollData = addRagdollConstraintData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
                     ragdollData = addRagdollTrackerData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
-                    ragdollData = addRagdollModel(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
                     ragdollData = addRagdollOtherData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
+                    ModelData modelData = addRagdollModelData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
+                    ragdollData = createModel(ragdollData, modelData);
 
                     SekCPhysics.ragdolls.registerRagdoll(entry.getKey(), ragdollData);
                 }
@@ -71,7 +71,7 @@ public class RagdollGenerator {
      * @throws RagdollInvalidDataException
      */
     private RagdollData addRagdollSkeletonPointData(JsonObject ragdollJsonData, RagdollData ragdollData,
-                                                           JsonObject ragdollFileJson) throws UnsupportedOperationException, RagdollInvalidDataException {
+                                                    JsonObject ragdollFileJson) throws UnsupportedOperationException, RagdollInvalidDataException {
         JsonElement inherit = getInheritData(ragdollJsonData, ragdollFileJson);
         if(inherit != null) {
             ragdollData = addRagdollSkeletonPointData(inherit.getAsJsonObject(), ragdollData,
@@ -95,7 +95,7 @@ public class RagdollGenerator {
     }
 
     private RagdollData addRagdollConstraintData(JsonObject ragdollJsonData, RagdollData ragdollData,
-                                                        JsonObject ragdollFileJson) throws UnsupportedOperationException, RagdollInvalidDataException {
+                                                 JsonObject ragdollFileJson) throws UnsupportedOperationException, RagdollInvalidDataException {
         JsonElement inherit = getInheritData(ragdollJsonData, ragdollFileJson);
         if(inherit != null) {
             ragdollData = addRagdollConstraintData(inherit.getAsJsonObject(), ragdollData,
@@ -126,7 +126,7 @@ public class RagdollGenerator {
      * @throws UnsupportedOperationException
      */
     private RagdollData addRagdollTrackerData(JsonObject ragdollJsonData, RagdollData ragdollData,
-                                                     JsonObject ragdollFileJson) throws UnsupportedOperationException, RagdollInvalidDataException {
+                                              JsonObject ragdollFileJson) throws UnsupportedOperationException, RagdollInvalidDataException {
         JsonElement inherit = getInheritData(ragdollJsonData, ragdollFileJson);
         if(inherit != null) {
             ragdollData = addRagdollTrackerData(inherit.getAsJsonObject(), ragdollData,
@@ -147,7 +147,30 @@ public class RagdollGenerator {
     }
 
     /**
-     * Fetches the data from the ragdoll json and creates the model for rendering them all.
+     * For adding the data that does not fit in the other general methods such as the spawn height
+     * @param ragdollJsonData
+     * @param ragdollData
+     * @param ragdollFileJson
+     * @return
+     */
+    private RagdollData addRagdollOtherData(JsonObject ragdollJsonData, RagdollData ragdollData,
+                                            JsonObject ragdollFileJson) throws UnsupportedOperationException, RagdollInvalidDataException {
+        JsonElement inherit = getInheritData(ragdollJsonData, ragdollFileJson);
+        if(inherit != null) {
+            ragdollData = addRagdollOtherData(inherit.getAsJsonObject(), ragdollData,
+                    ragdollFileJson);
+        }
+
+        JsonElement heightOffset = ragdollJsonData.get("centerHeightOffset");
+        if(heightOffset != null){
+            ragdollData.centerHeightOffset = heightOffset.getAsFloat();
+        }
+
+        return ragdollData;
+    }
+
+    /**
+     * Fetches the data from the ragdoll json for the model.
      *
      * @param ragdollJsonData
      * @param ragdollData
@@ -155,25 +178,85 @@ public class RagdollGenerator {
      * @return
      * @throws UnsupportedOperationException
      */
-    private RagdollData addRagdollModel(JsonObject ragdollJsonData, RagdollData ragdollData,
-                                               JsonObject ragdollFileJson) throws UnsupportedOperationException, RagdollInvalidDataException {
+    private ModelData addRagdollModelData(JsonObject ragdollJsonData, RagdollData ragdollData,
+                                            JsonObject ragdollFileJson) throws UnsupportedOperationException, RagdollInvalidDataException {
         JsonElement inherit = getInheritData(ragdollJsonData, ragdollFileJson);
+
+        ModelData modelData;
+
         if(inherit != null) {
-            ragdollData = addRagdollModel(inherit.getAsJsonObject(), ragdollData,
-                    ragdollFileJson);
+            modelData = addRagdollModelData(inherit.getAsJsonObject(), ragdollData, ragdollFileJson);
+        }
+        else {
+            modelData = new ModelData();
         }
 
         JsonObject modelJSON = ragdollJsonData.getAsJsonObject("modelData");
         if(modelJSON != null) {
-            ModelBase model = createModelObject(modelJSON.get("class").getAsString());
+            modelData.setClassName(modelJSON.get("class").getAsString());
+
+            JsonArray constructData = modelJSON.getAsJsonArray("constructData");
+
+            if(constructData != null) {
+                Object[] constructObjects = new Object[constructData.size()];
+                for(int i = 0; i < constructObjects.length; i++) {
+                    JsonArray entry = constructData.get(i).getAsJsonArray();
+                    String type = entry.get(0).toString();
+                    Object data = null;
+                    JsonElement dataEle = entry.get(1);
+                    switch(type) {
+                        case "double":
+                            data = dataEle.getAsDouble();
+                            break;
+                        case "float":
+                            data = dataEle.getAsFloat();
+                            break;
+                        case "int":
+                            data = dataEle.getAsInt();
+                            break;
+                        case "long":
+                            data = dataEle.getAsLong();
+                            break;
+                        case "boolean":
+                            data = dataEle.getAsBoolean();
+                            break;
+                        case "String":
+                            data = dataEle.getAsString();
+                            break;
+                        default:
+                            throw new RagdollInvalidDataException("Invalid Construct Data Type");
+                    }
+                    constructObjects[i] = data;
+                }
+                modelData.setConstructData(constructObjects);
+            }
+
+            JsonObject vertexTrackers = ragdollJsonData.getAsJsonObject("vertexTrackers");
+
+
+            JsonObject triangleTrackers = ragdollJsonData.getAsJsonObject("triangleTrackers");
+
+            /*JsonObject skeletonPoints = ragdollJsonData.getAsJsonObject("skeletonPoints");
+            if(skeletonPoints != null) {
+                Set<Map.Entry<String, JsonElement>> pointNames = skeletonPoints.entrySet();
+                for(Map.Entry<String, JsonElement> pointName : pointNames) {
+                    JsonArray pointPosArray = skeletonPoints.get(pointName.getKey()).getAsJsonArray();
+                    ragdollData.setSkeletonPoint(pointName.getKey(), pointPosArray.get(0).getAsDouble(),
+                            pointPosArray.get(1).getAsDouble(), pointPosArray.get(2).getAsDouble());
+                }
+            }*/
+
+
+
+            // Add tracker data grabber here
         }
 
-        return ragdollData;
+        return modelData;
     }
 
-    private ModelBase createModelObject(String classLoc) throws RagdollInvalidDataException {
+    private RagdollData createModel(RagdollData ragdollData, ModelData modelData) throws RagdollInvalidDataException {
 
-        try
+        /*try
         {
             Class rClass = Class.forName(classLoc);
 
@@ -182,6 +265,8 @@ public class RagdollGenerator {
                 // Need to make a set of construction data for the model in the json.
 
                 // Extra data trackers can come later.
+
+                //zombieModel = new ModelBiped(0.0f, 0, 64, 64);
 
 
 
@@ -198,32 +283,9 @@ public class RagdollGenerator {
         {
             exception.printStackTrace();
             throw new RagdollInvalidDataException("Could not find specified class");
-        }
+        }*/
 
         return null;
-    }
-
-    /**
-     * For adding the data that does not fit in the other general methods such as the spawn height
-     * @param ragdollJsonData
-     * @param ragdollData
-     * @param ragdollFileJson
-     * @return
-     */
-    private RagdollData addRagdollOtherData(JsonObject ragdollJsonData, RagdollData ragdollData,
-                                                   JsonObject ragdollFileJson) throws UnsupportedOperationException, RagdollInvalidDataException {
-        JsonElement inherit = getInheritData(ragdollJsonData, ragdollFileJson);
-        if(inherit != null) {
-            ragdollData = addRagdollOtherData(inherit.getAsJsonObject(), ragdollData,
-                    ragdollFileJson);
-        }
-
-        JsonElement heightOffset = ragdollJsonData.get("centerHeightOffset");
-        if(heightOffset != null){
-            ragdollData.centerHeightOffset = heightOffset.getAsFloat();
-        }
-
-        return ragdollData;
     }
 
     /**
