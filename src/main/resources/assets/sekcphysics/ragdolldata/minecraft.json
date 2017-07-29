@@ -41,6 +41,12 @@
     },
     "modelData":{
       "class" : "net.minecraft.client.model.ModelBiped",
+      "constructData" : [
+        ["float", 0],
+        ["float", 0],
+        ["int", 64],
+        ["int", 64]
+      ],
       "vertexTrackers" : {
         "bipedRightArm":{
           "anchor" : "rightShoulder",
