@@ -1,4 +1,6 @@
-package com.sekwah.sekcphysics.ragdoll.generation;
+package com.sekwah.sekcphysics.ragdoll.generation.data;
+
+import java.util.HashMap;
 
 /**
  * Store data about the entity
@@ -15,6 +17,10 @@ public class ModelData {
      * Add them into the RagdollGenerator
      */
     private Object[] constructData = new Object[0];
+
+    private HashMap<String, VertexTrackerData> vertexTrackers = new HashMap<>();
+
+    private HashMap<String, TriangleTrackerData> triangleTrackers = new HashMap<>();
 
     private String className;
 
@@ -40,5 +46,13 @@ public class ModelData {
 
     public void setConstructData(Object[] constructData) {
         this.constructData = constructData;
+    }
+
+    public void addVertexTracker(String key, VertexTrackerData vertexTrackerData) {
+        this.vertexTrackers.put(key, vertexTrackerData);
+    }
+
+    public void addTriangleTracker(String key, TriangleTrackerData trackerData) {
+        this.triangleTrackers.put(key, trackerData);
     }
 }

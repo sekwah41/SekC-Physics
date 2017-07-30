@@ -1,4 +1,4 @@
-package com.sekwah.sekcphysics.ragdoll.generation;
+package com.sekwah.sekcphysics.ragdoll.generation.data;
 
 /**
  * Holds the data for a constraint to be made

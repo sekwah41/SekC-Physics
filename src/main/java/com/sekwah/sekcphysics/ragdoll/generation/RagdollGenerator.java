@@ -2,7 +2,7 @@ package com.sekwah.sekcphysics.ragdoll.generation;
 
 import com.google.gson.*;
 import com.sekwah.sekcphysics.SekCPhysics;
-import net.minecraft.client.model.ModelBase;
+import com.sekwah.sekcphysics.ragdoll.generation.data.*;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.ProgressManager;
@@ -234,25 +234,30 @@ public class RagdollGenerator {
             JsonObject vertexTrackers = ragdollJsonData.getAsJsonObject("vertexTrackers");
 
             if(vertexTrackers != null) {
-                Set<Map.Entry<String, JsonElement>> pointNames =
+                Set<Map.Entry<String, JsonElement>> vertexNames = vertexTrackers.entrySet();
+                for(Map.Entry<String, JsonElement> vertexName : vertexNames) {
+                    JsonObject vertexObj = vertexName.getValue().getAsJsonObject();
+                    String anchor = vertexObj.get("anchor").getAsString();
+                    String pointTo = vertexObj.get("pointTo").getAsString();
+                    VertexTrackerData trackerData = new VertexTrackerData(anchor, pointTo);
+                    trackerData.getOffsetData(vertexObj);
+                    modelData.addVertexTracker(vertexName.getKey(), trackerData);
+                }
             }
 
 
             JsonObject triangleTrackers = ragdollJsonData.getAsJsonObject("triangleTrackers");
 
-            /*JsonObject skeletonPoints = ragdollJsonData.getAsJsonObject("skeletonPoints");
-            if(skeletonPoints != null) {
-                Set<Map.Entry<String, JsonElement>> pointNames = skeletonPoints.entrySet();
-                for(Map.Entry<String, JsonElement> pointName : pointNames) {
-                    JsonArray pointPosArray = skeletonPoints.get(pointName.getKey()).getAsJsonArray();
-                    ragdollData.setSkeletonPoint(pointName.getKey(), pointPosArray.get(0).getAsDouble(),
-                            pointPosArray.get(1).getAsDouble(), pointPosArray.get(2).getAsDouble());
+            if(vertexTrackers != null) {
+                Set<Map.Entry<String, JsonElement>> triangleNames = triangleTrackers.entrySet();
+                for(Map.Entry<String, JsonElement> triangleName : triangleNames) {
+                    JsonObject vertexObj = triangleName.getValue().getAsJsonObject();
+                    String tracker = vertexObj.get("tracker").getAsString();
+                    TriangleTrackerData trackerData = new TriangleTrackerData(tracker);
+                    trackerData.getOffsetData(vertexObj);
+                    modelData.addTriangleTracker(triangleName.getKey(), trackerData);
                 }
-            }*/
-
-
-
-            // Add tracker data grabber here
+            }
         }
 
         return modelData;

@@ -1,4 +1,4 @@
-package com.sekwah.sekcphysics.ragdoll.generation;
+package com.sekwah.sekcphysics.ragdoll.generation.data;
 
 import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.ragdoll.parts.Triangle;
@@ -59,7 +59,7 @@ public class RagdollData {
     }
 
     public String checkPoint(String point) throws RagdollInvalidDataException {
-        if(this.pointHashMap.get(point) == null) {
+        if(this.pointHashMap.containsKey(point)) {
             throw new RagdollInvalidDataException("Invalid Skeleton Point Selected");
         }
         return point;
@@ -78,7 +78,7 @@ public class RagdollData {
     }
 
     public void addTriangle(String name, String point1, String point2, String point3) throws RagdollInvalidDataException {
-        if(this.triangleHashMap.get(name) != null) {
+        if(this.triangleHashMap.containsKey(name)) {
             throw new RagdollInvalidDataException("Already triangle with that name");
         }
         this.triangleHashMap.put(name, new TriangleData(point1, point2, point3));

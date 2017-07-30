@@ -1,6 +1,8 @@
 package com.sekwah.sekcphysics.ragdoll.generation;
 
 import com.sekwah.sekcphysics.maths.PointD;
+import com.sekwah.sekcphysics.ragdoll.generation.data.ConstraintData;
+import com.sekwah.sekcphysics.ragdoll.generation.data.RagdollData;
 import com.sekwah.sekcphysics.ragdoll.parts.Constraint;
 import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
 

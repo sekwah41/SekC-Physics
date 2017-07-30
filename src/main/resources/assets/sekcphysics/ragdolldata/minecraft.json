@@ -48,15 +48,15 @@
         ["int", 64]
       ],
       "vertexTrackers" : {
-        "bipedRightArm":{
+        "bipedRightArm": {
           "anchor" : "rightShoulder",
           "pointTo" : "rightShoulder"
         },
-        "bipedLeftArm":{
+        "bipedLeftArm": {
           "anchor" : "leftShoulder",
           "pointTo" : "leftArm"
         },
-        "bipedRightLeg":{
+        "bipedRightLeg": {
           "anchor" : "rightLegTop",
           "pointTo" : "rightLegBot"
         },
