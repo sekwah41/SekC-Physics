@@ -3,12 +3,14 @@ package com.sekwah.sekcphysics.ragdoll.generation;
 import com.google.gson.*;
 import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.ragdoll.generation.data.*;
+import net.minecraft.client.model.ModelBase;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.ProgressManager;
 import org.apache.logging.log4j.Level;
 
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -264,6 +266,40 @@ public class RagdollGenerator {
     }
 
     private RagdollData createModel(RagdollData ragdollData, ModelData modelData) throws RagdollInvalidDataException {
+
+        try {
+            Class<?> rClass = Class.forName(modelData.getClassName());
+
+            if(ModelBase.class.isAssignableFrom(rClass)) {
+                throw new RagdollInvalidDataException("Invalid model class");
+            }
+
+            Object[] constructObjects = modelData.getConstructData();
+            Class[] classArray = new Class[constructObjects.length];
+            for(int i = 0; i < constructObjects.length; i++) {
+                classArray[i] = constructObjects[i].getClass();
+            }
+
+            ModelBase modelBase = (ModelBase) rClass.getConstructor(classArray).newInstance(constructObjects);
+
+        }
+        catch (ClassNotFoundException exception) {
+            exception.printStackTrace();
+            throw new RagdollInvalidDataException("Could not find specified class" + modelData.getClassName());
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            throw new RagdollInvalidDataException("Illegal access");
+        } catch (InstantiationException | InvocationTargetException e) {
+            e.printStackTrace();
+            throw new RagdollInvalidDataException("Construction error");
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+            throw new RagdollInvalidDataException("Method not found, invalid class of construction data listed");
+        } catch (SecurityException e) {
+            throw new RagdollInvalidDataException("The security manager has blocked access to the class"
+                    + modelData.getClassName());
+        }
+
 
         /*try
         {
