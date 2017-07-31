@@ -33,12 +33,12 @@ public class RagdollGenerator {
                 bar.step(entry.getKey());
                 try {
                     RagdollData ragdollData = new RagdollData();
-                    ragdollData = addRagdollSkeletonPointData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
-                    ragdollData = addRagdollConstraintData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
-                    ragdollData = addRagdollTrackerData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
-                    ragdollData = addRagdollOtherData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
-                    ModelData modelData = addRagdollModelData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
-                    ragdollData = createModel(ragdollData, modelData);
+                    addRagdollSkeletonPointData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
+                    addRagdollConstraintData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
+                    addRagdollTrackerData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
+                    addRagdollOtherData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
+                    ModelConstructData modelConstructData = getRagdollModelData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
+                    createModel(ragdollData, modelConstructData);
 
                     SekCPhysics.ragdolls.registerRagdoll(entry.getKey(), ragdollData);
                 }
@@ -72,7 +72,7 @@ public class RagdollGenerator {
      * @throws UnsupportedOperationException
      * @throws RagdollInvalidDataException
      */
-    private RagdollData addRagdollSkeletonPointData(JsonObject ragdollJsonData, RagdollData ragdollData,
+    private void addRagdollSkeletonPointData(JsonObject ragdollJsonData, RagdollData ragdollData,
                                                     JsonObject ragdollFileJson) throws UnsupportedOperationException, RagdollInvalidDataException {
         JsonElement inherit = getInheritData(ragdollJsonData, ragdollFileJson);
         if(inherit != null) {
@@ -93,14 +93,14 @@ public class RagdollGenerator {
             throw new RagdollInvalidDataException("No skeleton points");
         }
 
-        return ragdollData;
+        //return ragdollData;
     }
 
-    private RagdollData addRagdollConstraintData(JsonObject ragdollJsonData, RagdollData ragdollData,
+    private void addRagdollConstraintData(JsonObject ragdollJsonData, RagdollData ragdollData,
                                                  JsonObject ragdollFileJson) throws UnsupportedOperationException, RagdollInvalidDataException {
         JsonElement inherit = getInheritData(ragdollJsonData, ragdollFileJson);
         if(inherit != null) {
-            ragdollData = addRagdollConstraintData(inherit.getAsJsonObject(), ragdollData,
+            addRagdollConstraintData(inherit.getAsJsonObject(), ragdollData,
                     ragdollFileJson);
         }
 
@@ -116,7 +116,7 @@ public class RagdollGenerator {
             throw new RagdollInvalidDataException("No constraints");
         }
 
-        return ragdollData;
+        //return ragdollData;
     }
 
     /**
@@ -127,11 +127,11 @@ public class RagdollGenerator {
      * @return
      * @throws UnsupportedOperationException
      */
-    private RagdollData addRagdollTrackerData(JsonObject ragdollJsonData, RagdollData ragdollData,
+    private void addRagdollTrackerData(JsonObject ragdollJsonData, RagdollData ragdollData,
                                               JsonObject ragdollFileJson) throws UnsupportedOperationException, RagdollInvalidDataException {
         JsonElement inherit = getInheritData(ragdollJsonData, ragdollFileJson);
         if(inherit != null) {
-            ragdollData = addRagdollTrackerData(inherit.getAsJsonObject(), ragdollData,
+            addRagdollTrackerData(inherit.getAsJsonObject(), ragdollData,
                     ragdollFileJson);
         }
 
@@ -145,7 +145,7 @@ public class RagdollGenerator {
             }
         }
 
-        return ragdollData;
+        //return ragdollData;
     }
 
     /**
@@ -155,11 +155,11 @@ public class RagdollGenerator {
      * @param ragdollFileJson
      * @return
      */
-    private RagdollData addRagdollOtherData(JsonObject ragdollJsonData, RagdollData ragdollData,
+    private void addRagdollOtherData(JsonObject ragdollJsonData, RagdollData ragdollData,
                                             JsonObject ragdollFileJson) throws UnsupportedOperationException, RagdollInvalidDataException {
         JsonElement inherit = getInheritData(ragdollJsonData, ragdollFileJson);
         if(inherit != null) {
-            ragdollData = addRagdollOtherData(inherit.getAsJsonObject(), ragdollData,
+            addRagdollOtherData(inherit.getAsJsonObject(), ragdollData,
                     ragdollFileJson);
         }
 
@@ -168,7 +168,7 @@ public class RagdollGenerator {
             ragdollData.centerHeightOffset = heightOffset.getAsFloat();
         }
 
-        return ragdollData;
+        //return ragdollData;
     }
 
     /**
@@ -180,22 +180,22 @@ public class RagdollGenerator {
      * @return
      * @throws UnsupportedOperationException
      */
-    private ModelData addRagdollModelData(JsonObject ragdollJsonData, RagdollData ragdollData,
-                                            JsonObject ragdollFileJson) throws UnsupportedOperationException, RagdollInvalidDataException {
+    private ModelConstructData getRagdollModelData(JsonObject ragdollJsonData, RagdollData ragdollData,
+                                                   JsonObject ragdollFileJson) throws UnsupportedOperationException, RagdollInvalidDataException {
         JsonElement inherit = getInheritData(ragdollJsonData, ragdollFileJson);
 
-        ModelData modelData;
+        ModelConstructData modelConstructData;
 
         if(inherit != null) {
-            modelData = addRagdollModelData(inherit.getAsJsonObject(), ragdollData, ragdollFileJson);
+            modelConstructData = getRagdollModelData(inherit.getAsJsonObject(), ragdollData, ragdollFileJson);
         }
         else {
-            modelData = new ModelData();
+            modelConstructData = new ModelConstructData();
         }
 
-        JsonObject modelJSON = ragdollJsonData.getAsJsonObject("modelData");
+        JsonObject modelJSON = ragdollJsonData.getAsJsonObject("modelConstructData");
         if(modelJSON != null) {
-            modelData.setClassName(modelJSON.get("class").getAsString());
+            modelConstructData.setClassName(modelJSON.get("class").getAsString());
 
             JsonArray constructData = modelJSON.getAsJsonArray("constructData");
 
@@ -230,7 +230,7 @@ public class RagdollGenerator {
                     }
                     constructObjects[i] = data;
                 }
-                modelData.setConstructData(constructObjects);
+                modelConstructData.setConstructData(constructObjects);
             }
 
             JsonObject vertexTrackers = ragdollJsonData.getAsJsonObject("vertexTrackers");
@@ -243,7 +243,7 @@ public class RagdollGenerator {
                     String pointTo = vertexObj.get("pointTo").getAsString();
                     VertexTrackerData trackerData = new VertexTrackerData(anchor, pointTo);
                     trackerData.getOffsetData(vertexObj);
-                    modelData.addVertexTracker(vertexName.getKey(), trackerData);
+                    modelConstructData.addVertexTracker(vertexName.getKey(), trackerData);
                 }
             }
 
@@ -257,24 +257,24 @@ public class RagdollGenerator {
                     String tracker = vertexObj.get("tracker").getAsString();
                     TriangleTrackerData trackerData = new TriangleTrackerData(tracker);
                     trackerData.getOffsetData(vertexObj);
-                    modelData.addTriangleTracker(triangleName.getKey(), trackerData);
+                    modelConstructData.addTriangleTracker(triangleName.getKey(), trackerData);
                 }
             }
         }
 
-        return modelData;
+        return modelConstructData;
     }
 
-    private RagdollData createModel(RagdollData ragdollData, ModelData modelData) throws RagdollInvalidDataException {
+    private ModelData createModelAndAddTrackers(RagdollData ragdollData, ModelConstructData modelConstructData) throws RagdollInvalidDataException {
 
         try {
-            Class<?> rClass = Class.forName(modelData.getClassName());
+            Class<?> rClass = Class.forName(modelConstructData.getClassName());
 
             if(ModelBase.class.isAssignableFrom(rClass)) {
                 throw new RagdollInvalidDataException("Invalid model class");
             }
 
-            Object[] constructObjects = modelData.getConstructData();
+            Object[] constructObjects = modelConstructData.getConstructData();
             Class[] classArray = new Class[constructObjects.length];
             for(int i = 0; i < constructObjects.length; i++) {
                 classArray[i] = constructObjects[i].getClass();
@@ -282,10 +282,20 @@ public class RagdollGenerator {
 
             ModelBase modelBase = (ModelBase) rClass.getConstructor(classArray).newInstance(constructObjects);
 
+            ModelData modelData = new ModelData(modelBase);
+
+            for(VertexTrackerData vertexData : modelConstructData.getVertexTrackerData()) {
+
+            }
+
+            for(TriangleTrackerData triangleData : modelConstructData.getTriangleTrackerData()) {
+
+            }
+
         }
         catch (ClassNotFoundException exception) {
             exception.printStackTrace();
-            throw new RagdollInvalidDataException("Could not find specified class" + modelData.getClassName());
+            throw new RagdollInvalidDataException("Could not find specified class" + modelConstructData.getClassName());
         } catch (IllegalAccessException e) {
             e.printStackTrace();
             throw new RagdollInvalidDataException("Illegal access");
@@ -297,7 +307,7 @@ public class RagdollGenerator {
             throw new RagdollInvalidDataException("Method not found, invalid class of construction data listed");
         } catch (SecurityException e) {
             throw new RagdollInvalidDataException("The security manager has blocked access to the class"
-                    + modelData.getClassName());
+                    + modelConstructData.getClassName());
         }
 
 

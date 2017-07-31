@@ -1,58 +1,21 @@
 package com.sekwah.sekcphysics.ragdoll.generation.data;
 
-import java.util.HashMap;
+import net.minecraft.client.model.ModelBase;
 
 /**
- * Store data about the entity
+ * Stores a copy of the model as well as data to link it to the ragdoll on creation
  *
- * Created by sekwah41 on 29/07/2017.
+ * Created by sekwah41 on 31/07/2017.
  */
 public class ModelData {
 
-    /**
-     * Can only contain string int boolean float double and long for now.
-     *
-     * More can be added as they need to have support added.
-     *
-     * Add them into the RagdollGenerator
-     */
-    private Object[] constructData = new Object[0];
+    private ModelBase baseModel;
 
-    private HashMap<String, VertexTrackerData> vertexTrackers = new HashMap<>();
-
-    private HashMap<String, TriangleTrackerData> triangleTrackers = new HashMap<>();
-
-    private String className;
-
-    /**
-     * Ignores null values
-     * @param className
-     */
-    public void setClassName(String className) {
-        if(className == null) {
-            return;
-        }
-        this.constructData = new Object[0];
-        this.className = className;
+    public ModelData(ModelBase baseModel) {
+        this.baseModel = baseModel;
     }
 
-    public String getClassName() {
-        return className;
-    }
-
-    public Object[] getConstructData() {
-        return constructData;
-    }
-
-    public void setConstructData(Object[] constructData) {
-        this.constructData = constructData;
-    }
-
-    public void addVertexTracker(String key, VertexTrackerData vertexTrackerData) {
-        this.vertexTrackers.put(key, vertexTrackerData);
-    }
-
-    public void addTriangleTracker(String key, TriangleTrackerData trackerData) {
-        this.triangleTrackers.put(key, trackerData);
+    public ModelBase getBaseModel() {
+        return baseModel;
     }
 }
