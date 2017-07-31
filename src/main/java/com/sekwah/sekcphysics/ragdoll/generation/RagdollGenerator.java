@@ -38,7 +38,7 @@ public class RagdollGenerator {
                     addRagdollTrackerData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
                     addRagdollOtherData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
                     ModelConstructData modelConstructData = getRagdollModelData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
-                    createModel(ragdollData, modelConstructData);
+                    createModelAndAddTrackers(ragdollData, modelConstructData);
 
                     SekCPhysics.ragdolls.registerRagdoll(entry.getKey(), ragdollData);
                 }
@@ -76,7 +76,7 @@ public class RagdollGenerator {
                                                     JsonObject ragdollFileJson) throws UnsupportedOperationException, RagdollInvalidDataException {
         JsonElement inherit = getInheritData(ragdollJsonData, ragdollFileJson);
         if(inherit != null) {
-            ragdollData = addRagdollSkeletonPointData(inherit.getAsJsonObject(), ragdollData,
+            addRagdollSkeletonPointData(inherit.getAsJsonObject(), ragdollData,
                     ragdollFileJson);
         }
 
