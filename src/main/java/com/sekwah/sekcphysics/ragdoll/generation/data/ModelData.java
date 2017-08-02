@@ -2,6 +2,8 @@ package com.sekwah.sekcphysics.ragdoll.generation.data;
 
 import net.minecraft.client.model.ModelBase;
 
+import java.util.HashMap;
+
 /**
  * Stores a copy of the model as well as data to link it to the ragdoll on creation
  *
@@ -10,6 +12,10 @@ import net.minecraft.client.model.ModelBase;
 public class ModelData {
 
     private ModelBase baseModel;
+
+    private HashMap<String, VertexTrackerData> vertexTrackers = new HashMap<>();
+
+    private HashMap<String, TriangleTrackerData> triangleTrackers = new HashMap<>();
 
     public ModelData(ModelBase baseModel) {
         this.baseModel = baseModel;

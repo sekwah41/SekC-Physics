@@ -285,7 +285,7 @@ public class RagdollGenerator {
             ModelData modelData = new ModelData(modelBase);
 
             for(VertexTrackerData vertexData : modelConstructData.getVertexTrackerData()) {
-
+                modelBase
             }
 
             for(TriangleTrackerData triangleData : modelConstructData.getTriangleTrackerData()) {
