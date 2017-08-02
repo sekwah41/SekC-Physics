@@ -1,13 +1,15 @@
-package com.sekwah.sekcphysics.ragdoll.generation.data;
+package com.sekwah.sekcphysics.ragdoll.generation.data.tracker;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import net.minecraft.client.model.ModelBox;
 
 /**
  * Created by sekwah41 on 06/07/2017.
  */
 public class TrackerData {
 
+    private final String partName;
     protected float posOffsetX;
     protected float posOffsetY;
     protected float posOffsetZ;
@@ -16,7 +18,15 @@ public class TrackerData {
     protected float rotOffsetY;
     protected float rotOffsetZ;
 
-    public void getOffsetData(JsonObject vertexObj) {
+    private ModelBox part;
+
+    public TrackerData(String partName, JsonObject vertexObj) {
+
+        this.partName = partName;
+
+        if(vertexObj == null) {
+            return;
+        }
         this.setPosOffsetX(vertexObj.get("posOffX"));
         this.setPosOffsetY(vertexObj.get("posOffY"));
         this.setPosOffsetZ(vertexObj.get("posOffZ"));
@@ -24,6 +34,7 @@ public class TrackerData {
         this.setRotOffsetX(vertexObj.get("rotOffX"));
         this.setRotOffsetY(vertexObj.get("rotOffY"));
         this.setRotOffsetZ(vertexObj.get("rotOffZ"));
+
     }
 
     public void setRotOffsetX(JsonElement rotOffsetX) {
@@ -84,5 +95,17 @@ public class TrackerData {
         if(posOffsetZ != null) {
             this.posOffsetZ = posOffsetZ.getAsFloat();
         }
+    }
+
+    public ModelBox getPart() {
+        return part;
+    }
+
+    public void setPart(ModelBox part) {
+        this.part = part;
+    }
+
+    public String getPartName() {
+        return partName;
     }
 }

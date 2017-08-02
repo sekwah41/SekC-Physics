@@ -1,5 +1,9 @@
 package com.sekwah.sekcphysics.ragdoll.generation.data;
 
+import com.sekwah.sekcphysics.ragdoll.generation.data.tracker.TriangleTrackerData;
+import com.sekwah.sekcphysics.ragdoll.generation.data.tracker.VertexTrackerData;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -18,9 +22,9 @@ public class ModelConstructData {
      */
     private Object[] constructData = new Object[0];
 
-    private HashMap<String, VertexTrackerData> vertexTrackers = new HashMap<>();
+    private ArrayList<VertexTrackerData> vertexTrackers = new ArrayList<>();
 
-    private HashMap<String, TriangleTrackerData> triangleTrackers = new HashMap<>();
+    private ArrayList<TriangleTrackerData> triangleTrackers = new ArrayList<>();
 
     private String className;
 
@@ -48,20 +52,20 @@ public class ModelConstructData {
         this.constructData = constructData;
     }
 
-    public void addVertexTracker(String key, VertexTrackerData vertexTrackerData) {
-        this.vertexTrackers.put(key, vertexTrackerData);
+    public void addVertexTracker(VertexTrackerData vertexTrackerData) {
+        this.vertexTrackers.add(vertexTrackerData);
     }
 
-    public void addTriangleTracker(String key, TriangleTrackerData trackerData) {
-        this.triangleTrackers.put(key, trackerData);
+    public void addTriangleTracker(TriangleTrackerData trackerData) {
+        this.triangleTrackers.add(trackerData);
     }
 
     public VertexTrackerData[] getVertexTrackerData() {
-        return this.vertexTrackers.values().toArray(new VertexTrackerData[0]);
+        return this.vertexTrackers.toArray(new VertexTrackerData[0]);
     }
 
     public TriangleTrackerData[] getTriangleTrackerData() {
-        return this.triangleTrackers.values().toArray(new TriangleTrackerData[0]);
+        return this.triangleTrackers.toArray(new TriangleTrackerData[0]);
     }
 
 }

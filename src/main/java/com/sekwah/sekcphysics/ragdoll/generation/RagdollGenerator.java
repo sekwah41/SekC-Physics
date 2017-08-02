@@ -3,6 +3,8 @@ package com.sekwah.sekcphysics.ragdoll.generation;
 import com.google.gson.*;
 import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.ragdoll.generation.data.*;
+import com.sekwah.sekcphysics.ragdoll.generation.data.tracker.TriangleTrackerData;
+import com.sekwah.sekcphysics.ragdoll.generation.data.tracker.VertexTrackerData;
 import net.minecraft.client.model.ModelBase;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
@@ -164,7 +166,7 @@ public class RagdollGenerator {
         }
 
         JsonElement heightOffset = ragdollJsonData.get("centerHeightOffset");
-        if(heightOffset != null){
+        if(heightOffset != null) {
             ragdollData.centerHeightOffset = heightOffset.getAsFloat();
         }
 
@@ -241,9 +243,8 @@ public class RagdollGenerator {
                     JsonObject vertexObj = vertexName.getValue().getAsJsonObject();
                     String anchor = vertexObj.get("anchor").getAsString();
                     String pointTo = vertexObj.get("pointTo").getAsString();
-                    VertexTrackerData trackerData = new VertexTrackerData(anchor, pointTo);
-                    trackerData.getOffsetData(vertexObj);
-                    modelConstructData.addVertexTracker(vertexName.getKey(), trackerData);
+                    VertexTrackerData trackerData = new VertexTrackerData(vertexName.getKey(), anchor, pointTo, vertexObj);
+                    modelConstructData.addVertexTracker(trackerData);
                 }
             }
 
@@ -255,9 +256,8 @@ public class RagdollGenerator {
                 for(Map.Entry<String, JsonElement> triangleName : triangleNames) {
                     JsonObject vertexObj = triangleName.getValue().getAsJsonObject();
                     String tracker = vertexObj.get("tracker").getAsString();
-                    TriangleTrackerData trackerData = new TriangleTrackerData(tracker);
-                    trackerData.getOffsetData(vertexObj);
-                    modelConstructData.addTriangleTracker(triangleName.getKey(), trackerData);
+                    TriangleTrackerData trackerData = new TriangleTrackerData(triangleName.getKey(), tracker, vertexObj);
+                    modelConstructData.addTriangleTracker(trackerData);
                 }
             }
         }
@@ -284,11 +284,13 @@ public class RagdollGenerator {
 
             ModelData modelData = new ModelData(modelBase);
 
-            for(VertexTrackerData vertexData : modelConstructData.getVertexTrackerData()) {
-                modelBase
+            VertexTrackerData[] vertexTrackers = modelConstructData.getVertexTrackerData();
+            for(VertexTrackerData vertexData : vertexTrackers) {
+                
             }
 
-            for(TriangleTrackerData triangleData : modelConstructData.getTriangleTrackerData()) {
+            TriangleTrackerData[] triangleTrackers = modelConstructData.getTriangleTrackerData();
+            for(TriangleTrackerData triangleData : triangleTrackers) {
 
             }
 

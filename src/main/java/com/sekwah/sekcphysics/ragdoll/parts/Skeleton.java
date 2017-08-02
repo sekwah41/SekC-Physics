@@ -69,7 +69,7 @@ public class Skeleton {
         // oldUpdate constraints
         int updates = 0;
         for(; updates <= this.maxUpdateCount; updates++) {
-            if(!this.isActive()){
+            if(!this.isActive()) {
                 break;
             }
             for(Constraint constraint : constraints) {

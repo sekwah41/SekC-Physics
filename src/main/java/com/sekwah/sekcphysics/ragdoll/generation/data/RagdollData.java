@@ -73,7 +73,7 @@ public class RagdollData {
         return this.constraintLinkedList.toArray(new ConstraintData[0]);
     }
 
-    public HashMap<String, PointD> getPointMap(){
+    public HashMap<String, PointD> getPointMap() {
         return this.pointHashMap;
     }
 
