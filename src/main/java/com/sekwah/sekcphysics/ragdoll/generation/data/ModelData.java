@@ -32,7 +32,7 @@ public class ModelData {
         this.vertexTrackers = vertexTrackerData;
     }
 
-    public void setTriangleTracker(TriangleTrackerData[] triangleTrackerData) {
+    public void setTriangleTrackers(TriangleTrackerData[] triangleTrackerData) {
         this.triangleTrackers = triangleTrackerData;
     }
 

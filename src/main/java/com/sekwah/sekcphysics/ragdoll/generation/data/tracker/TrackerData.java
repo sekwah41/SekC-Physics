@@ -3,6 +3,7 @@ package com.sekwah.sekcphysics.ragdoll.generation.data.tracker;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.client.model.ModelBox;
+import net.minecraft.client.model.ModelRenderer;
 
 /**
  * Created by sekwah41 on 06/07/2017.
@@ -10,6 +11,7 @@ import net.minecraft.client.model.ModelBox;
 public class TrackerData {
 
     private final String partName;
+
     protected float posOffsetX;
     protected float posOffsetY;
     protected float posOffsetZ;
@@ -18,7 +20,7 @@ public class TrackerData {
     protected float rotOffsetY;
     protected float rotOffsetZ;
 
-    private ModelBox part;
+    private ModelRenderer part;
 
     public TrackerData(String partName, JsonObject vertexObj) {
 
@@ -97,11 +99,11 @@ public class TrackerData {
         }
     }
 
-    public ModelBox getPart() {
+    public ModelRenderer getPart() {
         return part;
     }
 
-    public void setPart(ModelBox part) {
+    public void setPart(ModelRenderer part) {
         this.part = part;
     }
 

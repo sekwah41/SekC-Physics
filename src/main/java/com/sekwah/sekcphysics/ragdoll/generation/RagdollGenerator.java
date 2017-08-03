@@ -6,12 +6,14 @@ import com.sekwah.sekcphysics.ragdoll.generation.data.*;
 import com.sekwah.sekcphysics.ragdoll.generation.data.tracker.TriangleTrackerData;
 import com.sekwah.sekcphysics.ragdoll.generation.data.tracker.VertexTrackerData;
 import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.ProgressManager;
 import org.apache.logging.log4j.Level;
 
 import java.io.*;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
@@ -286,13 +288,17 @@ public class RagdollGenerator {
 
             VertexTrackerData[] vertexTrackers = modelConstructData.getVertexTrackerData();
             for(VertexTrackerData vertexData : vertexTrackers) {
-                
+                ModelRenderer renderer = getRendererFromName(vertexData.getPartName(), modelBase, rClass);
+                vertexData.setPart(renderer);
             }
+            modelData.setVertexTrackers(vertexTrackers);
 
             TriangleTrackerData[] triangleTrackers = modelConstructData.getTriangleTrackerData();
             for(TriangleTrackerData triangleData : triangleTrackers) {
-
+                ModelRenderer renderer = getRendererFromName(triangleData.getPartName(), modelBase, rClass);
+                triangleData.setPart(renderer);
             }
+            modelData.setTriangleTrackers(triangleTrackers);
 
         }
         catch (ClassNotFoundException exception) {
@@ -310,8 +316,11 @@ public class RagdollGenerator {
         } catch (SecurityException e) {
             throw new RagdollInvalidDataException("The security manager has blocked access to the class"
                     + modelConstructData.getClassName());
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+            throw new RagdollInvalidDataException("Field not found for "
+                    + modelConstructData.getClassName());
         }
-
 
         /*try
         {
@@ -343,6 +352,15 @@ public class RagdollGenerator {
         }*/
 
         return null;
+    }
+
+    private ModelRenderer getRendererFromName(String partName, ModelBase modelBase, Class<?> rClass) throws NoSuchFieldException, RagdollInvalidDataException, IllegalAccessException {
+        Field partRender = rClass.getField(partName);
+        Object partObj = partRender.get(modelBase);
+        if(partObj instanceof ModelRenderer) {
+            return (ModelRenderer) partObj;
+        }
+        throw new RagdollInvalidDataException("Unexpected object type stored in location");
     }
 
     /**
