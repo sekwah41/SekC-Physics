@@ -267,6 +267,14 @@ public class RagdollGenerator {
         return modelConstructData;
     }
 
+    /**
+     * Create the model and link tracker data.
+     *
+     * @param ragdollData
+     * @param modelConstructData
+     * @return
+     * @throws RagdollInvalidDataException
+     */
     private ModelData createModelAndAddTrackers(RagdollData ragdollData, ModelConstructData modelConstructData) throws RagdollInvalidDataException {
 
         if(modelConstructData.getClassName() == null) {
@@ -280,10 +288,24 @@ public class RagdollGenerator {
                 throw new RagdollInvalidDataException("Invalid model class");
             }
 
+            /* Could store object array before but this should make it more robust when it works.
+            Though this makes it so object versions of primitives cant be used (though its safe to say it wont
+             be the case)
+            */
             Object[] constructObjects = modelConstructData.getConstructData();
             Class[] classArray = new Class[constructObjects.length];
             for(int i = 0; i < constructObjects.length; i++) {
-                classArray[i] = constructObjects[i].getClass();
+                Class<? extends Object> classType = constructObjects[i].getClass();
+                try {
+                    Object tempClassObj = classType.getField("TYPE").get(null);
+                    if(tempClassObj instanceof Class) {
+                        classType = (Class) tempClassObj;
+                    }
+                }
+                catch (NoSuchFieldException e) {
+                    SekCPhysics.logger.info("Constructor non primitive.");
+                }
+                classArray[i] = classType;
             }
 
             ModelBase modelBase = (ModelBase) rClass.getConstructor(classArray).newInstance(constructObjects);
