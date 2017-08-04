@@ -237,7 +237,7 @@ public class RagdollGenerator {
                 modelConstructData.setConstructData(constructObjects);
             }
 
-            JsonObject vertexTrackers = ragdollJsonData.getAsJsonObject("vertexTrackers");
+            JsonObject vertexTrackers = modelJSON.getAsJsonObject("vertexTrackers");
 
             if(vertexTrackers != null) {
                 Set<Map.Entry<String, JsonElement>> vertexNames = vertexTrackers.entrySet();
@@ -251,7 +251,7 @@ public class RagdollGenerator {
             }
 
 
-            JsonObject triangleTrackers = ragdollJsonData.getAsJsonObject("triangleTrackers");
+            JsonObject triangleTrackers = modelJSON.getAsJsonObject("triangleTrackers");
 
             if(vertexTrackers != null) {
                 Set<Map.Entry<String, JsonElement>> triangleNames = triangleTrackers.entrySet();
