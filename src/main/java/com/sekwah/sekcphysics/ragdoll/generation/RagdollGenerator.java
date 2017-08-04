@@ -197,7 +197,7 @@ public class RagdollGenerator {
             modelConstructData = new ModelConstructData();
         }
 
-        JsonObject modelJSON = ragdollJsonData.getAsJsonObject("modelConstructData");
+        JsonObject modelJSON = ragdollJsonData.getAsJsonObject("modelData");
         if(modelJSON != null) {
             modelConstructData.setClassName(modelJSON.get("class").getAsString());
 
@@ -207,7 +207,7 @@ public class RagdollGenerator {
                 Object[] constructObjects = new Object[constructData.size()];
                 for(int i = 0; i < constructObjects.length; i++) {
                     JsonArray entry = constructData.get(i).getAsJsonArray();
-                    String type = entry.get(0).toString();
+                    String type = entry.get(0).getAsString();
                     Object data = null;
                     JsonElement dataEle = entry.get(1);
                     switch(type) {
@@ -230,7 +230,7 @@ public class RagdollGenerator {
                             data = dataEle.getAsString();
                             break;
                         default:
-                            throw new RagdollInvalidDataException("Invalid Construct Data Type");
+                            throw new RagdollInvalidDataException("Invalid Construct Data Type: " + type);
                     }
                     constructObjects[i] = data;
                 }
@@ -269,10 +269,14 @@ public class RagdollGenerator {
 
     private ModelData createModelAndAddTrackers(RagdollData ragdollData, ModelConstructData modelConstructData) throws RagdollInvalidDataException {
 
-        try {
-            Class<?> rClass = Class.forName(modelConstructData.getClassName());
+        if(modelConstructData.getClassName() == null) {
+            throw new RagdollInvalidDataException("Model class was not given");
+        }
 
-            if(ModelBase.class.isAssignableFrom(rClass)) {
+        try {
+            Class rClass = Class.forName(modelConstructData.getClassName());
+
+            if(ModelBase.class.isInstance(rClass)) {
                 throw new RagdollInvalidDataException("Invalid model class");
             }
 
@@ -301,55 +305,27 @@ public class RagdollGenerator {
             modelData.setTriangleTrackers(triangleTrackers);
 
         }
-        catch (ClassNotFoundException exception) {
-            exception.printStackTrace();
-            throw new RagdollInvalidDataException("Could not find specified class" + modelConstructData.getClassName());
+        catch (ClassNotFoundException e) {
+            SekCPhysics.logger.error("Could not find specified class" + modelConstructData.getClassName());
+            e.printStackTrace();
         } catch (IllegalAccessException e) {
+            SekCPhysics.logger.error("Illegal access");
             e.printStackTrace();
-            throw new RagdollInvalidDataException("Illegal access");
         } catch (InstantiationException | InvocationTargetException e) {
+            SekCPhysics.logger.error("Construction error");
             e.printStackTrace();
-            throw new RagdollInvalidDataException("Construction error");
         } catch (NoSuchMethodException e) {
+            SekCPhysics.logger.error("Method not found, invalid class of construction data listed");
             e.printStackTrace();
-            throw new RagdollInvalidDataException("Method not found, invalid class of construction data listed");
         } catch (SecurityException e) {
-            throw new RagdollInvalidDataException("The security manager has blocked access to the class"
+            SekCPhysics.logger.error("The security manager has blocked access to the class"
                     + modelConstructData.getClassName());
-        } catch (NoSuchFieldException e) {
             e.printStackTrace();
-            throw new RagdollInvalidDataException("Field not found for "
+        } catch (NoSuchFieldException e) {
+            SekCPhysics.logger.error("Field not found for "
                     + modelConstructData.getClassName());
+            e.printStackTrace();
         }
-
-        /*try
-        {
-            Class rClass = Class.forName(classLoc);
-
-            if (rClass != null)
-            {
-                // Need to make a set of construction data for the model in the json.
-
-                // Extra data trackers can come later.
-
-                //zombieModel = new ModelBiped(0.0f, 0, 64, 64);
-
-
-
-                // in case needed to add arguments to constructor in the future
-                // it can be done like this for stuff like entities
-                // (Entity)rClass.getConstructor(new Class[] {World.class}).newInstance(new Object[] {worldObj});
-                //ragdoll = (BaseRagdoll)rClass.getConstructor(new Class[] {}).newInstance(new Object[]{});
-            }
-            else{
-
-            }
-        }
-        catch (Exception exception)
-        {
-            exception.printStackTrace();
-            throw new RagdollInvalidDataException("Could not find specified class");
-        }*/
 
         return null;
     }

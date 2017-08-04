@@ -59,7 +59,7 @@ public class RagdollData {
     }
 
     public String checkPoint(String point) throws RagdollInvalidDataException {
-        if(this.pointHashMap.containsKey(point)) {
+        if(!this.pointHashMap.containsKey(point)) {
             throw new RagdollInvalidDataException("Invalid Skeleton Point Selected");
         }
         return point;
