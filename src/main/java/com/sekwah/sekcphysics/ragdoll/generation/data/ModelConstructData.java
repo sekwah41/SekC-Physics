@@ -28,6 +28,8 @@ public class ModelConstructData {
 
     private String className;
 
+    private ResourceData textureDomain;
+
     /**
      * Ignores null values
      * @param className
@@ -68,4 +70,11 @@ public class ModelConstructData {
         return this.triangleTrackers.toArray(new TriangleTrackerData[0]);
     }
 
+    public ResourceData getTextureDomain() {
+        return textureDomain;
+    }
+
+    public void setTextureDomain(String textureDomain, String textureLocation) {
+        this.textureDomain = new ResourceData(textureDomain, textureLocation);
+    }
 }

@@ -1,7 +1,6 @@
 {
   "EntityBiped" : {
-    "textureDomain": "minecraft",
-    "texture": "textures/entity/steve.png",
+    "textureDomain": {"minecraft",  "textures/entity/steve.png"},
     "centerHeightOffset" : 24,
     "skeletonPoints":{
       "centerTorso" : [0,0,0],

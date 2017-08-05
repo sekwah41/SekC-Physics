@@ -21,11 +21,7 @@ public class EventHook {
 
     @SubscribeEvent
     public void deathEvent(LivingDeathEvent event) {
-        // TODO check entities for if they are in a list of registered mobs for ragdolls,
-        //  and also check if the died is when the body is removed after death animation or if its
-        //  as soon as it hits 0
-        //SekCPhysics.logger.info("Entity Died.");
-        // TODO Either add recalculation for the children or the option for a different model.
+
         if(FMLCommonHandler.instance().getEffectiveSide().isClient() && !event.getEntityLiving().isChild()) {
             //SekCPhysics.logger.info("Entity Died.");
 
@@ -69,19 +65,6 @@ public class EventHook {
                     }
                 }*/
             }
-
-            // Look at the events and see when the world update and other ticks are, if you cant do it as a client entity
-            //  you may need to trigger it each time.
-
-            // This will only fire once, even in single player. Gather data such as rotation and spawn the ragdoll.
-            //  also if its in the list of ragdolls remove the death animation of rotating and being red.
-            //  add a class type for ragdolls to set properties, such as for horses and players get the skin.
-            //  Also for ageable entities add the isbaby check and create baby ragdolls.
-
-            // Challange, create base zombie and try ender dragon for hard challange then make a video and see how many
-            //  people say its fake, dont give a download till most vanilla mobs are done and stuff is set up.
-            //  possibly just do a test of concept video with the zombie and player to see how people act.
-            //  ender dragon may be very hard... not sure if its rendered all as one or how the model is.
         }
     }
 

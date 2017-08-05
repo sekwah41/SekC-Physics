@@ -3,6 +3,7 @@ package com.sekwah.sekcphysics.ragdoll.generation.data;
 import com.sekwah.sekcphysics.ragdoll.generation.data.tracker.TriangleTrackerData;
 import com.sekwah.sekcphysics.ragdoll.generation.data.tracker.VertexTrackerData;
 import net.minecraft.client.model.ModelBase;
+import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,6 +20,8 @@ public class ModelData {
     private VertexTrackerData[] vertexTrackers = new VertexTrackerData[0];
 
     private TriangleTrackerData[] triangleTrackers = new TriangleTrackerData[0];
+
+    private ResourceLocation texture;
 
     public ModelData(ModelBase baseModel) {
         this.baseModel = baseModel;
@@ -42,5 +45,9 @@ public class ModelData {
 
     public TriangleTrackerData[] getTriangleTrackers() {
         return triangleTrackers;
+    }
+
+    public void setTexture(ResourceLocation texture) {
+        this.texture = texture;
     }
 }
