@@ -15,6 +15,8 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
+ * Client side event hook
+ *
  * Created by sekwah on 8/1/2015.
  */
 public class EventHook {
