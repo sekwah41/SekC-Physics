@@ -43,8 +43,8 @@ public class RagdollGenerator {
                     addRagdollTrackerData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
                     addRagdollOtherData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
                     ModelConstructData modelConstructData = getRagdollModelData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
-                    createModelAndAddTrackers(ragdollData, modelConstructData);
-
+                    ModelData modelData = createModelAndAddTrackers(ragdollData, modelConstructData);
+                    ragdollData.addModelData(modelData);
                     SekCPhysics.ragdolls.registerRagdoll(entry.getKey(), ragdollData);
                 }
                 catch(ClassCastException | RagdollInvalidDataException | IllegalStateException

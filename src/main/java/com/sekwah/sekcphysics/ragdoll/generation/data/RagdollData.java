@@ -32,7 +32,7 @@ public class RagdollData {
 
     public float centerHeightOffset;
 
-    private ModelBase model = null;
+    private ModelData modelData;
 
     public RagdollData() {
     }
@@ -88,11 +88,7 @@ public class RagdollData {
         return this.triangleHashMap.values().toArray(new TriangleData[0]);
     }
 
-    public void setModel(ModelBase model) {
-        this.model = model;
-    }
-
-    public ModelBase getModel() {
-        return this.model;
+    public void addModelData(ModelData modelData) {
+        this.modelData = modelData;
     }
 }
