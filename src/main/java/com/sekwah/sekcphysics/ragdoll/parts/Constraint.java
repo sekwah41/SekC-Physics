@@ -56,8 +56,8 @@ public class Constraint {
             return;
         }
 
-        PointD averageLoc = new PointD((end[0].newPosX + end[1].newPosX) * 0.5f,
-                (end[0].newPosY + end[1].newPosY) * 0.5f,(end[0].newPosZ + end[1].newPosZ) * 0.5f);
+        PointD averageLoc = new PointD((end[0].newPosX + end[1].newPosX) * 0.5d,
+                (end[0].newPosY + end[1].newPosY) * 0.5d,(end[0].newPosZ + end[1].newPosZ) * 0.5d);
 
         double currentLength = Math.sqrt(Math.pow(end[0].newPosX - end[1].newPosX, 2) + Math.pow(end[0].newPosY - end[1].newPosY, 2) + Math.pow(end[0].newPosZ - end[1].newPosZ, 2));
         // If its already the correct length theres no point in recalculating
@@ -67,23 +67,23 @@ public class Constraint {
         if(currentLength == 0) {
             currentLength = 0.01;
         }
-        double currentLengthInvert = 1.0/currentLength;
+        double currentLengthInvert = 1.0d/currentLength;
 
         PointD direction = new PointD((end[0].newPosX - end[1].newPosX) * currentLengthInvert,
                 (end[0].newPosY - end[1].newPosY) * currentLengthInvert, (end[0].newPosZ - end[1].newPosZ) * currentLengthInvert);
 
         //System.out.println(averageLoc);
 
-        double halfLength = length / 2F;
+        double halfLength = length * 0.5d;
 
         //System.out.println("");
 
         //System.out.println(length);
 
-        end[0].setNewPos((float) (averageLoc.x + (direction.x * halfLength)), (float) (averageLoc.y + (direction.y * halfLength)),
+        end[0].setNewPos(averageLoc.x + (direction.x * halfLength), averageLoc.y + (direction.y * halfLength),
                 (float) (averageLoc.z + (direction.z * halfLength)));
 
-        end[1].setNewPos((float) (averageLoc.x - (direction.x * halfLength)), (float) (averageLoc.y - (direction.y * halfLength)),
-                (float) (averageLoc.z - (direction.z * halfLength)));
+        end[1].setNewPos(averageLoc.x - (direction.x * halfLength), averageLoc.y - (direction.y * halfLength),
+                averageLoc.z - (direction.z * halfLength));
     }
 }

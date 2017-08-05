@@ -32,7 +32,7 @@ public class SkeletonPoint {
 
     private double nonMoveThresh = 0.001;
 
-    public boolean hasMoved = false;
+    public boolean hasMoved = true;
 
     // Push force multiplier
     public float pushability = 1;
