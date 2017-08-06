@@ -239,11 +239,15 @@ public class RagdollGenerator {
             }
 
             // TODO work on system for multiple skins, e.g. changing villagers based on a tracker or nbt data
-            JsonElement textureDomain = ragdollJsonData.get("textureDomain");
-            JsonElement texture = ragdollJsonData.get("texture");
+            JsonElement textureEle = ragdollJsonData.get("texture");
+            if(textureEle != null) {
+                JsonArray texture = textureEle.getAsJsonArray();
+                modelConstructData.setTextureDomain(texture.get(0).toString(), texture.get(1).toString());
+            }
+            /*JsonElement texture = ragdollJsonData.get("texture");
             if(textureDomain != null && texture != null) {
                 modelConstructData.setTextureDomain(textureDomain.getAsString(), texture.getAsString());
-            }
+            }*/
 
             JsonObject vertexTrackers = modelJSON.getAsJsonObject("vertexTrackers");
 

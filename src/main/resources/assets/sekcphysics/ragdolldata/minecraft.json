@@ -1,6 +1,6 @@
 {
   "EntityBiped" : {
-    "textureDomain": {"minecraft",  "textures/entity/steve.png"},
+    "texture": ["minecraft",  "textures/entity/steve.png"],
     "centerHeightOffset" : 24,
     "skeletonPoints":{
       "centerTorso" : [0,0,0],
@@ -77,8 +77,7 @@
   },
   "net.minecraft.entity.monster.EntityZombie" : {
     "inherit" : "EntityBiped",
-    "textureDomain": "minecraft",
-    "texture": "textures/entity/zombie/zombie.png",
+    "texture": ["minecraft",  "textures/entity/zombie/zombie.png"],
     "skeletonPoints":{
       "rightArm" : [-6,-2,8],
       "leftArm" : [6,-2,8]
@@ -90,8 +89,7 @@
   },
   "net.minecraft.entity.monster.EntityHusk" : {
     "inherit" : "net.minecraft.entity.monster.EntityZombie",
-    "textureDomain": "minecraft",
-    "texture": "textures/entity/zombie/husk.png",
+    "texture": ["minecraft",  "textures/entity/zombie/husk.png"],
     "skeletonPoints":{
     },
     "constraints":[
