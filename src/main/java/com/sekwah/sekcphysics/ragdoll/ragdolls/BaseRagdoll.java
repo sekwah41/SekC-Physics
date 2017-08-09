@@ -10,6 +10,7 @@ import com.sekwah.sekcphysics.ragdoll.parts.trackers.TrackerVertex;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.HashMap;
@@ -28,17 +29,14 @@ public class BaseRagdoll {
     // Current skeleton position and shape
     public Skeleton skeleton;
 
-    // Will be used once the physics is sorted, then can render all the stuff to the correct positions
-    public final ModelBase entityModel;
-
     // offset from the bottom of the desired entity to the main point of the ragdoll
     public double centerHeightOffset;
+
+    public ResourceLocation resourceLocation;
 
     public BaseRagdoll(float centerHeightOffset, ModelBase baseModel) {
 
         this.skeleton = new Skeleton();
-
-        this.entityModel = baseModel;
 
         this.centerHeightOffset = centerHeightOffset;
     }

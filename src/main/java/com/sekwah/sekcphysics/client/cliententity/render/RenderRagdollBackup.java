@@ -76,7 +76,8 @@ public class RenderRagdollBackup<T extends EntityRagdoll> extends Render<T> {
 
             BipedRagdoll bipedRagdoll = (BipedRagdoll) entity.ragdoll;
 
-            if(mc.gameSettings.showDebugInfo) {
+            // Commented because the lines were annoying for the dupes
+            /*if(mc.gameSettings.showDebugInfo) {
                 GL11.glPushMatrix();
                 GL11.glDepthMask(false);
                 GL11.glEnable(GL11.GL_BLEND);
@@ -84,7 +85,7 @@ public class RenderRagdollBackup<T extends EntityRagdoll> extends Render<T> {
                 GL11.glAlphaFunc(GL11.GL_GREATER, 0.003921569F);
 
                 GL11.glColor4f(1,1,1,0.5f);
-            }
+            }*/
 
 
             for(Tracker tracker : bipedRagdoll.trackerHashmap.values()) {

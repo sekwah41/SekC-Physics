@@ -47,4 +47,8 @@ public class ModelData {
     public void setTexture(ResourceLocation texture) {
         this.texture = texture;
     }
+
+    public ResourceLocation getTexture() {
+        return texture;
+    }
 }

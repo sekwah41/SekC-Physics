@@ -2,6 +2,8 @@ package com.sekwah.sekcphysics.client.cliententity.render;
 
 import com.sekwah.sekcphysics.client.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
+import com.sekwah.sekcphysics.ragdoll.parts.trackers.Tracker;
+import com.sekwah.sekcphysics.ragdoll.ragdolls.BaseRagdoll;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.entity.Render;
@@ -28,9 +30,14 @@ public class RenderRagdoll<T extends EntityRagdoll> extends Render<T> {
         // Sets the position offset for rendering
         GL11.glTranslated(x, y, z);
 
+        BaseRagdoll bipedRagdoll = entity.ragdoll;
 
+        ResourceLocation resourceLoc = bipedRagdoll.resourceLocation;
+        if(resourceLoc != null) {
+            this.bindTexture(bipedRagdoll.resourceLocation);
+        }
 
-        /*if(mc.gameSettings.showDebugInfo) {
+        if(mc.gameSettings.showDebugInfo) {
             GL11.glPushMatrix();
             GL11.glDepthMask(false);
             GL11.glEnable(GL11.GL_BLEND);
@@ -41,7 +48,6 @@ public class RenderRagdoll<T extends EntityRagdoll> extends Render<T> {
 
 
         for(Tracker tracker : bipedRagdoll.trackerHashmap.values()) {
-            //SekCPhysics.logger.info("Test");
             tracker.calcRotation();
             tracker.render();
         }
@@ -52,7 +58,7 @@ public class RenderRagdoll<T extends EntityRagdoll> extends Render<T> {
             GL11.glDepthMask(true);
 
             GL11.glPopMatrix();
-        }*/
+        }
 
         if(mc.gameSettings.showDebugInfo) {
             entity.ragdoll.skeleton.renderSkeletonDebug(entity.ragdoll.activeStatus());

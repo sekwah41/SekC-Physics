@@ -34,6 +34,8 @@ public class FromDataRagdoll extends BaseRagdoll {
 
         Collections.addAll(this.skeleton.triangles, ragdollConstruct.getTriangles());
 
+        this.resourceLocation = creationData.getModelData().getTexture();
+
         for(VertexTrackerData vertexTrackerData : modelData.getVertexTrackers()) {
             this.addVertexTracker(vertexTrackerData.getPart(), ragdollConstruct.getSkeletonPoint(vertexTrackerData.anchor),
                     ragdollConstruct.getSkeletonPoint(vertexTrackerData.pointTo));
