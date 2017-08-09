@@ -20,6 +20,8 @@ public class TrackerData {
     protected float rotOffsetY;
     protected float rotOffsetZ;
 
+    public final boolean hasRotateData;
+
     private ModelRenderer part;
 
     public TrackerData(String partName, JsonObject vertexObj) {
@@ -27,8 +29,10 @@ public class TrackerData {
         this.partName = partName;
 
         if(vertexObj == null) {
+            this.hasRotateData = false;
             return;
         }
+        this.hasRotateData = true;
         this.setPosOffsetX(vertexObj.get("posOffX"));
         this.setPosOffsetY(vertexObj.get("posOffY"));
         this.setPosOffsetZ(vertexObj.get("posOffZ"));

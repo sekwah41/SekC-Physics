@@ -5,9 +5,6 @@ import com.sekwah.sekcphysics.ragdoll.generation.data.tracker.VertexTrackerData;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.util.ResourceLocation;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 /**
  * Stores a copy of the model as well as data to link it to the ragdoll on creation
  *

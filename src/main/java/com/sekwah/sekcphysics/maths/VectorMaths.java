@@ -1,6 +1,8 @@
 package com.sekwah.sekcphysics.maths;
 
 /**
+ * TODO allow the code to apply multiple matricies then apply the rotation. (Make another class for that)
+ *
  * Created by sekwah41 on 07/07/2017.
  */
 public final class VectorMaths {

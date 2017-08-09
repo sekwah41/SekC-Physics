@@ -88,7 +88,15 @@ public class RagdollData {
         return this.triangleHashMap.values().toArray(new TriangleData[0]);
     }
 
+    public HashMap<String, TriangleData> getTriangleMap() {
+        return this.triangleHashMap;
+    }
+
     public void addModelData(ModelData modelData) {
         this.modelData = modelData;
+    }
+
+    public ModelData getModelData() {
+        return modelData;
     }
 }

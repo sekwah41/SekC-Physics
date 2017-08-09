@@ -2,11 +2,7 @@ package com.sekwah.sekcphysics.client.cliententity.render;
 
 import com.sekwah.sekcphysics.client.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
-import com.sekwah.sekcphysics.ragdoll.parts.trackers.Tracker;
-import com.sekwah.sekcphysics.ragdoll.ragdolls.vanilla.BipedRagdoll;
-import com.sekwah.sekcphysics.ragdoll.ragdolls.vanilla.ZombieRagdoll;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;

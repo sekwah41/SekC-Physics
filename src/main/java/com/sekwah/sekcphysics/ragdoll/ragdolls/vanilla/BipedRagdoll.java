@@ -1,10 +1,10 @@
 package com.sekwah.sekcphysics.ragdoll.ragdolls.vanilla;
 
 import com.sekwah.sekcphysics.SekCPhysics;
-import com.sekwah.sekcphysics.ragdoll.ragdolls.BaseRagdoll;
 import com.sekwah.sekcphysics.ragdoll.parts.Constraint;
 import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
 import com.sekwah.sekcphysics.ragdoll.parts.Triangle;
+import com.sekwah.sekcphysics.ragdoll.ragdolls.BaseRagdoll;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBiped;
 
@@ -31,7 +31,7 @@ public class BipedRagdoll extends BaseRagdoll {
     public SkeletonPoint leftArm;
 
     public BipedRagdoll() {
-        super(24);
+        super(24, null);
 
         centerTorso = new SkeletonPoint(0f,0f,0f);
 
@@ -133,8 +133,8 @@ public class BipedRagdoll extends BaseRagdoll {
             this.addVertexTracker(modelBiped.bipedRightLeg, this.rightLegTop, this.rightLegBot);
             this.addVertexTracker(modelBiped.bipedLeftLeg, this.leftLegTop, this.leftLegBot);
 
-            this.addTriangleTrackerRot(modelBiped.bipedBody, this.bodyTriangle, (float) Math.PI, 0, 0);
-            this.addTriangleTrackerRot(modelBiped.bipedHead, this.headTriangle, 0, 0, 0);
+            this.addTriangleTracker(modelBiped.bipedBody, this.bodyTriangle, 180f, 0, 0);
+            this.addTriangleTracker(modelBiped.bipedHead, this.headTriangle, 0, 0, 0);
             //this.addTriangleTracker(modelBiped.bipedHead, this.headTriangle);
         }
         else{

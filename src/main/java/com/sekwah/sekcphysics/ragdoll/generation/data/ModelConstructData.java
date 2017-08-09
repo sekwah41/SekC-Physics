@@ -4,7 +4,6 @@ import com.sekwah.sekcphysics.ragdoll.generation.data.tracker.TriangleTrackerDat
 import com.sekwah.sekcphysics.ragdoll.generation.data.tracker.VertexTrackerData;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Store data about the entity

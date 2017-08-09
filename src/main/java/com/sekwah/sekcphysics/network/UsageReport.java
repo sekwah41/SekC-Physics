@@ -3,7 +3,6 @@ package com.sekwah.sekcphysics.network;
 import com.google.common.collect.Maps;
 import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.settings.ModSettings;
-import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
 import java.io.BufferedReader;

@@ -1,7 +1,7 @@
 package com.sekwah.sekcphysics.ragdoll;
 
-import com.sekwah.sekcphysics.ragdoll.generation.FromDataRagdoll;
 import com.sekwah.sekcphysics.ragdoll.generation.data.RagdollData;
+import com.sekwah.sekcphysics.ragdoll.ragdolls.generated.FromDataRagdoll;
 import net.minecraft.entity.Entity;
 
 import java.util.HashMap;

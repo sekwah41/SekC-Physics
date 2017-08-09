@@ -29,14 +29,16 @@ public class BaseRagdoll {
     public Skeleton skeleton;
 
     // Will be used once the physics is sorted, then can render all the stuff to the correct positions
-    public ModelBase entityModel;
+    public final ModelBase entityModel;
 
     // offset from the bottom of the desired entity to the main point of the ragdoll
     public double centerHeightOffset;
 
-    public BaseRagdoll(float centerHeightOffset) {
+    public BaseRagdoll(float centerHeightOffset, ModelBase baseModel) {
 
         this.skeleton = new Skeleton();
+
+        this.entityModel = baseModel;
 
         this.centerHeightOffset = centerHeightOffset;
     }
@@ -81,7 +83,7 @@ public class BaseRagdoll {
         trackerHashmap.put(part, new TrackerTriangle(part, triangle));
     }
 
-    protected void addTriangleTrackerRot(ModelRenderer part, Triangle triangle, float rotateOffsetX, float rotateOffsetY, float rotateOffsetZ) {
+    protected void addTriangleTracker(ModelRenderer part, Triangle triangle, float rotateOffsetX, float rotateOffsetY, float rotateOffsetZ) {
         trackerHashmap.put(part, new TrackerTriangle(part, triangle, rotateOffsetX, rotateOffsetY, rotateOffsetZ));
     }
 

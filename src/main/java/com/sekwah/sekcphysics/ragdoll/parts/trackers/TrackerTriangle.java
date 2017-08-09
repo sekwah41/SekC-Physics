@@ -41,9 +41,9 @@ public class TrackerTriangle extends Tracker {
 
 
 
-        GL11.glRotatef((float) Math.toDegrees(this.rotationZ + this.rotateOffsetZ), 0,0,1);
-        GL11.glRotatef((float) Math.toDegrees(this.rotationY + this.rotateOffsetY), 0,1,0);
-        GL11.glRotatef((float) Math.toDegrees(this.rotationX + this.rotateOffsetX), 1,0,0);
+        GL11.glRotatef((float) Math.toDegrees(this.rotationZ) + this.rotateOffsetZ, 0,0,1);
+        GL11.glRotatef((float) Math.toDegrees(this.rotationY) + this.rotateOffsetY, 0,1,0);
+        GL11.glRotatef((float) Math.toDegrees(this.rotationX) + this.rotateOffsetX, 1,0,0);
 
         //GL11.glRotatef((float) Math.toDegrees(this.rotationY + this.rotateOffsetY), 0,1,0);
 
