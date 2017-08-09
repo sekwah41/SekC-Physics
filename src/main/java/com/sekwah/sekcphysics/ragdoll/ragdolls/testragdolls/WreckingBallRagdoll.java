@@ -14,7 +14,7 @@ import java.util.List;
 public class WreckingBallRagdoll extends BaseRagdoll {
 
     public WreckingBallRagdoll() {
-        super(1.4f);
+        super(1.4f, null);
 
         centerHeightOffset = 24;
 

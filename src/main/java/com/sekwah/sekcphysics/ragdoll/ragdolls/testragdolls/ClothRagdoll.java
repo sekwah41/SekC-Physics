@@ -19,7 +19,7 @@ public class ClothRagdoll extends BaseRagdoll {
     SkeletonPoint[][] points = new SkeletonPoint[width][height];
 
     public ClothRagdoll() {
-        super(1.4f);
+        super(1.4f, null);
 
         centerHeightOffset = 24;
 

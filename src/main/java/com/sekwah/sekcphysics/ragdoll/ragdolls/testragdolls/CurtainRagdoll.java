@@ -21,7 +21,7 @@ public class CurtainRagdoll extends BaseRagdoll {
     SkeletonPoint[][] rightPoints = new SkeletonPoint[width][height];
 
     public CurtainRagdoll() {
-        super(1.4f);
+        super(1.4f, null);
 
         centerHeightOffset = 24;
 
