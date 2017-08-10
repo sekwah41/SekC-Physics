@@ -70,6 +70,7 @@ public class TrackerTriangle extends Tracker {
 
     public void calcRotation() {
         // TODO Find out why convertToF is broken
+
         PointD triangleDir = triangle.getDirection();
 
         PointD trangleNorm = triangle.getNormal();

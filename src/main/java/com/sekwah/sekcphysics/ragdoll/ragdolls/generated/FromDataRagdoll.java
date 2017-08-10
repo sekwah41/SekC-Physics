@@ -1,10 +1,12 @@
 package com.sekwah.sekcphysics.ragdoll.ragdolls.generated;
 
+import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.ragdoll.generation.RagdollConstructor;
 import com.sekwah.sekcphysics.ragdoll.generation.data.ModelData;
 import com.sekwah.sekcphysics.ragdoll.generation.data.RagdollData;
 import com.sekwah.sekcphysics.ragdoll.generation.data.tracker.TriangleTrackerData;
 import com.sekwah.sekcphysics.ragdoll.generation.data.tracker.VertexTrackerData;
+import com.sekwah.sekcphysics.ragdoll.parts.Triangle;
 import com.sekwah.sekcphysics.ragdoll.ragdolls.BaseRagdoll;
 
 import java.util.Collections;
@@ -42,12 +44,18 @@ public class FromDataRagdoll extends BaseRagdoll {
         }
 
         for(TriangleTrackerData triangleTrackerData : modelData.getTriangleTrackers()) {
-            if(triangleTrackerData.hasRotateData) {
-                this.addTriangleTracker(triangleTrackerData.getPart(), ragdollConstruct.getTriangle(triangleTrackerData.tracker),
-                        triangleTrackerData.getRotOffsetX(), triangleTrackerData.getRotOffsetY(), triangleTrackerData.getRotOffsetZ());
+            Triangle triangle = ragdollConstruct.getTriangle(triangleTrackerData.tracker);
+            if(triangle != null) {
+                if(triangleTrackerData.hasRotateData) {
+                    this.addTriangleTracker(triangleTrackerData.getPart(), ragdollConstruct.getTriangle(triangleTrackerData.tracker),
+                            triangleTrackerData.getRotOffsetX(), triangleTrackerData.getRotOffsetY(), triangleTrackerData.getRotOffsetZ());
+                }
+                else {
+                    this.addTriangleTracker(triangleTrackerData.getPart(), triangle);
+                }
             }
             else {
-                this.addTriangleTracker(triangleTrackerData.getPart(), ragdollConstruct.getTriangle(triangleTrackerData.tracker));
+                SekCPhysics.logger.error("Null triangle found for:" + triangleTrackerData.tracker);
             }
         }
 

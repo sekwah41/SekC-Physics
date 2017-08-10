@@ -33,7 +33,7 @@ public class Tracker {
 
     public float offsetZ = 0;
 
-    public Tracker(ModelRenderer part) {
+    protected Tracker(ModelRenderer part) {
         this.part = part;
     }
 

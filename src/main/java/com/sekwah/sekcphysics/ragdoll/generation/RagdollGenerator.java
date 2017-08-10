@@ -43,7 +43,7 @@ public class RagdollGenerator {
                     addRagdollConstraintData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
                     addRagdollTrackerData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
                     addRagdollOtherData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
-                    ModelConstructData modelConstructData = getRagdollModelData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
+                    ModelConstructData modelConstructData = getRagdollModelData(entry.getValue().getAsJsonObject(), ragdollFileJson);
                     ModelData modelData = createModelAndAddTrackers(ragdollData, modelConstructData);
                     ragdollData.addModelData(modelData);
                     SekCPhysics.ragdolls.registerRagdoll(entry.getKey(), ragdollData);
@@ -181,22 +181,28 @@ public class RagdollGenerator {
      * Fetches the data from the ragdoll json for the model.
      *
      * @param ragdollJsonData
-     * @param ragdollData
      * @param ragdollFileJson
      * @return
      * @throws UnsupportedOperationException
      */
-    private ModelConstructData getRagdollModelData(JsonObject ragdollJsonData, RagdollData ragdollData,
+    private ModelConstructData getRagdollModelData(JsonObject ragdollJsonData,
                                                    JsonObject ragdollFileJson) throws UnsupportedOperationException, RagdollInvalidDataException {
         JsonElement inherit = getInheritData(ragdollJsonData, ragdollFileJson);
 
         ModelConstructData modelConstructData;
 
         if(inherit != null) {
-            modelConstructData = getRagdollModelData(inherit.getAsJsonObject(), ragdollData, ragdollFileJson);
+            modelConstructData = getRagdollModelData(inherit.getAsJsonObject(), ragdollFileJson);
         }
         else {
             modelConstructData = new ModelConstructData();
+        }
+
+        // TODO work on system for multiple skins, e.g. changing villagers based on a tracker or nbt data
+        JsonElement textureEle = ragdollJsonData.get("texture");
+        if(textureEle != null) {
+            JsonArray texture = textureEle.getAsJsonArray();
+            modelConstructData.setTextureDomain(texture.get(0).getAsString(), texture.get(1).getAsString());
         }
 
         JsonObject modelJSON = ragdollJsonData.getAsJsonObject("modelData");
@@ -238,17 +244,6 @@ public class RagdollGenerator {
                 }
                 modelConstructData.setConstructData(constructObjects);
             }
-
-            // TODO work on system for multiple skins, e.g. changing villagers based on a tracker or nbt data
-            JsonElement textureEle = ragdollJsonData.get("texture");
-            if(textureEle != null) {
-                JsonArray texture = textureEle.getAsJsonArray();
-                modelConstructData.setTextureDomain(texture.get(0).toString(), texture.get(1).toString());
-            }
-            /*JsonElement texture = ragdollJsonData.get("texture");
-            if(textureDomain != null && texture != null) {
-                modelConstructData.setTextureDomain(textureDomain.getAsString(), texture.getAsString());
-            }*/
 
             JsonObject vertexTrackers = modelJSON.getAsJsonObject("vertexTrackers");
 
