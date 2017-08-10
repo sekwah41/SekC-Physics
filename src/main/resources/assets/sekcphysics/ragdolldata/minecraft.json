@@ -2,6 +2,7 @@
   "EntityBiped" : {
     "texture": ["minecraft", "textures/entity/steve.png"],
     "centerHeightOffset" : 24,
+    "entityScale" : 1,
     "skeletonPoints":{
       "centerTorso" : [0,0,0],
       "headLeft" : [3,7,0],
@@ -88,6 +89,7 @@
     }
   },
   "net.minecraft.entity.monster.EntityHusk" : {
+    "entityScale" : 1.0625,
     "inherit" : "net.minecraft.entity.monster.EntityZombie",
     "texture": ["minecraft",  "textures/entity/zombie/husk.png"],
     "skeletonPoints":{

@@ -6,6 +6,7 @@ import com.sekwah.sekcphysics.ragdoll.parts.trackers.Tracker;
 import com.sekwah.sekcphysics.ragdoll.ragdolls.BaseRagdoll;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
@@ -25,10 +26,10 @@ public class RenderRagdoll<T extends EntityRagdoll> extends Render<T> {
 
     @Override
     public void doRender(T entity, double x, double y, double z, float entityYaw, float partialTicks) {
-        GL11.glPushMatrix();
+        GlStateManager.pushMatrix();
 
         // Sets the position offset for rendering
-        GL11.glTranslated(x, y, z);
+        GlStateManager.translate(x, y, z);
 
         BaseRagdoll bipedRagdoll = entity.ragdoll;
 
@@ -38,14 +39,13 @@ public class RenderRagdoll<T extends EntityRagdoll> extends Render<T> {
         }
 
         if(mc.gameSettings.showDebugInfo) {
-            GL11.glPushMatrix();
-            GL11.glDepthMask(false);
+            GlStateManager.pushMatrix();
+            GlStateManager.depthMask(false);
             GL11.glEnable(GL11.GL_BLEND);
             GL11.glAlphaFunc(GL11.GL_GREATER, 0.003921569F);
 
             GL11.glColor4f(1,1,1,0.5f);
         }
-
 
         for(Tracker tracker : bipedRagdoll.trackerHashmap.values()) {
             tracker.calcRotation();
@@ -55,15 +55,15 @@ public class RenderRagdoll<T extends EntityRagdoll> extends Render<T> {
         if(mc.gameSettings.showDebugInfo) {
             GL11.glColor4f(1, 1, 1, 1);
 
-            GL11.glDepthMask(true);
+            GlStateManager.depthMask(true);
 
-            GL11.glPopMatrix();
+            GlStateManager.popMatrix();
         }
 
         if(mc.gameSettings.showDebugInfo) {
             entity.ragdoll.skeleton.renderSkeletonDebug(entity.ragdoll.activeStatus());
         }
-        GL11.glPopMatrix();
+        GlStateManager.popMatrix();
     }
 
     public void setPartLocation(ModelRenderer trackPart, SkeletonPoint skeletonPart) {

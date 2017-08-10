@@ -7,7 +7,7 @@ import net.minecraft.client.model.ModelRenderer;
  *
  * @author sekwah41
  */
-public class Tracker {
+public abstract class Tracker {
 
     protected final ModelRenderer part;
 
@@ -44,12 +44,15 @@ public class Tracker {
         this.rotateOffsetZ = rotateOffsetZ;
     }
 
-    public void render() {
+    public abstract void render();
+
+    protected void renderPart() {
         this.part.render(0.0625f);
     }
 
-    public void calcRotation() {
+    public abstract void calcRotation();
 
-    }
+    public abstract void setPartLocation();
 
+    public abstract void setPartRotation();
 }

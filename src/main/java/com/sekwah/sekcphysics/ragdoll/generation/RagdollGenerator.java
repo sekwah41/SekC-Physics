@@ -2,6 +2,7 @@ package com.sekwah.sekcphysics.ragdoll.generation;
 
 import com.google.gson.*;
 import com.sekwah.sekcphysics.SekCPhysics;
+import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.ragdoll.generation.data.*;
 import com.sekwah.sekcphysics.ragdoll.generation.data.tracker.TriangleTrackerData;
 import com.sekwah.sekcphysics.ragdoll.generation.data.tracker.VertexTrackerData;
@@ -40,6 +41,7 @@ public class RagdollGenerator {
                 try {
                     RagdollData ragdollData = new RagdollData();
                     addRagdollSkeletonPointData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
+                    applyModifiers(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
                     addRagdollConstraintData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
                     addRagdollTrackerData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
                     addRagdollOtherData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
@@ -70,6 +72,23 @@ public class RagdollGenerator {
     }
 
     /**
+     * Applies the changer data such as scale values to the points
+     * @param ragdollJsonData
+     * @param ragdollData
+     * @param ragdollFileJson
+     */
+    private void applyModifiers(JsonObject ragdollJsonData, RagdollData ragdollData,
+                                JsonObject ragdollFileJson) {
+
+        for(Map.Entry<String, PointD> entry : ragdollData.getPointMap().entrySet()) {
+            PointD point = entry.getValue();
+            ragdollData.setSkeletonPoint(entry.getKey(), point.x * ragdollData.getScale(),
+                    point.y * ragdollData.getScale(), point.z * ragdollData.getScale());
+        }
+
+    }
+
+    /**
      * Add the data about the skeleton points
      * @param ragdollJsonData
      * @param ragdollData
@@ -88,8 +107,7 @@ public class RagdollGenerator {
 
         JsonObject skeletonPoints = ragdollJsonData.getAsJsonObject("skeletonPoints");
         if(skeletonPoints != null) {
-            Set<Map.Entry<String, JsonElement>> pointNames = skeletonPoints.entrySet();
-            for(Map.Entry<String, JsonElement> pointName : pointNames) {
+            for(Map.Entry<String, JsonElement> pointName : skeletonPoints.entrySet()) {
                 JsonArray pointPosArray = skeletonPoints.get(pointName.getKey()).getAsJsonArray();
                 ragdollData.setSkeletonPoint(pointName.getKey(), pointPosArray.get(0).getAsDouble(),
                         pointPosArray.get(1).getAsDouble(), pointPosArray.get(2).getAsDouble());
@@ -97,6 +115,11 @@ public class RagdollGenerator {
         }
         else{
             throw new RagdollInvalidDataException("No skeleton points");
+        }
+
+        JsonObject scaleValue = ragdollJsonData.getAsJsonObject("entityScale");
+        if(scaleValue != null) {
+            ragdollData.setScale(scaleValue.getAsFloat());
         }
 
         //return ragdollData;
