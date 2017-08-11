@@ -114,10 +114,12 @@ public class RagdollGenerator {
             }
         }
         else{
-            throw new RagdollInvalidDataException("No skeleton points");
+            if(ragdollData.getPointMap().size() == 0) {
+                throw new RagdollInvalidDataException("No skeleton points");
+            }
         }
 
-        JsonObject scaleValue = ragdollJsonData.getAsJsonObject("entityScale");
+        JsonElement scaleValue = ragdollJsonData.get("entityScale");
         if(scaleValue != null) {
             ragdollData.setScale(scaleValue.getAsFloat());
         }
@@ -141,8 +143,10 @@ public class RagdollGenerator {
                 ragdollData.addConstraint(constraint.get(0).getAsString(), constraint.get(1).getAsString());
             }
         }
-        else{
-            throw new RagdollInvalidDataException("No constraints");
+        else {
+            if(ragdollData.getConstraints().length == 0) {
+                throw new RagdollInvalidDataException("No constraints");
+            }
         }
 
         //return ragdollData;

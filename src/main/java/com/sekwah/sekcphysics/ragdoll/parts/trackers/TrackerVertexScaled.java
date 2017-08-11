@@ -13,21 +13,15 @@ import net.minecraft.client.model.ModelRenderer;
  */
 public class TrackerVertexScaled extends TrackerVertex {
 
-    private final SkeletonPoint anchor;
+    private final float scale;
 
-    private final SkeletonPoint pointsTo;
+    private final float scaleInvert;
 
-    private float scaleValue;
-
-    private final float piFloat = (float) (Math.PI);
-
-    public float rotationZ = 0;
-    public TrackerVertexScaled(ModelRenderer part, SkeletonPoint anchor, SkeletonPoint pointsTo, float scaleValue) {
+    public TrackerVertexScaled(ModelRenderer part, SkeletonPoint anchor, SkeletonPoint pointsTo, float scale) {
         super(part, anchor, pointsTo);
-        this.anchor = anchor;
-        this.pointsTo = pointsTo;
 
-        this.scaleValue = scaleValue;
+        this.scale = scale;
+        this.scaleInvert = 1f/scale;
     }
 
     @Override
@@ -38,7 +32,7 @@ public class TrackerVertexScaled extends TrackerVertex {
         this.calcRotation();
         this.setPartRotation();
 
-        this.part.render(0.0625f);
+        this.part.render(0.0625f * this.scale);
 
         // TODO Look at the length in comparison (store it when calculating physics) and stretch it based on the percentage xD
         //GlStateManager.scale(1,scaleFactorStretch,0);
@@ -46,23 +40,9 @@ public class TrackerVertexScaled extends TrackerVertex {
 
     @Override
     public void setPartLocation() {
-        this.part.setRotationPoint((float) anchor.posX * 16, (float) anchor.posY * 16, (float) anchor.posZ * 16);
-    }
-
-    /**
-     * Convert to using Math.atan2(y,x);
-     * @param axis1
-     * @param axis2
-     * @return
-     */
-    public float basicRotation(float axis1, float axis2) {
-        return (float) (Math.PI + Math.atan2(axis1, axis2));
-    }
-
-
-    public float angleBetween(PointF point1, PointF point2) {
-
-        return 0;
+        this.part.setRotationPoint((float) this.anchor.posX * 16 * this.scaleInvert,
+                (float) this.anchor.posY * 16 * this.scaleInvert,
+                (float) this.anchor.posZ * 16 * this.scaleInvert);
     }
 
 }

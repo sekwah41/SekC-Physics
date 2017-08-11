@@ -14,8 +14,6 @@ import org.lwjgl.opengl.GL11;
  */
 public class TrackerTriangle extends Tracker {
 
-    private final float piFloat = (float) (Math.PI);
-
     protected final Triangle triangle;
 
     public float rotationZ = 0;
@@ -35,8 +33,6 @@ public class TrackerTriangle extends Tracker {
     public void render() {
 
         this.setPartLocation();
-        this.part.setRotationPoint((float) triangle.points[0].posX * 16, (float) triangle.points[0].posY * 16,
-                (float) triangle.points[0].posZ * 16);
 
         //SekCPhysics.logger.info((float) anchor.posX * 16);
 
@@ -80,7 +76,7 @@ public class TrackerTriangle extends Tracker {
 
         // Works and gets it aligned
 
-        rotationX = piFloat / 2 + basicRotation((float) -triangleDir.y, (float) Math.sqrt(Math.pow(triangleDir.x,2) + Math.pow(triangleDir.z,2)));
+        rotationX = (float) Math.PI / 2 + basicRotation((float) -triangleDir.y, (float) Math.sqrt(Math.pow(triangleDir.x,2) + Math.pow(triangleDir.z,2)));
 
         rotationY = basicRotation((float) -triangleDir.x, (float) -triangleDir.z);
 
@@ -102,7 +98,8 @@ public class TrackerTriangle extends Tracker {
 
     @Override
     public void setPartLocation() {
-
+        this.part.setRotationPoint((float) triangle.points[0].posX * 16, (float) triangle.points[0].posY * 16,
+                (float) triangle.points[0].posZ * 16);
     }
 
     @Override

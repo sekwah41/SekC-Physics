@@ -88,15 +88,13 @@
     "triangleConstraints":{
     }
   },
+  "net.minecraft.entity.monster.EntityGiantZombie" : {
+    "entityScale" : 6,
+    "inherit" : "net.minecraft.entity.monster.EntityZombie"
+  },
   "net.minecraft.entity.monster.EntityHusk" : {
     "entityScale" : 1.0625,
     "inherit" : "net.minecraft.entity.monster.EntityZombie",
-    "texture": ["minecraft",  "textures/entity/zombie/husk.png"],
-    "skeletonPoints":{
-    },
-    "constraints":[
-    ],
-    "triangleConstraints":{
-    }
+    "texture": ["minecraft",  "textures/entity/zombie/husk.png"]
   }
 }

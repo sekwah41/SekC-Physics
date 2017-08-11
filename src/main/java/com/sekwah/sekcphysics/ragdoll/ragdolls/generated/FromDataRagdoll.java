@@ -40,7 +40,7 @@ public class FromDataRagdoll extends BaseRagdoll {
 
         for(VertexTrackerData vertexTrackerData : modelData.getVertexTrackers()) {
             this.addVertexTracker(vertexTrackerData.getPart(), ragdollConstruct.getSkeletonPoint(vertexTrackerData.anchor),
-                    ragdollConstruct.getSkeletonPoint(vertexTrackerData.pointTo));
+                    ragdollConstruct.getSkeletonPoint(vertexTrackerData.pointTo), creationData.getScale());
         }
 
         for(TriangleTrackerData triangleTrackerData : modelData.getTriangleTrackers()) {
@@ -48,10 +48,10 @@ public class FromDataRagdoll extends BaseRagdoll {
             if(triangle != null) {
                 if(triangleTrackerData.hasRotateData) {
                     this.addTriangleTracker(triangleTrackerData.getPart(), ragdollConstruct.getTriangle(triangleTrackerData.tracker),
-                            triangleTrackerData.getRotOffsetX(), triangleTrackerData.getRotOffsetY(), triangleTrackerData.getRotOffsetZ());
+                            triangleTrackerData.getRotOffsetX(), triangleTrackerData.getRotOffsetY(), triangleTrackerData.getRotOffsetZ(), creationData.getScale());
                 }
                 else {
-                    this.addTriangleTracker(triangleTrackerData.getPart(), triangle);
+                    this.addTriangleTracker(triangleTrackerData.getPart(), triangle, creationData.getScale());
                 }
             }
             else {

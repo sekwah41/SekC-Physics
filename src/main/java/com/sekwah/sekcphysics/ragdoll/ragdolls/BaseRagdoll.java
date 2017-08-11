@@ -4,9 +4,7 @@ import com.sekwah.sekcphysics.client.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.ragdoll.parts.Skeleton;
 import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
 import com.sekwah.sekcphysics.ragdoll.parts.Triangle;
-import com.sekwah.sekcphysics.ragdoll.parts.trackers.Tracker;
-import com.sekwah.sekcphysics.ragdoll.parts.trackers.TrackerTriangle;
-import com.sekwah.sekcphysics.ragdoll.parts.trackers.TrackerVertex;
+import com.sekwah.sekcphysics.ragdoll.parts.trackers.*;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.EntityLivingBase;
@@ -73,16 +71,31 @@ public class BaseRagdoll {
         trackersRegistered = true;
     }
 
-    protected void addVertexTracker(ModelRenderer part, SkeletonPoint anchor, SkeletonPoint pointTo) {
-        trackerHashmap.put(part, new TrackerVertex(part, anchor, pointTo));
+    protected void addVertexTracker(ModelRenderer part, SkeletonPoint anchor, SkeletonPoint pointTo, float scale) {
+        if(scale == 1) {
+            trackerHashmap.put(part, new TrackerVertex(part, anchor, pointTo));
+        }
+        else {
+            trackerHashmap.put(part, new TrackerVertexScaled(part, anchor, pointTo, scale));
+        }
     }
 
-    protected void addTriangleTracker(ModelRenderer part, Triangle triangle) {
-        trackerHashmap.put(part, new TrackerTriangle(part, triangle));
+    protected void addTriangleTracker(ModelRenderer part, Triangle triangle, float scale) {
+        if(scale == 1) {
+            trackerHashmap.put(part, new TrackerTriangle(part, triangle));
+        }
+        else {
+            trackerHashmap.put(part, new TrackerTriangleScaled(part, triangle, scale));
+        }
     }
 
-    protected void addTriangleTracker(ModelRenderer part, Triangle triangle, float rotateOffsetX, float rotateOffsetY, float rotateOffsetZ) {
-        trackerHashmap.put(part, new TrackerTriangle(part, triangle, rotateOffsetX, rotateOffsetY, rotateOffsetZ));
+    protected void addTriangleTracker(ModelRenderer part, Triangle triangle, float rotateOffsetX, float rotateOffsetY, float rotateOffsetZ, float scale) {
+        if(scale == 1) {
+            trackerHashmap.put(part, new TrackerTriangle(part, triangle, rotateOffsetX, rotateOffsetY, rotateOffsetZ));
+        }
+        else {
+            trackerHashmap.put(part, new TrackerTriangleScaled(part, triangle, rotateOffsetX, rotateOffsetY, rotateOffsetZ, scale));
+        }
     }
 
     public boolean isActive() {

@@ -32,7 +32,8 @@ public class RagdollConstructor {
 
         for(Map.Entry<String, PointD> entry : creationData.getPointMap().entrySet()) {
             PointD point = entry.getValue();
-            this.skeletonPointHashMap.put(entry.getKey(), new SkeletonPoint(point.x, point.y, point.z));
+            this.skeletonPointHashMap.put(entry.getKey(), new SkeletonPoint(point.x, point.y, point.z,
+                    0.15f * creationData.getScale()));
         }
 
         for(ConstraintData constraintData : creationData.getConstraints()) {

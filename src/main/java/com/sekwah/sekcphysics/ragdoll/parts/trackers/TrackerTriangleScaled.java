@@ -15,24 +15,30 @@ import org.lwjgl.opengl.GL11;
  */
 public class TrackerTriangleScaled extends TrackerTriangle {
 
-    public TrackerTriangleScaled(ModelRenderer part, Triangle triangle) {
+    private final float scale;
+    private final float scaleInvert;
+
+    public TrackerTriangleScaled(ModelRenderer part, Triangle triangle, float scale) {
         super(part, triangle);
+        this.scale = scale;
+        this.scaleInvert = 1f/scale;
     }
 
-    public TrackerTriangleScaled(ModelRenderer part, Triangle triangle, float rotateOffsetX, float rotateOffsetY, float rotateOffsetZ) {
+    public TrackerTriangleScaled(ModelRenderer part, Triangle triangle, float rotateOffsetX, float rotateOffsetY,
+                                 float rotateOffsetZ, float scale) {
         super(part, triangle, rotateOffsetX, rotateOffsetY, rotateOffsetZ);
+        this.scale = scale;
+        this.scaleInvert = 1f/scale;
     }
 
     public void render() {
 
-        this.part.setRotationPoint((float) triangle.points[0].posX * 16, (float) triangle.points[0].posY * 16,
-                (float) triangle.points[0].posZ * 16);
+        this.setPartLocation();
 
         //SekCPhysics.logger.info((float) anchor.posX * 16);
 
+        // TODO switch this to setting the rotation and values of the part and not the
         GlStateManager.pushMatrix();
-
-
 
         GlStateManager.rotate((float) Math.toDegrees(this.rotationZ) + this.rotateOffsetZ, 0,0,1);
         GlStateManager.rotate((float) Math.toDegrees(this.rotationY) + this.rotateOffsetY, 0,1,0);
@@ -53,9 +59,16 @@ public class TrackerTriangleScaled extends TrackerTriangle {
         // TODO calculate wanted rotation and the rotation added from getting to the correct direction.
 
 
-        this.part.render(0.0625f);
+        this.part.render(0.0625f * this.scale);
 
         GlStateManager.popMatrix();
+    }
+
+    @Override
+    public void setPartLocation() {
+        this.part.setRotationPoint((float) triangle.points[0].posX * 16 * this.scaleInvert,
+                (float) triangle.points[0].posY * 16 * this.scaleInvert,
+                (float) triangle.points[0].posZ * 16 * this.scaleInvert);
     }
 
 }

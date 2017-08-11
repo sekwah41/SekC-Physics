@@ -34,7 +34,7 @@ public class RagdollData {
 
     private ModelData modelData;
 
-    private float scale;
+    private float scale = 1;
 
     public RagdollData() {
     }
@@ -106,7 +106,7 @@ public class RagdollData {
         this.scale = scale;
     }
 
-    public double getScale() {
+    public float getScale() {
         return scale;
     }
 }

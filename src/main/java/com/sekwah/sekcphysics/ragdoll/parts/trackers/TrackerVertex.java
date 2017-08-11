@@ -14,13 +14,12 @@ import net.minecraft.client.renderer.GlStateManager;
  */
 public class TrackerVertex extends Tracker {
 
-    private final SkeletonPoint anchor;
+    protected final SkeletonPoint anchor;
 
-    private final SkeletonPoint pointsTo;
+    protected final SkeletonPoint pointsTo;
 
-    private final float piFloat = (float) (Math.PI);
+    protected float rotationZ = 0;
 
-    public float rotationZ = 0;
     public TrackerVertex(ModelRenderer part, SkeletonPoint anchor, SkeletonPoint pointsTo) {
         super(part);
         this.anchor = anchor;
@@ -31,11 +30,10 @@ public class TrackerVertex extends Tracker {
     @Override
     public void render() {
 
-        //SekCPhysics.logger.info((float) anchor.posX * 16);
+        this.setPartLocation();
 
-        this.part.rotateAngleX = rotationX;
-        this.part.rotateAngleY = rotationY;
-        this.part.rotateAngleZ = rotationZ;
+        this.calcRotation();
+        this.setPartRotation();
 
         this.part.render(0.0625f);
 
@@ -48,7 +46,7 @@ public class TrackerVertex extends Tracker {
         PointF constraintVert = new PointF((float) (anchor.posX - pointsTo.posX), (float) (anchor.posY - pointsTo.posY),
                 (float) (anchor.posZ - pointsTo.posZ));
 
-        rotationX = piFloat / 2 + basicRotation(-constraintVert.y, (float) Math.sqrt(Math.pow(constraintVert.x,2) + Math.pow(constraintVert.z,2)));
+        rotationX = (float) (Math.PI) / 2 + basicRotation(-constraintVert.y, (float) Math.sqrt(Math.pow(constraintVert.x,2) + Math.pow(constraintVert.z,2)));
 
         rotationY = basicRotation(-constraintVert.x, -constraintVert.z);
 

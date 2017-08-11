@@ -123,23 +123,23 @@ public class BipedRagdoll extends BaseRagdoll {
 
     }
 
-    public void initTrackers(ModelBase model) {
+    /*public void initTrackers(ModelBase model) {
         super.initTrackers(model);
         if(model instanceof ModelBiped) {
             ModelBiped modelBiped = (ModelBiped) model;
-            this.addVertexTracker(modelBiped.bipedRightArm, this.rightShoulder, this.rightArm);
-            this.addVertexTracker(modelBiped.bipedLeftArm, this.leftShoulder, this.leftArm);
+            this.addVertexTracker(modelBiped.bipedRightArm, this.rightShoulder, this.rightArm, creationData.getScale());
+            this.addVertexTracker(modelBiped.bipedLeftArm, this.leftShoulder, this.leftArm, creationData.getScale());
 
-            this.addVertexTracker(modelBiped.bipedRightLeg, this.rightLegTop, this.rightLegBot);
-            this.addVertexTracker(modelBiped.bipedLeftLeg, this.leftLegTop, this.leftLegBot);
+            this.addVertexTracker(modelBiped.bipedRightLeg, this.rightLegTop, this.rightLegBot, creationData.getScale());
+            this.addVertexTracker(modelBiped.bipedLeftLeg, this.leftLegTop, this.leftLegBot, creationData.getScale());
 
-            this.addTriangleTracker(modelBiped.bipedBody, this.bodyTriangle, 180f, 0, 0);
-            this.addTriangleTracker(modelBiped.bipedHead, this.headTriangle, 0, 0, 0);
+            this.addTriangleTracker(modelBiped.bipedBody, this.bodyTriangle, 180f, 0, 0, creationData.getScale());
+            this.addTriangleTracker(modelBiped.bipedHead, this.headTriangle, 0, 0, 0, creationData.getScale());
             //this.addTriangleTracker(modelBiped.bipedHead, this.headTriangle);
         }
         else{
             SekCPhysics.logger.error("Model type invalid!");
         }
-    }
+    }*/
 
 }
