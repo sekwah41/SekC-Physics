@@ -3,7 +3,6 @@ package com.sekwah.sekcphysics.ragdoll.parts.trackers;
 import com.sekwah.sekcphysics.maths.PointF;
 import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.renderer.GlStateManager;
 
 /**
  * Created by on 30/06/2016.
@@ -23,41 +22,37 @@ public class TrackerVertex extends Tracker {
         this.anchor = anchor;
         this.pointsTo = pointsTo;
 
+        // Resets the data so it doesnt get a sliding effect from 0 of every location.
+        /*this.calcPosition();
+        this.updateLastPos();
+        this.updatePosDifference();*/
     }
 
     @Override
-    public void render() {
+    public void render(float partialTicks) {
 
-        this.calcRotation();
-        this.setPartRotation();
-
-        this.renderPart();
+        this.renderPart(partialTicks);
 
         // TODO Look at the length in comparison (store it when calculating physics) and stretch it based on the percentage xD
         //GlStateManager.scale(1,scaleFactorStretch,0);
     }
 
     @Override
-    public void calcRotation() {
+    public void calcPosition() {
+
+        this.updateLastPos();
+
         PointF constraintVert = new PointF((float) (anchor.posX - pointsTo.posX), (float) (anchor.posY - pointsTo.posY),
                 (float) (anchor.posZ - pointsTo.posZ));
 
         this.rotation.x = (float) (Math.PI) / 2 + basicRotation(-constraintVert.y, (float) Math.sqrt(Math.pow(constraintVert.x,2) + Math.pow(constraintVert.z,2)));
 
         this.rotation.y = basicRotation(-constraintVert.x, -constraintVert.z);
+
+        this.updatePosDifference();
     }
 
-    @Override
-    public void setPartLocation() {
-        this.part.setRotationPoint((float) anchor.posX * 16, (float) anchor.posY * 16, (float) anchor.posZ * 16);
-    }
 
-    @Override
-    public void setPartRotation() {
-        this.part.rotateAngleX = this.rotation.x;
-        this.part.rotateAngleY = this.rotation.y;
-        this.part.rotateAngleZ = this.rotation.z;
-    }
 
     /**
      * Convert to using Math.atan2(y,x);

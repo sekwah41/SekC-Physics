@@ -19,30 +19,11 @@ public class EntityRagdoll extends Entity {
 
     public int ragdollLife = 600;
 
-    public int ragdollUpdate = 20;
-
     public EntityRagdoll(World p_i1582_1_) {
         super(p_i1582_1_);
         this.setSize(0.15F, 0.15F);
 
-        // the actual entity instance will be used mostly for lighting and a reference,
-        //  the entities position will follow the first point added to the skeleton.
-
         //this.ignoreFrustumCheck = true;
-    }
-
-    @SideOnly(Side.CLIENT)
-    public int getBrightnessForRender(float partialTicks)
-    {
-        return 15728880;
-    }
-
-    /**
-     * Gets how bright this entity is.
-     */
-    public float getBrightness(float partialTicks)
-    {
-        return 1.0F;
     }
 
     @Override
@@ -73,12 +54,6 @@ public class EntityRagdoll extends Entity {
 
         ragdoll.update(this);
 
-        //if(ragdollUpdate-- < 0) {
-            //ragdollUpdate = 20;
-            //ragdoll.update(this);
-        //}
-        // Possibly change to update every render rather than entity update and add alpha time
-
         PointD ragdollPos = ragdoll.skeleton.points.get(0).toPoint();
 
         this.setPosition(this.posX + ragdollPos.x, this.posY + ragdollPos.y, this.posZ + ragdollPos.z);
@@ -87,7 +62,7 @@ public class EntityRagdoll extends Entity {
     }
 
     @Override
-    protected void readEntityFromNBT(NBTTagCompound p_70037_1_) {
+    protected void readEntityFromNBT(NBTTagCompound nbtTagCompound) {
 
     }
 

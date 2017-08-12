@@ -18,11 +18,28 @@ public class RotateF {
         this( 0, 0, 0);
     }
 
-    public RotateF add(RotateF v) {
-        return new RotateF(this.x + v.x, this.y + v.y, this.z + v.z);
+    public RotateF add(RotateF r) {
+        this.x += r.x;
+        this.y += r.y;
+        this.z += r.z;
+        return this;
     }
 
-    public RotateF sub(RotateF v) {
-        return new RotateF(this.x - v.x, this.y - v.y, this.z - v.z);
+    public RotateF sub(RotateF r) {
+        this.x -= r.x;
+        this.y -= r.y;
+        this.z -= r.z;
+        return this;
+    }
+
+    public RotateF clone() {
+        return new RotateF(this.x, this.y, this.z);
+    }
+
+    public RotateF copy(RotateF rotation) {
+        this.x = rotation.x;
+        this.y = rotation.y;
+        this.z = rotation.z;
+        return this;
     }
 }

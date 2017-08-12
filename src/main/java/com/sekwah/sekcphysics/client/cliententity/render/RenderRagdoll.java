@@ -49,8 +49,8 @@ public class RenderRagdoll<T extends EntityRagdoll> extends Render<T> {
         }
 
         for(Tracker tracker : bipedRagdoll.trackerHashmap.values()) {
-            tracker.calcRotation();
-            tracker.render();
+            //tracker.calcPosition();
+            tracker.render(partialTicks);
         }
 
         if(mc.gameSettings.showDebugInfo) {

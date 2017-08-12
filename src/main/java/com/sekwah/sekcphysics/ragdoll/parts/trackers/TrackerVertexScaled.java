@@ -1,6 +1,5 @@
 package com.sekwah.sekcphysics.ragdoll.parts.trackers;
 
-import com.sekwah.sekcphysics.maths.PointF;
 import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
 import net.minecraft.client.model.ModelRenderer;
 
@@ -25,11 +24,9 @@ public class TrackerVertexScaled extends TrackerVertex {
     }
 
     @Override
-    public void render() {
+    public void render(float partialTicks) {
 
-        this.setPartLocation();
-
-        this.calcRotation();
+        this.calcPosition();
         this.setPartRotation();
 
         this.part.render(0.0625f * this.scale);
@@ -39,7 +36,7 @@ public class TrackerVertexScaled extends TrackerVertex {
     }
 
     @Override
-    public void setPartLocation() {
+    public void setPartLocation(float partialTicks) {
         this.part.setRotationPoint((float) this.anchor.posX * 16 * this.scaleInvert,
                 (float) this.anchor.posY * 16 * this.scaleInvert,
                 (float) this.anchor.posZ * 16 * this.scaleInvert);

@@ -18,6 +18,10 @@ public class PointD {
         this.z = z;
     }
 
+    public PointD() {
+        this(0,0,0);
+    }
+
     public PointD add(PointD v) {
         return new PointD(this.x + v.x, this.y + v.y, this.z + v.z);
     }

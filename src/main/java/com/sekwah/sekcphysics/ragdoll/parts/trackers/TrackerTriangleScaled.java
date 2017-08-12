@@ -1,12 +1,8 @@
 package com.sekwah.sekcphysics.ragdoll.parts.trackers;
 
-import com.sekwah.sekcphysics.maths.PointD;
-import com.sekwah.sekcphysics.maths.PointF;
 import com.sekwah.sekcphysics.ragdoll.parts.Triangle;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.util.math.Vec3d;
-import org.lwjgl.opengl.GL11;
 
 /**
  * Created by on 30/06/2016.
@@ -31,9 +27,7 @@ public class TrackerTriangleScaled extends TrackerTriangle {
         this.scaleInvert = 1f/scale;
     }
 
-    public void render() {
-
-        this.setPartLocation();
+    public void render(float partialTicks) {
 
         //SekCPhysics.logger.info((float) anchor.posX * 16);
 
@@ -65,7 +59,7 @@ public class TrackerTriangleScaled extends TrackerTriangle {
     }
 
     @Override
-    public void setPartLocation() {
+    public void setPartLocation(float partialTicks) {
         this.part.setRotationPoint((float) triangle.points[0].posX * 16 * this.scaleInvert,
                 (float) triangle.points[0].posY * 16 * this.scaleInvert,
                 (float) triangle.points[0].posZ * 16 * this.scaleInvert);

@@ -3,6 +3,7 @@ package com.sekwah.sekcphysics.ragdoll.parts;
 import com.sekwah.sekcphysics.client.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.maths.VectorMaths;
+import com.sekwah.sekcphysics.ragdoll.parts.trackers.Tracker;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
@@ -63,10 +64,8 @@ public class Skeleton {
 
         for(SkeletonPoint point : points) {
             point.update(entity);
-            //point.movePoint(entity);
         }
 
-        // oldUpdate constraints
         int updates = 0;
         for(; updates <= this.maxUpdateCount; updates++) {
             if(!this.isActive()) {
@@ -74,7 +73,6 @@ public class Skeleton {
             }
             for(Constraint constraint : constraints) {
                 constraint.calc(entity);
-                //point.movePoint(entity);
             }
         }
 
@@ -82,27 +80,11 @@ public class Skeleton {
 
         for(SkeletonPoint point : points) {
             point.updatePos(entity);
-            //point.movePoint(entity);
         }
 
-        // For finding the angle from the said norm use the dot product rearranged but base it on the angle between the reversed version
-        //  of the vector rather than 2 vectors. (for when a triangle wouldnt work or yould have to add too many points to make it work :D)
-        // formula 1  a � b = |a| � |b| � cos(?)
-        // formula 2  a � b = ax � bx + ay � by + az � bz
-
-    }
-
-    /**
-     * Stops points being too close or far from each other
-     */
-    public void updateLengthConstraints() {
-
-    }
-
-    /**
-     * Moves the points if they are outside of the rotation bounds, we cant have a leg pushing into your torso.
-     */
-    public void updateRotationConstraints() {
+        for(Tracker tracker : entity.ragdoll.trackerHashmap.values()) {
+            tracker.calcPosition();
+        }
 
     }
 

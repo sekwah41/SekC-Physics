@@ -5,8 +5,7 @@ import com.sekwah.sekcphysics.maths.PointF;
 import com.sekwah.sekcphysics.ragdoll.parts.Triangle;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.util.math.Vec3d;
-import org.lwjgl.opengl.GL11;
+
 /**
  * Created by on 30/06/2016.
  *
@@ -28,9 +27,7 @@ public class TrackerTriangle extends Tracker {
     }
 
     @Override
-    public void render() {
-
-        this.setPartLocation();
+    public void render(float partialTicks) {
 
         //SekCPhysics.logger.info((float) anchor.posX * 16);
 
@@ -56,7 +53,7 @@ public class TrackerTriangle extends Tracker {
 
         // TODO calculate wanted rotation and the rotation added from getting to the correct direction.
 
-        this.renderPart();
+        this.renderPart(partialTicks);
 
         GlStateManager.popMatrix();
 
@@ -64,8 +61,10 @@ public class TrackerTriangle extends Tracker {
         //GlStateManager.scale(1,scaleFactorStretch,0);
     }
 
-    public void calcRotation() {
+    public void calcPosition() {
         // TODO Find out why convertToF is broken
+
+        this.updateLastPos();
 
         PointD triangleDir = triangle.getDirection();
 
@@ -77,7 +76,7 @@ public class TrackerTriangle extends Tracker {
 
         this.rotation.y = basicRotation((float) -triangleDir.x, (float) -triangleDir.z);
 
-
+        this.updatePosDifference();
 
         // TODO figure out the rotation to get it to the right location.
 
@@ -94,13 +93,13 @@ public class TrackerTriangle extends Tracker {
     }
 
     @Override
-    public void setPartLocation() {
+    public void setPartLocation(float partialTicks) {
         this.part.setRotationPoint((float) triangle.points[0].posX * 16, (float) triangle.points[0].posY * 16,
                 (float) triangle.points[0].posZ * 16);
     }
 
     @Override
-    public void setPartRotation() {
+    public void setPartRotation(float partialTicks) {
 
     }
 
