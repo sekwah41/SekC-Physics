@@ -1,5 +1,6 @@
 package com.sekwah.sekcphysics.ragdoll.parts.trackers;
 
+import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.ragdoll.parts.Triangle;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -28,41 +29,13 @@ public class TrackerTriangleScaled extends TrackerTriangle {
     }
 
     public void render(float partialTicks) {
-
-        //SekCPhysics.logger.info((float) anchor.posX * 16);
-
-        // TODO switch this to setting the rotation and values of the part and not the
-        GlStateManager.pushMatrix();
-
-        GlStateManager.rotate((float) Math.toDegrees(this.rotation.z) + this.rotationOffset.z, 0,0,1);
-        GlStateManager.rotate((float) Math.toDegrees(this.rotation.y) + this.rotationOffset.y, 0,1,0);
-        GlStateManager.rotate((float) Math.toDegrees(this.rotation.x) + this.rotationOffset.x, 1,0,0);
-
-        //GlStateManager.rotate((float) Math.toDegrees(this.rotationY + this.rotateOffsetY), 0,1,0);
-
-        //this.part.rotateAngleX = this.rotationX + this.rotateOffsetX;
-        //this.part.rotateAngleY = this.rotationY + this.rotateOffsetY;
-        //this.part.rotateAngleZ = this.rotationZ + this.rotateOffsetZ;
-
-        //GlStateManager.rotate((float) (Math.random() * 180), 0,1,0);
-
-        //this.part.rotateAngleY = 0;
-        //GlStateManager.rotate((float) Math.toDegrees(this.axisRotation), 0,1,0);
-
-
-        // TODO calculate wanted rotation and the rotation added from getting to the correct direction.
-
-
-        this.part.render(0.0625f * this.scale);
-
-        GlStateManager.popMatrix();
+        this.renderPart(partialTicks, 0.0625f * this.scale);
     }
 
     @Override
-    public void setPartLocation(float partialTicks) {
-        this.part.setRotationPoint((float) triangle.points[0].posX * 16 * this.scaleInvert,
-                (float) triangle.points[0].posY * 16 * this.scaleInvert,
-                (float) triangle.points[0].posZ * 16 * this.scaleInvert);
+    protected void updatePosition() {
+        this.position = new PointD(triangle.points[0].posX * this.scale, triangle.points[0].posY * this.scale,
+                triangle.points[0].posZ * this.scale);
     }
 
 }

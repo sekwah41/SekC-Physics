@@ -34,12 +34,12 @@ public class EntityRagdoll extends Entity {
     public void onUpdate()
     {
         super.onUpdate();
-        if(ragdoll == null) {
+        if(this.ragdoll == null) {
             this.setDead();
             return;
         }
 
-        if(ragdollLife-- < 0) {
+        /*if(ragdollLife-- < 0) {
 
             for (int i = 0; i < 10; ++i) {
                 float poofSize = 1.0f;
@@ -50,15 +50,20 @@ public class EntityRagdoll extends Entity {
             }
 
             this.setDead();
-        }
+        }*/
 
-        ragdoll.update(this);
 
-        PointD ragdollPos = ragdoll.skeleton.points.get(0).toPoint();
+        this.ragdoll.update(this);
+
+        /*if(this.ragdollLife-- >= 599) {
+            this.ragdoll.update(this);
+        }*/
+
+        PointD ragdollPos = this.ragdoll.skeleton.points.get(0).toPoint();
 
         this.setPosition(this.posX + ragdollPos.x, this.posY + ragdollPos.y, this.posZ + ragdollPos.z);
 
-        ragdoll.shiftPos(-ragdollPos.x, -ragdollPos.y, -ragdollPos.z);
+        this.ragdoll.shiftPos(-ragdollPos.x, -ragdollPos.y, -ragdollPos.z);
     }
 
     @Override

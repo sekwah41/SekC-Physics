@@ -45,7 +45,7 @@ public class TrackerData {
 
     public void setRotOffsetX(JsonElement rotOffsetX) {
         if(rotOffsetX != null) {
-            this.rotOffsetX = rotOffsetX.getAsFloat();
+            this.rotOffsetX = (float) Math.toRadians(rotOffsetX.getAsFloat());
         }
     }
 
@@ -59,7 +59,7 @@ public class TrackerData {
 
     public void setRotOffsetY(JsonElement rotOffsetY) {
         if(rotOffsetY != null) {
-            this.rotOffsetY = rotOffsetY.getAsFloat();
+            this.rotOffsetY = (float) Math.toRadians(rotOffsetY.getAsFloat());
         }
     }
 
@@ -69,7 +69,7 @@ public class TrackerData {
 
     public void setRotOffsetZ(JsonElement rotOffsetZ) {
         if(rotOffsetZ != null) {
-            this.rotOffsetZ = rotOffsetZ.getAsFloat();
+            this.rotOffsetZ = (float) Math.toRadians(rotOffsetZ.getAsFloat());
         }
     }
 

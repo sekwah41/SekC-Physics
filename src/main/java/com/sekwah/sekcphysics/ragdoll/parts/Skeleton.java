@@ -150,8 +150,8 @@ public class Skeleton {
 
     public void drawLine(PointD point, PointD point2) {
         glBegin(GL_LINE_STRIP);
-        glVertex3d(point.x, point.x, point.x);
-        glVertex3d(point2.x, point2.x, point2.x);
+        glVertex3d(point.x, point.y, point.z);
+        glVertex3d(point2.x, point2.y, point2.z);
         glEnd();
     }
 

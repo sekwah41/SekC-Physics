@@ -42,4 +42,27 @@ public class RotateF {
         this.z = rotation.z;
         return this;
     }
+
+    /**
+     * Designed for if the stored value is storing a angle difference.
+     */
+    public void changeToShortestAngle() {
+        this.x = this.shortestAngleTo(this.x);
+        this.y = this.shortestAngleTo(this.y);
+        this.z = this.shortestAngleTo(this.z);
+    }
+
+    /**
+     * If its more than 180 then it reverses it to get the shortest
+     * @return
+     */
+    public float shortestAngleTo(float angle) {
+        if(angle > Math.PI) {
+            return (float) (-Math.PI * 2) + angle;
+        }
+        else if(angle < -Math.PI) {
+            return (float) (Math.PI * 2) + angle;
+        }
+        return angle;
+    }
 }

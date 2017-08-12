@@ -26,7 +26,6 @@ public class RenderRagdoll<T extends EntityRagdoll> extends Render<T> {
 
     @Override
     public void doRender(T entity, double x, double y, double z, float entityYaw, float partialTicks) {
-        System.out.println(partialTicks);
         GlStateManager.pushMatrix();
 
         // Sets the position offset for rendering

@@ -1,5 +1,6 @@
 package com.sekwah.sekcphysics.ragdoll.parts.trackers;
 
+import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.maths.PointF;
 import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
 import net.minecraft.client.model.ModelRenderer;
@@ -49,7 +50,13 @@ public class TrackerVertex extends Tracker {
 
         this.rotation.y = basicRotation(-constraintVert.x, -constraintVert.z);
 
+        this.updatePosition();
+
         this.updatePosDifference();
+    }
+
+    protected void updatePosition() {
+        this.position = new PointD(anchor.posX, anchor.posY, anchor.posZ);
     }
 
 
@@ -62,13 +69,6 @@ public class TrackerVertex extends Tracker {
      */
     public float basicRotation(float axis1, float axis2) {
         return (float) (Math.PI + Math.atan2(axis1, axis2));
-    }
-
-
-
-    public float angleBetween(PointF point1, PointF point2) {
-
-        return 0;
     }
 
 }
