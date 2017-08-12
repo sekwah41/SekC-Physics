@@ -1,5 +1,7 @@
 package com.sekwah.sekcphysics.ragdoll.parts.trackers;
 
+import com.sekwah.sekcphysics.maths.PointF;
+import com.sekwah.sekcphysics.maths.RotateF;
 import net.minecraft.client.model.ModelRenderer;
 
 /**
@@ -13,25 +15,18 @@ public abstract class Tracker {
 
     public ModelRenderer bodyPart = null;
 
-    public float rotateOffsetX = 0;
+    public RotateF rotationOffset = new RotateF();
 
-    public float rotateOffsetY = 0;
+    public RotateF rotation = new RotateF();
 
-    public float rotateOffsetZ = 0;
-
-    public float rotationX = 0;
-
-    public float rotationY = 0;
-
-    public float rotationZ = 0;
+    /**
+     * How far to move to the last known rotation
+     */
+    public RotateF distToLastRotation = new RotateF();
 
     public float axisRotation = 0;
 
-    public float offsetX = 0;
-
-    public float offsetY = 0;
-
-    public float offsetZ = 0;
+    public PointF offset = new PointF();
 
     protected Tracker(ModelRenderer part) {
         this.part = part;
@@ -39,9 +34,7 @@ public abstract class Tracker {
 
     public Tracker(ModelRenderer part, float rotateOffsetX, float rotateOffsetY, float rotateOffsetZ) {
         this(part);
-        this.rotateOffsetX = rotateOffsetX;
-        this.rotateOffsetY = rotateOffsetY;
-        this.rotateOffsetZ = rotateOffsetZ;
+        this.rotationOffset = new RotateF(rotateOffsetX, rotateOffsetY, rotateOffsetZ);
     }
 
     public abstract void render();

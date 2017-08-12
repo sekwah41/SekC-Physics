@@ -198,7 +198,7 @@ public class RagdollGenerator {
 
         JsonElement heightOffset = ragdollJsonData.get("centerHeightOffset");
         if(heightOffset != null) {
-            ragdollData.centerHeightOffset = heightOffset.getAsFloat();
+            ragdollData.setCenterHeightOffset(heightOffset.getAsFloat() * ragdollData.getScale());
         }
 
         //return ragdollData;

@@ -30,7 +30,7 @@ public class RagdollData {
 
     private HashMap<String, Triangle> trangleHashMap = new HashMap<>();
 
-    public float centerHeightOffset;
+    private float centerHeightOffset;
 
     private ModelData modelData;
 
@@ -108,5 +108,13 @@ public class RagdollData {
 
     public float getScale() {
         return scale;
+    }
+
+    public float getCenterHeightOffset() {
+        return centerHeightOffset;
+    }
+
+    public void setCenterHeightOffset(float centerHeightOffset) {
+        this.centerHeightOffset = centerHeightOffset;
     }
 }

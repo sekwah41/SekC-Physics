@@ -24,7 +24,7 @@ public class FromDataRagdoll extends BaseRagdoll {
 
 
     public FromDataRagdoll(RagdollData creationData) {
-        super(creationData.centerHeightOffset, creationData.getModelData().getBaseModel());
+        super(creationData.getCenterHeightOffset(), creationData.getModelData().getBaseModel());
 
         ModelData modelData = creationData.getModelData();
 

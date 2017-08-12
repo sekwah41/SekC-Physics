@@ -1,6 +1,7 @@
 package com.sekwah.sekcphysics.maths;
 
 /**
+ * Change the code to be like RotateF
  * Created by sekawh on 8/4/2015.
  */
 public class PointD {

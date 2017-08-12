@@ -16,8 +16,6 @@ public class TrackerTriangle extends Tracker {
 
     protected final Triangle triangle;
 
-    public float rotationZ = 0;
-
     public TrackerTriangle(ModelRenderer part, Triangle triangle) {
         super(part);
         this.triangle = triangle;
@@ -40,9 +38,9 @@ public class TrackerTriangle extends Tracker {
 
 
 
-        GlStateManager.rotate((float) Math.toDegrees(this.rotationZ) + this.rotateOffsetZ, 0,0,1);
-        GlStateManager.rotate((float) Math.toDegrees(this.rotationY) + this.rotateOffsetY, 0,1,0);
-        GlStateManager.rotate((float) Math.toDegrees(this.rotationX) + this.rotateOffsetX, 1,0,0);
+        GlStateManager.rotate((float) Math.toDegrees(this.rotation.z) + this.rotationOffset.z, 0,0,1);
+        GlStateManager.rotate((float) Math.toDegrees(this.rotation.y) + this.rotationOffset.y, 0,1,0);
+        GlStateManager.rotate((float) Math.toDegrees(this.rotation.x) + this.rotationOffset.x, 1,0,0);
 
         //GlStateManager.rotate((float) Math.toDegrees(this.rotationY + this.rotateOffsetY), 0,1,0);
 
@@ -58,8 +56,7 @@ public class TrackerTriangle extends Tracker {
 
         // TODO calculate wanted rotation and the rotation added from getting to the correct direction.
 
-
-        this.part.render(0.0625f);
+        this.renderPart();
 
         GlStateManager.popMatrix();
 
@@ -76,9 +73,9 @@ public class TrackerTriangle extends Tracker {
 
         // Works and gets it aligned
 
-        rotationX = (float) Math.PI / 2 + basicRotation((float) -triangleDir.y, (float) Math.sqrt(Math.pow(triangleDir.x,2) + Math.pow(triangleDir.z,2)));
+        this.rotation.x = (float) Math.PI / 2 + basicRotation((float) -triangleDir.y, (float) Math.sqrt(Math.pow(triangleDir.x,2) + Math.pow(triangleDir.z,2)));
 
-        rotationY = basicRotation((float) -triangleDir.x, (float) -triangleDir.z);
+        this.rotation.y = basicRotation((float) -triangleDir.x, (float) -triangleDir.z);
 
 
 

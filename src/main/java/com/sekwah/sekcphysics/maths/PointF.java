@@ -1,6 +1,7 @@
 package com.sekwah.sekcphysics.maths;
 
 /**
+ * Change the code to be like RotateF
  * Created by sekawh on 8/4/2015.
  */
 public class PointF {
@@ -15,6 +16,10 @@ public class PointF {
         this.x = x;
         this.y = y;
         this.z = z;
+    }
+
+    public PointF() {
+        this(0,0,0);
     }
 
     public PointF add(PointF v) {

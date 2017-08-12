@@ -18,8 +18,6 @@ public class TrackerVertex extends Tracker {
 
     protected final SkeletonPoint pointsTo;
 
-    protected float rotationZ = 0;
-
     public TrackerVertex(ModelRenderer part, SkeletonPoint anchor, SkeletonPoint pointsTo) {
         super(part);
         this.anchor = anchor;
@@ -30,12 +28,10 @@ public class TrackerVertex extends Tracker {
     @Override
     public void render() {
 
-        this.setPartLocation();
-
         this.calcRotation();
         this.setPartRotation();
 
-        this.part.render(0.0625f);
+        this.renderPart();
 
         // TODO Look at the length in comparison (store it when calculating physics) and stretch it based on the percentage xD
         //GlStateManager.scale(1,scaleFactorStretch,0);
@@ -46,10 +42,9 @@ public class TrackerVertex extends Tracker {
         PointF constraintVert = new PointF((float) (anchor.posX - pointsTo.posX), (float) (anchor.posY - pointsTo.posY),
                 (float) (anchor.posZ - pointsTo.posZ));
 
-        rotationX = (float) (Math.PI) / 2 + basicRotation(-constraintVert.y, (float) Math.sqrt(Math.pow(constraintVert.x,2) + Math.pow(constraintVert.z,2)));
+        this.rotation.x = (float) (Math.PI) / 2 + basicRotation(-constraintVert.y, (float) Math.sqrt(Math.pow(constraintVert.x,2) + Math.pow(constraintVert.z,2)));
 
-        rotationY = basicRotation(-constraintVert.x, -constraintVert.z);
-
+        this.rotation.y = basicRotation(-constraintVert.x, -constraintVert.z);
     }
 
     @Override
@@ -59,9 +54,9 @@ public class TrackerVertex extends Tracker {
 
     @Override
     public void setPartRotation() {
-        this.part.rotateAngleX = rotationX;
-        this.part.rotateAngleY = rotationY;
-        this.part.rotateAngleZ = rotationZ;
+        this.part.rotateAngleX = this.rotation.x;
+        this.part.rotateAngleY = this.rotation.y;
+        this.part.rotateAngleZ = this.rotation.z;
     }
 
     /**

@@ -20,7 +20,7 @@ import java.util.Map;
 public class BaseRagdoll {
 
 
-    public Map<ModelRenderer, Tracker> trackerHashmap = new HashMap<ModelRenderer, Tracker>();
+    public Map<ModelRenderer, Tracker> trackerHashmap = new HashMap<>();
 
     public boolean trackersRegistered = false;
 
@@ -49,7 +49,6 @@ public class BaseRagdoll {
      */
     public void update(EntityRagdoll entity) {
         skeleton.update(entity);
-
     }
 
     public void shiftPos(double x, double y, double z) {

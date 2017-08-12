@@ -40,9 +40,9 @@ public class TrackerTriangleScaled extends TrackerTriangle {
         // TODO switch this to setting the rotation and values of the part and not the
         GlStateManager.pushMatrix();
 
-        GlStateManager.rotate((float) Math.toDegrees(this.rotationZ) + this.rotateOffsetZ, 0,0,1);
-        GlStateManager.rotate((float) Math.toDegrees(this.rotationY) + this.rotateOffsetY, 0,1,0);
-        GlStateManager.rotate((float) Math.toDegrees(this.rotationX) + this.rotateOffsetX, 1,0,0);
+        GlStateManager.rotate((float) Math.toDegrees(this.rotation.z) + this.rotationOffset.z, 0,0,1);
+        GlStateManager.rotate((float) Math.toDegrees(this.rotation.y) + this.rotationOffset.y, 0,1,0);
+        GlStateManager.rotate((float) Math.toDegrees(this.rotation.x) + this.rotationOffset.x, 1,0,0);
 
         //GlStateManager.rotate((float) Math.toDegrees(this.rotationY + this.rotateOffsetY), 0,1,0);
 

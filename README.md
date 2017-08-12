@@ -15,3 +15,5 @@ Different point sizes in the ragdoll data to better suit stuff.
 Storing model scale factors (husks are slightly larger, also giants are huge)
 
 Make tools as a plugin into the SekCAnims editor
+
+Calculate rotations of everything after the physics is done
