@@ -23,6 +23,8 @@ public class EntityRagdoll extends Entity {
         super(p_i1582_1_);
         this.setSize(0.15F, 0.15F);
 
+        //ragdollLife = 16000;
+
         //this.ignoreFrustumCheck = true;
     }
 
@@ -52,10 +54,9 @@ public class EntityRagdoll extends Entity {
             this.setDead();
         }*/
 
-
         this.ragdoll.update(this);
 
-        /*if(this.ragdollLife-- >= 599) {
+        /*if(this.ragdollLife-- >= 595) {
             this.ragdoll.update(this);
         }*/
 

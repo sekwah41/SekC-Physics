@@ -34,8 +34,8 @@ public class TrackerTriangleScaled extends TrackerTriangle {
 
     @Override
     protected void updatePosition() {
-        this.position = new PointD(triangle.points[0].posX * this.scale, triangle.points[0].posY * this.scale,
-                triangle.points[0].posZ * this.scale);
+        this.position = new PointD(triangle.points[0].posX * this.scaleInvert, triangle.points[0].posY * this.scaleInvert,
+                triangle.points[0].posZ * this.scaleInvert);
     }
 
 }

@@ -47,9 +47,15 @@ public class TrackerVertex extends Tracker {
                 (float) (anchor.posZ - pointsTo.posZ));
 
         // TODO need to flip these around, they are getting the location right but the opposite side then rotating backwards casing it to be flipped
-        this.rotation.x = (float) (Math.PI) / 2 + basicRotation(-constraintVert.y, (float) Math.sqrt(Math.pow(constraintVert.x,2) + Math.pow(constraintVert.z,2)));
+
 
         this.rotation.y = basicRotation(constraintVert.x, constraintVert.z);
+
+        this.rotation.x = (float) (Math.PI * -0.5) + basicRotation(-constraintVert.y, (float) Math.sqrt(constraintVert.x * constraintVert.x + constraintVert.z * constraintVert.z));
+
+        //this.rotation.x = (float) (Math.PI) / 2 + basicRotation(-constraintVert.y, (float) Math.sqrt(Math.pow(constraintVert.x,2) + Math.pow(constraintVert.z,2)));
+
+        //this.rotation.y = basicRotation(constraintVert.x, constraintVert.z);
 
         this.updatePosition();
 
@@ -69,7 +75,7 @@ public class TrackerVertex extends Tracker {
      * @return
      */
     public float basicRotation(float axis1, float axis2) {
-        return (float) (Math.PI + Math.atan2(axis1, axis2));
+        return (float) Math.atan2(axis1, axis2);
     }
 
 }

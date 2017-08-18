@@ -66,7 +66,7 @@ public abstract class Tracker {
     protected void renderPart(float partialTicks, float scale) {
         this.setPartLocation(partialTicks);
         this.setPartRotation(partialTicks);
-        this.part.render(0.0625f);
+        this.part.render(scale);
     }
 
     protected void updateLastPos() {
