@@ -61,7 +61,7 @@ public class Skeleton {
      * @param entity
      */
     public void update(EntityRagdoll entity) {
-
+        
         for(SkeletonPoint point : points) {
             point.update(entity);
         }

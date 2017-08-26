@@ -6,6 +6,7 @@ import com.sekwah.sekcphysics.ragdoll.ragdolls.BaseRagdoll;
 import com.sekwah.sekcphysics.ragdoll.ragdolls.vanilla.BipedRagdoll;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -46,6 +47,10 @@ public class EventHook {
                 entityRagdoll.ragdoll.rotateRagdoll(deadEntity.rotationYaw);
 
                 entityRagdoll.ragdoll.skeleton.verifyPoints(entityRagdoll);
+
+                for(EntityEquipmentSlot slot : EntityEquipmentSlot.values()) {
+                    entityRagdoll.setItemStackToSlot(slot, deadEntity.getItemStackFromSlot(slot));
+                }
 
                 deadEntity.setDead();
 
