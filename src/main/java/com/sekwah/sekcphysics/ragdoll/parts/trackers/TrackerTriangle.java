@@ -37,10 +37,10 @@ public class TrackerTriangle extends Tracker {
         PointD triangleDir = triangle.getDirection();
 
         PointD trangleNorm = triangle.getNormal();
+		
+		this.rotation.y = basicRotation(triangleDir.x, triangleDir.z);
 
-        this.rotation.x = (float) (Math.PI) / 2 + basicRotation(-triangleDir.y, (float) Math.sqrt(Math.pow(triangleDir.x,2) + Math.pow(triangleDir.z,2)));
-
-        this.rotation.y = basicRotation(-triangleDir.x, -triangleDir.z);
+        this.rotation.x = (float) (Math.PI * -0.5) + basicRotation(-triangleDir.y, (float) Math.sqrt(triangleDir.x * triangleDir.x + triangleDir.z * triangleDir.z));
 
         // TODO rotate around the axis to meet the normal.
 
