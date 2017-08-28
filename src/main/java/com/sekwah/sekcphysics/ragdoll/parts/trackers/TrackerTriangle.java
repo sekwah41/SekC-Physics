@@ -41,6 +41,11 @@ public class TrackerTriangle extends Tracker {
 		this.rotation.y = basicRotation(triangleDir.x, triangleDir.z);
 
         this.rotation.x = (float) (Math.PI * -0.5) + basicRotation(-triangleDir.y, (float) Math.sqrt(triangleDir.x * triangleDir.x + triangleDir.z * triangleDir.z));
+		
+		// use matrix maths to translate into 2d. then apply the rotation
+		// think about using matrix maths to calculate the rotations to set.
+		// estimate the lengths of each and use nano time to compare times
+		// check how the renderers normally work to see if you can change it, rewrite it or something useful os there.
 
         // TODO rotate around the axis to meet the normal.
 
