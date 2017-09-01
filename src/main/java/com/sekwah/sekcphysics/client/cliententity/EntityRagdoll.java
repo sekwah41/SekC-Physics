@@ -73,7 +73,7 @@ public class EntityRagdoll extends Entity {
     }
 
     @Override
-    protected void writeEntityToNBT(NBTTagCompound p_70014_1_) {
+    protected void writeEntityToNBT(NBTTagCompound nbtTagCompound) {
 
     }
 
