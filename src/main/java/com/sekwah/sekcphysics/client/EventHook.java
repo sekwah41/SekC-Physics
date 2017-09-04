@@ -34,9 +34,7 @@ public class EventHook {
             BaseRagdoll ragdoll = SekCPhysics.ragdolls.createRagdoll(deadEntity);
             if(ragdoll != null) {
 
-                EntityRagdoll entityRagdoll = new EntityRagdoll(deadEntity.world);
-
-                entityRagdoll.ragdoll = ragdoll;
+                EntityRagdoll entityRagdoll = new EntityRagdoll(deadEntity.world, ragdoll);
 
                 entityRagdoll.ragdoll.setStanceToEntity(deadEntity);
 
@@ -80,9 +78,10 @@ public class EventHook {
 
         if(event.getWorld().isRemote) {
             if(event.getEntityPlayer().capabilities.isCreativeMode && event.getEntityPlayer().getHeldItem(EnumHand.MAIN_HAND) != null && event.getEntityPlayer().getHeldItem(EnumHand.MAIN_HAND).getItem() == Items.NETHER_STAR) {
-                EntityRagdoll entityRagdoll = new EntityRagdoll(event.getEntityPlayer().world);
 
                 BaseRagdoll ragdoll = new BipedRagdoll();
+
+                EntityRagdoll entityRagdoll = new EntityRagdoll(event.getEntityPlayer().world, ragdoll);
 
                 //BaseRagdoll ragdoll = new WreckingBallRagdoll();
 

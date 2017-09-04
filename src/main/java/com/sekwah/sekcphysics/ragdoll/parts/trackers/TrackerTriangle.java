@@ -17,6 +17,10 @@ public class TrackerTriangle extends Tracker {
         super(part);
         this.triangle = triangle;
 
+        this.calcPosition();
+        this.updateLastPos();
+        this.updatePosDifference();
+
     }
 
     public TrackerTriangle(ModelRenderer part, Triangle triangle, float rotateOffsetX, float rotateOffsetY, float rotateOffsetZ) {

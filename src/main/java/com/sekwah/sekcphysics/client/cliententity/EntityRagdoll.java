@@ -19,11 +19,16 @@ public class EntityRagdoll extends Entity {
 
     public int ragdollLife = 600;
 
-    public EntityRagdoll(World p_i1582_1_) {
+    public EntityRagdoll(World p_i1582_1_, BaseRagdoll ragdoll) {
         super(p_i1582_1_);
         this.setSize(0.15F, 0.15F);
 
         //ragdollLife = 16000;
+
+        this.ragdoll = ragdoll;
+
+        // Sets the first update so it doesnt start in the default locations
+        this.ragdoll.update(this);
 
         //this.ignoreFrustumCheck = true;
     }
@@ -54,7 +59,7 @@ public class EntityRagdoll extends Entity {
             this.setDead();
         }*/
 
-        this.ragdoll.update(this);
+        //this.ragdoll.update(this);
 
         /*if(this.ragdollLife-- >= 595) {
             this.ragdoll.update(this);
