@@ -2,6 +2,7 @@ package com.sekwah.sekcphysics.client;
 
 import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.client.cliententity.EntityRagdoll;
+import com.sekwah.sekcphysics.ragdoll.Ragdolls;
 import com.sekwah.sekcphysics.ragdoll.ragdolls.BaseRagdoll;
 import com.sekwah.sekcphysics.ragdoll.ragdolls.vanilla.BipedRagdoll;
 import net.minecraft.entity.EntityLivingBase;
@@ -45,6 +46,12 @@ public class EventHook {
                 entityRagdoll.ragdoll.rotateRagdoll(deadEntity.rotationYaw);
 
                 entityRagdoll.ragdoll.skeleton.verifyPoints(entityRagdoll);
+
+                entityRagdoll.ragdoll.update(entityRagdoll);
+
+                // TODO remove for release
+                Ragdolls.gravity = 0;
+                //Ragdolls.gravity = 0.05F;
 
                 for(EntityEquipmentSlot slot : EntityEquipmentSlot.values()) {
                     entityRagdoll.setItemStackToSlot(slot, deadEntity.getItemStackFromSlot(slot));
