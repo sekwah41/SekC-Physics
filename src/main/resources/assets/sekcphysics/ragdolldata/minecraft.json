@@ -67,11 +67,11 @@
       },
       "triangleTrackers" : {
         "bipedBody":{
-          "tracker" : "body",
-          "rotOffX" : 180
+          "tracker" : "body"
         },
         "bipedHead":{
-          "tracker" : "head"
+          "tracker" : "head",
+          "rotOffX" : 180
         }
       }
     }

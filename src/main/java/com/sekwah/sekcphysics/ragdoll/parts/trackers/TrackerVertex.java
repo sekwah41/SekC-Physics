@@ -44,15 +44,15 @@ public class TrackerVertex extends Tracker {
 
         this.updateLastPos();
 
-        PointF constraintVert = new PointF((float) (anchor.posX - pointsTo.posX), (float) (anchor.posY - pointsTo.posY),
-                (float) (anchor.posZ - pointsTo.posZ));
+        PointF constraintVert = new PointF((float) (pointsTo.posX - anchor.posX), (float) (pointsTo.posY - anchor.posY),
+                (float) (pointsTo.posZ - anchor.posZ));
 
         // TODO need to flip these around, they are getting the location right but the opposite side then rotating backwards casing it to be flipped
 
 
         this.rotation.y = basicRotation(constraintVert.x, constraintVert.z);
 
-        this.rotation.x = (float) (Math.PI * -0.5) + basicRotation(-constraintVert.y, (float) Math.sqrt(constraintVert.x * constraintVert.x + constraintVert.z * constraintVert.z));
+        this.rotation.x = (float) (Math.PI * 0.5) + basicRotation(-constraintVert.y, (float) Math.sqrt(constraintVert.x * constraintVert.x + constraintVert.z * constraintVert.z));
 
         //this.rotation.x = (float) (Math.PI) / 2 + basicRotation(-constraintVert.y, (float) Math.sqrt(Math.pow(constraintVert.x,2) + Math.pow(constraintVert.z,2)));
 
