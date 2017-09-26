@@ -66,6 +66,9 @@ public class TrackerTriangle extends Tracker {
 		// estimate the lengths of each and use nano time to compare times
 		// check how the renderers normally work to see if you can change it, rewrite it or something useful os there.
 
+        // Rotate the normal vector back to be 2d then do the 2d maths else you dont know how far and if to back or forward
+        // but only to go only how far
+
         // TODO rotate around the axis to meet the normal.
 
         this.updatePosition();
