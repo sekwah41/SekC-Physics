@@ -49,10 +49,6 @@ public class EventHook {
 
                 entityRagdoll.ragdoll.update(entityRagdoll);
 
-                // TODO remove for release
-                Ragdolls.gravity = 0;
-                //Ragdolls.gravity = 0.05F;
-
                 for(EntityEquipmentSlot slot : EntityEquipmentSlot.values()) {
                     entityRagdoll.setItemStackToSlot(slot, deadEntity.getItemStackFromSlot(slot));
                 }

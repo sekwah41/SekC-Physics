@@ -1,5 +1,7 @@
 package com.sekwah.sekcphysics.maths;
 
+import javax.vecmath.Matrix3d;
+
 /**
  * TODO allow the code to apply multiple matricies then apply the rotation. (Make another class for that)
  *

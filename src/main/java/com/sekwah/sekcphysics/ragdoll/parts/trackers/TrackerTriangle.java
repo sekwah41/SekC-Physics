@@ -1,6 +1,8 @@
 package com.sekwah.sekcphysics.ragdoll.parts.trackers;
 
+import com.sekwah.sekcphysics.maths.MatrixMaths;
 import com.sekwah.sekcphysics.maths.PointD;
+import com.sekwah.sekcphysics.maths.VectorMaths;
 import com.sekwah.sekcphysics.ragdoll.parts.Triangle;
 import net.minecraft.client.model.ModelRenderer;
 
@@ -40,14 +42,25 @@ public class TrackerTriangle extends Tracker {
 
         PointD triangleDir = triangle.getDirection();
 
-        PointD trangleNorm = triangle.getNormal();
+        PointD triangleNorm = triangle.getNormal();
 
         // TODO need to finish the rotation to the correct locaiton, though check the maths is howyou expected it first.
 
         this.rotation.y = basicRotation(triangleDir.x, triangleDir.z);
 
-        this.rotation.x = (float) (Math.PI * -0.5) + basicRotation(triangleDir.y, (float) Math.sqrt(triangleDir.x * triangleDir.x + triangleDir.z * triangleDir.z));
-		
+        this.rotation.x = (float) (Math.PI * 0.5) + basicRotation(-triangleDir.y, (float) Math.sqrt(triangleDir.x * triangleDir.x + triangleDir.z * triangleDir.z));
+
+        // TODO calc rotation to keep tracked
+
+        PointD angleDifference = VectorMaths.rotateOriginY(-this.rotation.y, triangleNorm);
+        angleDifference = VectorMaths.rotateOriginX(-this.rotation.x, angleDifference);
+
+        PointD rotations = MatrixMaths.addRotAroundAxis(this.rotation.x, this.rotation.y, 0, basicRotation(angleDifference.x, angleDifference.z));
+
+        this.rotation.x = (float) rotations.x;
+        this.rotation.y = (float) rotations.y;
+        this.rotation.z = (float) rotations.z;
+
 		// use matrix maths to translate into 2d. then apply the rotation
 		// think about using matrix maths to calculate the rotations to set.
 		// estimate the lengths of each and use nano time to compare times
@@ -79,7 +92,7 @@ public class TrackerTriangle extends Tracker {
     }
 
     public float basicRotation(double axis1, double axis2) {
-        return (float) (Math.PI + Math.atan2(axis1, axis2));
+        return (float) Math.atan2(axis1, axis2);
     }
 
 }
