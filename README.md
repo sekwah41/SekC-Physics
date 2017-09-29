@@ -12,8 +12,8 @@ Rotation constraints (Just basic min angle between two points at least)
 
 Different point sizes in the ragdoll data to better suit stuff.
 
-Storing model scale factors (husks are slightly larger, also giants are huge)
-
 Make tools as a plugin into the SekCAnims editor
 
-Calculate rotations of everything after the physics is done rather on each render (maybe only if visible, still likely better even when visible)
+Armour tracking.
+
+Update rotations based off model animations and not soley head rotation.
