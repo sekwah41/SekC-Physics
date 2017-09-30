@@ -26,6 +26,18 @@ public class RenderRagdoll<T extends EntityRagdoll> extends Render<T> {
 
     @Override
     public void doRender(T entity, double x, double y, double z, float entityYaw, float partialTicks) {
+
+        /**
+         * TODO Check these locations on rendering armour
+         * {@link net.minecraft.client.renderer.entity.RenderLivingBase#renderLayers}
+         * {@link net.minecraft.client.renderer.entity.layers.LayerBipedArmor#getArmorModelHook}
+         * {@link net.minecraft.client.renderer.entity.layers}
+         * {@link net.minecraft.client.renderer.entity.RenderZombie}
+         *
+         * Need to make a layer renderer handler for methods like
+         * {@link net.minecraft.client.renderer.entity.layers.LayerCustomHead#doRenderLayer}
+         */
+
         GlStateManager.pushMatrix();
 
         // Sets the position offset for rendering

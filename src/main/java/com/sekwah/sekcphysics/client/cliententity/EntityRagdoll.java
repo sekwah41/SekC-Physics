@@ -3,6 +3,8 @@ package com.sekwah.sekcphysics.client.cliententity;
 import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.ragdoll.ragdolls.BaseRagdoll;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -13,7 +15,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 /**
  * Created by sekawh on 8/1/2015.
  */
-public class EntityRagdoll extends Entity {
+public class EntityRagdoll extends EntityLiving {
 
     public BaseRagdoll ragdoll;
 
@@ -25,6 +27,7 @@ public class EntityRagdoll extends Entity {
 
     public EntityRagdoll(World world, BaseRagdoll ragdoll) {
         this(world);
+        this.noClip = true;
         this.setSize(0.15F, 0.15F);
 
         //ragdollLife = 16000;
@@ -32,6 +35,18 @@ public class EntityRagdoll extends Entity {
         this.ragdoll = ragdoll;
 
         //this.ignoreFrustumCheck = true;
+    }
+
+    public boolean canBeCollidedWith()
+    {
+        return false;
+    }
+
+    protected void applyEntityAttributes()
+    {
+        super.applyEntityAttributes();
+        super.entityInit();
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(0D);
     }
 
     @Override
@@ -74,12 +89,12 @@ public class EntityRagdoll extends Entity {
     }
 
     @Override
-    protected void readEntityFromNBT(NBTTagCompound nbtTagCompound) {
+    public void readEntityFromNBT(NBTTagCompound nbtTagCompound) {
 
     }
 
     @Override
-    protected void writeEntityToNBT(NBTTagCompound nbtTagCompound) {
+    public void writeEntityToNBT(NBTTagCompound nbtTagCompound) {
 
     }
 
