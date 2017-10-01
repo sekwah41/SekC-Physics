@@ -11,8 +11,8 @@
       "rightShoulder" : [-5,-2,0],
       "leftLegTop" : [2,-12,0],
       "rightLegTop" : [-2,-12,0],
-      "rightArm" : [-14,-2,1],
-      "leftArm" : [14,-2,1],
+      "rightArm" : [-6.40,10.40,0],
+      "leftArm" : [6.40,10.40,0],
       "leftLegBot" : [2,-23,0],
       "rightLegBot" : [-2,-23,0]
     },
@@ -76,16 +76,19 @@
       }
     }
   },
+  "net.minecraft.entity.monster.EntitySkeleton" : {
+    "inherit" : "EntityBiped",
+    "texture": ["minecraft",  "textures/entity/skeleton/skeleton.png"],
+    "modelData": {
+      "class": "net.minecraft.client.model.ModelSkeleton"
+    }
+  },
   "net.minecraft.entity.monster.EntityZombie" : {
     "inherit" : "EntityBiped",
     "texture": ["minecraft",  "textures/entity/zombie/zombie.png"],
     "skeletonPoints":{
       "rightArm" : [-6,-2,8],
       "leftArm" : [6,-2,8]
-    },
-    "constraints":[
-    ],
-    "triangleConstraints":{
     }
   },
   "net.minecraft.entity.monster.EntityGiantZombie" : {

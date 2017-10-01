@@ -36,6 +36,8 @@ public class RenderRagdoll<T extends EntityRagdoll> extends Render<T> {
          *
          * Need to make a layer renderer handler for methods like
          * {@link net.minecraft.client.renderer.entity.layers.LayerCustomHead#doRenderLayer}
+         *
+         * Possibly make it so there is a boolean instead some dont like being rendered directly as it for the layers
          */
 
         GlStateManager.pushMatrix();

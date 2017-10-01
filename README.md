@@ -17,3 +17,5 @@ Make tools as a plugin into the SekCAnims editor
 Armour tracking (check LayerBipedArmor) Need to find a way to render the armour with extra constructs and the ability for the custom forge model armour
 
 Update rotations based off model animations and not soley head rotation.
+
+Update for two things to name locations or a transfer for names because of dev environments changing to like field_178720_f
