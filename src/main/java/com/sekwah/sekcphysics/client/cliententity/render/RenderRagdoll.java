@@ -34,6 +34,8 @@ public class RenderRagdoll<T extends EntityRagdoll> extends Render<T> {
          * {@link net.minecraft.client.renderer.entity.layers}
          * {@link net.minecraft.client.renderer.entity.RenderZombie}
          *
+         * {@link net.minecraft.client.renderer.entity.RenderLivingBase#doRender}
+         *
          * Need to make a layer renderer handler for methods like
          * {@link net.minecraft.client.renderer.entity.layers.LayerCustomHead#doRenderLayer}
          *
@@ -57,10 +59,12 @@ public class RenderRagdoll<T extends EntityRagdoll> extends Render<T> {
             GlStateManager.depthMask(false);
             GL11.glEnable(GL11.GL_BLEND);
             GL11.glAlphaFunc(GL11.GL_GREATER, 0.003921569F);
+            GlStateManager.depthMask(true);
 
             GL11.glColor4f(1,1,1,0.5f);
         }
 
+        GlStateManager.disableCull();
         for(Tracker tracker : bipedRagdoll.trackerHashmap.values()) {
             //tracker.calcPosition();
             tracker.render(partialTicks);

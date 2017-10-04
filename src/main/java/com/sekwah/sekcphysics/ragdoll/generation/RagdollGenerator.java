@@ -48,7 +48,15 @@ public class RagdollGenerator {
                     ModelConstructData modelConstructData = getRagdollModelData(entry.getValue().getAsJsonObject(), ragdollFileJson);
                     ModelData modelData = createModelAndAddTrackers(ragdollData, modelConstructData);
                     ragdollData.addModelData(modelData);
-                    SekCPhysics.ragdolls.registerRagdoll(entry.getKey(), ragdollData);
+
+                    if(SekCPhysics.isDeObf || !entry.getValue().getAsJsonObject().has("entityObf")) {
+                        SekCPhysics.ragdolls.registerRagdoll(entry.getKey(), ragdollData);
+                    }
+                    else {
+                        SekCPhysics.ragdolls.registerRagdoll(entry.getValue().getAsJsonObject().get("entityObf").getAsString(),
+                                ragdollData);
+                    }
+
                 }
                 catch(ClassCastException | RagdollInvalidDataException | IllegalStateException
                         | UnsupportedOperationException e) {
@@ -234,6 +242,14 @@ public class RagdollGenerator {
 
         JsonObject modelJSON = ragdollJsonData.getAsJsonObject("modelData");
         if(modelJSON != null) {
+
+            // TODO example of a place where checking if its a dev environment is needed so switch it over
+            if(SekCPhysics.isDeObf || !modelJSON.has("classObf")) {
+                modelConstructData.setClassName(modelJSON.get("class").getAsString());
+            }
+            else {
+                modelConstructData.setClassName(modelJSON.get("classObf").getAsString());
+            }
             modelConstructData.setClassName(modelJSON.get("class").getAsString());
 
             JsonArray constructData = modelJSON.getAsJsonArray("constructData");
@@ -280,7 +296,14 @@ public class RagdollGenerator {
                     JsonObject vertexObj = vertexName.getValue().getAsJsonObject();
                     String anchor = vertexObj.get("anchor").getAsString();
                     String pointTo = vertexObj.get("pointTo").getAsString();
-                    VertexTrackerData trackerData = new VertexTrackerData(vertexName.getKey(), anchor, pointTo, vertexObj);
+                    String name;
+                    if(SekCPhysics.isDeObf || !vertexObj.has("obfName")) {
+                        name = vertexName.getKey();
+                    }
+                    else {
+                        name = vertexObj.get("obfName").getAsString();
+                    }
+                    VertexTrackerData trackerData = new VertexTrackerData(name, anchor, pointTo, vertexObj);
                     modelConstructData.addVertexTracker(trackerData);
                 }
             }
@@ -288,12 +311,19 @@ public class RagdollGenerator {
 
             JsonObject triangleTrackers = modelJSON.getAsJsonObject("triangleTrackers");
 
-            if(vertexTrackers != null) {
+            if(triangleTrackers != null) {
                 Set<Map.Entry<String, JsonElement>> triangleNames = triangleTrackers.entrySet();
                 for(Map.Entry<String, JsonElement> triangleName : triangleNames) {
                     JsonObject vertexObj = triangleName.getValue().getAsJsonObject();
                     String tracker = vertexObj.get("tracker").getAsString();
-                    TriangleTrackerData trackerData = new TriangleTrackerData(triangleName.getKey(), tracker, vertexObj);
+                    String name;
+                    if(SekCPhysics.isDeObf || !vertexObj.has("obfName")) {
+                        name = triangleName.getKey();
+                    }
+                    else {
+                        name = vertexObj.get("obfName").getAsString();
+                    }
+                    TriangleTrackerData trackerData = new TriangleTrackerData(name, tracker, vertexObj);
                     modelConstructData.addTriangleTracker(trackerData);
                 }
             }

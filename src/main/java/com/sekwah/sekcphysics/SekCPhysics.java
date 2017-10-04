@@ -5,6 +5,7 @@ import com.sekwah.sekcphysics.network.UsageReport;
 import com.sekwah.sekcphysics.ragdoll.Ragdolls;
 import com.sekwah.sekcphysics.ragdoll.ragdolls.vanilla.VanillaRagdolls;
 import com.sekwah.sekcphysics.settings.ModSettings;
+import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -43,6 +44,8 @@ public class SekCPhysics {
     public static final Logger logger = LogManager.getLogger("SekC Physics");
 
     public static final String version = "0.0.1";
+
+    public static final boolean isDeObf = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
 
     /**
      * Start using interfaces more

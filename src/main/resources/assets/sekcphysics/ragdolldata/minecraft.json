@@ -11,8 +11,8 @@
       "rightShoulder" : [-5,-2,0],
       "leftLegTop" : [2,-12,0],
       "rightLegTop" : [-2,-12,0],
-      "rightArm" : [-6.40,10.40,0],
-      "leftArm" : [6.40,10.40,0],
+      "rightArm" : [-6.40,-8,0],
+      "leftArm" : [6.40,-8,0],
       "leftLegBot" : [2,-23,0],
       "rightLegBot" : [-2,-23,0]
     },
@@ -41,6 +41,7 @@
     },
     "modelData":{
       "class" : "net.minecraft.client.model.ModelBiped",
+      "classObf" : "bpv",
       "constructData" : [
         ["float", 0],
         ["float", 0],
@@ -50,37 +51,45 @@
       "vertexTrackers" : {
         "bipedRightArm": {
           "anchor" : "rightShoulder",
-          "pointTo" : "rightArm"
+          "pointTo" : "rightArm",
+          "obfName" : "field_178723_h"
         },
         "bipedLeftArm": {
           "anchor" : "leftShoulder",
-          "pointTo" : "leftArm"
+          "pointTo" : "leftArm",
+          "obfName" : "field_178724_i"
         },
         "bipedRightLeg": {
           "anchor" : "rightLegTop",
-          "pointTo" : "rightLegBot"
+          "pointTo" : "rightLegBot",
+          "obfName" : "field_178721_j"
         },
         "bipedLeftLeg":{
           "anchor" : "leftLegTop",
-          "pointTo" : "leftLegBot"
+          "pointTo" : "leftLegBot",
+          "obfName" : "field_178722_k"
         }
       },
       "triangleTrackers" : {
         "bipedBody":{
-          "tracker" : "body"
+          "tracker" : "body",
+          "obfName" : "field_78115_e"
         },
         "bipedHead":{
           "tracker" : "head",
-          "rotOffX" : 180
+          "rotOffX" : 180,
+          "obfName" : "field_78116_c"
         }
       }
     }
   },
   "net.minecraft.entity.monster.EntitySkeleton" : {
+    "entityObf" : "adi",
     "inherit" : "EntityBiped",
     "texture": ["minecraft",  "textures/entity/skeleton/skeleton.png"],
     "modelData": {
-      "class": "net.minecraft.client.model.ModelSkeleton"
+      "class": "net.minecraft.client.model.ModelSkeleton",
+      "classObf" : "bqu"
     }
   },
   "net.minecraft.entity.monster.EntityZombie" : {
