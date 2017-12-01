@@ -20,6 +20,8 @@ import java.util.Map;
 public class BaseRagdoll {
 
 
+    public final ModelBase baseModel;
+
     public Map<ModelRenderer, Tracker> trackerHashmap = new HashMap<>();
 
     public boolean trackersRegistered = false;
@@ -33,6 +35,8 @@ public class BaseRagdoll {
     public ResourceLocation resourceLocation;
 
     public BaseRagdoll(float centerHeightOffset, ModelBase baseModel) {
+
+        this.baseModel = baseModel;
 
         this.skeleton = new Skeleton();
 
