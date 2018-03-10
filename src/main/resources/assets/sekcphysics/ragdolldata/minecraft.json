@@ -84,7 +84,6 @@
     }
   },
   "net.minecraft.entity.monster.EntitySkeleton" : {
-    "entityObf" : "adi",
     "inherit" : "EntityBiped",
     "texture": ["minecraft",  "textures/entity/skeleton/skeleton.png"],
     "modelData": {

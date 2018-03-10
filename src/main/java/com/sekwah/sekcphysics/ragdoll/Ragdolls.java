@@ -1,7 +1,9 @@
 package com.sekwah.sekcphysics.ragdoll;
 
+import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.ragdoll.generation.data.RagdollData;
 import com.sekwah.sekcphysics.ragdoll.ragdolls.generated.FromDataRagdoll;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 
 import java.util.HashMap;
@@ -15,6 +17,9 @@ public class Ragdolls {
 
     // Key is entity class and stores a ragdoll class
     private static Map<String, RagdollData> entityToRagdollHashmap = new HashMap<String, RagdollData>();
+
+
+    private static Minecraft mc = Minecraft.getMinecraft();
 
     /**
      * Need to add update counts to the ragdoll data rather than global also 10 is for cloths
@@ -44,6 +49,9 @@ public class Ragdolls {
 
         try
         {
+            if(mc.gameSettings.showDebugInfo) {
+                SekCPhysics.logger.info("Entity died: %s%n", entity.getClass().getName());
+            }
             RagdollData ragdollData = entityToRagdollHashmap.get(entity.getClass().getName());
 
             if (ragdollData != null)
