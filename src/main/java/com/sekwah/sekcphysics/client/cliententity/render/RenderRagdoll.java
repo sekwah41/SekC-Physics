@@ -10,6 +10,7 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -20,12 +21,12 @@ import org.lwjgl.opengl.GL11;
 /**
  * Ragdoll renderer file
  */
-public class RenderRagdoll<T extends EntityRagdoll> extends Render<T> {
+public class RenderRagdoll<T extends EntityRagdoll> extends RenderLiving<T> {
 
     private static Minecraft mc = Minecraft.getMinecraft();
 
     public RenderRagdoll(RenderManager renderManager) {
-        super(renderManager);
+        super(renderManager, new ModelBiped(), 0.0f);
 
     }
 
@@ -69,12 +70,9 @@ public class RenderRagdoll<T extends EntityRagdoll> extends Render<T> {
         }
 
         if(mc.gameSettings.showDebugInfo) {
-            GlStateManager.pushMatrix();
             GlStateManager.depthMask(false);
             GL11.glEnable(GL11.GL_BLEND);
             GL11.glAlphaFunc(GL11.GL_GREATER, 0.003921569F);
-            GlStateManager.depthMask(true);
-
             GL11.glColor4f(1,1,1,0.5f);
         }
 
@@ -88,14 +86,14 @@ public class RenderRagdoll<T extends EntityRagdoll> extends Render<T> {
             GL11.glColor4f(1, 1, 1, 1);
 
             GlStateManager.depthMask(true);
-
-            GlStateManager.popMatrix();
         }
 
         this.renderHandItems(entity, baseRagdoll);
 
         if(mc.gameSettings.showDebugInfo) {
+            GlStateManager.depthMask(false);
             entity.ragdoll.skeleton.renderSkeletonDebug(entity.ragdoll.activeStatus());
+            GlStateManager.depthMask(true);
         }
         GlStateManager.popMatrix();
     }

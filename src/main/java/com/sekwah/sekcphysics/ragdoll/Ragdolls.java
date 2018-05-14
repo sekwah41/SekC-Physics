@@ -54,8 +54,7 @@ public class Ragdolls {
             }
             RagdollData ragdollData = entityToRagdollHashmap.get(entity.getClass().getName());
 
-            if (ragdollData != null)
-            {
+            if (ragdollData != null) {
                 ragdoll = new FromDataRagdoll(ragdollData);
             }
         }
