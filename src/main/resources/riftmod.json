@@ -1,0 +1,10 @@
+{
+  "id": "sekcphysics",
+  "name": "SekC Physics",
+  "authors": [
+    "Sekwah41"
+  ],
+  "listeners": [
+    "com.sekwah.sekcphysics.SekCPhysics"
+  ]
+}
