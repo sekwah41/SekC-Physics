@@ -67,7 +67,7 @@ public class Skeleton {
         }
 
         int updates = 0;
-        for(; updates <= this.maxUpdateCount; updates++) {
+        while(updates++ <= this.maxUpdateCount) {
             if(!this.isActive()) {
                 break;
             }

@@ -147,7 +147,7 @@ public class SkeletonPoint {
         this.nonMoveThresh = 0.0001f;
 
         double move = this.newPosX - this.posX + this.newPosY - this.posY + this.newPosZ - this.posZ;
-        boolean moved = (move < -this.nonMoveThresh || move > this.nonMoveThresh);
+        boolean moved = Math.abs(move) < this.nonMoveThresh;
         //System.out.println(move);
         //System.out.println(moved);
         if(!moved) {
@@ -158,18 +158,30 @@ public class SkeletonPoint {
         return this.hasMoved = moved;
     }
 
+    private boolean isAboveSpeedThreashold(double vel) {
+        return Math.abs(vel) > nonMoveThresh;
+    }
+
     public void update(EntityRagdoll entity) {
         this.velX = this.posX - this.lastPosX;
+        if(!isAboveSpeedThreashold(this.velX)) {
+            this.velX = 0;
+        }
         this.velY = this.posY - this.lastPosY;
+        if(!isAboveSpeedThreashold(this.velX)) {
+            this.velX = 0;
+        }
         this.velZ = this.posZ - this.lastPosZ;
-
+        if(!isAboveSpeedThreashold(this.velX)) {
+            this.velX = 0;
+        }
         float speedMulti = 0.9999f;
 
         this.velY *= speedMulti;
 
         if(onGround) {
 
-            float groundMulti = 0.93f;
+            float groundMulti = 0.85f;
             this.velX *= groundMulti;
             this.velZ *= groundMulti;
         }

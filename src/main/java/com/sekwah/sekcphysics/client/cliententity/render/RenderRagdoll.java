@@ -91,9 +91,9 @@ public class RenderRagdoll<T extends EntityRagdoll> extends RenderLiving<T> {
         this.renderHandItems(entity, baseRagdoll);
 
         if(mc.gameSettings.showDebugInfo) {
-            GlStateManager.depthMask(false);
+            GlStateManager.disableDepth();
             entity.ragdoll.skeleton.renderSkeletonDebug(entity.ragdoll.activeStatus());
-            GlStateManager.depthMask(true);
+            GlStateManager.enableDepth();
         }
         GlStateManager.popMatrix();
     }
