@@ -26,7 +26,8 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
-    mavenCentral()maven {
+    mavenCentral()
+    maven {
         name = "DimDev"
         url = "https://www.dimdev.org/maven/"
     }
