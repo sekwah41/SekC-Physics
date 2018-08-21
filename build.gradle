@@ -1,14 +1,7 @@
 buildscript {
     repositories {
         jcenter()
-        maven {
-            name = "DimDev"
-            url = "https://www.dimdev.org/maven/"
-        }
-        maven {
-            name = "Forge"
-            url = "http://files.minecraftforge.net/maven"
-        }
+        maven { url 'https://www.dimdev.org/maven/' }
     }
     dependencies {
         classpath 'org.dimdev:ForgeGradle:2.3-SNAPSHOT'
@@ -27,19 +20,11 @@ targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
-    maven {
-        name = "DimDev"
-        url = "https://www.dimdev.org/maven/"
-    }
-
-    maven {
-        name = "CurseForge"
-        url = "https://minecraft.curseforge.com/api/maven"
-    }
+    maven { url 'https://www.dimdev.org/maven/' }
 }
 
 dependencies {
-    implementation 'org.dimdev:rift:1.0.3-45:dev'
+    implementation 'org.dimdev:rift:1.0.4-52:dev'
 }
 
 minecraft {
