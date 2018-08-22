@@ -5,7 +5,7 @@
     "target": "@env(DEFAULT)",
     "package": "com.sekwah.sekcphysics.mixin",
     "refmap": "mixins.sekcphysics.refmap.json",
-    "mixins": [
+    "client": [
         "MixinEntityDeath"
     ]
 }

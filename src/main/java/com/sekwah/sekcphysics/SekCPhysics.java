@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixins;
  * {@link org.dimdev.rift.listener}
   */
 @SuppressWarnings("unused")
-public class SekCPhysics implements MinecraftStartListener, InitializationListener {
+public class SekCPhysics implements MinecraftStartListener {
 
     public static final Logger logger = LogManager.getLogger("SekC Physics");
 
@@ -33,10 +33,4 @@ public class SekCPhysics implements MinecraftStartListener, InitializationListen
         new RagdollGenerator().loadRagdolls();
     }
 
-    @Override
-    public void onInitialization() {
-        logger.info("Initialising SekC Physics");
-        MixinBootstrap.init();
-        Mixins.addConfiguration("mixins.sekcphysics.json");
-    }
 }

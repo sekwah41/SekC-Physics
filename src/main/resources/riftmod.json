@@ -5,6 +5,7 @@
     "Sekwah41"
   ],
   "listeners": [
-    "com.sekwah.sekcphysics.SekCPhysics"
+    "com.sekwah.sekcphysics.SekCPhysics",
+    "com.sekwah.sekcphysics.SekCPhysicsCore"
   ]
 }
