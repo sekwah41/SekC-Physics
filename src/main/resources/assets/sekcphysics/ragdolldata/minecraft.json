@@ -40,7 +40,7 @@
       "body": ["centerTorso", "leftLegTop", "rightLegTop"]
     },
     "modelData":{
-      "class" : "net.minecraft.client.model.ModelBiped",
+      "class" : "net.minecraft.client.renderer.entity.model.ModelBiped",
       "classObf" : "bpv",
       "constructData" : [
         ["float", 0],
@@ -87,7 +87,7 @@
     "inherit" : "EntityBiped",
     "texture": ["minecraft",  "textures/entity/skeleton/skeleton.png"],
     "modelData": {
-      "class": "net.minecraft.client.model.ModelSkeleton",
+      "class": "net.minecraft.client.renderer.entity.model.ModelSkeleton",
       "classObf" : "bqu"
     }
   },

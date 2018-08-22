@@ -1,15 +1,19 @@
 buildscript {
     repositories {
         jcenter()
+        maven { url = "http://files.minecraftforge.net/maven" }
         maven { url 'https://www.dimdev.org/maven/' }
+        maven { url = "https://repo.spongepowered.org/maven" }
     }
     dependencies {
         classpath 'org.dimdev:ForgeGradle:2.3-SNAPSHOT'
+        classpath 'org.spongepowered:mixingradle:0.6-SNAPSHOT'
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle.tweaker-client'
 apply plugin: 'java'
+apply plugin: 'org.spongepowered.mixin'
 
 group 'com.sekwah.sekcphysics'
 version '1.0.0'
@@ -21,6 +25,11 @@ targetCompatibility = 1.8
 repositories {
     mavenCentral()
     maven { url 'https://www.dimdev.org/maven/' }
+}
+
+mixin {
+    defaultObfuscationEnv notch
+    add sourceSets.main, 'mixins.sekcphysics.refmap.json'
 }
 
 dependencies {

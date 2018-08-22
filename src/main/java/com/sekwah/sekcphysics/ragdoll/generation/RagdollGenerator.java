@@ -44,12 +44,15 @@ public class RagdollGenerator {
                     ModelData modelData = createModelAndAddTrackers(ragdollData, modelConstructData);
                     ragdollData.addModelData(modelData);
 
-                    if(!entry.getValue().getAsJsonObject().has("entityObf")) {
+                    if(SekCPhysics.isDeObf || !entry.getValue().getAsJsonObject().has("entityObf")) {
                         SekCPhysics.ragdolls.registerRagdoll(entry.getKey(), ragdollData);
+                        SekCPhysics.logger.info("Registered ragdoll for entity: " + entry.getKey());
                     }
                     else {
                         SekCPhysics.ragdolls.registerRagdoll(entry.getValue().getAsJsonObject().get("entityObf").getAsString(),
                                 ragdollData);
+
+                        SekCPhysics.logger.info("Registered ragdoll for entity: " + entry.getValue().getAsJsonObject().get("entityObf").getAsString());
                     }
 
                 }
@@ -192,7 +195,7 @@ public class RagdollGenerator {
      * @return
      */
     private void addRagdollOtherData(JsonObject ragdollJsonData, RagdollData ragdollData,
-                                            JsonObject ragdollFileJson) throws UnsupportedOperationException, RagdollInvalidDataException {
+                                            JsonObject ragdollFileJson) throws UnsupportedOperationException {
         JsonElement inherit = getInheritData(ragdollJsonData, ragdollFileJson);
         if(inherit != null) {
             addRagdollOtherData(inherit.getAsJsonObject(), ragdollData,
@@ -239,7 +242,7 @@ public class RagdollGenerator {
         if(modelJSON != null) {
 
             // TODO example of a place where checking if its a dev environment is needed so switch it over
-            if(!modelJSON.has("classObf")) {
+            if(SekCPhysics.isDeObf || !modelJSON.has("classObf")) {
                 modelConstructData.setClassName(modelJSON.get("class").getAsString());
             }
             else {
@@ -292,7 +295,7 @@ public class RagdollGenerator {
                     String anchor = vertexObj.get("anchor").getAsString();
                     String pointTo = vertexObj.get("pointTo").getAsString();
                     String name;
-                    if(!vertexObj.has("obfName")) {
+                    if(SekCPhysics.isDeObf || !vertexObj.has("obfName")) {
                         name = vertexName.getKey();
                     }
                     else {
@@ -312,7 +315,7 @@ public class RagdollGenerator {
                     JsonObject vertexObj = triangleName.getValue().getAsJsonObject();
                     String tracker = vertexObj.get("tracker").getAsString();
                     String name;
-                    if(!vertexObj.has("obfName")) {
+                    if(SekCPhysics.isDeObf || !vertexObj.has("obfName")) {
                         name = triangleName.getKey();
                     }
                     else {
@@ -443,7 +446,7 @@ public class RagdollGenerator {
     }
 
     public void loadRagdolls() {
-        SekCPhysics.logger.debug("Rift version so only Minecraft ragdolls will be loaded");
+        SekCPhysics.logger.info("Rift version so only Minecraft ragdolls will be loaded");
 
         this.generateRagdollsFrom("minecraft");
         /*List<ModContainer> modlist = Loader.instance().getActiveModList();
