@@ -10,11 +10,14 @@ import net.minecraft.client.renderer.entity.model.ModelBase;
 import net.minecraft.client.renderer.entity.model.ModelRenderer;
 import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.Level;
+import org.dimdev.riftloader.ModInfo;
+import org.dimdev.riftloader.RiftLoader;
 
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -446,15 +449,12 @@ public class RagdollGenerator {
     }
 
     public void loadRagdolls() {
-        SekCPhysics.logger.info("Rift version so only Minecraft ragdolls will be loaded");
 
         this.generateRagdollsFrom("minecraft");
-        /*List<ModContainer> modlist = Loader.instance().getActiveModList();
-        ProgressManager.ProgressBar bar = ProgressManager.push("SekCPhysics", modlist.size());
-        for(ModContainer mod : modlist) {
-            bar.step("Processing " + mod.getModId());
-            this.generateRagdollsFrom(mod.getModId());
+        Collection<ModInfo> modlist = RiftLoader.instance.getMods();
+        for(ModInfo mod : modlist) {
+            SekCPhysics.logger.info("Processing " + mod.id);
+            this.generateRagdollsFrom(mod.id);
         }
-        ProgressManager.pop(bar);*/
     }
 }
