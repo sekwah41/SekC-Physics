@@ -1,4 +1,4 @@
-package com.sekwah.sekcphysics.mixin;
+package com.sekwah.sekcphysics.mixins;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;

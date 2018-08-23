@@ -13,7 +13,7 @@ buildscript {
 
 apply plugin: 'net.minecraftforge.gradle.tweaker-client'
 apply plugin: 'java'
-apply plugin: 'org.spongepowered.mixin'
+apply plugin: 'org.spongepowered.mixins'
 
 group 'com.sekwah.sekcphysics'
 version '1.0.0'

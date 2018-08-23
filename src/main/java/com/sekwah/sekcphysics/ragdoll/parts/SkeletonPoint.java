@@ -213,7 +213,7 @@ public class SkeletonPoint {
 
         this.movePoint(entity, this.velX, this.velY - Ragdolls.gravity, this.velZ);
 
-        //next_old_position = position             // This position is the next frame's old_position
+        //next_old_position = position             // This position is the next frame'mixins old_position
         // position += position - old_position;     // Verlet integration
         //position += gravity;                     // gravity == (0,-0.01,0)
 
