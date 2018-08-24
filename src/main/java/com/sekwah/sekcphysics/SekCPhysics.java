@@ -30,9 +30,9 @@ public class SekCPhysics implements MinecraftStartListener, EntityTypeAdder, Ent
     public static final Logger logger = LogManager.getLogger("SekC Physics");
 
     /**
-     * Make false for building (probably add into the gradle)
+     * Look for a better way to do this...
      */
-    public static final boolean isDeObf = true;
+    public static final boolean isDeObf = Entity.class.getName().equals("net.minecraft.entity.Entity");
 
     public static EntityType<EntityRagdoll> RAGDOLL;
 
@@ -48,7 +48,7 @@ public class SekCPhysics implements MinecraftStartListener, EntityTypeAdder, Ent
     @Override
     public void registerEntityTypes() {
         logger.info("Registering ragdoll entity");
-        RAGDOLL = EntityType.register("sekcphysics:ragdoll", EntityType.Builder.create(EntityRagdoll.class, EntityRagdoll::new));
+        RAGDOLL = EntityType.registerEntityType("sekcphysics:ragdoll", EntityType.Builder.create(EntityRagdoll.class, EntityRagdoll::new));
     }
 
     @Override

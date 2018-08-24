@@ -75,7 +75,7 @@ public class EntityRagdoll extends EntityLiving {
                 double d0 = this.rand.nextGaussian() * 0.04D;
                 double d1 = this.rand.nextGaussian() * 0.04D;
                 double d2 = this.rand.nextGaussian() * 0.04D;
-                this.world.spawnParticle(Particles.CLOUD, this.posX + (double) (this.rand.nextFloat() * poofSize * 2.0F) - (double) poofSize, this.posY + this.height / 2 + (double) (this.rand.nextFloat() * this.height), this.posZ + (double) (this.rand.nextFloat() * poofSize * 2.0F) - (double) poofSize, d0, d1, d2);
+                this.world.addParticle(Particles.CLOUD, this.posX + (double) (this.rand.nextFloat() * poofSize * 2.0F) - (double) poofSize, this.posY + this.height / 2 + (double) (this.rand.nextFloat() * this.height), this.posZ + (double) (this.rand.nextFloat() * poofSize * 2.0F) - (double) poofSize, d0, d1, d2);
             }
 
             this.setDead();

@@ -8,7 +8,7 @@ Potentially will support addons so not all features have to be included and othe
 
 Ragdolls will be generated on startup based on the mods installed. So if you are a mod author and want your mobs to work with this mod feel free to contact me or go ahead and add the data yourself if you want to.
 
-Names for compiled http://mcp.thiakil.com/index.html
+Mapping names for SRG can be found in .gradle\caches\minecraft\de\oceanlabs\mcp\mcp_snapshot\snapnumber\1.13\srgs\notch-mcp.srg
 
 Todo (A list for me really also shows plans)
 --------

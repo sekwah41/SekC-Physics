@@ -251,7 +251,6 @@ public class RagdollGenerator {
             else {
                 modelConstructData.setClassName(modelJSON.get("classObf").getAsString());
             }
-            modelConstructData.setClassName(modelJSON.get("class").getAsString());
 
             JsonArray constructData = modelJSON.getAsJsonArray("constructData");
 
@@ -398,7 +397,8 @@ public class RagdollGenerator {
 
         }
         catch (ClassNotFoundException e) {
-            SekCPhysics.logger.error("Could not find specified class" + modelConstructData.getClassName());
+            SekCPhysics.logger.error("Could not find specified class " + modelConstructData.getClassName());
+            SekCPhysics.logger.info("Is DeObf: " + SekCPhysics.isDeObf);
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             SekCPhysics.logger.error("Illegal access");
