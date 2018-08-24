@@ -111,20 +111,23 @@ public class SkeletonPoint {
 
         if (moveY != 0.0D) {
             moveY = ShapeUtils.calculateAxisOffset(EnumFacing.Axis.Y, axisalignedbb, voxel, moveY);
-            axisalignedbb.offset(0.0D, moveY, 0.0D);
+            if(oMoveY < 0 && moveY != oMoveY) {
+                onGround = true;
+            }
+            axisalignedbb = axisalignedbb.offset(0.0D, moveY, 0.0D);
         }
 
         if (moveX != 0.0D) {
             moveX = ShapeUtils.calculateAxisOffset(EnumFacing.Axis.X, axisalignedbb, voxel, moveX);
             if (moveX != 0.0D) {
-                axisalignedbb.offset(moveX, 0.0D, 0.0D);
+                axisalignedbb = axisalignedbb.offset(moveX, 0.0D, 0.0D);
             }
         }
 
         if (moveZ != 0.0D) {
             moveZ = ShapeUtils.calculateAxisOffset(EnumFacing.Axis.Z, axisalignedbb, voxel, moveZ);
             if (moveZ != 0.0D) {
-                axisalignedbb.offset(0.0D, 0.0D, moveZ);
+                axisalignedbb = axisalignedbb.offset(0.0D, 0.0D, moveZ);
             }
         }
 
@@ -142,8 +145,8 @@ public class SkeletonPoint {
     private boolean checkWillMove() {
         this.nonMoveThresh = 0.0001f;
 
-        double move = this.newPosX - this.posX + this.newPosY - this.posY + this.newPosZ - this.posZ;
-        boolean moved = Math.abs(move) < this.nonMoveThresh;
+        double move = Math.abs(this.newPosX - this.posX) + Math.abs(this.newPosY - this.posY) + Math.abs(this.newPosZ - this.posZ);
+        boolean moved = move < this.nonMoveThresh;
         //System.out.println(move);
         //System.out.println(moved);
         if(!moved) {
@@ -176,7 +179,6 @@ public class SkeletonPoint {
         this.velY *= speedMulti;
 
         if(onGround) {
-
             float groundMulti = 0.85f;
             this.velX *= groundMulti;
             this.velZ *= groundMulti;

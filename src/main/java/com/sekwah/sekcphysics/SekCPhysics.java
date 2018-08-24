@@ -1,5 +1,7 @@
 package com.sekwah.sekcphysics;
 
+import com.sekwah.sekcphysics.client.cliententity.EntityRagdoll;
+import com.sekwah.sekcphysics.client.render.RenderRagdoll;
 import com.sekwah.sekcphysics.ragdoll.Ragdolls;
 import com.sekwah.sekcphysics.ragdoll.generation.RagdollGenerator;
 import net.minecraft.client.renderer.entity.Render;
@@ -32,6 +34,8 @@ public class SekCPhysics implements MinecraftStartListener, EntityTypeAdder, Ent
      */
     public static final boolean isDeObf = true;
 
+    public static EntityType<EntityRagdoll> RAGDOLL;
+
     public static Ragdolls ragdolls = new Ragdolls();
 
     @Override
@@ -43,11 +47,13 @@ public class SekCPhysics implements MinecraftStartListener, EntityTypeAdder, Ent
 
     @Override
     public void registerEntityTypes() {
-        EntityType.register("sekcphysics:ragdoll", EntityType.Builder.create())
+        logger.info("Registering ragdoll entity");
+        RAGDOLL = EntityType.register("sekcphysics:ragdoll", EntityType.Builder.create(EntityRagdoll.class, EntityRagdoll::new));
     }
 
     @Override
     public void addEntityRenderers(Map<Class<? extends Entity>, Render<? extends Entity>> entityRenderMap, RenderManager renderManager) {
-        
+        logger.info("Registering ragdoll renderer");
+        entityRenderMap.put(EntityRagdoll.class, new RenderRagdoll<>(renderManager));
     }
 }

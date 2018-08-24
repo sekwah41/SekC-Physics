@@ -50,7 +50,7 @@ public class Ragdolls {
         try
         {
             if(mc.gameSettings.showDebugInfo) {
-                SekCPhysics.logger.info("Entity died: %s%n", entity.getClass().getName());
+                SekCPhysics.logger.info("Entity died: {}", entity.getClass().getName());
             }
             RagdollData ragdollData = entityToRagdollHashmap.get(entity.getClass().getName());
 
