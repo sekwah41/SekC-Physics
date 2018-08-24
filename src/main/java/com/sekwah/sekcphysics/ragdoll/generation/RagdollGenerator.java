@@ -49,13 +49,12 @@ public class RagdollGenerator {
 
                     if(SekCPhysics.isDeObf || !entry.getValue().getAsJsonObject().has("entityObf")) {
                         SekCPhysics.ragdolls.registerRagdoll(entry.getKey(), ragdollData);
-                        SekCPhysics.logger.info("Registered ragdoll for entity: " + entry.getKey());
+                        SekCPhysics.logger.info("Registered ragdoll for entity: {}", entry.getKey());
                     }
                     else {
                         SekCPhysics.ragdolls.registerRagdoll(entry.getValue().getAsJsonObject().get("entityObf").getAsString(),
                                 ragdollData);
-
-                        SekCPhysics.logger.info("Registered ragdoll for entity: " + entry.getValue().getAsJsonObject().get("entityObf").getAsString());
+                        SekCPhysics.logger.info("Registered ragdoll for entity: {} as {}", entry.getKey(), entry.getValue().getAsJsonObject().get("entityObf").getAsString());
                     }
 
                 }
@@ -450,10 +449,11 @@ public class RagdollGenerator {
 
     public void loadRagdolls() {
 
+        SekCPhysics.logger.info("Processing: minecraft");
         this.generateRagdollsFrom("minecraft");
         Collection<ModInfo> modlist = RiftLoader.instance.getMods();
         for(ModInfo mod : modlist) {
-            SekCPhysics.logger.info("Processing " + mod.id);
+            SekCPhysics.logger.info("Processing: {}", mod.id);
             this.generateRagdollsFrom(mod.id);
         }
     }
