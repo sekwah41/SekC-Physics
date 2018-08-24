@@ -85,7 +85,7 @@
   },
   "net.minecraft.entity.monster.EntitySkeleton" : {
     "inherit" : "EntityBiped",
-    entityObf : "anj",
+    "entityObf" : "anj",
     "texture": ["minecraft",  "textures/entity/skeleton/skeleton.png"],
     "modelData": {
       "class": "net.minecraft.client.renderer.entity.model.ModelSkeleton",
@@ -93,7 +93,7 @@
     }
   },
   "net.minecraft.entity.monster.EntityZombie" : {
-    entityObf : "ans",
+    "entityObf" : "ans",
     "inherit" : "EntityBiped",
     "texture": ["minecraft",  "textures/entity/zombie/zombie.png"],
     "skeletonPoints":{
@@ -102,12 +102,12 @@
     }
   },
   "net.minecraft.entity.monster.EntityGiantZombie" : {
-    entityObf : "amx",
+    "entityObf" : "amx",
     "entityScale" : 6,
     "inherit" : "net.minecraft.entity.monster.EntityZombie"
   },
   "net.minecraft.entity.monster.EntityHusk" : {
-    entityObf : "amz",
+    "entityObf" : "amz",
     "entityScale" : 1.0625,
     "inherit" : "net.minecraft.entity.monster.EntityZombie",
     "texture": ["minecraft",  "textures/entity/zombie/husk.png"]
