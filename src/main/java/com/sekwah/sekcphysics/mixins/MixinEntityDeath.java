@@ -42,7 +42,7 @@ public abstract class MixinEntityDeath extends Entity {
 
             EntityRagdoll entityRagdoll = new EntityRagdoll(this.world, ragdoll);
 
-            entityRagdoll.ragdoll.setStanceToEntity((EntityLivingBase) (Entity) this);
+            entityRagdoll.ragdoll.setStanceToEntity((EntityLivingBase) (Object) this);
 
             entityRagdoll.setSpawnPosition(this.posX, this.posY, this.posZ);
 

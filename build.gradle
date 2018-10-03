@@ -16,7 +16,7 @@ apply plugin: 'java'
 apply plugin: 'org.spongepowered.mixin'
 
 group 'com.sekwah.sekcphysics'
-version '1.0.0'
+version '0.1.0'
 archivesBaseName = 'sekcphysics'
 
 sourceCompatibility = 1.8
