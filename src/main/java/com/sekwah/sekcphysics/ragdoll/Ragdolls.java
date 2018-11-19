@@ -1,13 +1,14 @@
 package com.sekwah.sekcphysics.ragdoll;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.ragdoll.generation.data.RagdollData;
 import com.sekwah.sekcphysics.ragdoll.ragdolls.generated.FromDataRagdoll;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by sekawh on 8/4/2015.
@@ -64,6 +65,10 @@ public class Ragdolls {
         }
 
         return ragdoll;
+    }
+    
+    public void reset() {
+        entityToRagdollHashmap.clear();
     }
 
 
