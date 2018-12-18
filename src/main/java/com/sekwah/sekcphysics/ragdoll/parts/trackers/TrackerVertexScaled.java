@@ -2,7 +2,7 @@ package com.sekwah.sekcphysics.ragdoll.parts.trackers;
 
 import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
-import net.minecraft.client.renderer.entity.model.ModelRenderer;
+import net.minecraft.client.model.Cuboid;
 
 /**
  * Created by on 30/06/2016.
@@ -17,7 +17,7 @@ public class TrackerVertexScaled extends TrackerVertex {
 
     private final float scaleInvert;
 
-    public TrackerVertexScaled(ModelRenderer part, SkeletonPoint anchor, SkeletonPoint pointsTo, float scale) {
+    public TrackerVertexScaled(Cuboid part, SkeletonPoint anchor, SkeletonPoint pointsTo, float scale) {
         super(part, anchor, pointsTo);
 
         this.scale = scale;

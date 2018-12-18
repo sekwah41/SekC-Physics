@@ -2,16 +2,24 @@ package com.sekwah.sekcphysics.client.cliententity;
 
 import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.maths.PointD;
+import com.sekwah.sekcphysics.ragdoll.parts.trackers.Tracker;
 import com.sekwah.sekcphysics.ragdoll.ragdolls.BaseRagdoll;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.init.Particles;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.particle.ParticleTypes;
+import net.minecraft.sortme.OptionMainHand;
+import net.minecraft.util.DefaultedList;
+import net.minecraft.util.math.BoundingBox;
 import net.minecraft.world.World;
 
-public class EntityRagdoll extends EntityLiving {
+public class EntityRagdoll extends LivingEntity {
+
+    private final DefaultedList<ItemStack> handItems;
+    private final DefaultedList<ItemStack> armorItems;
 
     public BaseRagdoll ragdoll;
 
@@ -23,6 +31,61 @@ public class EntityRagdoll extends EntityLiving {
 
     public EntityRagdoll(EntityType<?> entityType, World world) {
         super(entityType, world);
+        this.handItems = DefaultedList.create(2, ItemStack.EMPTY);
+        this.armorItems = DefaultedList.create(4, ItemStack.EMPTY);
+    }
+
+    @Override
+    public Iterable<ItemStack> getItemsArmor() {
+        return null;
+    }
+
+    public ItemStack getEquippedStack(EquipmentSlot var1) {
+        switch(var1) {
+            case HAND_MAIN:
+                return this.handItems.get(0);
+            case HAND_OFF:
+                return this.handItems.get(1);
+            case FEET:
+                return this.armorItems.get(0);
+            case LEGS:
+                return this.armorItems.get(1);
+            case CHEST:
+                return this.armorItems.get(2);
+            case HEAD:
+                return this.armorItems.get(3);
+            default:
+                return ItemStack.EMPTY;
+        }
+    }
+
+    @Override
+    public void setEquippedStack(EquipmentSlot var1, ItemStack var2) {
+        switch(var1) {
+            case HAND_MAIN:
+                this.handItems.set(0, var2);
+                break;
+            case HAND_OFF:
+                this.handItems.set(1, var2);
+                break;
+            case FEET:
+                this.armorItems.set(0, var2);
+                break;
+            case LEGS:
+                this.armorItems.set(1, var2);
+                break;
+            case CHEST:
+                this.armorItems.set(2, var2);
+                break;
+            case HEAD:
+                this.armorItems.set(3, var2);
+                break;
+        }
+    }
+
+    @Override
+    public OptionMainHand getMainHand() {
+        return null;
     }
 
     public EntityRagdoll(World world, BaseRagdoll ragdoll) {
@@ -43,28 +106,17 @@ public class EntityRagdoll extends EntityLiving {
         return false;
     }
 
-    protected void applyEntityAttributes()
+    protected void initAttributes()
     {
-        super.applyEntityAttributes();
-        super.entityInit();
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(0D);
+        super.initAttributes();
+        this.getAttributeInstance(EntityAttributes.MAX_HEALTH).setBaseValue(0D);
     }
 
     @Override
-    protected void entityInit() {
-
-    }
-
-    @Override
-    public void onEntityUpdate() {
-
-    }
-
-    @Override
-    public void onUpdate()
+    public void updateLogic()
     {
         if(this.ragdoll == null) {
-            this.setDead();
+            this.destroy();
             return;
         }
 
@@ -72,24 +124,21 @@ public class EntityRagdoll extends EntityLiving {
 
             for (int i = 0; i < 10; ++i) {
                 float poofSize = 1.0f;
-                double d0 = this.rand.nextGaussian() * 0.04D;
-                double d1 = this.rand.nextGaussian() * 0.04D;
-                double d2 = this.rand.nextGaussian() * 0.04D;
-                this.world.addParticle(Particles.CLOUD, this.posX + (double) (this.rand.nextFloat() * poofSize * 2.0F) - (double) poofSize, this.posY + this.height / 2 + (double) (this.rand.nextFloat() * this.height), this.posZ + (double) (this.rand.nextFloat() * poofSize * 2.0F) - (double) poofSize, d0, d1, d2);
+                double d0 = this.random.nextGaussian() * 0.04D;
+                double d1 = this.random.nextGaussian() * 0.04D;
+                double d2 = this.random.nextGaussian() * 0.04D;
+
+                this.world.addParticle(ParticleTypes.CLOUD, this.x + (double) (this.random.nextFloat() * poofSize * 2.0F) - (double) poofSize, this.y + this.height / 2 + (double) (this.random.nextFloat() * this.height), this.z + (double) (this.random.nextFloat() * poofSize * 2.0F) - (double) poofSize, d0, d1, d2);
             }
 
-            this.setDead();
+            this.invalidate();
         }
 
         this.ragdoll.update(this);
 
-        /*if(this.remainingLife-- >= 595) {
-            this.ragdoll.update(this);
-        }*/
-
         PointD ragdollPos = this.ragdoll.skeleton.points.get(0).toPoint();
 
-        this.setPosition(this.posX + ragdollPos.x, this.posY + ragdollPos.y, this.posZ + ragdollPos.z);
+        this.setPosition(this.x + ragdollPos.x, this.y + ragdollPos.y, this.z + ragdollPos.z);
 
         this.ragdoll.shiftPos(-ragdollPos.x, -ragdollPos.y, -ragdollPos.z);
     }
@@ -99,26 +148,23 @@ public class EntityRagdoll extends EntityLiving {
     }
 
     @Override
-    public void readEntityFromNBT(NBTTagCompound nbtTagCompound) {
+    public void readCustomDataFromTag(CompoundTag compoundTag) {
 
     }
 
     @Override
-    public void writeEntityToNBT(NBTTagCompound nbtTagCompound) {
+    public void writeCustomDataToTag(CompoundTag compoundTag) {
 
     }
 
     public void setSpawnPosition(double posX, double posY, double posZ) {
         posY += (ragdoll.centerHeightOffset / 16f);
-        this.posX = posX;
-        this.posY = posY;
-        this.posZ = posZ;
+        this.x = posX;
+        this.y = posY;
+        this.z = posZ;
         float f = this.width / 2.0F;
         float f1 = this.height;
-        this.setEntityBoundingBox(new AxisAlignedBB(posX - (double)f, posY, posZ - (double)f, posX + (double)f, posY + (double)f1, posZ + (double)f));
-
-        // the entity position will probably follow the simulated ragdoll position and not the other way.
-        //this.ragdoll.setRagdollPos(this.posX, this.posY, this.posZ);
+        this.setBoundingBox(new BoundingBox(posX - (double)f, posY, posZ - (double)f, posX + (double)f, posY + (double)f1, posZ + (double)f));
     }
 
     /**

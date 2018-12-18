@@ -1,8 +1,8 @@
 package com.sekwah.sekcphysics.ragdoll.model;
 
-import net.minecraft.client.renderer.entity.model.ModelBiped;
+import net.minecraft.client.render.entity.model.BipedEntityModel;
 
-public class ModelBipedContainer extends ModelBiped {
+public class ModelBipedContainer extends BipedEntityModel {
 
     private final ModelContainerData modelContainerData;
 

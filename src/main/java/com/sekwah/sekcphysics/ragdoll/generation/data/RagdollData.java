@@ -2,8 +2,8 @@ package com.sekwah.sekcphysics.ragdoll.generation.data;
 
 import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.ragdoll.parts.Triangle;
-import net.minecraft.client.renderer.entity.model.ModelBase;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.class_3879;
+import net.minecraft.util.Identifier;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -19,9 +19,9 @@ public class RagdollData {
 
     private HashMap<String, TriangleData> triangleHashMap = new HashMap<>();
     
-    private ModelBase ragdollModel;
+    private class_3879 ragdollModel;
 
-    private ResourceLocation entityTexture;
+    private Identifier entityTexture;
 
     /**
      * Has no references back so best to do it this way for quick use.

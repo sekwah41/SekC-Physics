@@ -1,10 +1,8 @@
 package com.sekwah.sekcphysics.ragdoll.parts.trackers;
 
 import com.sekwah.sekcphysics.maths.PointD;
-import com.sekwah.sekcphysics.maths.PointF;
 import com.sekwah.sekcphysics.maths.RotateF;
-import net.minecraft.client.renderer.entity.model.ModelRenderer;
-
+import net.minecraft.client.model.Cuboid;
 /**
  * Created by on 30/06/2016.
  *
@@ -12,9 +10,9 @@ import net.minecraft.client.renderer.entity.model.ModelRenderer;
  */
 public abstract class Tracker {
 
-    protected final ModelRenderer part;
+    protected final Cuboid part;
 
-    public ModelRenderer bodyPart = null;
+    public Cuboid bodyPart = null;
 
     public RotateF rotationOffset = new RotateF();
 
@@ -46,11 +44,11 @@ public abstract class Tracker {
      */
     public PointD offset = new PointD();
 
-    protected Tracker(ModelRenderer part) {
+    protected Tracker(Cuboid part) {
         this.part = part;
     }
 
-    public Tracker(ModelRenderer part, float rotateOffsetX, float rotateOffsetY, float rotateOffsetZ) {
+    public Tracker(Cuboid part, float rotateOffsetX, float rotateOffsetY, float rotateOffsetZ) {
         this(part);
         this.rotationOffset = new RotateF(rotateOffsetX, rotateOffsetY, rotateOffsetZ);
     }
@@ -99,15 +97,21 @@ public abstract class Tracker {
         this.part.setRotationPoint((float) (this.lastPosition.x + this.positionDiff.x * partialTicks) * 16f,
                 (float) (this.lastPosition.y + this.positionDiff.y * partialTicks) * 16f,
                 (float) (this.lastPosition.z + this.positionDiff.z * partialTicks) * 16f);
+        /*this.part.setRotationPoint((float) (this.position.x) * 16f,
+                (float) (this.position.y) * 16f,(float) (this.position.z) * 16f);*/
     }
 
     /**
      * For rendering, not generally setting
      */
     public void setPartRotation(float partialTicks) {
-        this.part.rotateAngleX = this.lastRotation.x + this.rotationDiff.x * partialTicks;
-        this.part.rotateAngleY = this.lastRotation.y + this.rotationDiff.y * partialTicks;
-        this.part.rotateAngleZ = this.lastRotation.z + this.rotationDiff.z * partialTicks;
+        this.part.pitch = this.lastRotation.x + this.rotationDiff.x * partialTicks;
+        this.part.yaw = this.lastRotation.y + this.rotationDiff.y * partialTicks;
+        this.part.roll = this.lastRotation.z + this.rotationDiff.z * partialTicks;
+
+        /*this.part.pitch = this.rotation.x;
+        this.part.yaw = this.rotation.y;
+        this.part.roll = this.rotation.z;*/
     }
 
     public abstract void render(float partialTicks);

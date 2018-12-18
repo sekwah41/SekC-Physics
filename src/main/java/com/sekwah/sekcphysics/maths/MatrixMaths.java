@@ -4,8 +4,6 @@ public final class MatrixMaths {
 
     public static PointD addRotAroundAxis(double x, double y, double z, double axis) {
 
-        // May be faster to rewrite with your own to reduce the number of calculations
-
         Matrix rotationMatrix = Matrix.identity();
         rotationMatrix.rotZ(z);
         rotationMatrix.rotY(y);

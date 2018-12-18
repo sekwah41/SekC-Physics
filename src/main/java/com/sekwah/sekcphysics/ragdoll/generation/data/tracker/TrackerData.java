@@ -2,7 +2,7 @@ package com.sekwah.sekcphysics.ragdoll.generation.data.tracker;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.minecraft.client.renderer.entity.model.ModelRenderer;
+import net.minecraft.client.model.Cuboid;
 
 /**
  * Created by sekwah41 on 06/07/2017.
@@ -21,7 +21,7 @@ public class TrackerData {
 
     public final boolean hasRotateData;
 
-    private ModelRenderer part;
+    private Cuboid part;
 
     public TrackerData(String partName, JsonObject vertexObj) {
 
@@ -102,11 +102,11 @@ public class TrackerData {
         }
     }
 
-    public ModelRenderer getPart() {
+    public Cuboid getPart() {
         return part;
     }
 
-    public void setPart(ModelRenderer part) {
+    public void setPart(Cuboid part) {
         this.part = part;
     }
 

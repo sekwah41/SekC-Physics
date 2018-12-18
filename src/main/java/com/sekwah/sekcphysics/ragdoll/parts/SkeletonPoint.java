@@ -3,13 +3,14 @@ package com.sekwah.sekcphysics.ragdoll.parts;
 import com.sekwah.sekcphysics.client.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.ragdoll.Ragdolls;
-import net.minecraft.block.material.Material;
+import net.minecraft.block.Material;
+import net.minecraft.class_3538;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BoundingBox;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.shapes.ShapeUtils;
-import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
 
 import java.util.List;
 
@@ -96,44 +97,47 @@ public class SkeletonPoint {
 
     public void movePoint(EntityRagdoll entity, double moveX, double moveY, double moveZ) {
 
-        double pointPosX = entity.posX + this.posX;
-        double pointPosY = entity.posY + this.posY;
-        double pointPosZ = entity.posZ + this.posZ;
+        double pointPosX = entity.x + this.posX;
+        double pointPosY = entity.y + this.posY;
+        double pointPosZ = entity.z + this.posZ;
 
-        AxisAlignedBB axisalignedbb = new AxisAlignedBB(pointPosX - size, pointPosY - size, pointPosZ - size,
+        BoundingBox boundingBox = new BoundingBox(pointPosX - size, pointPosY - size, pointPosZ - size,
                 pointPosX + size, pointPosY + size, pointPosZ + size);
 
-        //axisalignedbb.offset(this.posX, this.posY, this.posZ);
+        //boundingBox.offset(this.posX, this.posY, this.posZ);
 
-        VoxelShape voxel = entity.world.getCollisionBoxes(entity, axisalignedbb, moveX, moveY, moveZ);
+        //VoxelShape voxel = entity.world.getCollisionBoxes(entity, boundingBox, moveX, moveY, moveZ);
+        // Not sure what to give this name weirdly its a list/interable value
+        class_3538<VoxelShape> voxels = new class_3538(entity.world.method_8609(entity, boundingBox, moveX, moveY, moveZ));
 
         double oMoveY = moveY;
 
         if (moveY != 0.0D) {
-            moveY = ShapeUtils.calculateAxisOffset(EnumFacing.Axis.Y, axisalignedbb, voxel, moveY);
+            // method_1085 calculates the max offset
+            moveY = VoxelShapes.method_1085(Direction.Axis.Y, boundingBox, voxels.method_15418(), moveY);
             if(oMoveY < 0 && moveY != oMoveY) {
                 onGround = true;
             }
-            axisalignedbb = axisalignedbb.offset(0.0D, moveY, 0.0D);
+            boundingBox = boundingBox.offset(0.0D, moveY, 0.0D);
         }
 
         if (moveX != 0.0D) {
-            moveX = ShapeUtils.calculateAxisOffset(EnumFacing.Axis.X, axisalignedbb, voxel, moveX);
+            moveX = VoxelShapes.method_1085(Direction.Axis.X, boundingBox, voxels.method_15418(), moveX);
             if (moveX != 0.0D) {
-                axisalignedbb = axisalignedbb.offset(moveX, 0.0D, 0.0D);
+                boundingBox = boundingBox.offset(moveX, 0.0D, 0.0D);
             }
         }
 
         if (moveZ != 0.0D) {
-            moveZ = ShapeUtils.calculateAxisOffset(EnumFacing.Axis.Z, axisalignedbb, voxel, moveZ);
+            moveZ = VoxelShapes.method_1085(Direction.Axis.Z, boundingBox, voxels.method_15418(), moveZ);
             if (moveZ != 0.0D) {
-                axisalignedbb = axisalignedbb.offset(0.0D, 0.0D, moveZ);
+                boundingBox = boundingBox.offset(0.0D, 0.0D, moveZ);
             }
         }
 
-        this.posX = (axisalignedbb.minX + axisalignedbb.maxX) / 2.0D - entity.posX;
-        this.posY = (axisalignedbb.minY + axisalignedbb.maxY) / 2.0D - entity.posY;
-        this.posZ = (axisalignedbb.minZ + axisalignedbb.maxZ) / 2.0D - entity.posZ;
+        this.posX = (boundingBox.minX + boundingBox.maxX) / 2.0D - entity.x;
+        this.posY = (boundingBox.minY + boundingBox.maxY) / 2.0D - entity.y;
+        this.posZ = (boundingBox.minZ + boundingBox.maxZ) / 2.0D - entity.z;
 
         this.checkWillMove();
     }
@@ -195,15 +199,15 @@ public class SkeletonPoint {
         this.lastPosY = this.posY;
         this.lastPosZ = this.posZ;
 
-        double pointPosX = entity.posX + this.posX;
-        double pointPosY = entity.posY + this.posY;
-        double pointPosZ = entity.posZ + this.posZ;
+        double pointPosX = entity.x + this.posX;
+        double pointPosY = entity.y + this.posY;
+        double pointPosZ = entity.z + this.posZ;
 
-        AxisAlignedBB axisalignedbb = new AxisAlignedBB(pointPosX - size, pointPosY - size, pointPosZ - size,
+        BoundingBox axisalignedbb = new BoundingBox(pointPosX - size, pointPosY - size, pointPosZ - size,
                 pointPosX + size, pointPosY + size, pointPosZ + size);
 
         // TODO check how the player gets this, i has roughly been coded for 1.13 as a test
-        if (entity.world.isMaterialInBB(axisalignedbb.expand(0.0D, -0.4000000059604645D, 0.0D).contract(0.001D, 0.001D, 0.001D), Material.WATER)) {
+        if (entity.world.method_8422(axisalignedbb.expand(0.0D, -0.4000000059604645D, 0.0D).contract(0.001D, 0.001D, 0.001D), Material.WATER)) {
             this.addVelocity(0, 0.1f, 0);
             if(this.posY - this.lastPosY > 0.5) {
                 this.lastPosY = this.posY - 0.5;
@@ -228,14 +232,14 @@ public class SkeletonPoint {
 
     // Wont push other entities but make it get pushed by others.
     private void updateCollisions(EntityRagdoll entity) {
-        double pointPosX = entity.posX + this.posX;
-        double pointPosY = entity.posY + this.posY;
-        double pointPosZ = entity.posZ + this.posZ;
+        double pointPosX = entity.x + this.posX;
+        double pointPosY = entity.y + this.posY;
+        double pointPosZ = entity.z + this.posZ;
 
-        AxisAlignedBB axisalignedbb = new AxisAlignedBB(pointPosX - size, pointPosY - size, pointPosZ - size,
+        BoundingBox boundingBox = new BoundingBox(pointPosX - size, pointPosY - size, pointPosZ - size,
                 pointPosX + size, pointPosY + size, pointPosZ + size);
 
-        List list = entity.world.getEntitiesWithinAABBExcludingEntity(entity, axisalignedbb.expand(0.20000000298023224D, 0.0D, 0.20000000298023224D));
+        List list = entity.world.getVisibleEntities(entity, boundingBox.expand(0.20000000298023224D, 0.0D, 0.20000000298023224D));
 
         if (list != null && !list.isEmpty())
         {
@@ -244,7 +248,8 @@ public class SkeletonPoint {
                 Entity entityCol = (Entity)list.get(i);
 
                 // Cant directly detect if in ground sadly. Try stuff like arrows though ;3
-                if(entityCol.canBePushed()/* || (entityCol instanceof EntityArrow && entityCol.motionY != 0)*/) {
+                // method_5810 is Can be pushed
+                if(entityCol.method_5810()/* || (entityCol instanceof EntityArrow && entityCol.motionY != 0)*/) {
                     this.collideWithEntity(entity, entityCol);
                 }
             }
@@ -255,10 +260,10 @@ public class SkeletonPoint {
     }
 
     private void collideWithEntity(EntityRagdoll entity, Entity entityCol) {
-        double pointPosX = entity.posX + this.posX;
-        double pointPosZ = entity.posZ + this.posZ;
-        double d0 = pointPosX - entityCol.posX;
-        double d1 = pointPosZ - entityCol.posZ;
+        double pointPosX = entity.x + this.posX;
+        double pointPosZ = entity.z + this.posZ;
+        double d0 = pointPosX - entityCol.x;
+        double d1 = pointPosZ - entityCol.z;
         double d2 = MathHelper.absMax(d0, d1);
 
         if (d2 >= 0.009999999776482582D)
@@ -277,11 +282,12 @@ public class SkeletonPoint {
             d1 *= d3;
             d0 *= 0.05000000074505806D;
             d1 *= 0.05000000074505806D;
-            d0 *= (double)(1.0F - entityCol.entityCollisionReduction);
-            d1 *= (double)(1.0F - entityCol.entityCollisionReduction);
+            // field_5968 should be pushSpeedModifier
+            d0 *= (double)(1.0F - entityCol.field_5968);
+            d1 *= (double)(1.0F - entityCol.field_5968);
             //SekCPhysics.logger.info(entityCol.motionX);
             //entityCol.addVelocity(-d0, 0.0D, -d1);
-            this.addVelocity(d0 + entityCol.motionX, 0.0D, d1 + entityCol.motionZ);
+            this.addVelocity(d0 + entityCol.velocityX, 0.0D, d1 + entityCol.velocityZ);
         }
     }
 

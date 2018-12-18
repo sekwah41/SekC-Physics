@@ -4,7 +4,7 @@ import com.sekwah.sekcphysics.maths.MatrixMaths;
 import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.maths.VectorMaths;
 import com.sekwah.sekcphysics.ragdoll.parts.Triangle;
-import net.minecraft.client.renderer.entity.model.ModelRenderer;
+import net.minecraft.client.model.Cuboid;
 
 /**
  * Created by on 30/06/2016.
@@ -15,7 +15,7 @@ public class TrackerTriangle extends Tracker {
 
     protected final Triangle triangle;
 
-    public TrackerTriangle(ModelRenderer part, Triangle triangle) {
+    public TrackerTriangle(Cuboid part, Triangle triangle) {
         super(part);
         this.triangle = triangle;
 
@@ -25,7 +25,7 @@ public class TrackerTriangle extends Tracker {
 
     }
 
-    public TrackerTriangle(ModelRenderer part, Triangle triangle, float rotateOffsetX, float rotateOffsetY, float rotateOffsetZ) {
+    public TrackerTriangle(Cuboid part, Triangle triangle, float rotateOffsetX, float rotateOffsetY, float rotateOffsetZ) {
         super(part, rotateOffsetX, rotateOffsetY, rotateOffsetZ);
         this.triangle = triangle;
     }

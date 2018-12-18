@@ -3,7 +3,7 @@ package com.sekwah.sekcphysics.ragdoll.parts.trackers;
 import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.maths.PointF;
 import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
-import net.minecraft.client.renderer.entity.model.ModelRenderer;
+import net.minecraft.client.model.Cuboid;
 
 /**
  * Created by on 30/06/2016.
@@ -18,7 +18,7 @@ public class TrackerVertex extends Tracker {
 
     protected final SkeletonPoint pointsTo;
 
-    public TrackerVertex(ModelRenderer part, SkeletonPoint anchor, SkeletonPoint pointsTo) {
+    public TrackerVertex(Cuboid part, SkeletonPoint anchor, SkeletonPoint pointsTo) {
         super(part);
         this.anchor = anchor;
         this.pointsTo = pointsTo;
@@ -32,11 +32,7 @@ public class TrackerVertex extends Tracker {
 
     @Override
     public void render(float partialTicks) {
-
         this.renderPart(partialTicks);
-
-        // TODO Look at the length in comparison (store it when calculating physics) and stretch it based on the percentage xD
-        //GlStateManager.scale(1,scaleFactorStretch,0);
     }
 
     @Override
@@ -53,10 +49,6 @@ public class TrackerVertex extends Tracker {
         this.rotation.y = basicRotation(constraintVert.x, constraintVert.z);
 
         this.rotation.x = (float) (Math.PI * 0.5) + basicRotation(-constraintVert.y, (float) Math.sqrt(constraintVert.x * constraintVert.x + constraintVert.z * constraintVert.z));
-
-        //this.rotation.x = (float) (Math.PI) / 2 + basicRotation(-constraintVert.y, (float) Math.sqrt(Math.pow(constraintVert.x,2) + Math.pow(constraintVert.z,2)));
-
-        //this.rotation.y = basicRotation(constraintVert.x, constraintVert.z);
 
         this.updatePosition();
 

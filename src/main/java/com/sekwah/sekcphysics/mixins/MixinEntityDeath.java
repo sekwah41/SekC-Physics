@@ -3,12 +3,13 @@ package com.sekwah.sekcphysics.mixins;
 import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.client.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.ragdoll.ragdolls.BaseRagdoll;
+import net.minecraft.container.Slot;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EntityType;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -17,11 +18,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @SuppressWarnings("unused")
-@Mixin(EntityLivingBase.class)
+@Mixin(LivingEntity.class)
 public abstract class MixinEntityDeath extends Entity {
 
     @Shadow
-    public ItemStack getItemStackFromSlot(EntityEquipmentSlot p_getItemStackFromSlot_1_) {return null;}
+    public ItemStack getEquippedStack(EquipmentSlot equipmentSlot) {return null;}
 
     @Shadow
     public boolean isChild() {return false;}
@@ -32,7 +33,7 @@ public abstract class MixinEntityDeath extends Entity {
 
     @Inject(method = "onDeath", at = @At("RETURN"))
     public void onDeath(DamageSource damageSource, CallbackInfo ci) {
-        if(!this.world.isRemote || this.isChild()) {
+        if(!this.world.isClient || this.isChild()) {
             return;
         }
 
@@ -42,23 +43,23 @@ public abstract class MixinEntityDeath extends Entity {
 
             EntityRagdoll entityRagdoll = new EntityRagdoll(this.world, ragdoll);
 
-            entityRagdoll.ragdoll.setStanceToEntity((EntityLivingBase) (Object) this);
+            entityRagdoll.ragdoll.setStanceToEntity((LivingEntity) (Object) this);
 
-            entityRagdoll.setSpawnPosition(this.posX, this.posY, this.posZ);
+            entityRagdoll.setSpawnPosition(this.x, this.y, this.z);
 
             this.world.spawnEntity(entityRagdoll);
 
-            entityRagdoll.ragdoll.rotateRagdoll(this.rotationYaw);
+            entityRagdoll.ragdoll.rotateRagdoll(this.yaw);
 
             entityRagdoll.ragdoll.skeleton.verifyPoints(entityRagdoll);
 
             entityRagdoll.ragdoll.update(entityRagdoll);
 
-            for(EntityEquipmentSlot slot : EntityEquipmentSlot.values()) {
-                entityRagdoll.setItemStackToSlot(slot, this.getItemStackFromSlot(slot));
+            for(EquipmentSlot slot : EquipmentSlot.values()) {
+                entityRagdoll.setEquippedStack(slot, this.getEquippedStack(slot));
             }
 
-            this.setDead();
+            this.invalidate();
         }
 
     }

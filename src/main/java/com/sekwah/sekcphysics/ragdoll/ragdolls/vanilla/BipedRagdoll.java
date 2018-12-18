@@ -121,7 +121,7 @@ public class BipedRagdoll extends BaseRagdoll {
 
     }
 
-    /*public void initTrackers(ModelBase model) {
+    /*public void initTrackers(class_3879 model) {
         super.initTrackers(model);
         if(model instanceof ModelBiped) {
             ModelBiped modelBiped = (ModelBiped) model;

@@ -6,12 +6,12 @@ import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.ragdoll.generation.data.*;
 import com.sekwah.sekcphysics.ragdoll.generation.data.tracker.TriangleTrackerData;
 import com.sekwah.sekcphysics.ragdoll.generation.data.tracker.VertexTrackerData;
-import net.minecraft.client.renderer.entity.model.ModelBase;
-import net.minecraft.client.renderer.entity.model.ModelRenderer;
-import net.minecraft.util.ResourceLocation;
+import net.fabricmc.loader.FabricLoader;
+import net.fabricmc.loader.ModContainer;
+import net.minecraft.class_3879;
+import net.minecraft.client.model.Cuboid;
+import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.Level;
-import org.dimdev.riftloader.ModInfo;
-import org.dimdev.riftloader.RiftLoader;
 
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -348,7 +348,7 @@ public class RagdollGenerator {
         try {
             Class rClass = Class.forName(modelConstructData.getClassName());
 
-            if(ModelBase.class.isInstance(rClass)) {
+            if(class_3879.class.isInstance(rClass)) {
                 throw new RagdollInvalidDataException("Invalid model class");
             }
 
@@ -372,7 +372,7 @@ public class RagdollGenerator {
                 classArray[i] = classType;
             }
 
-            ModelBase modelBase = (ModelBase) rClass.getConstructor(classArray).newInstance(constructObjects);
+            class_3879 modelBase = (class_3879) rClass.getConstructor(classArray).newInstance(constructObjects);
 
             ModelData modelData = new ModelData(modelBase);
 
@@ -380,14 +380,14 @@ public class RagdollGenerator {
 
             VertexTrackerData[] vertexTrackers = modelConstructData.getVertexTrackerData();
             for(VertexTrackerData vertexData : vertexTrackers) {
-                ModelRenderer renderer = getRendererFromName(vertexData.getPartName(), modelBase, rClass);
+                Cuboid renderer = getRendererFromName(vertexData.getPartName(), modelBase, rClass);
                 vertexData.setPart(renderer);
             }
             modelData.setVertexTrackers(vertexTrackers);
 
             TriangleTrackerData[] triangleTrackers = modelConstructData.getTriangleTrackerData();
             for(TriangleTrackerData triangleData : triangleTrackers) {
-                ModelRenderer renderer = getRendererFromName(triangleData.getPartName(), modelBase, rClass);
+                Cuboid renderer = getRendererFromName(triangleData.getPartName(), modelBase, rClass);
                 triangleData.setPart(renderer);
             }
             modelData.setTriangleTrackers(triangleTrackers);
@@ -423,14 +423,14 @@ public class RagdollGenerator {
 
     private void addExtraModelData(RagdollData ragdollData, ModelData modelData, ModelConstructData modelConstructData) {
         ResourceData textureDomain = modelConstructData.getTextureDomain();
-        modelData.setTexture(new ResourceLocation(textureDomain.getTextureDomain(), textureDomain.getTexture()));
+        modelData.setTexture(new Identifier(textureDomain.getTextureDomain(), textureDomain.getTexture()));
     }
 
-    private ModelRenderer getRendererFromName(String partName, ModelBase modelBase, Class<?> rClass) throws NoSuchFieldException, RagdollInvalidDataException, IllegalAccessException {
+    private Cuboid getRendererFromName(String partName, class_3879 modelBase, Class<?> rClass) throws NoSuchFieldException, RagdollInvalidDataException, IllegalAccessException {
         Field partRender = rClass.getField(partName);
         Object partObj = partRender.get(modelBase);
-        if(partObj instanceof ModelRenderer) {
-            return (ModelRenderer) partObj;
+        if(partObj instanceof Cuboid) {
+            return (Cuboid) partObj;
         }
         throw new RagdollInvalidDataException("Unexpected object type stored in location");
     }
@@ -451,10 +451,10 @@ public class RagdollGenerator {
 
         SekCPhysics.logger.info("Processing: minecraft");
         this.generateRagdollsFrom("minecraft");
-        Collection<ModInfo> modlist = RiftLoader.instance.getMods();
-        for(ModInfo mod : modlist) {
-            SekCPhysics.logger.info("Processing: {}", mod.id);
-            this.generateRagdollsFrom(mod.id);
+        List<ModContainer> modlist = FabricLoader.INSTANCE.getMods();
+        for(ModContainer mod : modlist) {
+            SekCPhysics.logger.info("Processing: {}", mod.getInfo().getName());
+            this.generateRagdollsFrom(mod.getInfo().getId());
         }
     }
 }

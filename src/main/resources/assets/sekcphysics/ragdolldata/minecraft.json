@@ -40,7 +40,7 @@
       "body": ["centerTorso", "leftLegTop", "rightLegTop"]
     },
     "modelData":{
-      "class" : "net.minecraft.client.renderer.entity.model.ModelBiped",
+      "class" : "net.minecraft.client.render.entity.model.BipedEntityModel",
       "classObf" : "coh",
       "constructData" : [
         ["float", 0],
@@ -49,33 +49,33 @@
         ["int", 64]
       ],
       "vertexTrackers" : {
-        "bipedRightArm": {
+        "armRight": {
           "anchor" : "rightShoulder",
           "pointTo" : "rightArm",
           "obfName" : "f"
         },
-        "bipedLeftArm": {
+        "armLeft": {
           "anchor" : "leftShoulder",
           "pointTo" : "leftArm",
           "obfName" : "g"
         },
-        "bipedRightLeg": {
+        "legRight": {
           "anchor" : "rightLegTop",
           "pointTo" : "rightLegBot",
           "obfName" : "h"
         },
-        "bipedLeftLeg":{
+        "legLeft":{
           "anchor" : "leftLegTop",
           "pointTo" : "leftLegBot",
           "obfName" : "i"
         }
       },
       "triangleTrackers" : {
-        "bipedBody":{
+        "body":{
           "tracker" : "body",
           "obfName" : "e"
         },
-        "bipedHead":{
+        "head":{
           "tracker" : "head",
           "rotOffX" : 180,
           "obfName" : "c"
@@ -83,16 +83,16 @@
       }
     }
   },
-  "net.minecraft.entity.monster.EntitySkeleton" : {
+  "net.minecraft.entity.mob.SkeletonEntity" : {
     "inherit" : "EntityBiped",
     "entityObf" : "anj",
     "texture": ["minecraft",  "textures/entity/skeleton/skeleton.png"],
     "modelData": {
-      "class": "net.minecraft.client.renderer.entity.model.ModelSkeleton",
+      "class": "net.minecraft.client.render.entity.model.StrayEntityModel",
       "classObf" : "cpn"
     }
   },
-  "net.minecraft.entity.monster.EntityZombie" : {
+  "net.minecraft.entity.mob.ZombieEntity" : {
     "entityObf" : "ans",
     "inherit" : "EntityBiped",
     "texture": ["minecraft",  "textures/entity/zombie/zombie.png"],
@@ -101,15 +101,15 @@
       "leftArm" : [6,-2,8]
     }
   },
-  "net.minecraft.entity.monster.EntityGiantZombie" : {
+  "net.minecraft.entity.mob.GiantEntity" : {
     "entityObf" : "amx",
     "entityScale" : 6,
-    "inherit" : "net.minecraft.entity.monster.EntityZombie"
+    "inherit" : "net.minecraft.entity.mob.ZombieEntity"
   },
   "net.minecraft.entity.monster.EntityHusk" : {
     "entityObf" : "amz",
     "entityScale" : 1.0625,
-    "inherit" : "net.minecraft.entity.monster.EntityZombie",
+    "inherit" : "net.minecraft.entity.mob.ZombieEntity",
     "texture": ["minecraft",  "textures/entity/zombie/husk.png"]
   }
 }

@@ -2,8 +2,8 @@ package com.sekwah.sekcphysics.ragdoll.generation.data;
 
 import com.sekwah.sekcphysics.ragdoll.generation.data.tracker.TriangleTrackerData;
 import com.sekwah.sekcphysics.ragdoll.generation.data.tracker.VertexTrackerData;
-import net.minecraft.client.renderer.entity.model.ModelBase;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.class_3879;
+import net.minecraft.util.Identifier;
 
 /**
  * Stores a copy of the model as well as data to link it to the ragdoll on creation
@@ -12,19 +12,19 @@ import net.minecraft.util.ResourceLocation;
  */
 public class ModelData {
 
-    private ModelBase baseModel;
+    private class_3879 baseModel;
 
     private VertexTrackerData[] vertexTrackers = new VertexTrackerData[0];
 
     private TriangleTrackerData[] triangleTrackers = new TriangleTrackerData[0];
 
-    private ResourceLocation texture;
+    private Identifier texture;
 
-    public ModelData(ModelBase baseModel) {
+    public ModelData(class_3879 baseModel) {
         this.baseModel = baseModel;
     }
 
-    public ModelBase getBaseModel() {
+    public class_3879 getBaseModel() {
         return baseModel;
     }
 
@@ -44,11 +44,11 @@ public class ModelData {
         return triangleTrackers;
     }
 
-    public void setTexture(ResourceLocation texture) {
+    public void setTexture(Identifier texture) {
         this.texture = texture;
     }
 
-    public ResourceLocation getTexture() {
+    public Identifier getTexture() {
         return texture;
     }
 }
