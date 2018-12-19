@@ -16,3 +16,6 @@ To update just check the numbers at http://fabric.asie.pl/use/ and run gradlew g
 
 ### Project page
 https://minecraft.curseforge.com/projects/sekc-physics-fabric
+
+### Adding ragdolls for your own mod
+You can find info about that all [here](https://github.com/sekwah41/SekC-Physics/wiki/Physics-Support)
