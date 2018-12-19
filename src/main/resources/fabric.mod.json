@@ -2,7 +2,7 @@
   "id": "sekcphysics",
   "name": "SekC Physics",
   "description": "A ragdoll physics mod for Minecraft",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "side": "client",
   "initializer": "com.sekwah.sekcphysics.SekCPhysics",
   "requires": {
