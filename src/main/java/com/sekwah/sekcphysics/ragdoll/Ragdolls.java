@@ -67,12 +67,4 @@ public class Ragdolls {
     }
 
     // Material.rock for the sounds, could add a bit of bouncing from materials rather than instantly losing velocity when it hits soemthing.
-
-    // Also store an array of current ragdolls(dont forget to monitor lag and if its lagging MASSIVELY remove 50% of oldest ragdolls
-    //  however this may all change, add a debug item like diamond or a client command(probs best) for removing all.
-
-    /*
-    look at the code for moveEntity in entities for the collisions, also for future stuff it may be usefull to use it for future
-    physics stuff in mods(stupid for not using this in the past probably)
-     */
 }

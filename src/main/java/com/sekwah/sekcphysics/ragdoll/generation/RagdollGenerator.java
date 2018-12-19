@@ -15,6 +15,7 @@ import net.minecraft.entity.mob.HuskEntity;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.Level;
 
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Field;
@@ -34,7 +35,16 @@ public class RagdollGenerator {
     private void generateRagdollsFrom(String modid) {
         // TODO check for the mod id and if not found then report false. If found generate ragdolls.
         try {
-            Reader fileIn = new InputStreamReader(SekCPhysics.class.getResourceAsStream("/assets/sekcphysics/ragdolldata/" + modid + ".json"));
+            InputStream ragdollFile = SekCPhysics.class.getResourceAsStream("/assets/sekcphysics/ragdolldata/" + modid + ".json");
+            if(ragdollFile == null) {
+                SekCPhysics.logger.info("Checking ragdoll file in: " + modid);
+                ragdollFile = SekCPhysics.class.getResourceAsStream("/assets/" + modid + "/sekc_ragdoll.json");
+            }
+            if(ragdollFile == null){
+                SekCPhysics.logger.info("No ragdoll data found for: " + modid);
+                return;
+            }
+            Reader fileIn = new InputStreamReader(ragdollFile);
             Gson jsonFile = new Gson();
             JsonObject ragdollFileJson = jsonFile.fromJson(fileIn, JsonObject.class);
             Set<Map.Entry<String, JsonElement>> entityEnteries = ragdollFileJson.entrySet();
