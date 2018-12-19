@@ -6,10 +6,12 @@ import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.ragdoll.generation.data.*;
 import com.sekwah.sekcphysics.ragdoll.generation.data.tracker.TriangleTrackerData;
 import com.sekwah.sekcphysics.ragdoll.generation.data.tracker.VertexTrackerData;
+import com.sekwah.sekcphysics.ragdoll.generation.runtime.VanillaModelMapping;
 import net.fabricmc.loader.FabricLoader;
 import net.fabricmc.loader.ModContainer;
 import net.minecraft.class_3879;
 import net.minecraft.client.model.Cuboid;
+import net.minecraft.entity.mob.HuskEntity;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.Level;
 
@@ -17,7 +19,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -27,6 +28,8 @@ import java.util.Set;
  * Created by Alastair on 24/01/2016.
  */
 public class RagdollGenerator {
+
+    public static final VanillaModelMapping modelMapping = new VanillaModelMapping();
 
     private void generateRagdollsFrom(String modid) {
         // TODO check for the mod id and if not found then report false. If found generate ragdolls.
@@ -47,15 +50,14 @@ public class RagdollGenerator {
                     ModelData modelData = createModelAndAddTrackers(ragdollData, modelConstructData);
                     ragdollData.addModelData(modelData);
 
-                    if(SekCPhysics.isDeObf || !entry.getValue().getAsJsonObject().has("entityObf")) {
-                        SekCPhysics.ragdolls.registerRagdoll(entry.getKey(), ragdollData);
-                        SekCPhysics.logger.info("Registered ragdoll for entity: {}", entry.getKey());
+                    String className = entry.getKey();
+                    try {
+                        Class.forName(className);
+                    } catch (ClassNotFoundException e) {
+                        className = modelMapping.getClassName(className);
                     }
-                    else {
-                        SekCPhysics.ragdolls.registerRagdoll(entry.getValue().getAsJsonObject().get("entityObf").getAsString(),
-                                ragdollData);
-                        SekCPhysics.logger.info("Registered ragdoll for entity: {} as {}", entry.getKey(), entry.getValue().getAsJsonObject().get("entityObf").getAsString());
-                    }
+                    SekCPhysics.ragdolls.registerRagdoll(className, ragdollData);
+                    SekCPhysics.logger.info("Registered ragdoll for entity: {}", entry.getKey());
 
                 }
                 catch(ClassCastException | RagdollInvalidDataException | IllegalStateException
@@ -244,12 +246,15 @@ public class RagdollGenerator {
         if(modelJSON != null) {
 
             // TODO example of a place where checking if its a dev environment is needed so switch it over
-            if(SekCPhysics.isDeObf || !modelJSON.has("classObf")) {
-                modelConstructData.setClassName(modelJSON.get("class").getAsString());
+
+            String className = modelJSON.get("class").getAsString();
+            try {
+                Class.forName(className);
+            } catch (ClassNotFoundException e) {
+                SekCPhysics.logger.info("Swapping to compiled mapping name");
+                className = modelMapping.getClassName(className);
             }
-            else {
-                modelConstructData.setClassName(modelJSON.get("classObf").getAsString());
-            }
+            modelConstructData.setClassName(className);
 
             JsonArray constructData = modelJSON.getAsJsonArray("constructData");
 
@@ -348,7 +353,7 @@ public class RagdollGenerator {
         try {
             Class rClass = Class.forName(modelConstructData.getClassName());
 
-            if(class_3879.class.isInstance(rClass)) {
+            if(!class_3879.class.isAssignableFrom(rClass)) {
                 throw new RagdollInvalidDataException("Invalid model class");
             }
 

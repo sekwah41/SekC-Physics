@@ -33,6 +33,9 @@ public class EntityRagdoll extends LivingEntity {
         super(entityType, world);
         this.handItems = DefaultedList.create(2, ItemStack.EMPTY);
         this.armorItems = DefaultedList.create(4, ItemStack.EMPTY);
+
+        // To stop issues (TODO look to making just a large render box instead)
+        this.field_5985 = true;
     }
 
     @Override

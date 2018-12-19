@@ -41,7 +41,6 @@
     },
     "modelData":{
       "class" : "net.minecraft.client.render.entity.model.BipedEntityModel",
-      "classObf" : "coh",
       "constructData" : [
         ["float", 0],
         ["float", 0],
@@ -52,48 +51,45 @@
         "armRight": {
           "anchor" : "rightShoulder",
           "pointTo" : "rightArm",
-          "obfName" : "i"
+          "obfName" : "field_3401"
         },
         "armLeft": {
           "anchor" : "leftShoulder",
           "pointTo" : "leftArm",
-          "obfName" : "j"
+          "obfName" : "field_3390"
         },
         "legRight": {
           "anchor" : "rightLegTop",
           "pointTo" : "rightLegBot",
-          "obfName" : "k"
+          "obfName" : "field_3392"
         },
         "legLeft":{
           "anchor" : "leftLegTop",
           "pointTo" : "leftLegBot",
-          "obfName" : "l"
+          "obfName" : "field_3397"
         }
       },
       "triangleTrackers" : {
         "body":{
           "tracker" : "body",
-          "obfName" : "h"
+          "obfName" : "field_3391"
         },
         "head":{
           "tracker" : "head",
           "rotOffX" : 180,
-          "obfName" : "f"
+          "obfName" : "field_3398"
         }
       }
     }
   },
   "net.minecraft.entity.mob.SkeletonEntity" : {
     "inherit" : "EntityBiped",
-    "entityObf" : "aqd",
     "texture": ["minecraft",  "textures/entity/skeleton/skeleton.png"],
     "modelData": {
-      "class": "net.minecraft.client.render.entity.model.StrayEntityModel",
-      "classObf" : "cpn"
+      "class": "net.minecraft.client.render.entity.model.StrayEntityModel"
     }
   },
   "net.minecraft.entity.mob.ZombieEntity" : {
-    "entityObf" : "ans",
     "inherit" : "EntityBiped",
     "texture": ["minecraft",  "textures/entity/zombie/zombie.png"],
     "skeletonPoints":{
@@ -102,12 +98,10 @@
     }
   },
   "net.minecraft.entity.mob.GiantEntity" : {
-    "entityObf" : "apo",
     "entityScale" : 6,
     "inherit" : "net.minecraft.entity.mob.ZombieEntity"
   },
     "net.minecraft.entity.mob.HuskEntity" : {
-    "entityObf" : "apq",
     "entityScale" : 1.0625,
     "inherit" : "net.minecraft.entity.mob.ZombieEntity",
     "texture": ["minecraft",  "textures/entity/zombie/husk.png"]

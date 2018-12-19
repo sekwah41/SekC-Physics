@@ -18,7 +18,6 @@ public class Ragdolls {
     // Key is entity class and stores a ragdoll class
     private static Map<String, RagdollData> entityToRagdollHashmap = new HashMap<String, RagdollData>();
 
-
     private static MinecraftClient mc = MinecraftClient.getInstance();
 
     /**

@@ -33,6 +33,7 @@ public abstract class MixinEntityDeath extends Entity {
 
     @Inject(method = "onDeath", at = @At("RETURN"))
     public void onDeath(DamageSource damageSource, CallbackInfo ci) {
+
         if(!this.world.isClient || this.isChild()) {
             return;
         }

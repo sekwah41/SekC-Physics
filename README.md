@@ -10,3 +10,9 @@ I will focus more on this if people are interested or if I just generally want t
 * Armour Layer Renderer
 * Mapping out more mobs
 * Rotational Constraits (Low priority atm)
+
+### Fabric dev notes
+To update just check the numbers at http://fabric.asie.pl/use/ and run gradlew genSources
+
+### Project page
+https://minecraft.curseforge.com/projects/sekc-physics-fabric
