@@ -52,40 +52,40 @@
         "armRight": {
           "anchor" : "rightShoulder",
           "pointTo" : "rightArm",
-          "obfName" : "f"
+          "obfName" : "i"
         },
         "armLeft": {
           "anchor" : "leftShoulder",
           "pointTo" : "leftArm",
-          "obfName" : "g"
+          "obfName" : "j"
         },
         "legRight": {
           "anchor" : "rightLegTop",
           "pointTo" : "rightLegBot",
-          "obfName" : "h"
+          "obfName" : "k"
         },
         "legLeft":{
           "anchor" : "leftLegTop",
           "pointTo" : "leftLegBot",
-          "obfName" : "i"
+          "obfName" : "l"
         }
       },
       "triangleTrackers" : {
         "body":{
           "tracker" : "body",
-          "obfName" : "e"
+          "obfName" : "h"
         },
         "head":{
           "tracker" : "head",
           "rotOffX" : 180,
-          "obfName" : "c"
+          "obfName" : "f"
         }
       }
     }
   },
   "net.minecraft.entity.mob.SkeletonEntity" : {
     "inherit" : "EntityBiped",
-    "entityObf" : "anj",
+    "entityObf" : "aqd",
     "texture": ["minecraft",  "textures/entity/skeleton/skeleton.png"],
     "modelData": {
       "class": "net.minecraft.client.render.entity.model.StrayEntityModel",
@@ -102,12 +102,12 @@
     }
   },
   "net.minecraft.entity.mob.GiantEntity" : {
-    "entityObf" : "amx",
+    "entityObf" : "apo",
     "entityScale" : 6,
     "inherit" : "net.minecraft.entity.mob.ZombieEntity"
   },
-  "net.minecraft.entity.monster.EntityHusk" : {
-    "entityObf" : "amz",
+    "net.minecraft.entity.mob.HuskEntity" : {
+    "entityObf" : "apq",
     "entityScale" : 1.0625,
     "inherit" : "net.minecraft.entity.mob.ZombieEntity",
     "texture": ["minecraft",  "textures/entity/zombie/husk.png"]

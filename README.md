@@ -1,16 +1,12 @@
-# Fabric Example Mod
+# SekC Physics
 
-## Setup
+A work in progress physics mod for Minecraft
 
-1. Edit build.gradle and mod.json to suit your needs.
-    * The "mixins" object can be removed from mod.json if you do not need to use mixins.
-    * Please replace all occurences of "modid" with your own mod ID - sometimes, a different string may also suffice.
-2. Run the following command:
+I was requested to finally release ragdoll physics in Minecraft so here it is :)
 
-```
-./gradlew idea
-```
+I will focus more on this if people are interested or if I just generally want to play around with it more.  At the moment I am currently working on a tool to help make skeleton mappings for entities and also need to add the armour layers
 
-## License
-
-This template is available under the CC0 license. Feel free to learn from it and incorporate it in your own projects.
+#### Current Development Focus
+* Armour Layer Renderer
+* Mapping out more mobs
+* Rotational Constraits (Low priority atm)
