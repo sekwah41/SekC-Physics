@@ -38,7 +38,7 @@ public class RagdollGenerator {
             InputStream ragdollFile = SekCPhysics.class.getResourceAsStream("/assets/sekcphysics/ragdolldata/" + modid + ".json");
             if(ragdollFile == null) {
                 SekCPhysics.logger.info("Checking ragdoll file in: " + modid);
-                ragdollFile = SekCPhysics.class.getResourceAsStream("/assets/" + modid + "/sekc_ragdoll.json");
+                ragdollFile = SekCPhysics.class.getResourceAsStream("/assets/" + modid + "/sekc_ragdolls.json");
             }
             if(ragdollFile == null){
                 SekCPhysics.logger.info("No ragdoll data found for: " + modid);
