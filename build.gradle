@@ -5,8 +5,8 @@ plugins {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-archivesBaseName = "modid"
-version = "1.0.0"
+archivesBaseName = "sekcphysics"
+version = "0.0.1"
 
 minecraft {
 }
