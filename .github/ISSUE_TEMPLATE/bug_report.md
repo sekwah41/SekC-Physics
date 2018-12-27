@@ -24,5 +24,5 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Mod Branch (Modding system used)**
-- [] Forge
-- [] Fabric
+- [ ] Forge
+- [ ] Fabric
