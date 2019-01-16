@@ -4,6 +4,7 @@ import com.sekwah.sekcphysics.client.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.client.render.RenderRagdoll;
 import com.sekwah.sekcphysics.ragdoll.Ragdolls;
 import com.sekwah.sekcphysics.ragdoll.generation.RagdollGenerator;
+import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.client.render.EntityRendererRegistry;
 import net.fabricmc.fabric.entity.EntityTrackingRegistry;
@@ -13,7 +14,7 @@ import net.minecraft.entity.EntityType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class SekCPhysics implements ModInitializer {
+public class SekCPhysics implements ClientModInitializer {
 
     public static final Logger logger = LogManager.getLogger("SekC Physics");
 
@@ -26,7 +27,7 @@ public class SekCPhysics implements ModInitializer {
     public static Ragdolls ragdolls = new Ragdolls();
 
     @Override
-    public void onInitialize() {
+    public void onInitializeClient() {
         logger.info("Generating ragdolls from JSON");
 
         new RagdollGenerator().loadRagdolls();
