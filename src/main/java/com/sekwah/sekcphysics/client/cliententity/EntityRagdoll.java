@@ -29,6 +29,7 @@ public class EntityRagdoll extends EntityLiving {
     public EntityRagdoll(World world, BaseRagdoll ragdoll) {
         this(world);
         this.noClip = true;
+        this.ignoreFrustumCheck = true;
 
         this.setSize(0.15F, 0.15F);
 

@@ -250,7 +250,7 @@ public class RagdollGenerator {
             else {
                 modelConstructData.setClassName(modelJSON.get("classObf").getAsString());
             }
-            modelConstructData.setClassName(modelJSON.get("class").getAsString());
+            //modelConstructData.setClassName(modelJSON.get("class").getAsString());
 
             JsonArray constructData = modelJSON.getAsJsonArray("constructData");
 

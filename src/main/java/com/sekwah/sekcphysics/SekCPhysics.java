@@ -43,7 +43,7 @@ public class SekCPhysics {
     public static final String modid = "sekcphysics";
     public static final Logger logger = LogManager.getLogger("SekC Physics");
 
-    public static final String version = "0.0.1";
+    public static final String version = "0.1.0";
 
     public static final boolean isDeObf = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
 

@@ -107,5 +107,47 @@
     "entityScale" : 1.0625,
     "inherit" : "net.minecraft.entity.monster.EntityZombie",
     "texture": ["minecraft",  "textures/entity/zombie/husk.png"]
+  },
+  "net.minecraft.entity.passive.EntityPig" : {
+    "texture": ["minecraft", "textures/entity/pig/pig.png"],
+    "centerHeightOffset" : -2,
+    "entityScale" : 1,
+    "skeletonPoints":{
+      "rightFrontTop" : [-3, 18, -5],
+      "leftFrontTop" : [3, 18, -5],
+      "rightBackTop" : [-3, 18, 7],
+      "leftBackTop" : [3, 18, 7],
+      "rightFrontBottom" : [-3, 23, -5],
+      "leftFrontBottom" : [3, 23, -5],
+      "rightBackBottom" : [-3, 23, 7],
+      "leftBackBottom" : [3, 23, 7],
+      "leftShoulder": [3, 12, -5],
+      "rightShoulder": [-3, 12, -5],
+      "leftButt": [3, 12, 6],
+      "rightButt": [-3, 12, 6],
+      "head": [0, 12, -6],
+      "headLeft": [3, 12, -13],
+      "headRight": [-3, 12, -13]
+    },
+    "constraints":[
+      ["rightFrontTop", "rightFrontBottom"],
+      ["rightBackTop", "rightBackBottom"],
+      ["leftFrontTop", "leftFrontBottom"],
+      ["leftBackTop", "leftBackBottom"]
+    ],
+    "modelData":{
+      "class" : "net.minecraft.client.model.ModelBiped",
+      "classObf" : "bpv",
+      "constructData" : [
+        ["float", 0],
+        ["float", 0],
+        ["int", 64],
+        ["int", 64]
+      ],
+      "vertexTrackers" : {
+      },
+      "triangleTrackers" : {
+      }
+    }
   }
 }
