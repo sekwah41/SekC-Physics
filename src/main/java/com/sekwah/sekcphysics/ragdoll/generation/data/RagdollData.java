@@ -40,7 +40,7 @@ public class RagdollData {
     }
 
     public void setSkeletonPoint(String pointName, double x, double y, double z) {
-        this.pointHashMap.put(pointName, new PointD(x,y,z));
+        this.pointHashMap.put(pointName, new PointD(x,y,-z));
     }
 
     /*public void setTriangle(String triangleName, String point1, String point2, String point3) throws RagdollInvalidDataException {

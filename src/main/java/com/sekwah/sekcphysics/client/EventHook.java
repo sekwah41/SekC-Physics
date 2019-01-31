@@ -75,7 +75,7 @@ public class EventHook {
         }
     }
 
-    @SubscribeEvent
+    /*@SubscribeEvent
     public void playerInteract(PlayerInteractEvent.RightClickItem event) {
         //SekCPhysics.logger.info("Player Interact");
 
@@ -105,7 +105,7 @@ public class EventHook {
             }
 
         }
-    }
+    }*/
 
 
 }
