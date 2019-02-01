@@ -36,7 +36,7 @@
       ["leftLegTop", "rightShoulder"]
     ],
     "triangles":{
-      "head": ["centerTorso", "headLeft", "headRight"],
+      "head": ["centerTorso", "headRight", "headLeft"],
       "body": ["centerTorso", "leftLegTop", "rightLegTop"]
     },
     "modelData":{
@@ -192,7 +192,7 @@
       ["headLeft", "headRight"]
     ],
     "triangles":{
-      "head": ["head", "headLeft", "headRight"],
+      "head": ["head", "headRight", "headLeft"],
       "body": ["head", "leftBackTop", "rightBackTop"]
     },
     "modelData":{
@@ -203,11 +203,11 @@
       "triangleTrackers" : {
         "head":{
           "tracker" : "head",
-          "rotOffX" : 180,
-          "rotOffY" : 90
+          "rotOffZ" : 90
         },
         "body":{
-          "tracker" : "body"
+          "tracker" : "body",
+          "rotOffZ" : 22
         }
       }
     }

@@ -99,7 +99,7 @@ public class RenderRagdoll<T extends EntityRagdoll> extends RenderLiving<T> {
     }
 
     private void renderHandItems(T entity, BaseRagdoll baseRagdoll) {
-        if(baseRagdoll.baseModel instanceof ModelBiped) {
+        /*if(baseRagdoll.baseModel instanceof ModelBiped) {
             ModelBiped modelBiped = (ModelBiped) baseRagdoll.baseModel;
             ItemStack leftHand = entity.getItemStackFromSlot(EntityEquipmentSlot.OFFHAND);
             ItemStack rightHand = entity.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
@@ -109,10 +109,10 @@ public class RenderRagdoll<T extends EntityRagdoll> extends RenderLiving<T> {
             if(!rightHand.isEmpty()) {
                 this.renderHeldItem(entity, modelBiped, rightHand, ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, EnumHandSide.RIGHT);
             }
-        }
+        }*/
     }
 
-    private void renderHeldItem(T entity, ModelBiped modelBiped, ItemStack itemStack, ItemCameraTransforms.TransformType transformType, EnumHandSide handSide)
+    /*private void renderHeldItem(T entity, ModelBiped modelBiped, ItemStack itemStack, ItemCameraTransforms.TransformType transformType, EnumHandSide handSide)
     {
         if (!itemStack.isEmpty())
         {
@@ -127,18 +127,12 @@ public class RenderRagdoll<T extends EntityRagdoll> extends RenderLiving<T> {
             Minecraft.getMinecraft().getItemRenderer().renderItemSide(entity, itemStack, transformType, flag);
             GlStateManager.popMatrix();
         }
-    }
+    }*/
 
-    private void translateToHand(ModelBiped modelBiped, EnumHandSide handSide)
+    /*private void translateToHand(ModelBiped modelBiped, EnumHandSide handSide)
     {
         modelBiped.postRenderArm(0.0625F, handSide);
-    }
-
-    public void setPartLocation(T entity, ModelRenderer trackPart, SkeletonPoint skeletonPart) {
-        trackPart.setRotationPoint((float) skeletonPart.posX * 16, (float) skeletonPart.posY * 16, (float) skeletonPart.posZ * 16);
-        trackPart.render(0.0625F);
-        //trackPart.rotateAngleZ=1;
-    }
+    }*/
 
     @Override
     protected ResourceLocation getEntityTexture(T entity) {

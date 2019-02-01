@@ -88,8 +88,10 @@ public class Skeleton {
 
     }
 
-    public void renderSkeletonDebug() {
-        renderSkeletonDebug(0);
+    public void updateLastLocations(EntityRagdoll entity) {
+        for(Tracker tracker : entity.ragdoll.trackerHashmap.values()) {
+            tracker.updateLastPos();
+        }
     }
 
     /**

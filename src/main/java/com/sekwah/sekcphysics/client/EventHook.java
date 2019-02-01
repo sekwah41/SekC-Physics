@@ -49,6 +49,8 @@ public class EventHook {
 
                 entityRagdoll.ragdoll.update(entityRagdoll);
 
+                entityRagdoll.ragdoll.skeleton.updateLastLocations(entityRagdoll);
+
                 for(EntityEquipmentSlot slot : EntityEquipmentSlot.values()) {
                     entityRagdoll.setItemStackToSlot(slot, deadEntity.getItemStackFromSlot(slot));
                 }
