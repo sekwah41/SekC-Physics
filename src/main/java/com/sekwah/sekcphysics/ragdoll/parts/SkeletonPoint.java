@@ -1,6 +1,5 @@
 package com.sekwah.sekcphysics.ragdoll.parts;
 
-import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.client.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.ragdoll.Ragdolls;
@@ -29,6 +28,8 @@ public class SkeletonPoint {
     public double newPosX;
     public double newPosY;
     public double newPosZ;
+
+    private boolean inWater = false;
 
     private double nonMoveThresh = 0.001;
 
@@ -201,21 +202,33 @@ public class SkeletonPoint {
         double pointPosY = entity.posY + this.posY;
         double pointPosZ = entity.posZ + this.posZ;
 
-        AxisAlignedBB axisalignedbb = new AxisAlignedBB(pointPosX - size, pointPosY - size, pointPosZ - size,
+        AxisAlignedBB axisalignedbb = new AxisAlignedBB(pointPosX - size, pointPosY + size * 0.5f, pointPosZ - size,
                 pointPosX + size, pointPosY + size, pointPosZ + size);
 
+        this.velY -= Ragdolls.gravity;
+
         // TODO add code to properly do water velocity
-        if (entity.world.handleMaterialAcceleration(axisalignedbb.expand(0.0D, -0.4000000059604645D, 0.0D).contract(0.001D, 0.001D, 0.001D), Material.WATER, entity)) {
-            this.addVelocity(0, 0.1f, 0);
-            if(this.posY - this.lastPosY > 0.5) {
-                this.lastPosY = this.posY - 0.5;
+        if (entity.world.handleMaterialAcceleration(axisalignedbb.expand(0.0D, 0.0D, 0.0D).contract(0.001D, 0.001D , 0.001D), Material.WATER, entity)) {
+            this.addVelocity(0, 0.06f, 0);
+            if(!this.inWater) {
+                this.inWater = true;
+                this.velX *= 0.9f;
+                this.velY *= 0.5f;
+                this.velZ *= 0.9f;
             }
-            //entity.setVelocity(0,0,0);
+            else {
+                this.velX *= 0.9f;
+                this.velY *= 0.85f;
+                this.velZ *= 0.9f;
+            }
+        }
+        else {
+            this.inWater = false;
         }
 
         this.updateCollisions(entity);
 
-        this.movePoint(entity, this.velX, this.velY - Ragdolls.gravity, this.velZ);
+        this.movePoint(entity, this.velX, this.velY, this.velZ);
 
         //next_old_position = position             // This position is the next frame's old_position
        // position += position - old_position;     // Verlet integration
