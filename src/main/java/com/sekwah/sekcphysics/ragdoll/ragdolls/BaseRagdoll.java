@@ -5,8 +5,8 @@ import com.sekwah.sekcphysics.ragdoll.parts.Skeleton;
 import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
 import com.sekwah.sekcphysics.ragdoll.parts.Triangle;
 import com.sekwah.sekcphysics.ragdoll.parts.trackers.*;
-import net.minecraft.class_3879;
 import net.minecraft.client.model.Cuboid;
+import net.minecraft.client.model.Model;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
@@ -19,8 +19,7 @@ import java.util.Map;
  */
 public class BaseRagdoll {
 
-    // class_3879 is the BaseModel
-    public final class_3879 baseModel;
+    public final Model baseModel;
 
     public Map<Cuboid, Tracker> trackerHashmap = new HashMap<>();
 
@@ -34,7 +33,7 @@ public class BaseRagdoll {
 
     public Identifier resourceLocation;
 
-    public BaseRagdoll(float centerHeightOffset, class_3879 baseModel) {
+    public BaseRagdoll(float centerHeightOffset, Model baseModel) {
 
         this.baseModel = baseModel;
 
@@ -70,7 +69,7 @@ public class BaseRagdoll {
         }
     }
 
-    public void initTrackers(class_3879 model) {
+    public void initTrackers(Model model) {
         trackersRegistered = true;
     }
 

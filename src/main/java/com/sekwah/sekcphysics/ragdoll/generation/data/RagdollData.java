@@ -2,7 +2,7 @@ package com.sekwah.sekcphysics.ragdoll.generation.data;
 
 import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.ragdoll.parts.Triangle;
-import net.minecraft.class_3879;
+import net.minecraft.client.model.Model;
 import net.minecraft.util.Identifier;
 
 import java.util.HashMap;
@@ -19,7 +19,7 @@ public class RagdollData {
 
     private HashMap<String, TriangleData> triangleHashMap = new HashMap<>();
     
-    private class_3879 ragdollModel;
+    private Model ragdollModel;
 
     private Identifier entityTexture;
 
@@ -40,7 +40,7 @@ public class RagdollData {
     }
 
     public void setSkeletonPoint(String pointName, double x, double y, double z) {
-        this.pointHashMap.put(pointName, new PointD(x,y,z));
+        this.pointHashMap.put(pointName, new PointD(x,y,-z));
     }
 
     /*public void setTriangle(String triangleName, String point1, String point2, String point3) throws RagdollInvalidDataException {

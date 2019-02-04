@@ -2,7 +2,7 @@ package com.sekwah.sekcphysics.ragdoll.generation.data;
 
 import com.sekwah.sekcphysics.ragdoll.generation.data.tracker.TriangleTrackerData;
 import com.sekwah.sekcphysics.ragdoll.generation.data.tracker.VertexTrackerData;
-import net.minecraft.class_3879;
+import net.minecraft.client.model.Model;
 import net.minecraft.util.Identifier;
 
 /**
@@ -12,7 +12,7 @@ import net.minecraft.util.Identifier;
  */
 public class ModelData {
 
-    private class_3879 baseModel;
+    private Model baseModel;
 
     private VertexTrackerData[] vertexTrackers = new VertexTrackerData[0];
 
@@ -20,11 +20,11 @@ public class ModelData {
 
     private Identifier texture;
 
-    public ModelData(class_3879 baseModel) {
+    public ModelData(Model baseModel) {
         this.baseModel = baseModel;
     }
 
-    public class_3879 getBaseModel() {
+    public Model getBaseModel() {
         return baseModel;
     }
 

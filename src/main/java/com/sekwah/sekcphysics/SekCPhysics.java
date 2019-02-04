@@ -28,14 +28,16 @@ public class SekCPhysics implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+
+        RAGDOLL = RAGDOLL_TYPE_BUILDER.build("sekcphysics:ragdoll");
+
         logger.info("Generating ragdolls from JSON");
 
         new RagdollGenerator().loadRagdolls();
 
         // Trackers
         logger.info("Registering ragdoll entity");
-        EntityTrackingRegistry.INSTANCE.register(
-                RAGDOLL_TYPE_BUILDER.build("sekcphysics:ragdoll"), 64, 1, false);
+        EntityTrackingRegistry.INSTANCE.register(RAGDOLL, 64, 1, false);
 
         // Renderers
         EntityRendererRegistry.INSTANCE.register(EntityRagdoll.class, new RenderRagdoll.Factory());

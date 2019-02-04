@@ -9,9 +9,8 @@ import com.sekwah.sekcphysics.ragdoll.generation.data.tracker.VertexTrackerData;
 import com.sekwah.sekcphysics.ragdoll.generation.runtime.VanillaModelMapping;
 import net.fabricmc.loader.FabricLoader;
 import net.fabricmc.loader.ModContainer;
-import net.minecraft.class_3879;
 import net.minecraft.client.model.Cuboid;
-import net.minecraft.entity.mob.HuskEntity;
+import net.minecraft.client.model.Model;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.Level;
 
@@ -363,7 +362,7 @@ public class RagdollGenerator {
         try {
             Class rClass = Class.forName(modelConstructData.getClassName());
 
-            if(!class_3879.class.isAssignableFrom(rClass)) {
+            if(!Model.class.isAssignableFrom(rClass)) {
                 throw new RagdollInvalidDataException("Invalid model class");
             }
 
@@ -387,7 +386,7 @@ public class RagdollGenerator {
                 classArray[i] = classType;
             }
 
-            class_3879 modelBase = (class_3879) rClass.getConstructor(classArray).newInstance(constructObjects);
+            Model modelBase = (Model) rClass.getConstructor(classArray).newInstance(constructObjects);
 
             ModelData modelData = new ModelData(modelBase);
 
@@ -441,7 +440,7 @@ public class RagdollGenerator {
         modelData.setTexture(new Identifier(textureDomain.getTextureDomain(), textureDomain.getTexture()));
     }
 
-    private Cuboid getRendererFromName(String partName, class_3879 modelBase, Class<?> rClass) throws NoSuchFieldException, RagdollInvalidDataException, IllegalAccessException {
+    private Cuboid getRendererFromName(String partName, Model modelBase, Class<?> rClass) throws NoSuchFieldException, RagdollInvalidDataException, IllegalAccessException {
         Field partRender = rClass.getField(partName);
         Object partObj = partRender.get(modelBase);
         if(partObj instanceof Cuboid) {

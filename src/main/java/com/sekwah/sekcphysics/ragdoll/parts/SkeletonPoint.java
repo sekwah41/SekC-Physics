@@ -4,8 +4,10 @@ import com.sekwah.sekcphysics.client.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.ragdoll.Ragdolls;
 import net.minecraft.block.Material;
-import net.minecraft.class_3538;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.VerticalEntityPosition;
+import net.minecraft.util.BooleanBiFunction;
+import net.minecraft.util.LoopingStream;
 import net.minecraft.util.math.BoundingBox;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
@@ -13,6 +15,8 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 /**
  * Created by sekawh on 8/5/2015.
@@ -108,13 +112,31 @@ public class SkeletonPoint {
 
         //VoxelShape voxel = entity.world.getCollisionBoxes(entity, boundingBox, moveX, moveY, moveZ);
         // Not sure what to give this name weirdly its a list/interable value
-        class_3538<VoxelShape> voxels = new class_3538(entity.world.method_8609(entity, boundingBox, moveX, moveY, moveZ));
+        // TODO find new code for this
+        LoopingStream<VoxelShape> voxels = null;//new LoopingStream(entity.world.getCollisionVoxelShapes(entity, boundingBox, moveX, moveY, moveZ));
 
         double oMoveY = moveY;
 
+        VerticalEntityPosition verticalEntityPosition_1 = VerticalEntityPosition.fromEntity(entity);
+
+        VoxelShape voxelShape_1 = entity.world.getWorldBorder().asVoxelShape();
+        Stream<VoxelShape> stream_1 = VoxelShapes.compareShapes(voxelShape_1, VoxelShapes.cube(boundingBox.contract(1.0E-7D)), BooleanBiFunction.AND) ? Stream.empty() : Stream.of(voxelShape_1);
+        BoundingBox boundingBox_2 = boundingBox.stretch(moveX, moveY, moveZ).expand(1.0E-7D);
+        Stream visibleEntityStream = entity.world.getVisibleEntities(entity, boundingBox_2).stream().filter((entity_1) -> {
+            return !entity.method_5794(entity_1);
+        }).flatMap((entity_1) -> {
+            return Stream.of(entity_1.method_5827(), entity.method_5708(entity_1));
+        }).filter(Objects::nonNull);
+
+        Stream<VoxelShape> stream_2 = visibleEntityStream.filter(boundingBox_Filter -> boundingBox_2.intersects((BoundingBox) boundingBox_Filter)).map(cube_Map -> VoxelShapes.cube((BoundingBox) cube_Map));
+
+        voxels = new LoopingStream(Stream.concat(stream_2, stream_1));
+
         if (moveY != 0.0D) {
             // method_1085 calculates the max offset
-            moveY = VoxelShapes.method_1085(Direction.Axis.Y, boundingBox, voxels.method_15418(), moveY);
+            //VoxelShapes.method_17945(Axis.Y, boundingBox, viewableWorld_1, double_2, verticalEntityPosition_1, loopingStream_1.getStream());
+            //VoxelShapes.method_17945(Direction.Axis.Y, boundingBox, entity.world, moveY, verticalEntityPosition_1, loopingStream_1.getStream());
+            moveY = VoxelShapes.calculateMaxOffset(Direction.Axis.Y, boundingBox, voxels.getStream(), moveY);
             if(oMoveY < 0 && moveY != oMoveY) {
                 onGround = true;
             }
@@ -122,14 +144,14 @@ public class SkeletonPoint {
         }
 
         if (moveX != 0.0D) {
-            moveX = VoxelShapes.method_1085(Direction.Axis.X, boundingBox, voxels.method_15418(), moveX);
+            moveX = VoxelShapes.calculateMaxOffset(Direction.Axis.X, boundingBox, voxels.getStream(), moveX);
             if (moveX != 0.0D) {
                 boundingBox = boundingBox.offset(moveX, 0.0D, 0.0D);
             }
         }
 
         if (moveZ != 0.0D) {
-            moveZ = VoxelShapes.method_1085(Direction.Axis.Z, boundingBox, voxels.method_15418(), moveZ);
+            moveZ = VoxelShapes.calculateMaxOffset(Direction.Axis.Z, boundingBox, voxels.getStream(), moveZ);
             if (moveZ != 0.0D) {
                 boundingBox = boundingBox.offset(0.0D, 0.0D, moveZ);
             }
@@ -247,9 +269,7 @@ public class SkeletonPoint {
             {
                 Entity entityCol = (Entity)list.get(i);
 
-                // Cant directly detect if in ground sadly. Try stuff like arrows though ;3
-                // method_5810 is Can be pushed
-                if(entityCol.method_5810()/* || (entityCol instanceof EntityArrow && entityCol.motionY != 0)*/) {
+                if(entityCol.isPushable()) {
                     this.collideWithEntity(entity, entityCol);
                 }
             }
@@ -283,8 +303,8 @@ public class SkeletonPoint {
             d0 *= 0.05000000074505806D;
             d1 *= 0.05000000074505806D;
             // field_5968 should be pushSpeedModifier
-            d0 *= (double)(1.0F - entityCol.field_5968);
-            d1 *= (double)(1.0F - entityCol.field_5968);
+            d0 *= (double)(1.0F - entityCol.pushSpeedReduction);
+            d1 *= (double)(1.0F - entityCol.pushSpeedReduction);
             //SekCPhysics.logger.info(entityCol.motionX);
             //entityCol.addVelocity(-d0, 0.0D, -d1);
             this.addVelocity(d0 + entityCol.velocityX, 0.0D, d1 + entityCol.velocityZ);

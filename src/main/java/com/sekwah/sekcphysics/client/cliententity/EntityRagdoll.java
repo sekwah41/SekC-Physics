@@ -35,7 +35,7 @@ public class EntityRagdoll extends LivingEntity {
         this.armorItems = DefaultedList.create(4, ItemStack.EMPTY);
 
         // To stop issues (TODO look to making just a large render box instead)
-        this.field_5985 = true;
+        this.ignoreCameraFrustum = true;
     }
 
     @Override
@@ -131,7 +131,7 @@ public class EntityRagdoll extends LivingEntity {
                 double d1 = this.random.nextGaussian() * 0.04D;
                 double d2 = this.random.nextGaussian() * 0.04D;
 
-                this.world.addParticle(ParticleTypes.CLOUD, this.x + (double) (this.random.nextFloat() * poofSize * 2.0F) - (double) poofSize, this.y + this.height / 2 + (double) (this.random.nextFloat() * this.height), this.z + (double) (this.random.nextFloat() * poofSize * 2.0F) - (double) poofSize, d0, d1, d2);
+                this.world.addParticle(ParticleTypes.CLOUD, this.x + (double) (this.random.nextFloat() * poofSize * 2.0F) - (double) poofSize, this.y + this.getHeight() / 2 + (double) (this.random.nextFloat() * this.getHeight()), this.z + (double) (this.random.nextFloat() * poofSize * 2.0F) - (double) poofSize, d0, d1, d2);
             }
 
             this.invalidate();
@@ -165,8 +165,8 @@ public class EntityRagdoll extends LivingEntity {
         this.x = posX;
         this.y = posY;
         this.z = posZ;
-        float f = this.width / 2.0F;
-        float f1 = this.height;
+        float f = this.getWidth() / 2.0F;
+        float f1 = this.getHeight();
         this.setBoundingBox(new BoundingBox(posX - (double)f, posY, posZ - (double)f, posX + (double)f, posY + (double)f1, posZ + (double)f));
     }
 

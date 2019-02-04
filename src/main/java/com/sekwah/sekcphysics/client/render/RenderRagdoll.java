@@ -13,7 +13,8 @@ import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
-import net.minecraft.client.render.model.json.ModelTransformations;
+import net.minecraft.client.render.entity.model.EntityModel;
+import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -24,7 +25,7 @@ import org.lwjgl.opengl.GL11;
 /**
  * Ragdoll renderer file
  */
-public class RenderRagdoll<T extends EntityRagdoll, M extends Model<T>> extends LivingEntityRenderer<T, M> {
+public class RenderRagdoll<T extends EntityRagdoll, M extends EntityModel<T>> extends LivingEntityRenderer<T, M> {
 
     private static MinecraftClient mc = MinecraftClient.getInstance();
 
@@ -35,7 +36,7 @@ public class RenderRagdoll<T extends EntityRagdoll, M extends Model<T>> extends 
 
     // This is doRender
     @Override
-    public void method_4054(T entity, double x, double y, double z, float entityYaw, float partialTicks) {
+    public void render(T entity, double x, double y, double z, float entityYaw, float partialTicks) {
 
         /**
          * TODO Check these locations on rendering armour
@@ -108,15 +109,15 @@ public class RenderRagdoll<T extends EntityRagdoll, M extends Model<T>> extends 
             ItemStack leftHand = entity.getEquippedStack(EquipmentSlot.HAND_OFF);
             ItemStack rightHand = entity.getEquippedStack(EquipmentSlot.HAND_MAIN);
             if(!leftHand.isEmpty()) {
-                this.renderHeldItem(entity, modelBiped, leftHand, ModelTransformations.Type.THIRD_PERSON_LEFT_HAND, OptionMainHand.LEFT);
+                this.renderHeldItem(entity, modelBiped, leftHand, ModelTransformation.Type.THIRD_PERSON_LEFT_HAND, OptionMainHand.LEFT);
             }
             if(!rightHand.isEmpty()) {
-                this.renderHeldItem(entity, modelBiped, rightHand, ModelTransformations.Type.THIRD_PERSON_RIGHT_HAND, OptionMainHand.RIGHT);
+                this.renderHeldItem(entity, modelBiped, rightHand, ModelTransformation.Type.THIRD_PERSON_RIGHT_HAND, OptionMainHand.RIGHT);
             }
         }
     }
 
-    private void renderHeldItem(T entity, BipedEntityModel modelBiped, ItemStack itemStack, ModelTransformations.Type transformType, OptionMainHand handSide)
+    private void renderHeldItem(T entity, BipedEntityModel modelBiped, ItemStack itemStack, ModelTransformation.Type transformType, OptionMainHand handSide)
     {
         if (!itemStack.isEmpty())
         {
