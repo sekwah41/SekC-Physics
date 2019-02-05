@@ -11,8 +11,10 @@ import net.minecraft.util.LoopingStream;
 import net.minecraft.util.math.BoundingBox;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
+import net.minecraft.world.ViewableWorld;
 
 import java.util.List;
 import java.util.Objects;
@@ -99,7 +101,52 @@ public class SkeletonPoint {
         this.checkWillMove();
     }
 
-    public void movePoint(EntityRagdoll entity, double moveX, double moveY, double moveZ) {
+    private void movePoint(EntityRagdoll entity, Vec3d moveVec) {
+
+        BoundingBox boundingBox_1 = this.getBoundingBox(entity);
+
+        VerticalEntityPosition verticalEntityPosition_1 = VerticalEntityPosition.fromEntity(entity);
+        VoxelShape voxelShape_1 = entity.world.getWorldBorder().asVoxelShape();
+        Stream<VoxelShape> stream_1 = VoxelShapes.compareShapes(voxelShape_1, VoxelShapes.cube(boundingBox_1.contract(1.0E-7D)), BooleanBiFunction.AND) ? Stream.empty() : Stream.of(voxelShape_1);
+        BoundingBox boundingBox_2 = boundingBox_1.stretch(moveVec.x, moveVec.y, moveVec.z).expand(1.0E-7D);
+        Stream visibleEntityStream = entity.world.getVisibleEntities(entity, boundingBox_2).stream().filter((entity_1) -> !entity.method_5794(entity_1)).flatMap((entity_1) -> Stream.of(entity_1.method_5827(), entity.method_5708(entity_1))).filter(Objects::nonNull);
+        boundingBox_2.getClass();
+        Stream<VoxelShape> stream_2 = visibleEntityStream.filter(boundingBox_Filter -> boundingBox_2.intersects((BoundingBox) boundingBox_Filter)).map(cube_Map -> VoxelShapes.cube((BoundingBox) cube_Map));
+        LoopingStream<VoxelShape> loopingStream_1 = new LoopingStream(Stream.concat(stream_2, stream_1));
+        Vec3d vec3d_2 = moveVec.lengthSquared() == 0.0D ? moveVec : moveCheck(moveVec, boundingBox_1, entity.world, verticalEntityPosition_1, loopingStream_1);
+        boolean boolean_1 = moveVec.x != vec3d_2.x;
+        boolean boolean_2 = moveVec.y != vec3d_2.y;
+        boolean boolean_3 = moveVec.z != vec3d_2.z;
+        boolean boolean_4 = entity.onGround || boolean_2 && moveVec.y < 0.0D;
+        if (entity.stepHeight > 0.0F && boolean_4 && (boolean_1 || boolean_3)) {
+            Vec3d vec3d_3 = moveCheck(new Vec3d(moveVec.x, (double)entity.stepHeight, moveVec.z), boundingBox_1, entity.world, verticalEntityPosition_1, loopingStream_1);
+            Vec3d vec3d_4 = moveCheck(new Vec3d(0.0D, (double)entity.stepHeight, 0.0D), boundingBox_1.stretch(moveVec.x, 0.0D, moveVec.z), entity.world, verticalEntityPosition_1, loopingStream_1);
+            if (vec3d_4.y < (double)entity.stepHeight) {
+                Vec3d vec3d_5 = moveCheck(new Vec3d(moveVec.x, 0.0D, moveVec.z), boundingBox_1.offset(vec3d_4), entity.world, verticalEntityPosition_1, loopingStream_1).add(vec3d_4);
+                if (method_17996(vec3d_5) > method_17996(vec3d_3)) {
+                    vec3d_3 = vec3d_5;
+                }
+            }
+
+            if (method_17996(vec3d_3) > method_17996(vec3d_2)) {
+                applyMove(vec3d_3.add(moveCheck(new Vec3d(0.0D, -vec3d_3.y + moveVec.y, 0.0D), boundingBox_1.offset(vec3d_3), entity.world, verticalEntityPosition_1, loopingStream_1)));
+            }
+        }
+
+        applyMove(vec3d_2);
+    }
+
+    private void applyMove(Vec3d vec3d) {
+        this.posX += vec3d.x;
+        this.posY += vec3d.y;
+        this.posZ += vec3d.z;
+    }
+
+    private static double method_17996(Vec3d vec3d_1) {
+        return vec3d_1.x * vec3d_1.x + vec3d_1.z * vec3d_1.z;
+    }
+
+    /*public void movePoint(EntityRagdoll entity, double moveX, double moveY, double moveZ) {
 
         double pointPosX = entity.x + this.posX;
         double pointPosY = entity.y + this.posY;
@@ -122,17 +169,15 @@ public class SkeletonPoint {
         VoxelShape voxelShape_1 = entity.world.getWorldBorder().asVoxelShape();
         Stream<VoxelShape> stream_1 = VoxelShapes.compareShapes(voxelShape_1, VoxelShapes.cube(boundingBox.contract(1.0E-7D)), BooleanBiFunction.AND) ? Stream.empty() : Stream.of(voxelShape_1);
         BoundingBox boundingBox_2 = boundingBox.stretch(moveX, moveY, moveZ).expand(1.0E-7D);
-        Stream visibleEntityStream = entity.world.getVisibleEntities(entity, boundingBox_2).stream().filter((entity_1) -> {
-            return !entity.method_5794(entity_1);
-        }).flatMap((entity_1) -> {
-            return Stream.of(entity_1.method_5827(), entity.method_5708(entity_1));
-        }).filter(Objects::nonNull);
+        Stream visibleEntityStream = entity.world.getVisibleEntities(entity, boundingBox_2).stream().filter((entity_1) -> !entity.method_5794(entity_1)).flatMap((entity_1) -> Stream.of(entity_1.method_5827(), entity.method_5708(entity_1))).filter(Objects::nonNull);
 
         Stream<VoxelShape> stream_2 = visibleEntityStream.filter(boundingBox_Filter -> boundingBox_2.intersects((BoundingBox) boundingBox_Filter)).map(cube_Map -> VoxelShapes.cube((BoundingBox) cube_Map));
 
-        voxels = new LoopingStream(Stream.concat(stream_2, stream_1));
+        voxels = new LoopingStream(Stream.concat(stream_2, stream_1));*/
 
-        if (moveY != 0.0D) {
+
+
+        /*if (moveY != 0.0D) {
             // method_1085 calculates the max offset
             //VoxelShapes.method_17945(Axis.Y, boundingBox, viewableWorld_1, double_2, verticalEntityPosition_1, loopingStream_1.getStream());
             //VoxelShapes.method_17945(Direction.Axis.Y, boundingBox, entity.world, moveY, verticalEntityPosition_1, loopingStream_1.getStream());
@@ -162,6 +207,39 @@ public class SkeletonPoint {
         this.posZ = (boundingBox.minZ + boundingBox.maxZ) / 2.0D - entity.z;
 
         this.checkWillMove();
+    }*/
+
+    public static Vec3d moveCheck(Vec3d vec3d_1, BoundingBox boundingBox_1, ViewableWorld viewableWorld_1, VerticalEntityPosition verticalEntityPosition_1, LoopingStream<VoxelShape> loopingStream_1) {
+        double double_1 = vec3d_1.x;
+        double double_2 = vec3d_1.y;
+        double double_3 = vec3d_1.z;
+        if (double_2 != 0.0D) {
+            double_2 = VoxelShapes.method_17945(Direction.Axis.Y, boundingBox_1, viewableWorld_1, double_2, verticalEntityPosition_1, loopingStream_1.getStream());
+            if (double_2 != 0.0D) {
+                boundingBox_1 = boundingBox_1.offset(0.0D, double_2, 0.0D);
+            }
+        }
+
+        boolean boolean_1 = Math.abs(double_1) < Math.abs(double_3);
+        if (boolean_1 && double_3 != 0.0D) {
+            double_3 = VoxelShapes.method_17945(Direction.Axis.Z, boundingBox_1, viewableWorld_1, double_3, verticalEntityPosition_1, loopingStream_1.getStream());
+            if (double_3 != 0.0D) {
+                boundingBox_1 = boundingBox_1.offset(0.0D, 0.0D, double_3);
+            }
+        }
+
+        if (double_1 != 0.0D) {
+            double_1 = VoxelShapes.method_17945(Direction.Axis.X, boundingBox_1, viewableWorld_1, double_1, verticalEntityPosition_1, loopingStream_1.getStream());
+            if (!boolean_1 && double_1 != 0.0D) {
+                boundingBox_1 = boundingBox_1.offset(double_1, 0.0D, 0.0D);
+            }
+        }
+
+        if (!boolean_1 && double_3 != 0.0D) {
+            double_3 = VoxelShapes.method_17945(Direction.Axis.Z, boundingBox_1, viewableWorld_1, double_3, verticalEntityPosition_1, loopingStream_1.getStream());
+        }
+
+        return new Vec3d(double_1, double_2, double_3);
     }
 
     /**
@@ -221,12 +299,7 @@ public class SkeletonPoint {
         this.lastPosY = this.posY;
         this.lastPosZ = this.posZ;
 
-        double pointPosX = entity.x + this.posX;
-        double pointPosY = entity.y + this.posY;
-        double pointPosZ = entity.z + this.posZ;
-
-        BoundingBox axisalignedbb = new BoundingBox(pointPosX - size, pointPosY - size, pointPosZ - size,
-                pointPosX + size, pointPosY + size, pointPosZ + size);
+        BoundingBox axisalignedbb = this.getBoundingBox(entity);
 
         // TODO check how the player gets this, i has roughly been coded for 1.13 as a test
         if (entity.world.method_8422(axisalignedbb.expand(0.0D, -0.4000000059604645D, 0.0D).contract(0.001D, 0.001D, 0.001D), Material.WATER)) {
@@ -239,7 +312,9 @@ public class SkeletonPoint {
 
         this.updateCollisions(entity);
 
-        this.movePoint(entity, this.velX, this.velY - Ragdolls.gravity, this.velZ);
+        this.movePoint(entity, new Vec3d(this.velX, this.velY - Ragdolls.gravity, this.velZ));
+
+        // TODO collisions work but something not updating right
 
         //next_old_position = position             // This position is the next frame'mixins old_position
         // position += position - old_position;     // Verlet integration
@@ -250,6 +325,15 @@ public class SkeletonPoint {
             this.newPosY = this.posY;
             this.newPosZ = this.posZ;
         }
+    }
+
+    private BoundingBox getBoundingBox(EntityRagdoll entity) {
+        double pointPosX = entity.x + this.posX;
+        double pointPosY = entity.y + this.posY;
+        double pointPosZ = entity.z + this.posZ;
+
+        return new BoundingBox(pointPosX - size, pointPosY - size, pointPosZ - size,
+                pointPosX + size, pointPosY + size, pointPosZ + size);
     }
 
     // Wont push other entities but make it get pushed by others.
@@ -373,7 +457,7 @@ public class SkeletonPoint {
 
     public void moveTo(EntityRagdoll entity, double x, double y, double z) {
 
-        this.movePoint(entity, x - this.posX, y - this.posY, z - this.posZ);
+        this.movePoint(entity, new Vec3d(x - this.posX, y - this.posY, z - this.posZ));
 
         /*this.posX = x;
         this.posY = y;
