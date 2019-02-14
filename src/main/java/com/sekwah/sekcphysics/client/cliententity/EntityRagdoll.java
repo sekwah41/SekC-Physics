@@ -123,6 +123,8 @@ public class EntityRagdoll extends LivingEntity {
             return;
         }
 
+        System.out.printf("%s %s %s%n", this.x, this.y, this.z);
+
         if(remainingLife-- < 0) {
 
             for (int i = 0; i < 10; ++i) {
