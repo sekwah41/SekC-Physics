@@ -145,14 +145,6 @@ public class RenderRagdoll<T extends EntityRagdoll, M extends EntityModel<T>> ex
         //trackPart.rotateAngleZ=1;
     }
 
-    public static class Factory implements EntityRendererRegistry.Factory {
-
-        @Override
-        public EntityRenderer<? extends Entity> create(EntityRenderDispatcher entityRenderDispatcher, EntityRendererRegistry.Context context) {
-            return new RenderRagdoll(entityRenderDispatcher, new BipedEntityModel());
-        }
-    }
-
     @Override
     protected Identifier getTexture(T entity) {
         return null;

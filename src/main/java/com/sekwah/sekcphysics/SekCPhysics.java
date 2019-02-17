@@ -8,9 +8,11 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.render.EntityRendererRegistry;
 import net.fabricmc.fabric.api.entity.EntityTrackingRegistry;
 import net.fabricmc.fabric.api.entity.FabricEntityTypeBuilder;
+import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCategory;
 import net.minecraft.entity.EntityType;
+import net.minecraft.util.registry.Registry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,7 +24,7 @@ public class SekCPhysics implements ClientModInitializer {
 
     public static EntityType<EntityRagdoll> RAGDOLL;
 
-    public static FabricEntityTypeBuilder<EntityRagdoll> RAGDOLL_TYPE_BUILDER = FabricEntityTypeBuilder.create(EntityCategory.MISC, EntityRagdoll::new);
+    public static FabricEntityTypeBuilder<EntityRagdoll> RAGDOLL_TYPE_BUILDER = FabricEntityTypeBuilder.create(EntityCategory.MISC);
 
     public static Ragdolls ragdolls = new Ragdolls();
 
@@ -37,9 +39,11 @@ public class SekCPhysics implements ClientModInitializer {
 
         // Trackers
         logger.info("Registering ragdoll entity");
-        EntityTrackingRegistry.INSTANCE.register(RAGDOLL, 64, 1, false);
+        Registry.register(Registry.ENTITY_TYPE, "sekcphysics:ragdoll", RAGDOLL);
+
+        //EntityTrackingRegistry.INSTANCE.register(RAGDOLL, 64, 1, false);
 
         // Renderers
-        EntityRendererRegistry.INSTANCE.register(EntityRagdoll.class, new RenderRagdoll.Factory());
+        //EntityRendererRegistry.INSTANCE.register(EntityRagdoll.class, (dispatcher, context) -> new RenderRagdoll(dispatcher, new BipedEntityModel()));
     }
 }

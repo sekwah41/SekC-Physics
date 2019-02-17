@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @SuppressWarnings("unused")
 @Mixin(LivingEntity.class)
-public abstract class MixinEntityDeath extends Entity {
+public abstract class EntityDeathMixin extends Entity {
 
     @Shadow
     public ItemStack getEquippedStack(EquipmentSlot equipmentSlot) {return null;}
@@ -27,7 +27,7 @@ public abstract class MixinEntityDeath extends Entity {
     @Shadow
     public boolean isChild() {return false;}
 
-    public MixinEntityDeath(EntityType<?> p_i48580_1_, World p_i48580_2_) {
+    public EntityDeathMixin(EntityType<?> p_i48580_1_, World p_i48580_2_) {
         super(p_i48580_1_, p_i48580_2_);
     }
 
