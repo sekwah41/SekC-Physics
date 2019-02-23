@@ -1,6 +1,6 @@
 package com.sekwah.sekcphysics.ragdoll.parts;
 
-import com.sekwah.sekcphysics.client.cliententity.EntityRagdoll;
+import com.sekwah.sekcphysics.client.cliententity.RagdollEntity;
 
 /**
  * Created by sekawh on 8/5/2015.
@@ -40,11 +40,11 @@ public class AnchoredSkeletonPoint extends SkeletonPoint {
         super(x, y, z, size, shouldDoModelScale);
     }
 
-    public void movePoint(EntityRagdoll entity, double moveX, double moveY, double moveZ) {
+    public void movePoint(RagdollEntity entity, double moveX, double moveY, double moveZ) {
 
     }
 
-    public void verify(EntityRagdoll entity) {
+    public void verify(RagdollEntity entity) {
 
     }
 
@@ -52,11 +52,11 @@ public class AnchoredSkeletonPoint extends SkeletonPoint {
 
     }
 
-    public void moveTo(EntityRagdoll entity, double x, double y, double z) {
+    public void moveTo(RagdollEntity entity, double x, double y, double z) {
 
     }
 
-    public void update(EntityRagdoll entity) {
+    public void update(RagdollEntity entity) {
         this.velX = 0;
         this.velY = 0;
         this.velZ = 0;

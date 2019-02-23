@@ -1,6 +1,6 @@
 package com.sekwah.sekcphysics.ragdoll.parts;
 
-import com.sekwah.sekcphysics.client.cliententity.EntityRagdoll;
+import com.sekwah.sekcphysics.client.cliententity.RagdollEntity;
 import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.ragdoll.Ragdolls;
 import net.minecraft.block.Material;
@@ -101,7 +101,7 @@ public class SkeletonPoint {
         this.checkWillMove();
     }
 
-    private void movePoint(EntityRagdoll entity, Vec3d moveVec) {
+    private void movePoint(RagdollEntity entity, Vec3d moveVec) {
 
         BoundingBox boundingBox_1 = this.getBoundingBox(entity);
 
@@ -215,7 +215,7 @@ public class SkeletonPoint {
         return moveVec.x * moveVec.x + moveVec.z * moveVec.z;
     }
 
-    /*public void movePoint(EntityRagdoll entity, double moveX, double moveY, double moveZ) {
+    /*public void movePoint(RagdollEntity entity, double moveX, double moveY, double moveZ) {
 
         double pointPosX = entity.x + this.posX;
         double pointPosY = entity.y + this.posY;
@@ -301,7 +301,7 @@ public class SkeletonPoint {
         return Math.abs(vel) > nonMoveThresh;
     }
 
-    public void update(EntityRagdoll entity) {
+    public void update(RagdollEntity entity) {
         this.velX = this.posX - this.lastPosX;
         if(!isAboveSpeedThreashold(this.velX)) {
             this.velX = 0;
@@ -363,7 +363,7 @@ public class SkeletonPoint {
         }
     }
 
-    private BoundingBox getBoundingBox(EntityRagdoll entity) {
+    private BoundingBox getBoundingBox(RagdollEntity entity) {
         double pointPosX = entity.x + this.posX;
         double pointPosY = entity.y + this.posY;
         double pointPosZ = entity.z + this.posZ;
@@ -373,7 +373,7 @@ public class SkeletonPoint {
     }
 
     // Wont push other entities but make it get pushed by others.
-    private void updateCollisions(EntityRagdoll entity) {
+    private void updateCollisions(RagdollEntity entity) {
         double pointPosX = entity.x + this.posX;
         double pointPosY = entity.y + this.posY;
         double pointPosZ = entity.z + this.posZ;
@@ -399,7 +399,7 @@ public class SkeletonPoint {
 
     }
 
-    private void collideWithEntity(EntityRagdoll entity, Entity entityCol) {
+    private void collideWithEntity(RagdollEntity entity, Entity entityCol) {
         double pointPosX = entity.x + this.posX;
         double pointPosZ = entity.z + this.posZ;
         double d0 = pointPosX - entityCol.x;
@@ -437,11 +437,11 @@ public class SkeletonPoint {
         this.newPosZ = z;
     }
 
-    public void updatePos(EntityRagdoll entity) {
+    public void updatePos(RagdollEntity entity) {
         moveTo(entity, this.newPosX, this.newPosY, this.newPosZ);
     }
 
-    /*private boolean moveInWater(World worldObj, AxisAlignedBB boundingBox, Material material, EntityRagdoll entity) {
+    /*private boolean moveInWater(World worldObj, AxisAlignedBB boundingBox, Material material, RagdollEntity entity) {
         int i = MathHelper.floor_double(boundingBox.minX);
         int j = MathHelper.floor_double(boundingBox.maxX + 1.0D);
         int k = MathHelper.floor_double(boundingBox.minY);
@@ -491,7 +491,7 @@ public class SkeletonPoint {
         }
     }*/
 
-    public void moveTo(EntityRagdoll entity, double x, double y, double z) {
+    public void moveTo(RagdollEntity entity, double x, double y, double z) {
 
         this.movePoint(entity, new Vec3d(x - this.posX, y - this.posY, z - this.posZ));
 
@@ -506,7 +506,7 @@ public class SkeletonPoint {
         return new PointD(this.posX, this.posY, this.posZ);
     }
 
-    public void verify(EntityRagdoll entity) {
+    public void verify(RagdollEntity entity) {
         double tempPosX = this.posX;
         double tempPosY = this.posY;
         double tempPosZ = this.posZ;

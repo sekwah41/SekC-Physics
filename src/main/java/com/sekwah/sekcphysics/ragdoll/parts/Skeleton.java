@@ -1,6 +1,6 @@
 package com.sekwah.sekcphysics.ragdoll.parts;
 
-import com.sekwah.sekcphysics.client.cliententity.EntityRagdoll;
+import com.sekwah.sekcphysics.client.cliententity.RagdollEntity;
 import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.maths.VectorMaths;
 import com.sekwah.sekcphysics.ragdoll.parts.trackers.Tracker;
@@ -60,7 +60,7 @@ public class Skeleton {
      * Applies the physics before constraints are taken into account.
      * @param entity
      */
-    public void update(EntityRagdoll entity) {
+    public void update(RagdollEntity entity) {
         
         for(SkeletonPoint point : points) {
             point.update(entity);
@@ -164,7 +164,7 @@ public class Skeleton {
         glEnd();
     }
 
-    public void verifyPoints(EntityRagdoll entity) {
+    public void verifyPoints(RagdollEntity entity) {
         for(SkeletonPoint point : points) {
             point.verify(entity);
             //point.movePoint(entity);

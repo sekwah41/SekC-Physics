@@ -3,7 +3,8 @@
   "package": "com.sekwah.sekcphysics.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "MixinEntityDeath"
+    "EntityDeathMixin",
+    "WorldRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

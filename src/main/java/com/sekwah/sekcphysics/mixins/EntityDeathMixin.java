@@ -1,9 +1,8 @@
 package com.sekwah.sekcphysics.mixins;
 
 import com.sekwah.sekcphysics.SekCPhysics;
-import com.sekwah.sekcphysics.client.cliententity.EntityRagdoll;
+import com.sekwah.sekcphysics.client.cliententity.RagdollEntity;
 import com.sekwah.sekcphysics.ragdoll.ragdolls.BaseRagdoll;
-import net.minecraft.container.Slot;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
@@ -42,7 +41,7 @@ public abstract class EntityDeathMixin extends Entity {
 
         if(ragdoll != null) {
 
-            EntityRagdoll entityRagdoll = new EntityRagdoll(this.world, ragdoll);
+            RagdollEntity entityRagdoll = new RagdollEntity(this.world, ragdoll);
 
             entityRagdoll.ragdoll.setStanceToEntity((LivingEntity) (Object) this);
 

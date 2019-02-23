@@ -2,7 +2,6 @@ package com.sekwah.sekcphysics.client.cliententity;
 
 import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.maths.PointD;
-import com.sekwah.sekcphysics.ragdoll.parts.trackers.Tracker;
 import com.sekwah.sekcphysics.ragdoll.ragdolls.BaseRagdoll;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
@@ -16,7 +15,7 @@ import net.minecraft.util.DefaultedList;
 import net.minecraft.util.math.BoundingBox;
 import net.minecraft.world.World;
 
-public class EntityRagdoll extends LivingEntity {
+public class RagdollEntity extends LivingEntity {
 
     private final DefaultedList<ItemStack> handItems;
     private final DefaultedList<ItemStack> armorItems;
@@ -25,11 +24,11 @@ public class EntityRagdoll extends LivingEntity {
 
     private int remainingLife = 600;
 
-    public EntityRagdoll(World world) {
+    public RagdollEntity(World world) {
         this(SekCPhysics.RAGDOLL, world);
     }
 
-    public EntityRagdoll(EntityType<?> entityType, World world) {
+    public RagdollEntity(EntityType<?> entityType, World world) {
         super(entityType, world);
         this.handItems = DefaultedList.create(2, ItemStack.EMPTY);
         this.armorItems = DefaultedList.create(4, ItemStack.EMPTY);
@@ -91,7 +90,7 @@ public class EntityRagdoll extends LivingEntity {
         return null;
     }
 
-    public EntityRagdoll(World world, BaseRagdoll ragdoll) {
+    public RagdollEntity(World world, BaseRagdoll ragdoll) {
         this(world);
         this.noClip = true;
 

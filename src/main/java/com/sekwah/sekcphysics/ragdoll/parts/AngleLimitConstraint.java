@@ -1,6 +1,6 @@
 package com.sekwah.sekcphysics.ragdoll.parts;
 
-import com.sekwah.sekcphysics.client.cliententity.EntityRagdoll;
+import com.sekwah.sekcphysics.client.cliententity.RagdollEntity;
 import com.sekwah.sekcphysics.maths.PointD;
 
 /**
@@ -37,7 +37,7 @@ public class AngleLimitConstraint {
     }
 
 
-    public void apply(EntityRagdoll entity) {
+    public void apply(RagdollEntity entity) {
         // Center between left and right
         PointD averageLoc = new PointD((end[1].posX + end[2].posX) / 2F,(end[1].posY + end[2].posY) / 2F,(end[1].posZ + end[2].posZ) / 2F);
 

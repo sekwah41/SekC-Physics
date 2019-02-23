@@ -1,20 +1,17 @@
 package com.sekwah.sekcphysics.client.render;
 
 import com.mojang.blaze3d.platform.GlStateManager;
-import com.sekwah.sekcphysics.client.cliententity.EntityRagdoll;
+import com.sekwah.sekcphysics.client.cliententity.RagdollEntity;
 import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
 import com.sekwah.sekcphysics.ragdoll.parts.trackers.Tracker;
 import com.sekwah.sekcphysics.ragdoll.ragdolls.BaseRagdoll;
-import net.fabricmc.fabric.api.client.render.EntityRendererRegistry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.model.Cuboid;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
-import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.model.json.ModelTransformation;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sortme.OptionMainHand;
@@ -24,7 +21,7 @@ import org.lwjgl.opengl.GL11;
 /**
  * Ragdoll renderer file
  */
-public class RenderRagdoll<T extends EntityRagdoll, M extends EntityModel<T>> extends LivingEntityRenderer<T, M> {
+public class RenderRagdoll<T extends RagdollEntity, M extends EntityModel<T>> extends LivingEntityRenderer<T, M> {
 
     private static MinecraftClient mc = MinecraftClient.getInstance();
 

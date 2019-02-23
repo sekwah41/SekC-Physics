@@ -1,14 +1,10 @@
 package com.sekwah.sekcphysics;
 
-import com.sekwah.sekcphysics.client.cliententity.EntityRagdoll;
-import com.sekwah.sekcphysics.client.render.RenderRagdoll;
+import com.sekwah.sekcphysics.client.cliententity.RagdollEntity;
 import com.sekwah.sekcphysics.ragdoll.Ragdolls;
 import com.sekwah.sekcphysics.ragdoll.generation.RagdollGenerator;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.render.EntityRendererRegistry;
-import net.fabricmc.fabric.api.entity.EntityTrackingRegistry;
 import net.fabricmc.fabric.api.entity.FabricEntityTypeBuilder;
-import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCategory;
 import net.minecraft.entity.EntityType;
@@ -22,9 +18,9 @@ public class SekCPhysics implements ClientModInitializer {
 
     public static final boolean isDeObf = Entity.class.getName().equals("net.minecraft.entity.Entity");
 
-    public static EntityType<EntityRagdoll> RAGDOLL;
+    public static EntityType<RagdollEntity> RAGDOLL;
 
-    public static FabricEntityTypeBuilder<EntityRagdoll> RAGDOLL_TYPE_BUILDER = FabricEntityTypeBuilder.create(EntityCategory.MISC);
+    public static FabricEntityTypeBuilder<RagdollEntity> RAGDOLL_TYPE_BUILDER = FabricEntityTypeBuilder.create(EntityCategory.MISC);
 
     public static Ragdolls ragdolls = new Ragdolls();
 
@@ -38,12 +34,12 @@ public class SekCPhysics implements ClientModInitializer {
         new RagdollGenerator().loadRagdolls();
 
         // Trackers
-        logger.info("Registering ragdoll entity");
-        Registry.register(Registry.ENTITY_TYPE, "sekcphysics:ragdoll", RAGDOLL);
+        //logger.info("Registering ragdoll entity");
+        //Registry.register(Registry.ENTITY_TYPE, "sekcphysics:ragdoll", RAGDOLL);
 
         //EntityTrackingRegistry.INSTANCE.register(RAGDOLL, 64, 1, false);
 
         // Renderers
-        //EntityRendererRegistry.INSTANCE.register(EntityRagdoll.class, (dispatcher, context) -> new RenderRagdoll(dispatcher, new BipedEntityModel()));
+        //EntityRendererRegistry.INSTANCE.register(RagdollEntity.class, (dispatcher, context) -> new RenderRagdoll(dispatcher, new BipedEntityModel()));
     }
 }

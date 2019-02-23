@@ -1,6 +1,6 @@
 package com.sekwah.sekcphysics.ragdoll.parts;
 
-import com.sekwah.sekcphysics.client.cliententity.EntityRagdoll;
+import com.sekwah.sekcphysics.client.cliententity.RagdollEntity;
 import com.sekwah.sekcphysics.maths.PointD;
 
 /**
@@ -49,7 +49,7 @@ public class Constraint {
         this.length = Math.sqrt(Math.pow(start.posX - end.posX, 2) + Math.pow(start.posY - end.posY, 2) + Math.pow(start.posZ - end.posZ, 2));
     }
 
-    public void calc(EntityRagdoll entity) {
+    public void calc(RagdollEntity entity) {
 
         if(!(end[0].hasMoved || end[1].hasMoved)) {
             //System.out.println("Cancel");
