@@ -28,7 +28,7 @@ public class RagdollEntity extends LivingEntity {
         this(SekCPhysics.RAGDOLL, world);
     }
 
-    public RagdollEntity(EntityType<?> entityType, World world) {
+    public RagdollEntity(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
         this.handItems = DefaultedList.create(2, ItemStack.EMPTY);
         this.armorItems = DefaultedList.create(4, ItemStack.EMPTY);
@@ -94,7 +94,7 @@ public class RagdollEntity extends LivingEntity {
         this(world);
         this.noClip = true;
 
-        this.setSize(0.15F, 0.15F);
+        //this(0.15F, 0.15F);
 
         //remainingLife = 16000;
 

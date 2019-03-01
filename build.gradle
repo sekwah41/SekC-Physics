@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.1.0-SNAPSHOT'
+	id 'fabric-loom' version '0.2.0-SNAPSHOT'
 }
 
 sourceCompatibility = 1.8
@@ -8,17 +8,24 @@ targetCompatibility = 1.8
 archivesBaseName = "sekcphysics"
 version = "0.1.0"
 
+repositories {
+	maven {url "https://maven.jamieswhiteshirt.com/libs-release/"}
+}
+
 minecraft {
 }
 
 dependencies {
 	// https://modmuss50.me/fabric.html
 	// http://fabric.asie.pl/use/
-	minecraft "com.mojang:minecraft:19w07a"
-	mappings "net.fabricmc:yarn:19w07a.8"
-	modCompile "net.fabricmc:fabric-loader:0.3.5.106"
+	minecraft "com.mojang:minecraft:19w09a"
+	mappings "net.fabricmc:yarn:19w09a.1"
+	modCompile "net.fabricmc:fabric-loader:0.3.7.109"
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	// https://minecraft.curseforge.com/projects/fabric/files
-	modCompile "net.fabricmc:fabric:0.2.1.94"
+	modCompile "net.fabricmc:fabric:0.2.3.107"
+	
+	// Useful for quicker testing (thank you JamiesWhiteShirt you magnificent bastard <3)
+	//modCompile "com.jamieswhiteshirt:developer-mode:1.0.2"
 }

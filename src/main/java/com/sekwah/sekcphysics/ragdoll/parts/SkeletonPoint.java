@@ -427,7 +427,7 @@ public class SkeletonPoint {
             d1 *= (double)(1.0F - entityCol.pushSpeedReduction);
             //SekCPhysics.logger.info(entityCol.motionX);
             //entityCol.addVelocity(-d0, 0.0D, -d1);
-            this.addVelocity(d0 + entityCol.velocityX, 0.0D, d1 + entityCol.velocityZ);
+            this.addVelocity(d0 + entityCol.getVelocity().x, 0.0D, d1 + entityCol.getVelocity().z);
         }
     }
 

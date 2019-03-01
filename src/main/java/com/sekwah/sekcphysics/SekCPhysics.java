@@ -7,8 +7,8 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCategory;
+import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
-import net.minecraft.util.registry.Registry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -27,7 +27,11 @@ public class SekCPhysics implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
 
+        RAGDOLL_TYPE_BUILDER.size(new EntitySize(0.15f, 0.15f, true));
+
         RAGDOLL = RAGDOLL_TYPE_BUILDER.build();
+
+        RAGDOLL.getDefaultSize();
 
         logger.info("Generating ragdolls from JSON");
 
