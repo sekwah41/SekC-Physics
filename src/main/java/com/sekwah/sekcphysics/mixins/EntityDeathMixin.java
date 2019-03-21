@@ -2,6 +2,7 @@ package com.sekwah.sekcphysics.mixins;
 
 import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.client.cliententity.RagdollEntity;
+import com.sekwah.sekcphysics.ragdoll.Ragdolls;
 import com.sekwah.sekcphysics.ragdoll.ragdolls.BaseRagdoll;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -47,13 +48,15 @@ public abstract class EntityDeathMixin extends Entity {
 
             entityRagdoll.setSpawnPosition(this.x, this.y, this.z);
 
-            this.world.spawnEntity(entityRagdoll);
+            SekCPhysics.ragdolls.spawnRagdoll(entityRagdoll);
+
+            //this.world.spawnEntity(entityRagdoll);
 
             entityRagdoll.ragdoll.rotateRagdoll(this.yaw);
 
             entityRagdoll.ragdoll.skeleton.verifyPoints(entityRagdoll);
 
-            entityRagdoll.ragdoll.update(entityRagdoll);
+            //entityRagdoll.ragdoll.update(entityRagdoll);
 
             for(EquipmentSlot slot : EquipmentSlot.values()) {
                 entityRagdoll.setEquippedStack(slot, this.getEquippedStack(slot));

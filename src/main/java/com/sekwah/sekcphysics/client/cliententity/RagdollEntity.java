@@ -10,7 +10,7 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.sortme.OptionMainHand;
+import net.minecraft.util.AbsoluteHand;
 import net.minecraft.util.DefaultedList;
 import net.minecraft.util.math.BoundingBox;
 import net.minecraft.world.World;
@@ -86,7 +86,7 @@ public class RagdollEntity extends LivingEntity {
     }
 
     @Override
-    public OptionMainHand getMainHand() {
+    public AbsoluteHand getMainHand() {
         return null;
     }
 

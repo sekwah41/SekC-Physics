@@ -244,13 +244,6 @@ public class RagdollGenerator {
             modelConstructData = new ModelConstructData();
         }
 
-        // TODO work on system for multiple skins, e.g. changing villagers based on a tracker or nbt data
-        JsonElement textureEle = ragdollJsonData.get("texture");
-        if(textureEle != null) {
-            JsonArray texture = textureEle.getAsJsonArray();
-            modelConstructData.setTextureDomain(texture.get(0).getAsString(), texture.get(1).getAsString());
-        }
-
         JsonObject modelJSON = ragdollJsonData.getAsJsonObject("modelData");
         if(modelJSON != null) {
 
@@ -436,8 +429,7 @@ public class RagdollGenerator {
     }
 
     private void addExtraModelData(RagdollData ragdollData, ModelData modelData, ModelConstructData modelConstructData) {
-        ResourceData textureDomain = modelConstructData.getTextureDomain();
-        modelData.setTexture(new Identifier(textureDomain.getTextureDomain(), textureDomain.getTexture()));
+        // TODO if there is more data (used to hold the texture data)
     }
 
     private Cuboid getRendererFromName(String partName, Model modelBase, Class<?> rClass) throws NoSuchFieldException, RagdollInvalidDataException, IllegalAccessException {

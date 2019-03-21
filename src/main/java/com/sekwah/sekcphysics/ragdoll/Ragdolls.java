@@ -1,11 +1,15 @@
 package com.sekwah.sekcphysics.ragdoll;
 
 import com.sekwah.sekcphysics.SekCPhysics;
+import com.sekwah.sekcphysics.accessors.EntityTextureAccessor;
 import com.sekwah.sekcphysics.client.cliententity.RagdollEntity;
+import com.sekwah.sekcphysics.client.render.RenderRagdoll;
 import com.sekwah.sekcphysics.ragdoll.generation.data.RagdollData;
 import com.sekwah.sekcphysics.ragdoll.ragdolls.generated.FromDataRagdoll;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.entity.Entity;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,7 +27,9 @@ public class Ragdolls {
 
     private static MinecraftClient mc = MinecraftClient.getInstance();
 
-    private List<RagdollEntity> ragdolls = new ArrayList<>();
+    public List<RagdollEntity> ragdolls = new ArrayList<>();
+
+    public static EntityRenderDispatcher entityRenderDispatcher;
 
     /**
      * Need to add update counts to the ragdoll data rather than global also 10 is for cloths
@@ -55,14 +61,8 @@ public class Ragdolls {
         }
     }
 
-    public void renderRagdolls() {
-        for(RagdollEntity ragdoll : this.ragdolls) {
-
-        }
-    }
-
     public void spawnRagdoll(RagdollEntity ragdoll) {
-
+        this.ragdolls.add(ragdoll);
     }
 
     public FromDataRagdoll createRagdoll(Entity entity) {
@@ -73,13 +73,27 @@ public class Ragdolls {
 
         try
         {
+            String entityClass = entity.getClass().getName();
             if(mc.options.debugEnabled) {
-                SekCPhysics.logger.info("Entity died: {}", entity.getClass().getName());
+                SekCPhysics.logger.debug("Entity died: {}", entityClass);
             }
-            RagdollData ragdollData = entityToRagdollHashmap.get(entity.getClass().getName());
+            RagdollData ragdollData = entityToRagdollHashmap.computeIfAbsent(entityClass, (key) -> {
+                Class classc = entity.getClass();
+                while(classc != Entity.class) {
+                    classc = classc.getSuperclass();
+                    RagdollData superRagdollData = entityToRagdollHashmap.get(classc.getName());
+                    if (superRagdollData != null) {
+                        RagdollData ragdollDataClone = superRagdollData.clone();
+                        entityToRagdollHashmap.put(entityClass, ragdollDataClone);
+                        return superRagdollData;
+                    }
+                }
+                return null;
+            });
 
             if (ragdollData != null) {
                 ragdoll = new FromDataRagdoll(ragdollData);
+                ragdoll.resourceLocation = ((EntityTextureAccessor) MinecraftClient.getInstance().getEntityRenderManager().getRenderer(entity)).getBaseTexture(entity);
             }
         }
         catch (Exception exception)

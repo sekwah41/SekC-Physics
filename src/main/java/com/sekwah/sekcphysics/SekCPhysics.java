@@ -1,10 +1,14 @@
 package com.sekwah.sekcphysics;
 
 import com.sekwah.sekcphysics.client.cliententity.RagdollEntity;
+import com.sekwah.sekcphysics.client.render.RenderRagdoll;
 import com.sekwah.sekcphysics.ragdoll.Ragdolls;
 import com.sekwah.sekcphysics.ragdoll.generation.RagdollGenerator;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.render.EntityRendererRegistry;
 import net.fabricmc.fabric.api.entity.FabricEntityTypeBuilder;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCategory;
 import net.minecraft.entity.EntitySize;
@@ -44,6 +48,6 @@ public class SekCPhysics implements ClientModInitializer {
         //EntityTrackingRegistry.INSTANCE.register(RAGDOLL, 64, 1, false);
 
         // Renderers
-        //EntityRendererRegistry.INSTANCE.register(RagdollEntity.class, (dispatcher, context) -> new RenderRagdoll(dispatcher, new BipedEntityModel()));
+        EntityRendererRegistry.INSTANCE.register(RagdollEntity.class, (dispatcher, context) -> new RenderRagdoll(dispatcher, new BipedEntityModel()));
     }
 }

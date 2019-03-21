@@ -18,8 +18,6 @@ public class ModelData {
 
     private TriangleTrackerData[] triangleTrackers = new TriangleTrackerData[0];
 
-    private Identifier texture;
-
     public ModelData(Model baseModel) {
         this.baseModel = baseModel;
     }
@@ -44,11 +42,4 @@ public class ModelData {
         return triangleTrackers;
     }
 
-    public void setTexture(Identifier texture) {
-        this.texture = texture;
-    }
-
-    public Identifier getTexture() {
-        return texture;
-    }
 }

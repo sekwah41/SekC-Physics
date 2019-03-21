@@ -9,6 +9,6 @@
     "fabric": "*"
   },
   "mixins": {
-    "client": "sekcphysics.client.json"
+    "client": "mixins.sekcphysics.client.json"
   }
 }

@@ -1,5 +1,6 @@
 package com.sekwah.sekcphysics.ragdoll.parts.trackers;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.sekwah.sekcphysics.maths.MatrixMaths;
 import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.maths.VectorMaths;
@@ -15,14 +16,17 @@ public class TrackerTriangle extends Tracker {
 
     protected final Triangle triangle;
 
+    protected float lastRotationAxis = 0;
+
+    protected float rotationAxis = 0;
+
+    protected float rotationAxisDiff = 0;
+
     public TrackerTriangle(Cuboid part, Triangle triangle) {
         super(part);
         this.triangle = triangle;
 
         this.calcPosition();
-        this.updateLastPos();
-        this.updatePosDifference();
-
     }
 
     public TrackerTriangle(Cuboid part, Triangle triangle, float rotateOffsetX, float rotateOffsetY, float rotateOffsetZ) {
@@ -55,21 +59,7 @@ public class TrackerTriangle extends Tracker {
         PointD angleDifference = VectorMaths.rotateOriginY(-this.rotation.y, triangleNorm);
         angleDifference = VectorMaths.rotateOriginX(-this.rotation.x, angleDifference);
 
-        PointD rotations = MatrixMaths.addRotAroundAxis(this.rotation.x, this.rotation.y, 0, basicRotation(angleDifference.x, angleDifference.z));
-
-        this.rotation.x = (float) rotations.x;
-        this.rotation.y = (float) rotations.y;
-        this.rotation.z = (float) rotations.z;
-
-		// use matrix maths to translate into 2d. then apply the rotation
-		// think about using matrix maths to calculate the rotations to set.
-		// estimate the lengths of each and use nano time to compare times
-		// check how the renderers normally work to see if you can change it, rewrite it or something useful os there.
-
-        // Rotate the normal vector back to be 2d then do the 2d maths else you dont know how far and if to back or forward
-        // but only to go only how far
-
-        // TODO rotate around the axis to meet the normal.
+        this.rotationAxis = basicRotation(angleDifference.x, angleDifference.z);
 
         this.updatePosition();
 
@@ -87,6 +77,12 @@ public class TrackerTriangle extends Tracker {
         rotMatrix.rotate(-rotationX, new Vector3f(1, 0, 0));
         rotMatrix.rotate(-rotationY, new Vector3f(0, 1, 0));*/
 
+    }
+
+    @Override
+    protected void smoothRotation(float partialTicks) {
+        super.smoothRotation(partialTicks);
+        GlStateManager.rotatef((float) Math.toDegrees(this.lastRotationAxis + this.rotationAxisDiff * partialTicks), 0,1,0);
     }
 
     protected void updatePosition() {

@@ -25,9 +25,7 @@ public class TrackerVertex extends Tracker {
 
         // Resets the data so it doesnt get a sliding effect from 0 of every location.
 
-        this.calcPosition();
-        this.updateLastPos();
-        this.updatePosDifference();
+
     }
 
     @Override

@@ -103,7 +103,7 @@ public class SkeletonPoint {
 
     private void movePoint(RagdollEntity entity, Vec3d moveVec) {
 
-        BoundingBox boundingBox_1 = this.getBoundingBox(entity);
+        /*BoundingBox boundingBox_1 = this.getBoundingBox(entity);
 
         VerticalEntityPosition verticalEntityPosition_1 = VerticalEntityPosition.fromEntity(entity);
         VoxelShape voxelShape_1 = entity.world.getWorldBorder().asVoxelShape();
@@ -137,7 +137,7 @@ public class SkeletonPoint {
             if (method_17996(vec3d_3) > method_17996(vec3d_2)) {
                 //return vec3d_3.add(method_17833(new Vec3d(0.0D, -vec3d_3.y + moveVec.y, 0.0D), boundingBox_1.offset(vec3d_3), entity.world, verticalEntityPosition_1, loopingStream_1));
             }
-        }
+        }*/
 
 
 
@@ -169,7 +169,8 @@ public class SkeletonPoint {
             }
         }*/
 
-        applyMove(vec3d_2);
+        //applyMove(vec3d_2);
+        applyMove(moveVec);
     }
 
     public static Vec3d method_17833(Vec3d vec3d_1, BoundingBox boundingBox_1, ViewableWorld viewableWorld_1, VerticalEntityPosition verticalEntityPosition_1, LoopingStream<VoxelShape> loopingStream_1) {

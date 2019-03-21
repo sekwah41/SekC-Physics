@@ -167,7 +167,10 @@ public class Skeleton {
     public void verifyPoints(RagdollEntity entity) {
         for(SkeletonPoint point : points) {
             point.verify(entity);
-            //point.movePoint(entity);
+        }
+        for(Tracker tracker : entity.ragdoll.trackerHashmap.values()) {
+            tracker.updateLastPos();
+            tracker.updatePosDifference();
         }
     }
 

@@ -4,7 +4,8 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "EntityDeathMixin",
-    "WorldRendererMixin"
+    "WorldRendererMixin",
+    "EntityRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

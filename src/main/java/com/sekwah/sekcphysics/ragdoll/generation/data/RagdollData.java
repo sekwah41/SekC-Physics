@@ -13,15 +13,11 @@ import java.util.LinkedList;
  *
  * Created by sekwah41 on 28/06/2017.
  */
-public class RagdollData {
+public class RagdollData implements Cloneable {
 
     private HashMap<String, PointD> pointHashMap = new HashMap<>();
 
     private HashMap<String, TriangleData> triangleHashMap = new HashMap<>();
-    
-    private Model ragdollModel;
-
-    private Identifier entityTexture;
 
     /**
      * Has no references back so best to do it this way for quick use.
@@ -116,5 +112,14 @@ public class RagdollData {
 
     public void setCenterHeightOffset(float centerHeightOffset) {
         this.centerHeightOffset = centerHeightOffset;
+    }
+
+    @Override
+    public RagdollData clone() {
+        try {
+            return (RagdollData) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

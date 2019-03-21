@@ -14,7 +14,7 @@ import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.sortme.OptionMainHand;
+import net.minecraft.util.AbsoluteHand;
 import net.minecraft.util.Identifier;
 import org.lwjgl.opengl.GL11;
 
@@ -105,15 +105,15 @@ public class RenderRagdoll<T extends RagdollEntity, M extends EntityModel<T>> ex
             ItemStack leftHand = entity.getEquippedStack(EquipmentSlot.HAND_OFF);
             ItemStack rightHand = entity.getEquippedStack(EquipmentSlot.HAND_MAIN);
             if(!leftHand.isEmpty()) {
-                this.renderHeldItem(entity, modelBiped, leftHand, ModelTransformation.Type.THIRD_PERSON_LEFT_HAND, OptionMainHand.LEFT);
+                this.renderHeldItem(entity, modelBiped, leftHand, ModelTransformation.Type.THIRD_PERSON_LEFT_HAND, AbsoluteHand.LEFT);
             }
             if(!rightHand.isEmpty()) {
-                this.renderHeldItem(entity, modelBiped, rightHand, ModelTransformation.Type.THIRD_PERSON_RIGHT_HAND, OptionMainHand.RIGHT);
+                this.renderHeldItem(entity, modelBiped, rightHand, ModelTransformation.Type.THIRD_PERSON_RIGHT_HAND, AbsoluteHand.RIGHT);
             }
         }
     }
 
-    private void renderHeldItem(T entity, BipedEntityModel modelBiped, ItemStack itemStack, ModelTransformation.Type transformType, OptionMainHand handSide)
+    private void renderHeldItem(T entity, BipedEntityModel modelBiped, ItemStack itemStack, ModelTransformation.Type transformType, AbsoluteHand handSide)
     {
         if (!itemStack.isEmpty())
         {
@@ -123,17 +123,17 @@ public class RenderRagdoll<T extends RagdollEntity, M extends EntityModel<T>> ex
             this.translateToHand(modelBiped, handSide);
             GlStateManager.rotatef(-90.0F, 1.0F, 0.0F, 0.0F);
             GlStateManager.rotatef(180.0F, 0.0F, 1.0F, 0.0F);
-            boolean flag = handSide == OptionMainHand.LEFT;
+            boolean flag = handSide == AbsoluteHand.LEFT;
             GlStateManager.translatef((float)(flag ? -1 : 1) / 16.0F, 0.125F, -0.625F);
             MinecraftClient.getInstance().getFirstPersonRenderer().renderItemFromSide(entity, itemStack, transformType, flag);
             GlStateManager.popMatrix();
         }
     }
 
-    private void translateToHand(BipedEntityModel modelBiped, OptionMainHand handSide)
+    private void translateToHand(BipedEntityModel modelBiped, AbsoluteHand handSide)
     {
         // method_2803 applyTransformation to thhe opengl matrix
-        modelBiped.method_2803(0.0625F, handSide);
+        modelBiped.setArmAngle(0.0625F, handSide);
     }
 
     public void setPartLocation(T entity, Cuboid trackPart, SkeletonPoint skeletonPart) {

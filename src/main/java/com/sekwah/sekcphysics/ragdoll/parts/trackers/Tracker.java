@@ -1,8 +1,10 @@
 package com.sekwah.sekcphysics.ragdoll.parts.trackers;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.maths.RotateF;
 import net.minecraft.client.model.Cuboid;
+
 /**
  * Created by on 30/06/2016.
  *
@@ -45,6 +47,10 @@ public abstract class Tracker {
     public PointD offset = new PointD();
 
     protected Tracker(Cuboid part) {
+        part.setRotationPoint(0,0,0);
+        part.pitch = 0;
+        part.yaw = 0;
+        part.roll = 0;
         this.part = part;
     }
 
@@ -62,12 +68,15 @@ public abstract class Tracker {
     }
 
     protected void renderPart(float partialTicks, float scale) {
-        this.setPartLocation(partialTicks);
-        this.setPartRotation(partialTicks);
+        GlStateManager.pushMatrix();
+        this.smoothLocation(partialTicks);
+        this.smoothRotation(partialTicks);
+        this.applyOffset();
         this.part.render(scale);
+        GlStateManager.popMatrix();
     }
 
-    protected void updateLastPos() {
+    public void updateLastPos() {
         this.lastRotation.copy(this.rotation);
         this.lastPosition = this.position;
     }
@@ -83,8 +92,6 @@ public abstract class Tracker {
         this.positionDiff = this.position.sub(this.lastPosition);
         this.rotationDiff.changeToShortestAngle();
 
-        this.lastRotation.add(this.rotationOffset);
-        this.lastPosition = this.lastPosition.add(this.offset);
     }
 
     public abstract void calcPosition();
@@ -93,25 +100,43 @@ public abstract class Tracker {
      * For rendering, not generally setting
      * @param partialTicks
      */
-    public void setPartLocation(float partialTicks) {
-        this.part.setRotationPoint((float) (this.lastPosition.x + this.positionDiff.x * partialTicks) * 16f,
-                (float) (this.lastPosition.y + this.positionDiff.y * partialTicks) * 16f,
-                (float) (this.lastPosition.z + this.positionDiff.z * partialTicks) * 16f);
-        /*this.part.setRotationPoint((float) (this.position.x) * 16f,
-                (float) (this.position.y) * 16f,(float) (this.position.z) * 16f);*/
+    protected void smoothLocation(float partialTicks) {
+        GlStateManager.translated(this.lastPosition.x + this.positionDiff.x * partialTicks,
+                this.lastPosition.y + this.positionDiff.y * partialTicks,
+                this.lastPosition.z + this.positionDiff.z * partialTicks);
     }
 
     /**
      * For rendering, not generally setting
      */
-    public void setPartRotation(float partialTicks) {
-        this.part.pitch = this.lastRotation.x + this.rotationDiff.x * partialTicks;
-        this.part.yaw = this.lastRotation.y + this.rotationDiff.y * partialTicks;
-        this.part.roll = this.lastRotation.z + this.rotationDiff.z * partialTicks;
+    protected void smoothRotation(float partialTicks) {
+        applyRotation(this.lastRotation.z + this.rotationDiff.z * partialTicks,
+                this.lastRotation.y + this.rotationDiff.y * partialTicks,
+                this.lastRotation.x + this.rotationDiff.x * partialTicks);
+    }
 
-        /*this.part.pitch = this.rotation.x;
-        this.part.yaw = this.rotation.y;
-        this.part.roll = this.rotation.z;*/
+    protected void applyOffset() {
+        applyRotation(this.rotationOffset.x,
+                this.rotationOffset.y,
+                this.rotationOffset.z);
+    }
+
+    private void applyRotationDeg(float x, float y, float z) {
+        if (z != 0.0F) {
+            GlStateManager.rotatef(z, 0,0,1);
+        }
+
+        if (y != 0.0F) {
+            GlStateManager.rotatef(y, 0,1,0);
+        }
+
+        if (x != 0.0F) {
+            GlStateManager.rotatef(x, 1,0,0);
+        }
+    }
+
+    private void applyRotation(float x, float y, float z) {
+        this.applyRotationDeg(z * (180F / (float)Math.PI), y * (180F / (float)Math.PI),x * (180F / (float)Math.PI));
     }
 
     public abstract void render(float partialTicks);
