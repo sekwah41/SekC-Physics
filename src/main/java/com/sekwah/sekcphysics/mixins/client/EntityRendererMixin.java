@@ -1,4 +1,4 @@
-package com.sekwah.sekcphysics.mixins;
+package com.sekwah.sekcphysics.mixins.client;
 
 import com.sekwah.sekcphysics.accessors.EntityTextureAccessor;
 import net.minecraft.client.render.entity.EntityRenderer;

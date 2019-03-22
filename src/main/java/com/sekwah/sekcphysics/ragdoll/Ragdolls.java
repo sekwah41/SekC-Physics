@@ -53,11 +53,10 @@ public class Ragdolls {
     }
 
     public void updateRagdolls() {
-
         this.ragdolls.removeIf(ragdoll -> ragdoll.invalid);
 
         for(RagdollEntity ragdoll : this.ragdolls) {
-            
+            ragdoll.updateLogic();
         }
     }
 
@@ -68,8 +67,6 @@ public class Ragdolls {
     public FromDataRagdoll createRagdoll(Entity entity) {
 
         FromDataRagdoll ragdoll = null;
-
-        // TODO add code to detect the baby versions and add new ragdolls
 
         try
         {

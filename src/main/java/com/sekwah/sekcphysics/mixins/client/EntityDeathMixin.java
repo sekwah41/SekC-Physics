@@ -1,4 +1,4 @@
-package com.sekwah.sekcphysics.mixins;
+package com.sekwah.sekcphysics.mixins.client;
 
 import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.client.cliententity.RagdollEntity;

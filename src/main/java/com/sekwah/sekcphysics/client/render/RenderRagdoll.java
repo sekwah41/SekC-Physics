@@ -89,7 +89,7 @@ public class RenderRagdoll<T extends RagdollEntity, M extends EntityModel<T>> ex
             GlStateManager.depthMask(true);
         }
 
-        this.renderHandItems(entity, baseRagdoll);
+        //this.renderHandItems(entity, baseRagdoll);
 
         if(mc.options.debugEnabled) {
             GlStateManager.disableDepthTest();

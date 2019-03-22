@@ -1,11 +1,12 @@
 {
   "required": true,
-  "package": "com.sekwah.sekcphysics.mixins",
+  "package": "com.sekwah.sekcphysics.mixins.client",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "EntityDeathMixin",
     "WorldRendererMixin",
-    "EntityRendererMixin"
+    "EntityRendererMixin",
+    "ClientWorldMixin"
   ],
   "injectors": {
     "defaultRequire": 1
