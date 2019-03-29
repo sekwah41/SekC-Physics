@@ -36,7 +36,8 @@ public class Ragdolls {
      */
     //public static int maxUpdateCount = 10;
 
-    public static float gravity = 0.05F; // alter till it looks the best, also maybe add material values as mods use stuff like
+    //public static float gravity = 0.05F;
+    public static float gravity = 0F;
 
     public void registerRagdoll(Class<? extends Entity> entityClass, RagdollData ragdollData) {
         this.entityToRagdollHashmap.put(entityClass.getName(), ragdollData);

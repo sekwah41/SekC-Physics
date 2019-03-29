@@ -20,7 +20,7 @@ public class Constraint {
 
     // but till they are needed
 
-    // TODO add rotation constraints to single links which arnt triangles, would be good for simulating shoulders
+    // TODO add rotation constraints to single links which arn't triangles, would be good for simulating shoulders
     // but for now just add some stuff so that way its sorta rough physics(shoulders will have no leeway due to constraints
     //public boolean hasAngleConstraint = false;
 
