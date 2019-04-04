@@ -14,7 +14,7 @@ public class EntityHandler {
 
     public void registerEntities() {
 
-        ragdollResLoc = new ResourceLocation(SekCPhysics.modid,"ragdoll");
+        ragdollResLoc = new ResourceLocation(SekCPhysics.MODID,"ragdoll");
 
         EntityRegistry.registerModEntity(ragdollResLoc, EntityRagdoll.class, "Ragdoll", 1, SekCPhysics.instance, 64, 1, true);
 

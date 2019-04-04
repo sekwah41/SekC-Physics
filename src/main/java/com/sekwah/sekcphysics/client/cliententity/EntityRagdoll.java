@@ -2,10 +2,9 @@ package com.sekwah.sekcphysics.client.cliententity;
 
 import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.ragdoll.ragdolls.BaseRagdoll;
-import net.minecraft.entity.Entity;
+import com.sekwah.sekcphysics.settings.RagdollConfig;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -20,7 +19,9 @@ public class EntityRagdoll extends EntityLiving {
 
     public BaseRagdoll ragdoll;
 
-    public int ragdollLife = 600;
+    public int ragdollLife = RagdollConfig.maxRagdolls;
+
+    public boolean ragdollWillDecay = RagdollConfig.maxRagdolls >= 0;
 
     public EntityRagdoll(World world) {
         super(world);
@@ -32,8 +33,6 @@ public class EntityRagdoll extends EntityLiving {
         this.ignoreFrustumCheck = true;
 
         this.setSize(0.15F, 0.15F);
-
-        //ragdollLife = 16000;
 
         this.ragdoll = ragdoll;
 
@@ -69,7 +68,7 @@ public class EntityRagdoll extends EntityLiving {
         this.motionY = 0;
         this.motionZ = 0;
 
-        /*if(ragdollLife-- < 0) {
+        if(ragdollWillDecay && ragdollLife-- < 0) {
 
             for (int i = 0; i < 10; ++i) {
                 float poofSize = 1.0f;
@@ -80,13 +79,9 @@ public class EntityRagdoll extends EntityLiving {
             }
 
             this.setDead();
-        }*/
+        }
 
         this.ragdoll.update(this);
-
-        /*if(this.ragdollLife-- >= 595) {
-            this.ragdoll.update(this);
-        }*/
 
         PointD ragdollPos = this.ragdoll.skeleton.points.get(0).toPoint();
 

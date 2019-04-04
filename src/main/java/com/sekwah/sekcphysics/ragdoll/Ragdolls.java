@@ -1,9 +1,12 @@
 package com.sekwah.sekcphysics.ragdoll;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.sekwah.sekcphysics.SekCPhysics;
+import com.sekwah.sekcphysics.client.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.ragdoll.generation.data.RagdollData;
 import com.sekwah.sekcphysics.ragdoll.ragdolls.generated.FromDataRagdoll;
 
@@ -21,6 +24,8 @@ public class Ragdolls {
 
 
     private static Minecraft mc = Minecraft.getMinecraft();
+
+    public List<EntityRagdoll> ragdolls = new ArrayList<>();
 
     /**
      * Need to add update counts to the ragdoll data rather than global also 10 is for cloths
@@ -40,6 +45,18 @@ public class Ragdolls {
      */
     public void registerRagdoll(String entityClass, RagdollData ragdollData) {
         this.entityToRagdollHashmap.put(entityClass, ragdollData);
+    }
+
+    public void updateRagdolls() {
+        this.ragdolls.removeIf(ragdoll -> ragdoll.isDead);
+
+        for(EntityRagdoll ragdoll : this.ragdolls) {
+            ragdoll.onUpdate();
+        }
+    }
+
+    public void spawnRagdoll(EntityRagdoll ragdoll) {
+        this.ragdolls.add(ragdoll);
     }
 
     public FromDataRagdoll createRagdoll(Entity entity) {

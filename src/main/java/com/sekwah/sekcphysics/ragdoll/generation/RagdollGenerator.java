@@ -49,7 +49,7 @@ public class RagdollGenerator {
                     ModelData modelData = createModelAndAddTrackers(ragdollData, modelConstructData);
                     ragdollData.addModelData(modelData);
 
-                    if(SekCPhysics.isDeObf || !entry.getValue().getAsJsonObject().has("entityObf")) {
+                    if(SekCPhysics.IS_DEOBF || !entry.getValue().getAsJsonObject().has("entityObf")) {
                         SekCPhysics.ragdolls.registerRagdoll(entry.getKey(), ragdollData);
                     }
                     else {
@@ -244,7 +244,7 @@ public class RagdollGenerator {
         if(modelJSON != null) {
 
             // TODO example of a place where checking if its a dev environment is needed so switch it over
-            if(SekCPhysics.isDeObf || !modelJSON.has("classObf")) {
+            if(SekCPhysics.IS_DEOBF || !modelJSON.has("classObf")) {
                 modelConstructData.setClassName(modelJSON.get("class").getAsString());
             }
             else {
@@ -297,7 +297,7 @@ public class RagdollGenerator {
                     String anchor = vertexObj.get("anchor").getAsString();
                     String pointTo = vertexObj.get("pointTo").getAsString();
                     String name;
-                    if(SekCPhysics.isDeObf || !vertexObj.has("obfName")) {
+                    if(SekCPhysics.IS_DEOBF || !vertexObj.has("obfName")) {
                         name = vertexName.getKey();
                     }
                     else {
@@ -317,7 +317,7 @@ public class RagdollGenerator {
                     JsonObject vertexObj = triangleName.getValue().getAsJsonObject();
                     String tracker = vertexObj.get("tracker").getAsString();
                     String name;
-                    if(SekCPhysics.isDeObf || !vertexObj.has("obfName")) {
+                    if(SekCPhysics.IS_DEOBF || !vertexObj.has("obfName")) {
                         name = triangleName.getKey();
                     }
                     else {

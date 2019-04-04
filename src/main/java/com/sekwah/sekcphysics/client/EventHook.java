@@ -3,17 +3,23 @@ package com.sekwah.sekcphysics.client;
 import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.client.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.ragdoll.ragdolls.BaseRagdoll;
-import com.sekwah.sekcphysics.ragdoll.ragdolls.vanilla.BipedRagdoll;
 
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
+import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.common.config.Config;
+import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.relauncher.Side;
+
+import java.util.List;
 
 /**
  * Client side event hook
@@ -21,6 +27,13 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
  * Created by sekwah on 8/1/2015.
  */
 public class EventHook {
+
+    public RenderManager renderManager;
+
+    @SubscribeEvent
+    public void onConfigurationChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
+        if (event.getModID().equals(SekCPhysics.MODID)) ConfigManager.sync(SekCPhysics.MODID, Config.Type.INSTANCE);
+    }
 
     @SubscribeEvent
     public void deathEvent(LivingDeathEvent event) {
@@ -41,7 +54,7 @@ public class EventHook {
 
                 entityRagdoll.setSpawnPosition(deadEntity.posX, deadEntity.posY, deadEntity.posZ);
 
-                deadEntity.world.spawnEntity(entityRagdoll);
+                SekCPhysics.ragdolls.spawnRagdoll(entityRagdoll);
 
                 entityRagdoll.ragdoll.rotateRagdoll(deadEntity.rotationYaw);
 
@@ -74,6 +87,26 @@ public class EventHook {
                     }
                 }*/
             }
+        }
+    }
+
+    @SubscribeEvent
+    public void renderWorld(RenderWorldLastEvent event) {
+        List<EntityRagdoll> ragdollList = SekCPhysics.ragdolls.ragdolls;
+
+        World world = FMLClientHandler.instance().getClientPlayerEntity().world;
+
+        ragdollList.removeIf(ragdoll -> ragdoll.world != world);
+
+        for(EntityRagdoll ragdoll : ragdollList) {
+            renderManager.renderEntityStatic(ragdoll, event.getPartialTicks(), false);
+        }
+    }
+
+    @SubscribeEvent
+    public void worldTicks(TickEvent.ClientTickEvent event) {
+        if(event.side == Side.CLIENT && event.phase == TickEvent.Phase.END) {
+            SekCPhysics.ragdolls.updateRagdolls();
         }
     }
 

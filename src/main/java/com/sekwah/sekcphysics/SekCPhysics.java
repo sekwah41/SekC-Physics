@@ -1,10 +1,8 @@
 package com.sekwah.sekcphysics;
 
 import com.sekwah.sekcphysics.generic.CommonProxy;
-import com.sekwah.sekcphysics.network.UsageReport;
 import com.sekwah.sekcphysics.ragdoll.Ragdolls;
 import com.sekwah.sekcphysics.ragdoll.ragdolls.vanilla.VanillaRagdolls;
-import com.sekwah.sekcphysics.settings.ModSettings;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
@@ -37,23 +35,21 @@ import java.io.File;
  *   Also potentially add physics to the cloak, even if its as a giant square, but maybe split to small blocks and do it like
  *   real cloth
  */
-@Mod(modid = SekCPhysics.modid, name = "SekC Physics", version = SekCPhysics.version)
+@Mod(modid = SekCPhysics.MODID, name = "SekC Physics", version = SekCPhysics.version)
 public class SekCPhysics {
 
-    public static final String modid = "sekcphysics";
+    public static final String MODID = "sekcphysics";
     public static final Logger logger = LogManager.getLogger("SekC Physics");
 
     public static final String version = "0.1.0";
 
-    public static final boolean isDeObf = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
+    public static final boolean IS_DEOBF = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
 
     /**
      * Start using interfaces more
      */
     @Mod.Instance
 	public static SekCPhysics instance;
-
-    public static UsageReport usageReport;
 
     public static Ragdolls ragdolls = new Ragdolls();
 
@@ -68,9 +64,6 @@ public class SekCPhysics {
             logger.error("The mod so far contains only visual features, there is no point having it installed on anything other " +
                     "than a client for now.");
         }
-
-        //SekCPhysics.usageReport = new UsageReport(proxy.isClient());
-        //SekCPhysics.usageReport.startUsageReport();
 
         proxy.init();
 
@@ -87,7 +80,6 @@ public class SekCPhysics {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         configFolder = event.getModConfigurationDirectory();
-        ModSettings.preInit(event);
 
         // Add ProgressManager data for generating and other steps.
 
