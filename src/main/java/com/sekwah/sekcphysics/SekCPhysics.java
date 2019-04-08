@@ -3,6 +3,7 @@ package com.sekwah.sekcphysics;
 import com.sekwah.sekcphysics.generic.CommonProxy;
 import com.sekwah.sekcphysics.ragdoll.Ragdolls;
 import com.sekwah.sekcphysics.ragdoll.ragdolls.vanilla.VanillaRagdolls;
+import com.sekwah.sekcphysics.util.Reflection;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
@@ -41,7 +42,7 @@ public class SekCPhysics {
     public static final String MODID = "sekcphysics";
     public static final Logger logger = LogManager.getLogger("SekC Physics");
 
-    public static final String version = "0.1.0";
+    public static final String version = "0.2.0b1";
 
     public static final boolean IS_DEOBF = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
 
@@ -50,6 +51,8 @@ public class SekCPhysics {
      */
     @Mod.Instance
 	public static SekCPhysics instance;
+
+    public static Reflection reflection = new Reflection();
 
     public static Ragdolls ragdolls = new Ragdolls();
 

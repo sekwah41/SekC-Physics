@@ -1,12 +1,9 @@
 package com.sekwah.sekcphysics.ragdoll.ragdolls.vanilla;
 
-import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.ragdoll.parts.Constraint;
 import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
 import com.sekwah.sekcphysics.ragdoll.parts.Triangle;
 import com.sekwah.sekcphysics.ragdoll.ragdolls.BaseRagdoll;
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelBiped;
 
 /**
  * Created by sekawh on 8/5/2015.

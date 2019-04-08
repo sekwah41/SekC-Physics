@@ -2,9 +2,6 @@ package com.sekwah.sekcphysics.settings;
 
 import com.sekwah.sekcphysics.SekCPhysics;
 import net.minecraftforge.common.config.Config;
-import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.config.Property;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 @Config(modid = SekCPhysics.MODID, name = SekCPhysics.MODID)
 public class RagdollConfig {

@@ -3,12 +3,14 @@ package com.sekwah.sekcphysics.ragdoll.generation;
 import com.google.gson.*;
 import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.maths.PointD;
-import com.sekwah.sekcphysics.ragdoll.generation.data.*;
+import com.sekwah.sekcphysics.ragdoll.generation.data.ModelConstructData;
+import com.sekwah.sekcphysics.ragdoll.generation.data.ModelData;
+import com.sekwah.sekcphysics.ragdoll.generation.data.RagdollData;
+import com.sekwah.sekcphysics.ragdoll.generation.data.RagdollInvalidDataException;
 import com.sekwah.sekcphysics.ragdoll.generation.data.tracker.TriangleTrackerData;
 import com.sekwah.sekcphysics.ragdoll.generation.data.tracker.VertexTrackerData;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.ProgressManager;
@@ -234,11 +236,11 @@ public class RagdollGenerator {
         }
 
         // TODO work on system for multiple skins, e.g. changing villagers based on a tracker or nbt data
-        JsonElement textureEle = ragdollJsonData.get("texture");
+        /*JsonElement textureEle = ragdollJsonData.get("texture");
         if(textureEle != null) {
             JsonArray texture = textureEle.getAsJsonArray();
             modelConstructData.setTextureDomain(texture.get(0).getAsString(), texture.get(1).getAsString());
-        }
+        }*/
 
         JsonObject modelJSON = ragdollJsonData.getAsJsonObject("modelData");
         if(modelJSON != null) {
@@ -422,8 +424,8 @@ public class RagdollGenerator {
     }
 
     private void addExtraModelData(RagdollData ragdollData, ModelData modelData, ModelConstructData modelConstructData) {
-        ResourceData textureDomain = modelConstructData.getTextureDomain();
-        modelData.setTexture(new ResourceLocation(textureDomain.getTextureDomain(), textureDomain.getTexture()));
+        /*ResourceData textureDomain = modelConstructData.getTextureDomain();
+        modelData.setTexture(new ResourceLocation(textureDomain.getTextureDomain(), textureDomain.getTexture()));*/
     }
 
     private ModelRenderer getRendererFromName(String partName, ModelBase modelBase, Class<?> rClass) throws NoSuchFieldException, RagdollInvalidDataException, IllegalAccessException {

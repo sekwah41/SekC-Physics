@@ -2,7 +2,6 @@ package com.sekwah.sekcphysics.ragdoll.generation.data.tracker;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 
 /**

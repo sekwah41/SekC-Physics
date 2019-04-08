@@ -19,9 +19,9 @@ public class EntityRagdoll extends EntityLiving {
 
     public BaseRagdoll ragdoll;
 
-    public int ragdollLife = RagdollConfig.maxRagdolls;
+    public int ragdollLife = RagdollConfig.ragdollLife;
 
-    public boolean ragdollWillDecay = RagdollConfig.maxRagdolls >= 0;
+    public boolean ragdollWillDecay = RagdollConfig.ragdollLife >= 0;
 
     public EntityRagdoll(World world) {
         super(world);
@@ -59,6 +59,11 @@ public class EntityRagdoll extends EntityLiving {
     public void onUpdate()
     {
         super.onUpdate();
+        this.lastTickPosX = this.posX;
+        this.lastTickPosY = this.posY;
+        this.lastTickPosZ = this.posZ;
+        ++this.ticksExisted;
+
         if(this.ragdoll == null) {
             this.setDead();
             return;

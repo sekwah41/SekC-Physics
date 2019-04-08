@@ -1,17 +1,18 @@
 package com.sekwah.sekcphysics.ragdoll;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.client.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.ragdoll.generation.data.RagdollData;
 import com.sekwah.sekcphysics.ragdoll.ragdolls.generated.FromDataRagdoll;
-
+import com.sekwah.sekcphysics.settings.RagdollConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraftforge.fml.client.FMLClientHandler;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by sekawh on 8/4/2015.
@@ -27,15 +28,19 @@ public class Ragdolls {
 
     public List<EntityRagdoll> ragdolls = new ArrayList<>();
 
+    public final Object sync = new Object();
+
+
+
     /**
      * Need to add update counts to the ragdoll data rather than global also 10 is for cloths
      */
     //public static int maxUpdateCount = 10;
 
-    public static float gravity = 0.05F; // alter till it looks the best, also maybe add material values as mods use stuff like
+    public static float gravity = 0.045F; // alter till it looks the best, also maybe add material values as mods use stuff like
 
     public void registerRagdoll(Class<? extends Entity> entityClass, RagdollData ragdollData) {
-        this.entityToRagdollHashmap.put(entityClass.getName(), ragdollData);
+        entityToRagdollHashmap.put(entityClass.getName(), ragdollData);
     }
 
     /**
@@ -44,19 +49,31 @@ public class Ragdolls {
      * @param ragdollData
      */
     public void registerRagdoll(String entityClass, RagdollData ragdollData) {
-        this.entityToRagdollHashmap.put(entityClass, ragdollData);
+        entityToRagdollHashmap.put(entityClass, ragdollData);
     }
 
     public void updateRagdolls() {
-        this.ragdolls.removeIf(ragdoll -> ragdoll.isDead);
+        synchronized (this.sync) {
+            this.ragdolls.removeIf(ragdoll -> ragdoll.isDead);
+            if(RagdollConfig.maxRagdolls != -1) {
+                int removeCount = this.ragdolls.size() - RagdollConfig.maxRagdolls;
+                if(removeCount > 0) {
+                    for (int i = 0; i < removeCount; i++) {
+                        this.ragdolls.remove(0);
+                    }
+                }
+            }
 
-        for(EntityRagdoll ragdoll : this.ragdolls) {
-            ragdoll.onUpdate();
+            for(EntityRagdoll ragdoll : this.ragdolls) {
+                ragdoll.onUpdate();
+            }
         }
     }
 
     public void spawnRagdoll(EntityRagdoll ragdoll) {
-        this.ragdolls.add(ragdoll);
+        synchronized (this.sync) {
+            this.ragdolls.add(ragdoll);
+        }
     }
 
     public FromDataRagdoll createRagdoll(Entity entity) {
@@ -70,12 +87,23 @@ public class Ragdolls {
             if(mc.gameSettings.showDebugInfo) {
                 SekCPhysics.logger.info("Entity died: {}", entity.getClass().getName());
             }
-            RagdollData ragdollData = entityToRagdollHashmap.get(entity.getClass().getName());
-
-            System.out.println(ragdollData);
+            RagdollData ragdollData = entityToRagdollHashmap.computeIfAbsent(entity.getClass().getName(), (key) -> {
+                Class classc = entity.getClass();
+                while(classc != Entity.class) {
+                    classc = classc.getSuperclass();
+                    RagdollData superRagdollData = entityToRagdollHashmap.get(classc.getName());
+                    if (superRagdollData != null) {
+                        RagdollData ragdollDataClone = superRagdollData.clone();
+                        entityToRagdollHashmap.put(entity.getClass().getName(), ragdollDataClone);
+                        return superRagdollData;
+                    }
+                }
+                return null;
+            });
 
             if (ragdollData != null) {
                 ragdoll = new FromDataRagdoll(ragdollData);
+                ragdoll.resourceLocation = SekCPhysics.reflection.getResource(FMLClientHandler.instance().getClient().getRenderManager().getEntityRenderObject(entity), entity);//FMLClientHandler.instance().getClient().getRenderManager().getEntityRenderObject(entity).getEntityTexture(entity);//
             }
         }
         catch (Exception exception)

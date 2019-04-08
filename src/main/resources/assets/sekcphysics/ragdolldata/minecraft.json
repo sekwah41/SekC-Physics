@@ -1,6 +1,5 @@
 {
   "EntityBiped" : {
-    "texture": ["minecraft", "textures/entity/steve.png"],
     "centerHeightOffset" : 24,
     "entityScale" : 1,
     "skeletonPoints":{
@@ -83,9 +82,11 @@
       }
     }
   },
+  "net.minecraft.entity.player.EntityPlayer" : {
+    "inherit" : "EntityBiped"
+  },
   "net.minecraft.entity.monster.EntitySkeleton" : {
     "inherit" : "EntityBiped",
-    "texture": ["minecraft",  "textures/entity/skeleton/skeleton.png"],
     "modelData": {
       "class": "net.minecraft.client.model.ModelSkeleton",
       "classObf" : "bqu"
@@ -93,7 +94,6 @@
   },
   "net.minecraft.entity.monster.EntityZombie" : {
     "inherit" : "EntityBiped",
-    "texture": ["minecraft",  "textures/entity/zombie/zombie.png"],
     "skeletonPoints":{
       "rightArm" : [-6,-2,8],
       "leftArm" : [6,-2,8]
@@ -105,11 +105,9 @@
   },
   "net.minecraft.entity.monster.EntityHusk" : {
     "entityScale" : 1.0625,
-    "inherit" : "net.minecraft.entity.monster.EntityZombie",
-    "texture": ["minecraft",  "textures/entity/zombie/husk.png"]
+    "inherit" : "net.minecraft.entity.monster.EntityZombie"
   },
   "net.minecraft.entity.passive.EntityPig" : {
-    "texture": ["minecraft", "textures/entity/pig/pig.png"],
     "centerHeightOffset" : 24,
     "entityScale" : 1,
     "skeletonPoints":{
