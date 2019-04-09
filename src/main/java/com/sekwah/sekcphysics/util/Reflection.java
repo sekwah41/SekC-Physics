@@ -27,7 +27,7 @@ public class Reflection {
     // Be careful of use, doesnt work well if if there are multiple methods with similar uses.
     private Method findMethod(Class searchClass, Class returnType, Class... parameterTypes) {
         for(Method method : searchClass.getDeclaredMethods()) {
-            System.out.println(method.getName());
+            //System.out.println(method.getName());
             if(method.getReturnType() == returnType && Arrays.equals(method.getParameterTypes(), parameterTypes)) {
                 return method;
             }

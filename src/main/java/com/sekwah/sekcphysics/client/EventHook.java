@@ -31,8 +31,6 @@ import java.util.List;
  */
 public class EventHook {
 
-    public RenderManager renderManager;
-
     @SubscribeEvent
     public void onConfigurationChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
         if (event.getModID().equals(SekCPhysics.MODID)) ConfigManager.sync(SekCPhysics.MODID, Config.Type.INSTANCE);
@@ -110,19 +108,14 @@ public class EventHook {
         }
     }
 
-    @SubscribeEvent
+    /*@SubscribeEvent
     public void renderWorld(RenderWorldLastEvent event) {
-        List<EntityRagdoll> ragdollList = SekCPhysics.ragdolls.ragdolls;
+        RagdollRenderer.hasRendered = false;
+    }*/
 
-        World world = FMLClientHandler.instance().getClientPlayerEntity().world;
-
-        synchronized (SekCPhysics.ragdolls.sync) {
-            ragdollList.removeIf(ragdoll -> ragdoll.world != world);
-
-            for (EntityRagdoll ragdoll : ragdollList) {
-                renderManager.renderEntityStatic(ragdoll, event.getPartialTicks(), false);
-            }
-        }
+    @SubscribeEvent
+    public void renderWorld(TickEvent.RenderTickEvent event) {
+        RagdollRenderer.hasRendered = false;
     }
 
     @SubscribeEvent

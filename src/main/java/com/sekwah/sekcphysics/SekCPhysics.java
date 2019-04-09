@@ -35,6 +35,8 @@ import java.io.File;
  *
  *   Also potentially add physics to the cloak, even if its as a giant square, but maybe split to small blocks and do it like
  *   real cloth
+ *
+ *   Look at hooks https://github.com/elucent/Albedo/blob/master/src/main/java/elucent/albedo/asm/ASMTransformer.java
  */
 @Mod(modid = SekCPhysics.MODID, name = "SekC Physics", version = SekCPhysics.version)
 public class SekCPhysics {

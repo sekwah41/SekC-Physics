@@ -5,6 +5,7 @@ Potentially will support addons so not all features have to be included and othe
 
 Ragdolls will be generated on startup based on the mods installed. So if you are a mod author and want your mobs to work with this mod feel free to contact me or go ahead and add the data yourself if you want to.
 
+Run VM args `-Dfml.coreMods.load=com.sekwah.sekcphysics.asm.SekCore`
 
 Names for compiled http://export.mcpbot.bspk.rs/
 

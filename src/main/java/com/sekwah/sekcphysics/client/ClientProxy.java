@@ -38,7 +38,7 @@ public class ClientProxy extends CommonProxy {
         new RagdollGenerator().loadRagdolls();
         //VanillaRagdolls.register();
 
-        eventHook.renderManager = Minecraft.getMinecraft().getRenderManager();
+        RagdollRenderer.renderManager = Minecraft.getMinecraft().getRenderManager();
     }
 
     @Override
