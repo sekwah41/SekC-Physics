@@ -15,7 +15,7 @@ public class RagdollRenderer {
     public static RenderManager renderManager;
 
     public static Minecraft mc = Minecraft.getMinecraft();
-    public static boolean hasRendered = true;
+    public static int renderCounter = 0;
 
     public static void renderRagdolls(String profileName) {
 
@@ -23,7 +23,13 @@ public class RagdollRenderer {
 
         int pass = MinecraftForgeClient.getRenderPass();
 
-        if(pass != -1) return;
+        if(pass == -1) {
+            renderCounter = 0;
+        }
+
+        if(renderCounter++ != 1) return;
+
+        //if(pass != -1) return;
 
         List<EntityRagdoll> ragdollList = SekCPhysics.ragdolls.ragdolls;
 

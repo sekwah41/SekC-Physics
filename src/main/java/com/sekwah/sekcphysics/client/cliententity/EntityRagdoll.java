@@ -23,13 +23,24 @@ public class EntityRagdoll extends EntityLiving {
 
     public boolean ragdollWillDecay = RagdollConfig.ragdollLife >= 0;
 
+    public double tempPosX;
+    public double tempPosY;
+    public double tempPosZ;
+    public AxisAlignedBB tempBoundingBox;
+
     public EntityRagdoll(World world) {
         super(world);
+        this.stepHeight = 0.1f;
+    }
+
+    public boolean canBePushed()
+    {
+        return false;
     }
 
     public EntityRagdoll(World world, BaseRagdoll ragdoll) {
         this(world);
-        this.noClip = true;
+        //this.noClip = true;
         this.ignoreFrustumCheck = true;
 
         this.setSize(0.15F, 0.15F);

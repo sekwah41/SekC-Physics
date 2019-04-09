@@ -3,7 +3,9 @@ package com.sekwah.sekcphysics.ragdoll.parts;
 import com.sekwah.sekcphysics.client.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.maths.VectorMaths;
+import com.sekwah.sekcphysics.ragdoll.Ragdolls;
 import com.sekwah.sekcphysics.ragdoll.parts.trackers.Tracker;
+import net.minecraft.util.math.AxisAlignedBB;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
@@ -61,7 +63,9 @@ public class Skeleton {
      * @param entity
      */
     public void update(EntityRagdoll entity) {
-        
+
+        this.storeTemp(entity);
+
         for(SkeletonPoint point : points) {
             point.update(entity);
         }
@@ -86,6 +90,24 @@ public class Skeleton {
             tracker.calcPosition();
         }
 
+        this.loadTemp(entity);
+
+    }
+
+    private void storeTemp(EntityRagdoll entity) {
+        entity.noClip = false;
+        entity.tempPosX = entity.posX;
+        entity.tempPosY = entity.posY;
+        entity.tempPosZ = entity.posZ;
+        entity.tempBoundingBox = entity.getEntityBoundingBox();
+    }
+
+    private void loadTemp(EntityRagdoll entity) {
+        entity.noClip = true;
+        entity.posX = entity.tempPosX;
+        entity.posY = entity.tempPosY;
+        entity.posZ = entity.tempPosZ;
+        entity.setEntityBoundingBox(entity.tempBoundingBox);
     }
 
     public void updateLastLocations(EntityRagdoll entity) {
@@ -167,10 +189,12 @@ public class Skeleton {
     }
 
     public void verifyPoints(EntityRagdoll entity) {
+        this.storeTemp(entity);
         for(SkeletonPoint point : points) {
             point.verify(entity);
             //point.movePoint(entity);
         }
+        this.loadTemp(entity);
     }
 
     public void shiftPos(double x, double y, double z) {

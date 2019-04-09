@@ -5,6 +5,7 @@ import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.ragdoll.Ragdolls;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.MoverType;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 
@@ -95,47 +96,23 @@ public class SkeletonPoint {
 
     public void movePoint(EntityRagdoll entity, double moveX, double moveY, double moveZ) {
 
-        double pointPosX = entity.posX + this.posX;
-        double pointPosY = entity.posY + this.posY;
-        double pointPosZ = entity.posZ + this.posZ;
+        double pointPosX = entity.tempPosX + this.posX;
+        double pointPosY = entity.tempPosY + this.posY;
+        double pointPosZ = entity.tempPosZ + this.posZ;
 
-        AxisAlignedBB axisalignedbb = new AxisAlignedBB(pointPosX - size, pointPosY - size, pointPosZ - size,
-                pointPosX + size, pointPosY + size, pointPosZ + size);
+        entity.setEntityBoundingBox(new AxisAlignedBB(pointPosX - size, pointPosY - size, pointPosZ - size,
+                pointPosX + size, pointPosY + size, pointPosZ + size));
 
-        //axisalignedbb.offset(this.posX, this.posY, this.posZ);
+        entity.move(MoverType.SELF, moveX, moveY, moveZ);
 
-        List<AxisAlignedBB> list = entity.world.getCollisionBoxes(entity, axisalignedbb.expand(moveX, moveY, moveZ));
+        AxisAlignedBB boundingBox = entity.getEntityBoundingBox();
 
-        double oMoveY = moveY;
+        this.posX = (boundingBox.minX + boundingBox.maxX) / 2.0D - entity.tempPosX;
+        this.posY = (boundingBox.minY + boundingBox.maxY) / 2.0D - entity.tempPosY;
+        this.posZ = (boundingBox.minZ + boundingBox.maxZ) / 2.0D - entity.tempPosZ;
 
-        for (int k = 0; k < list.size(); ++k)
-        {
-            moveY = list.get(k).calculateYOffset(axisalignedbb, moveY);
-        }
-
-        if(oMoveY < 0 && moveY != oMoveY) {
-            onGround = true;
-        }
-
-        axisalignedbb = axisalignedbb.offset(0.0D, moveY, 0.0D);
-
-        for (int k = 0; k < list.size(); ++k)
-        {
-            moveX = list.get(k).calculateXOffset(axisalignedbb, moveX);
-        }
-
-        axisalignedbb = axisalignedbb.offset(moveX, 0.0D, 0.0D);
-
-        for (int k = 0; k < list.size(); ++k)
-        {
-            moveZ = list.get(k).calculateZOffset(axisalignedbb, moveZ);
-        }
-
-        axisalignedbb = axisalignedbb.offset(0.0D, 0.0D, moveZ);
-
-        this.posX = (axisalignedbb.minX + axisalignedbb.maxX) / 2.0D - entity.posX;
-        this.posY = (axisalignedbb.minY + axisalignedbb.maxY) / 2.0D - entity.posY;
-        this.posZ = (axisalignedbb.minZ + axisalignedbb.maxZ) / 2.0D - entity.posZ;
+        // Second half is to counteract slightly odd onGround values despite always being on ground (check to see if gravity is being applied properly)
+        this.onGround = entity.onGround || Math.abs(this.lastPosY - this.posY) < 0.01f;
 
         this.checkWillMove();
     }

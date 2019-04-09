@@ -54,7 +54,8 @@ public class Ragdolls {
 
     public void updateRagdolls() {
         synchronized (this.sync) {
-            this.ragdolls.removeIf(ragdoll -> ragdoll.isDead);
+            Entity player = FMLClientHandler.instance().getClientPlayerEntity();
+            this.ragdolls.removeIf(ragdoll -> ragdoll.isDead || ragdoll.posY < -64 || ragdoll.getDistanceSq(player) > 64 * 64);
             if(RagdollConfig.maxRagdolls != -1) {
                 int removeCount = this.ragdolls.size() - RagdollConfig.maxRagdolls;
                 if(removeCount > 0) {

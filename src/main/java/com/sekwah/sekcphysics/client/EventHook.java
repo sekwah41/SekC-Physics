@@ -114,11 +114,6 @@ public class EventHook {
     }*/
 
     @SubscribeEvent
-    public void renderWorld(TickEvent.RenderTickEvent event) {
-        RagdollRenderer.hasRendered = false;
-    }
-
-    @SubscribeEvent
     public void worldTicks(TickEvent.ClientTickEvent event) {
         if(event.side == Side.CLIENT && event.phase == TickEvent.Phase.END) {
             SekCPhysics.ragdolls.updateRagdolls();
