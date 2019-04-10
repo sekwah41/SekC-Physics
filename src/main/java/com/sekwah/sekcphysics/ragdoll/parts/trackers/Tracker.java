@@ -64,15 +64,15 @@ public abstract class Tracker {
     }
 
     protected void renderPart(float partialTicks) {
-        this.renderPart(partialTicks, 0.0625f);
+        this.renderPart(partialTicks, 1);
     }
 
     protected void renderPart(float partialTicks, float scale) {
         GlStateManager.pushMatrix();
-        this.smoothLocation(partialTicks);
+        this.smoothLocation(partialTicks, scale);
         this.smoothRotation(partialTicks);
         this.applyOffset();
-        this.part.render(scale);
+        this.part.render(0.0625f * scale);
         GlStateManager.popMatrix();
     }
 
@@ -100,10 +100,10 @@ public abstract class Tracker {
      * For rendering, not generally setting
      * @param partialTicks
      */
-    protected void smoothLocation(float partialTicks) {
-        GlStateManager.translate((float) (this.lastPosition.x + this.positionDiff.x * partialTicks),
-                (float) (this.lastPosition.y + this.positionDiff.y * partialTicks),
-                (float) (this.lastPosition.z + this.positionDiff.z * partialTicks));
+    protected void smoothLocation(float partialTicks, float scale) {
+        GlStateManager.translate((float) (this.lastPosition.x + this.positionDiff.x * partialTicks) * scale,
+                (float) (this.lastPosition.y + this.positionDiff.y * partialTicks) * scale,
+                (float) (this.lastPosition.z + this.positionDiff.z * partialTicks) * scale);
     }
 
     /**

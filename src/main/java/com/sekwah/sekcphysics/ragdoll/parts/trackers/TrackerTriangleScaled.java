@@ -28,7 +28,7 @@ public class TrackerTriangleScaled extends TrackerTriangle {
     }
 
     public void render(float partialTicks) {
-        this.renderPart(partialTicks, 0.0625f * this.scale);
+        this.renderPart(partialTicks, this.scale);
     }
 
     @Override

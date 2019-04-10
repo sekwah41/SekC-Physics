@@ -27,7 +27,7 @@ public class TrackerVertexScaled extends TrackerVertex {
     @Override
     public void render(float partialTicks) {
 
-        this.renderPart(partialTicks, 0.0625f * this.scale);
+        this.renderPart(partialTicks, this.scale);
 
         // TODO Look at the length in comparison (store it when calculating physics) and stretch it based on the percentage xD
         //GlStateManager.scale(1,scaleFactorStretch,0);

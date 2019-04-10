@@ -19,7 +19,7 @@ public class EntityRagdoll extends EntityLiving {
 
     public BaseRagdoll ragdoll;
 
-    public int ragdollLife = RagdollConfig.ragdollLife;
+    public int ragdollLife = RagdollConfig.ragdollLife * 20;
 
     public boolean ragdollWillDecay = RagdollConfig.ragdollLife >= 0;
 

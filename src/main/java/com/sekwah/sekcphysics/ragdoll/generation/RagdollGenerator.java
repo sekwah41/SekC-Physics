@@ -246,12 +246,13 @@ public class RagdollGenerator {
         if(modelJSON != null) {
 
             // TODO example of a place where checking if its a dev environment is needed so switch it over
-            if(SekCPhysics.IS_DEOBF || !modelJSON.has("classObf")) {
+            modelConstructData.setClassName(modelJSON.get("class").getAsString());
+            /*if(SekCPhysics.IS_DEOBF || !modelJSON.has("classObf")) {
                 modelConstructData.setClassName(modelJSON.get("class").getAsString());
             }
             else {
                 modelConstructData.setClassName(modelJSON.get("classObf").getAsString());
-            }
+            }*/
             //modelConstructData.setClassName(modelJSON.get("class").getAsString());
 
             JsonArray constructData = modelJSON.getAsJsonArray("constructData");

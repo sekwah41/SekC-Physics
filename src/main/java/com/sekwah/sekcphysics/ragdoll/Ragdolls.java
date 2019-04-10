@@ -7,6 +7,7 @@ import com.sekwah.sekcphysics.ragdoll.ragdolls.generated.FromDataRagdoll;
 import com.sekwah.sekcphysics.settings.RagdollConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraftforge.fml.client.FMLClientHandler;
 
 import java.util.ArrayList;
@@ -66,7 +67,9 @@ public class Ragdolls {
             }
 
             for(EntityRagdoll ragdoll : this.ragdolls) {
-                ragdoll.onUpdate();
+                if(ragdoll.getEntityWorld().getChunkFromChunkCoords((int) ragdoll.posX / 16, (int) ragdoll.posZ / 16).isLoaded()) {
+                    ragdoll.onUpdate();
+                }
             }
         }
     }
