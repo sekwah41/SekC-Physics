@@ -85,7 +85,7 @@ public class RenderRagdoll<T extends EntityRagdoll> extends RenderLiving<T> {
 
         if(mc.gameSettings.showDebugInfo) {
             GlStateManager.disableDepth();
-            entity.ragdoll.skeleton.renderSkeletonDebug(entity.ragdoll.activeStatus());
+            entity.ragdoll.skeleton.renderSkeletonDebug(entity.ragdoll.activeStatus(), mc.getRenderManager().isDebugBoundingBox());
             GlStateManager.enableDepth();
         }
         GlStateManager.popMatrix();

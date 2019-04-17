@@ -119,8 +119,9 @@ public class Skeleton {
     /**
      * Renders all the constraints as lines, also maybe add the linked triangles next. Create a skleton for the
      * @param activeStatus
+     * @param debugBoundingBox
      */
-    public void renderSkeletonDebug(int activeStatus) {
+    public void renderSkeletonDebug(int activeStatus, boolean debugBoundingBox) {
         glDisable(GL_CULL_FACE);
         glDisable(GL11.GL_TEXTURE_2D);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -159,10 +160,50 @@ public class Skeleton {
             drawLine(basePoint, normalPoint);
             glColor4f(1f,1f,1f, 1.0f);
         }
+
+        if(debugBoundingBox) {
+            for(SkeletonPoint point : points) {
+                drawCube(point);
+            }
+        }
+
         glEnable(GL11.GL_TEXTURE_2D);
         GL11.glEnable(GL11.GL_ALPHA_TEST);
 
         GL11.glEnable(GL11.GL_LIGHTING);
+    }
+
+    public void drawCube(SkeletonPoint point) {
+        float size = point.getSize();
+        glBegin(GL_LINE_STRIP);
+        glVertex3d(point.posX + size, point.posY + size, point.posZ + size);
+        glVertex3d(point.posX - size, point.posY + size, point.posZ + size);
+        glVertex3d(point.posX - size, point.posY + size, point.posZ - size);
+        glVertex3d(point.posX + size, point.posY + size, point.posZ - size);
+        glVertex3d(point.posX + size, point.posY + size, point.posZ + size);
+
+        glVertex3d(point.posX + size, point.posY - size, point.posZ + size);
+        glVertex3d(point.posX - size, point.posY - size, point.posZ + size);
+        glVertex3d(point.posX - size, point.posY - size, point.posZ - size);
+        glVertex3d(point.posX + size, point.posY - size, point.posZ - size);
+        glVertex3d(point.posX + size, point.posY - size, point.posZ + size);
+        glEnd();
+
+        glBegin(GL_LINE_STRIP);
+        glVertex3d(point.posX - size, point.posY - size, point.posZ + size);
+        glVertex3d(point.posX - size, point.posY + size, point.posZ + size);
+        glEnd();
+
+        glBegin(GL_LINE_STRIP);
+        glVertex3d(point.posX - size, point.posY - size, point.posZ - size);
+        glVertex3d(point.posX - size, point.posY + size, point.posZ - size);
+        glEnd();
+
+        glBegin(GL_LINE_STRIP);
+        glVertex3d(point.posX + size, point.posY - size, point.posZ - size);
+        glVertex3d(point.posX + size, point.posY + size, point.posZ - size);
+        glEnd();
+
     }
 
     public void drawLine(SkeletonPoint point, SkeletonPoint point2) {

@@ -87,6 +87,10 @@ public class SkeletonPoint {
         this.setPosition(this.posX * 16f, this.posY * 16f, this.posZ * 16f);
     }
 
+    public float getSize() {
+        return this.size;
+    }
+
     public void setPosition(double x, double y, double z) {
         this.lastPosX = this.newPosX = this.posX = x;
         this.lastPosY = this.newPosY = this.posY = y;
