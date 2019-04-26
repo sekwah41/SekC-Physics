@@ -11,8 +11,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class ClientWorldMixin {
 
     // Tick method
-    @Inject(method = "method_18116", at = @At("RETURN"))
-    public void method_18116(CallbackInfo ci) {
+    @Inject(method = "tickEntities", at = @At("RETURN"))
+    public void tickEntities(CallbackInfo ci) {
         SekCPhysics.ragdolls.updateRagdolls();
     }
 

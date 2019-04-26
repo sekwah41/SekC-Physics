@@ -61,7 +61,9 @@ public class Skeleton {
      * @param entity
      */
     public void update(RagdollEntity entity) {
-        
+
+        this.storeTemp(entity);
+
         for(SkeletonPoint point : points) {
             point.update(entity);
         }
@@ -86,6 +88,24 @@ public class Skeleton {
             tracker.calcPosition();
         }
 
+        this.loadTemp(entity);
+
+    }
+
+    private void storeTemp(RagdollEntity entity) {
+        entity.noClip = false;
+        entity.tempPosX = entity.x;
+        entity.tempPosY = entity.y;
+        entity.tempPosZ = entity.z;
+        entity.tempBoundingBox = entity.getBoundingBox();
+    }
+
+    private void loadTemp(RagdollEntity entity) {
+        entity.noClip = true;
+        entity.x = entity.tempPosX;
+        entity.y = entity.tempPosY;
+        entity.z = entity.tempPosZ;
+        entity.setBoundingBox(entity.tempBoundingBox);
     }
 
     public void renderSkeletonDebug() {
@@ -165,6 +185,7 @@ public class Skeleton {
     }
 
     public void verifyPoints(RagdollEntity entity) {
+        this.storeTemp(entity);
         for(SkeletonPoint point : points) {
             point.verify(entity);
         }
@@ -172,6 +193,7 @@ public class Skeleton {
             tracker.updateLastPos();
             tracker.updatePosDifference();
         }
+        this.loadTemp(entity);
     }
 
     public void shiftPos(double x, double y, double z) {

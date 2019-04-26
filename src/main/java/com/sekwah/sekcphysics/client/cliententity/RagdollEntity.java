@@ -3,6 +3,7 @@ package com.sekwah.sekcphysics.client.cliententity;
 import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.ragdoll.ragdolls.BaseRagdoll;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -22,10 +23,16 @@ public class RagdollEntity extends LivingEntity {
 
     public BaseRagdoll ragdoll;
 
+    public double tempPosX;
+    public double tempPosY;
+    public double tempPosZ;
+    public BoundingBox tempBoundingBox;
+
     private int remainingLife = 600;
 
     public RagdollEntity(World world) {
         this(SekCPhysics.RAGDOLL, world);
+        this.stepHeight = 0.1f;
     }
 
     public RagdollEntity(EntityType<? extends LivingEntity> entityType, World world) {
@@ -38,7 +45,7 @@ public class RagdollEntity extends LivingEntity {
     }
 
     @Override
-    public Iterable<ItemStack> getItemsArmor() {
+    public Iterable<ItemStack> getArmorItems() {
         return null;
     }
 
@@ -115,8 +122,13 @@ public class RagdollEntity extends LivingEntity {
     }
 
     @Override
-    public void updateLogic()
+    public void tick()
     {
+        this.prevRenderX = this.x;
+        this.prevRenderY = this.y;
+        this.prevRenderZ = this.z;
+        ++this.age;
+
         if(this.ragdoll == null) {
             this.destroy();
             return;
@@ -133,7 +145,7 @@ public class RagdollEntity extends LivingEntity {
                 this.world.addParticle(ParticleTypes.CLOUD, this.x + (double) (this.random.nextFloat() * poofSize * 2.0F) - (double) poofSize, this.y + this.getHeight() / 2 + (double) (this.random.nextFloat() * this.getHeight()), this.z + (double) (this.random.nextFloat() * poofSize * 2.0F) - (double) poofSize, d0, d1, d2);
             }
 
-            this.invalidate();
+            this.remove();
             return;
         }
 

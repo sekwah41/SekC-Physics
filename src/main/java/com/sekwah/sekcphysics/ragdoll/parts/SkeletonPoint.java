@@ -5,6 +5,7 @@ import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.ragdoll.Ragdolls;
 import net.minecraft.block.Material;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.MovementType;
 import net.minecraft.entity.VerticalEntityPosition;
 import net.minecraft.util.BooleanBiFunction;
 import net.minecraft.util.LoopingStream;
@@ -105,71 +106,26 @@ public class SkeletonPoint {
 
     private void movePoint(RagdollEntity entity, Vec3d moveVec) {
 
-        BoundingBox boundingBox_1 = this.getBoundingBox(entity);
-        VerticalEntityPosition verticalEntityPosition_1 = VerticalEntityPosition.fromEntity(entity);
-        VoxelShape voxelShape_1 = entity.world.getWorldBorder().asVoxelShape();
-        Stream<VoxelShape> stream_1 = VoxelShapes.compareShapes(voxelShape_1, VoxelShapes.cube(boundingBox_1.contract(1.0E-7D)), BooleanBiFunction.AND) ? Stream.empty() : Stream.of(voxelShape_1);
-        BoundingBox boundingBox_2 = boundingBox_1.method_18804(moveVec).expand(1.0E-7D);
-        Stream var10000 = entity.world.getVisibleEntities(entity, boundingBox_2).stream().filter((entity_1) -> !entity.method_5794(entity_1))
-                .flatMap((entity_1) -> Stream.of(entity_1.method_5827(), entity.method_5708(entity_1))).filter(Objects::nonNull);
-        Stream<VoxelShape> stream_2 = var10000.filter((box) -> boundingBox_2.intersects((BoundingBox) box)).map((box) -> VoxelShapes.cube((BoundingBox) box));
-        LoopingStream<VoxelShape> loopingStream_1 = new LoopingStream(Stream.concat(stream_2, stream_1));
-        Vec3d vec3d_2 = moveVec.lengthSquared() == 0.0D ? moveVec : Entity.method_17833(moveVec, boundingBox_1, entity.world, verticalEntityPosition_1, loopingStream_1);
-        boolean boolean_1 = moveVec.x != vec3d_2.x;
-        boolean boolean_2 = moveVec.y != vec3d_2.y;
-        boolean boolean_3 = moveVec.z != vec3d_2.z;
-        boolean boolean_4 = entity.onGround || boolean_2 && moveVec.y < 0.0D;
-        if (entity.stepHeight > 0.0F && boolean_4 && (boolean_1 || boolean_3)) {
-            Vec3d vec3d_3 = Entity.method_17833(new Vec3d(moveVec.x, (double)entity.stepHeight, moveVec.z), boundingBox_1, entity.world, verticalEntityPosition_1, loopingStream_1);
-            Vec3d vec3d_4 = Entity.method_17833(new Vec3d(0.0D, (double)entity.stepHeight, 0.0D), boundingBox_1.stretch(moveVec.x, 0.0D, moveVec.z), entity.world, verticalEntityPosition_1, loopingStream_1);
-            if (vec3d_4.y < (double)entity.stepHeight) {
-                Vec3d vec3d_5 = Entity.method_17833(new Vec3d(moveVec.x, 0.0D, moveVec.z), boundingBox_1.offset(vec3d_4), entity.world, verticalEntityPosition_1, loopingStream_1).add(vec3d_4);
-                if (Entity.squaredHorizontalLength(vec3d_5) > Entity.squaredHorizontalLength(vec3d_3)) {
-                    vec3d_3 = vec3d_5;
-                }
-            }
+        double pointPosX = entity.tempPosX + this.posX;
+        double pointPosY = entity.tempPosY + this.posY;
+        double pointPosZ = entity.tempPosZ + this.posZ;
 
-            if (Entity.squaredHorizontalLength(vec3d_3) > Entity.squaredHorizontalLength(vec3d_2)) {
-                applyMove(vec3d_3.add(movePoint(new Vec3d(0.0D, -vec3d_3.y + moveVec.y, 0.0D), boundingBox_1.offset(vec3d_3), entity.world, verticalEntityPosition_1, loopingStream_1)));
-                return;
-            }
-        }
+        entity.setBoundingBox(new BoundingBox(pointPosX - size, pointPosY - size, pointPosZ - size,
+                pointPosX + size, pointPosY + size, pointPosZ + size));
+
+        entity.move(MovementType.SELF, moveVec);
+
+        BoundingBox boundingBox = entity.getBoundingBox();
+
+        this.posX = (boundingBox.minX + boundingBox.maxX) / 2.0D - entity.tempPosX;
+        this.posY = (boundingBox.minY + boundingBox.maxY) / 2.0D - entity.tempPosY;
+        this.posZ = (boundingBox.minZ + boundingBox.maxZ) / 2.0D - entity.tempPosZ;
+
+        // Second half is to counteract slightly odd onGround values despite always being on ground (check to see if gravity is being applied properly)
+        this.onGround = entity.onGround || Math.abs(this.lastPosY - this.posY) < 0.01f;
 
         //applyMove(vec3d_2);
-        applyMove(moveVec);
-    }
-
-    public static Vec3d movePoint(Vec3d moveVec, BoundingBox boundingBox_1, ViewableWorld viewableWorld_1, VerticalEntityPosition verticalEntityPosition_1, LoopingStream<VoxelShape> loopingStream_1) {
-        double double_1 = moveVec.x;
-        double double_2 = moveVec.y;
-        double double_3 = moveVec.z;
-        if (double_2 != 0.0D) {
-            double_2 = VoxelShapes.method_17945(Direction.Axis.Y, boundingBox_1, viewableWorld_1, double_2, verticalEntityPosition_1, loopingStream_1.getStream());
-            if (double_2 != 0.0D) {
-                boundingBox_1 = boundingBox_1.offset(0.0D, double_2, 0.0D);
-            }
-        }
-
-        boolean boolean_1 = Math.abs(double_1) < Math.abs(double_3);
-        if (boolean_1 && double_3 != 0.0D) {
-            double_3 = VoxelShapes.method_17945(Direction.Axis.Z, boundingBox_1, viewableWorld_1, double_3, verticalEntityPosition_1, loopingStream_1.getStream());
-            if (double_3 != 0.0D) {
-                boundingBox_1 = boundingBox_1.offset(0.0D, 0.0D, double_3);
-            }
-        }
-
-        if (double_1 != 0.0D) {
-            double_1 = VoxelShapes.method_17945(Direction.Axis.X, boundingBox_1, viewableWorld_1, double_1, verticalEntityPosition_1, loopingStream_1.getStream());
-            if (!boolean_1 && double_1 != 0.0D) {
-                boundingBox_1 = boundingBox_1.offset(double_1, 0.0D, 0.0D);
-            }
-        }
-
-        if (!boolean_1 && double_3 != 0.0D) {
-            double_3 = VoxelShapes.method_17945(Direction.Axis.Z, boundingBox_1, viewableWorld_1, double_3, verticalEntityPosition_1, loopingStream_1.getStream());
-        }
-
-        return new Vec3d(double_1, double_2, double_3);
+        this.checkWillMove();
     }
 
     private void applyMove(Vec3d vec3d) {
@@ -240,7 +196,7 @@ public class SkeletonPoint {
         this.velY -= Ragdolls.gravity;
 
         // TODO check how the player gets this, i has roughly been coded for 1.13 as a test
-        if (entity.world.containsBlockWithMaterial(axisalignedbb.expand(0.0D, -0.4000000059604645D, 0.0D).contract(0.001D, 0.001D, 0.001D), Material.WATER)) {
+        if (entity.world.containsBlockWithMaterial(axisalignedbb.expand(0.0D, -0.4000000059604645D, 0.0D).shrink(0.001D, 0.001D, 0.001D), Material.WATER)) {
             this.addVelocity(0, 0.06f, 0);
             if(!this.inWater) {
                 this.inWater = true;
@@ -294,7 +250,7 @@ public class SkeletonPoint {
         BoundingBox boundingBox = new BoundingBox(pointPosX - size, pointPosY - size, pointPosZ - size,
                 pointPosX + size, pointPosY + size, pointPosZ + size);
 
-        List list = entity.world.getVisibleEntities(entity, boundingBox.expand(0.20000000298023224D, 0.0D, 0.20000000298023224D));
+        List list = entity.world.getEntities(entity, boundingBox.expand(0.20000000298023224D, 0.0D, 0.20000000298023224D));
 
         if (list != null && !list.isEmpty())
         {

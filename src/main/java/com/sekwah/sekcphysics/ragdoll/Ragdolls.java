@@ -36,8 +36,8 @@ public class Ragdolls {
      */
     //public static int maxUpdateCount = 10;
 
-    //public static float gravity = 0.05F;
-    public static float gravity = 0F;
+    public static float gravity = 0.05F;
+    //public static float gravity = 0F;
 
     public void registerRagdoll(Class<? extends Entity> entityClass, RagdollData ragdollData) {
         this.entityToRagdollHashmap.put(entityClass.getName(), ragdollData);
@@ -54,10 +54,10 @@ public class Ragdolls {
     }
 
     public void updateRagdolls() {
-        this.ragdolls.removeIf(ragdoll -> ragdoll.invalid);
+        this.ragdolls.removeIf(ragdoll -> ragdoll.removed);
 
         for(RagdollEntity ragdoll : this.ragdolls) {
-            ragdoll.updateLogic();
+            ragdoll.tick();
         }
     }
 

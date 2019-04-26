@@ -62,7 +62,7 @@ public abstract class EntityDeathMixin extends Entity {
                 entityRagdoll.setEquippedStack(slot, this.getEquippedStack(slot));
             }
 
-            this.invalidate();
+            this.remove();
         }
 
     }
