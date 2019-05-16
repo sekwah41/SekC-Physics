@@ -2,7 +2,7 @@
   "required": true,
   "package": "com.sekwah.sekcphysics.mixins.client",
   "compatibilityLevel": "JAVA_8",
-  "mixins": [
+  "client": [
     "EntityDeathMixin",
     "WorldRendererMixin",
     "EntityRendererMixin",

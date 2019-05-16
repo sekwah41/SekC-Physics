@@ -2,30 +2,69 @@ plugins {
 	id 'fabric-loom' version '0.2.2-SNAPSHOT'
 }
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
 
-archivesBaseName = "sekcphysics"
-version = "0.2.0"
-
-repositories {
-	maven {url "https://maven.jamieswhiteshirt.com/libs-release/"}
-}
+archivesBaseName = project.archives_base_name
+version = project.mod_version
+group = project.maven_group
 
 minecraft {
+}
+
+repositories {
+	maven {
+		name = "FabricMC"
+		url = "https://maven.fabricmc.net"
+	}
+
+	maven {
+		name = "CurseForge"
+		url = "https://minecraft.curseforge.com/api/maven"
+	}
+
+	maven {
+		name = "JamiesWhiteShirt"
+		url = "https://maven.jamieswhiteshirt.com/libs-release"
+	}
+
+	maven { url "https://minecraft.curseforge.com/api/maven"}
+}
+
+processResources {
+	inputs.property "version", project.version
+
+	from(sourceSets.main.resources.srcDirs) {
+		include "fabric.mod.json"
+		expand "version": project.version
+	}
+
+	from(sourceSets.main.resources.srcDirs) {
+		exclude "fabric.mod.json"
+	}
 }
 
 dependencies {
 	// https://modmuss50.me/fabric.html
 	// http://fabric.asie.pl/use/
-	minecraft "com.mojang:minecraft:1.14"
-	mappings "net.fabricmc:yarn:1.14+build.3"
-	modCompile "net.fabricmc:fabric-loader:0.4.3+build.134"
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	mappings "net.fabricmc:yarn:${project.yarn_mappings}"
+	modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
-	// https://minecraft.curseforge.com/projects/fabric/files
-	modCompile "net.fabricmc:fabric:0.2.7+build.127"
-	
-	// Useful for quicker testing (thank you JamiesWhiteShirt you magnificent bastard <3)
-	//modCompile "com.jamieswhiteshirt:developer-mode:1.0.2"
+	modCompile "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+	modCompile "io.github.prospector.modmenu:ModMenu:${project.modmenu_version}"
+
+	modCompile "com.jamieswhiteshirt:developer-mode:${project.developer_mode_version}"
+
+	modCompile "whilewewait:whilewewait:${project.while_we_wait_version}"
+
+	modCompile "cloth-config:ClothConfig:${project.cloth_config_version}"
+
+	modCompile "gamemode-numbers-fabric:GamemodeNumbers:${project.gm_numbers_version}"
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+	classifier = 'sources'
+	from sourceSets.main.allSource
 }

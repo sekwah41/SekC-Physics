@@ -102,8 +102,8 @@ public class RenderRagdoll<T extends RagdollEntity, M extends EntityModel<T>> ex
     private void renderHandItems(T entity, BaseRagdoll baseRagdoll) {
         if(baseRagdoll.baseModel instanceof BipedEntityModel) {
             BipedEntityModel modelBiped = (BipedEntityModel) baseRagdoll.baseModel;
-            ItemStack leftHand = entity.getEquippedStack(EquipmentSlot.HAND_OFF);
-            ItemStack rightHand = entity.getEquippedStack(EquipmentSlot.HAND_MAIN);
+            ItemStack leftHand = entity.getEquippedStack(EquipmentSlot.MAINHAND);
+            ItemStack rightHand = entity.getEquippedStack(EquipmentSlot.OFFHAND);
             if(!leftHand.isEmpty()) {
                 this.renderHeldItem(entity, modelBiped, leftHand, ModelTransformation.Type.THIRD_PERSON_LEFT_HAND, AbsoluteHand.LEFT);
             }

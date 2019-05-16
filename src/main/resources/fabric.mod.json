@@ -1,14 +1,28 @@
 {
+  "schemaVersion": 1,
   "id": "sekcphysics",
   "name": "SekC Physics",
+  "version": "${version}",
+  "authors": [
+    "Sekwah"
+  ],
   "description": "A ragdoll physics mod for Minecraft",
-  "version": "0.1.0",
-  "side": "client",
-  "initializer": "com.sekwah.sekcphysics.SekCPhysics",
-  "requires": {
+  "environment": "client",
+  "contact": {
+    "homepage": "https://minecraft.curseforge.com/projects/sekc-physics-fabric",
+    "sources": "https://github.com/sekwah41/SekC-Physics",
+    "issues": "https://github.com/sekwah41/SekC-Physics/issues"
+  },
+  "entrypoints": {
+    "client": [
+      "com.sekwah.sekcphysics.SekCPhysics"
+    ]
+  },
+  "recommends": {
     "fabric": "*"
   },
-  "mixins": {
-    "client": "mixins.sekcphysics.client.json"
+  "mixins": ["mixins.sekcphysics.json"],
+  "custom": {
+    "modmenu:clientsideOnly": true
   }
 }

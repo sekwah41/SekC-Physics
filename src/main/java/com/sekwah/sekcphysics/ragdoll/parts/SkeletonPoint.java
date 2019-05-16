@@ -6,20 +6,11 @@ import com.sekwah.sekcphysics.ragdoll.Ragdolls;
 import net.minecraft.block.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MovementType;
-import net.minecraft.entity.VerticalEntityPosition;
-import net.minecraft.util.BooleanBiFunction;
-import net.minecraft.util.LoopingStream;
 import net.minecraft.util.math.BoundingBox;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.ViewableWorld;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Stream;
 
 /**
  * Created by sekawh on 8/5/2015.

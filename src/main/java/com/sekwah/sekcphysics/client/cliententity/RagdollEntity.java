@@ -51,9 +51,9 @@ public class RagdollEntity extends LivingEntity {
 
     public ItemStack getEquippedStack(EquipmentSlot var1) {
         switch(var1) {
-            case HAND_MAIN:
+            case MAINHAND:
                 return this.handItems.get(0);
-            case HAND_OFF:
+            case OFFHAND:
                 return this.handItems.get(1);
             case FEET:
                 return this.armorItems.get(0);
@@ -71,10 +71,10 @@ public class RagdollEntity extends LivingEntity {
     @Override
     public void setEquippedStack(EquipmentSlot var1, ItemStack var2) {
         switch(var1) {
-            case HAND_MAIN:
+            case MAINHAND:
                 this.handItems.set(0, var2);
                 break;
-            case HAND_OFF:
+            case OFFHAND:
                 this.handItems.set(1, var2);
                 break;
             case FEET:

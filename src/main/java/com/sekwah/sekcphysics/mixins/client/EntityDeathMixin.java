@@ -25,7 +25,7 @@ public abstract class EntityDeathMixin extends Entity {
     public ItemStack getEquippedStack(EquipmentSlot equipmentSlot) {return null;}
 
     @Shadow
-    public boolean isChild() {return false;}
+    public boolean isBaby() {return false;}
 
     public EntityDeathMixin(EntityType<?> p_i48580_1_, World p_i48580_2_) {
         super(p_i48580_1_, p_i48580_2_);
@@ -34,7 +34,7 @@ public abstract class EntityDeathMixin extends Entity {
     @Inject(method = "onDeath", at = @At("RETURN"))
     public void onDeath(DamageSource damageSource, CallbackInfo ci) {
 
-        if(!this.world.isClient || this.isChild()) {
+        if(!this.world.isClient || this.isBaby()) {
             return;
         }
 
