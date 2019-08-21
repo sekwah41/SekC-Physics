@@ -7,8 +7,8 @@ import com.sekwah.sekcphysics.ragdoll.generation.data.*;
 import com.sekwah.sekcphysics.ragdoll.generation.data.tracker.TriangleTrackerData;
 import com.sekwah.sekcphysics.ragdoll.generation.data.tracker.VertexTrackerData;
 import com.sekwah.sekcphysics.ragdoll.generation.runtime.VanillaModelMapping;
-import net.fabricmc.loader.FabricLoader;
-import net.fabricmc.loader.ModContainer;
+import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.client.model.Cuboid;
 import net.minecraft.client.model.Model;
 import net.minecraft.util.Identifier;
@@ -19,6 +19,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -457,10 +458,9 @@ public class RagdollGenerator {
 
         SekCPhysics.logger.info("Processing: minecraft");
         this.generateRagdollsFrom("minecraft");
-        List<ModContainer> modlist = FabricLoader.INSTANCE.getMods();
+        Collection<ModContainer> modlist = FabricLoader.getInstance().getAllMods();
         for(ModContainer mod : modlist) {
-            SekCPhysics.logger.info("Processing: {}", mod.getInfo().getName());
-            this.generateRagdollsFrom(mod.getInfo().getId());
+            this.generateRagdollsFrom(mod.getMetadata().getId());
         }
     }
 }
