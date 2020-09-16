@@ -1,24 +1,45 @@
 buildscript {
     repositories {
         maven { url = 'https://files.minecraftforge.net/maven' }
+        maven { url = "https://repo.spongepowered.org/maven" }
+        maven {url "https://plugins.gradle.org/m2/"}
+        // Only temporary
         jcenter()
         mavenCentral()
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath "org.spongepowered:mixingradle:0.7-SNAPSHOT"
+        classpath "com.wynprice.cursemaven:CurseMaven:2.1.1"
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle'
-// Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
+apply plugin: "java"
+apply plugin: "idea"
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
+apply plugin: "org.spongepowered.mixin"
+apply plugin: "com.wynprice.cursemaven"
 
-version = getVersion("version", mod_file)
-group= "com.sekwah.sekcphysics" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "sekcphysics"
+version = project.version
+group = project.package // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = project.modid
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://dvs1.progwml6.com/files/maven'
+    }
+    maven {
+        url "https://minecraft.curseforge.com/api/maven/"
+    }
+    maven {
+        url 'https://www.dogforce-games.com/maven/'
+    }
+}
 
 minecraft {
     // The mappings can be changed at any time, and must be in the following format.
@@ -26,10 +47,14 @@ minecraft {
     // stable_#            Stables are built at the discretion of the MCP team.
     // Use non-default mappings at your own risk. they may not always work.
     // Simply re-run your setup task after changing the mappings to update your workspace.
-    mappings channel: 'snapshot', version: '20190719-1.14.3'
-    // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+    mappings channel: 'snapshot', version: project.mcp_mapping
+
+    // This is for personal local tests i was doing ignore it ;)
+    //mappings channel: 'snapshot', version: '20200706-unofficialtest-1.16.1'
 
     // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+
+    // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
     // Default run configurations.
     // These can be tweaked, removed, or duplicated as needed.
@@ -38,7 +63,7 @@ minecraft {
             workingDirectory project.file('run')
 
             // Recommended logging data for a userdev environment
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            //property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
@@ -54,7 +79,8 @@ minecraft {
             workingDirectory project.file('run')
 
             // Recommended logging data for a userdev environment
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.markers', ''
+            //property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
@@ -70,7 +96,8 @@ minecraft {
             workingDirectory project.file('run')
 
             // Recommended logging data for a userdev environment
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.markers', ''
+            //property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
@@ -86,11 +113,28 @@ minecraft {
     }
 }
 
+repositories {
+    maven {
+        url "http://repo.spongepowered.org/maven/"
+    }
+}
+
+configurations {
+    include {
+        compile.extendsFrom(include)
+    }
+    includePlusMeta {
+        include.extendsFrom(includePlusMeta)
+    }
+}
+
 dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft 'net.minecraftforge:forge:1.15.1-30.0.35'
+    minecraft 'net.minecraftforge:forge:' + project.forge_version
+
+    //include('org.ow2.asm:asm-debug-all:5.2')
 
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"
@@ -100,28 +144,27 @@ dependencies {
     // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
     // compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
 
-    // The 'provided' configuration is for optional dependencies that exist at compile-time but might not at runtime.
-    // provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-
-    // These dependencies get remapped to your current MCP mappings
-    // deobf 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-
     // For more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
 }
 
+mixin {
+    add sourceSets.main, "mixins.sekcphysics.json"
+}
+
 // Example for how to get properties into the manifest for reading by the runtime..
 jar {
+
     manifest {
         attributes([
-                "Specification-Title": "examplemod",
-                "Specification-Vendor": "examplemodsareus",
+                "Specification-Title": project.modid,
+                "Specification-Vendor": project.vendor,
                 "Specification-Version": "1", // We are version 1 of ourselves
                 "Implementation-Title": project.name,
                 "Implementation-Version": "${version}",
-                "Implementation-Vendor" :"examplemodsareus",
+                "Implementation-Vendor" :project.vendor,
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
@@ -147,21 +190,4 @@ publishing {
             url "file:///${project.projectDir}/mcmodsrepo"
         }
     }
-}
-
-String getModFile() {
-    String path = "";
-    FileTree tree = fileTree(dir: 'src/main/java')
-    tree.include '**/*.java'
-    tree.visit {element ->
-        if (element.file.isFile()) {
-            element.file.eachLine { String s ->
-                s = s.trim();
-                if (s.startsWith("@Mod")) {
-                    path = "src/main/java/$element.relativePath"
-                }
-            }
-        }
-    }
-    return path;
 }

@@ -1,0 +1,29 @@
+modLoader="javafml"
+loaderVersion="[32,)"
+issueTrackerURL="https://github.com/sekwah41/SekC-Physics/issues"
+license="All rights reserved"
+[[mods]]
+    modId="reskin"
+    version="${file.jarVersion}"
+    displayName="Re:Skin"
+    updateJSONURL="https://www.sekwah.com/modversions/sekcphysics.json"
+    displayURL="https://www.curseforge.com/minecraft/mc-mods/sekc-physics"
+    authors="Sekwah41"
+    description='''
+        A skin editing mod for role plays, HD skins and whatever you can imagine!
+        '''
+
+[[dependencies.reskin]]
+    modId="forge"
+    mandatory=true
+    versionRange="[32,)"
+    ordering="NONE"
+    side="BOTH"
+
+# https://maven.apache.org/enforcer/enforcer-rules/versionRanges.html
+[[dependencies.reskin]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.16,)"
+    ordering="NONE"
+    side="BOTH"

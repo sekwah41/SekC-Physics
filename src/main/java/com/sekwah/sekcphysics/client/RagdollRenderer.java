@@ -31,7 +31,7 @@ public class RagdollRenderer {
 
         //if(pass != -1) return;
 
-        List<EntityRagdoll> ragdollList = SekCPhysics.ragdolls.ragdolls;
+        List<EntityRagdoll> ragdollList = SekCPhysics.RAGDOLLS.ragdolls;
 
         //System.out.println(ragdollList.size());
 
@@ -39,7 +39,7 @@ public class RagdollRenderer {
 
         float partialTicks = mc.getRenderPartialTicks();
 
-        synchronized (SekCPhysics.ragdolls.sync) {
+        synchronized (SekCPhysics.RAGDOLLS.sync) {
             ragdollList.removeIf(ragdoll -> ragdoll.world != world);
 
             for (EntityRagdoll ragdoll : ragdollList) {

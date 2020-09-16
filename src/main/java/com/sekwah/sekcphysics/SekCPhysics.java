@@ -1,16 +1,19 @@
 package com.sekwah.sekcphysics;
 
-import com.sekwah.sekcphysics.generic.CommonProxy;
+import com.sekwah.sekcphysics.config.RagdollConfig;
 import com.sekwah.sekcphysics.ragdoll.Ragdolls;
 import com.sekwah.sekcphysics.ragdoll.ragdolls.vanilla.VanillaRagdolls;
 import com.sekwah.sekcphysics.util.Reflection;
-import net.minecraft.launchwrapper.Launch;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -38,63 +41,42 @@ import java.io.File;
  *
  *   Look at hooks https://github.com/elucent/Albedo/blob/master/src/main/java/elucent/albedo/asm/ASMTransformer.java
  */
-@Mod(modid = SekCPhysics.MODID, name = "SekC Physics", version = SekCPhysics.version)
+@Mod(SekCPhysics.MODID)
 public class SekCPhysics {
 
     public static final String MODID = "sekcphysics";
-    public static final Logger logger = LogManager.getLogger("SekC Physics");
 
-    public static final String version = "0.2.0b1";
+    public static final Logger LOGGER = LogManager.getLogger("SekC Physics");
 
-    public static final boolean IS_DEOBF = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
+    public static Reflection REFLECTION = new Reflection();
 
-    /**
-     * Start using interfaces more
-     */
-    @Mod.Instance
-	public static SekCPhysics instance;
+    public static Ragdolls RAGDOLLS = new Ragdolls();
 
-    public static Reflection reflection = new Reflection();
+    public SekCPhysics() {
 
-    public static Ragdolls ragdolls = new Ragdolls();
+        ModLoadingContext loadingContext = ModLoadingContext.get();
+        loadingContext.registerConfig(ModConfig.Type.COMMON, RagdollConfig.RAGDOLL_CONFIG);
 
-    @SidedProxy(clientSide = "com.sekwah.sekcphysics.client.ClientProxy", serverSide = "com.sekwah.sekcphysics.generic.CommonProxy")
-    public static CommonProxy proxy;
+        IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-    public static File configFolder;
+        eventBus.addListener(this::clientSetup);
+        eventBus.addListener(this::setup);
 
-    @Mod.EventHandler
-    public void init(FMLInitializationEvent event) {
-        if(FMLCommonHandler.instance().getSide().isServer()) {
-            logger.error("The mod so far contains only visual features, there is no point having it installed on anything other " +
-                    "than a client for now.");
-        }
+    }
 
-        proxy.init();
+    private void clientSetup(final FMLClientSetupEvent event) {
 
         VanillaRagdolls.register();
-    }
-
-    @Mod.EventHandler
-    public void postInit(FMLPostInitializationEvent event) {
-
-        proxy.postInit();
 
     }
 
-    @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent event) {
-        configFolder = event.getModConfigurationDirectory();
-
-        // Add ProgressManager data for generating and other steps.
-
-        proxy.preInit();
+    private void setup(final FMLCommonSetupEvent event) {
 
     }
 
-    public void preInit() {
+    @SubscribeEvent
+    public static void onServerStarting(RegisterCommandsEvent event) {
+
     }
-
-
 
 }

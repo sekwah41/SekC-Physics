@@ -7,7 +7,6 @@ import com.sekwah.sekcphysics.ragdoll.ragdolls.generated.FromDataRagdoll;
 import com.sekwah.sekcphysics.settings.RagdollConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.math.ChunkPos;
 import net.minecraftforge.fml.client.FMLClientHandler;
 
 import java.util.ArrayList;
@@ -89,7 +88,7 @@ public class Ragdolls {
         try
         {
             if(mc.gameSettings.showDebugInfo) {
-                SekCPhysics.logger.info("Entity died: {}", entity.getClass().getName());
+                SekCPhysics.LOGGER.info("Entity died: {}", entity.getClass().getName());
             }
             RagdollData ragdollData = entityToRagdollHashmap.computeIfAbsent(entity.getClass().getName(), (key) -> {
                 Class classc = entity.getClass();
@@ -107,7 +106,7 @@ public class Ragdolls {
 
             if (ragdollData != null) {
                 ragdoll = new FromDataRagdoll(ragdollData);
-                ragdoll.resourceLocation = SekCPhysics.reflection.getResource(FMLClientHandler.instance().getClient().getRenderManager().getEntityRenderObject(entity), entity);//FMLClientHandler.instance().getClient().getRenderManager().getEntityRenderObject(entity).getEntityTexture(entity);//
+                ragdoll.resourceLocation = SekCPhysics.REFLECTION.getResource(FMLClientHandler.instance().getClient().getRenderManager().getEntityRenderObject(entity), entity);//FMLClientHandler.instance().getClient().getRenderManager().getEntityRenderObject(entity).getEntityTexture(entity);//
             }
         }
         catch (Exception exception)
@@ -117,7 +116,7 @@ public class Ragdolls {
 
         return ragdoll;
     }
-    
+
     public void reset() {
         entityToRagdollHashmap.clear();
     }
