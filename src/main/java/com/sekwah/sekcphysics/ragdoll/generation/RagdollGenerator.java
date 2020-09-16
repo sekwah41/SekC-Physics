@@ -52,30 +52,30 @@ public class RagdollGenerator {
                     ragdollData.addModelData(modelData);
 
                     if(SekCPhysics.IS_DEOBF || !entry.getValue().getAsJsonObject().has("entityObf")) {
-                        SekCPhysics.ragdolls.registerRagdoll(entry.getKey(), ragdollData);
+                        SekCPhysics.RAGDOLLS.registerRagdoll(entry.getKey(), ragdollData);
                     }
                     else {
-                        SekCPhysics.ragdolls.registerRagdoll(entry.getValue().getAsJsonObject().get("entityObf").getAsString(),
+                        SekCPhysics.RAGDOLLS.registerRagdoll(entry.getValue().getAsJsonObject().get("entityObf").getAsString(),
                                 ragdollData);
                     }
 
                 }
                 catch(ClassCastException | RagdollInvalidDataException | IllegalStateException
                         | UnsupportedOperationException e) {
-                    SekCPhysics.logger.error("Invalid data for: " + entry.getKey());
-                    SekCPhysics.logger.error("Error message: " + e.getMessage());
-                    SekCPhysics.logger.catching(Level.ERROR, e);
+                    SekCPhysics.LOGGER.error("Invalid data for: " + entry.getKey());
+                    SekCPhysics.LOGGER.error("Error message: " + e.getMessage());
+                    SekCPhysics.LOGGER.catching(Level.ERROR, e);
                 }
             }
             ProgressManager.pop(bar);
-            SekCPhysics.logger.info("Data loaded for: " + modid);
+            SekCPhysics.LOGGER.info("Data loaded for: " + modid);
         }
         catch(JsonSyntaxException | UnsupportedOperationException  e) {
-            SekCPhysics.logger.info("Error with data for: " + modid);
-            SekCPhysics.logger.catching(Level.ERROR, e);
+            SekCPhysics.LOGGER.info("Error with data for: " + modid);
+            SekCPhysics.LOGGER.catching(Level.ERROR, e);
         }
         catch(JsonIOException | NullPointerException e) {
-            SekCPhysics.logger.info("No ragdoll data found for: " + modid);
+            SekCPhysics.LOGGER.info("No ragdoll data found for: " + modid);
             // Use for finding errors in program when file should be found
             //e.printStackTrace();
         }
@@ -371,7 +371,7 @@ public class RagdollGenerator {
                     }
                 }
                 catch (NoSuchFieldException e) {
-                    SekCPhysics.logger.info("Constructor non primitive.");
+                    SekCPhysics.LOGGER.info("Constructor non primitive.");
                 }
                 classArray[i] = classType;
             }
@@ -400,23 +400,23 @@ public class RagdollGenerator {
 
         }
         catch (ClassNotFoundException e) {
-            SekCPhysics.logger.error("Could not find specified class" + modelConstructData.getClassName());
+            SekCPhysics.LOGGER.error("Could not find specified class" + modelConstructData.getClassName());
             e.printStackTrace();
         } catch (IllegalAccessException e) {
-            SekCPhysics.logger.error("Illegal access");
+            SekCPhysics.LOGGER.error("Illegal access");
             e.printStackTrace();
         } catch (InstantiationException | InvocationTargetException e) {
-            SekCPhysics.logger.error("Construction error");
+            SekCPhysics.LOGGER.error("Construction error");
             e.printStackTrace();
         } catch (NoSuchMethodException e) {
-            SekCPhysics.logger.error("Method not found, invalid class of construction data listed");
+            SekCPhysics.LOGGER.error("Method not found, invalid class of construction data listed");
             e.printStackTrace();
         } catch (SecurityException e) {
-            SekCPhysics.logger.error("The security manager has blocked access to the class"
+            SekCPhysics.LOGGER.error("The security manager has blocked access to the class"
                     + modelConstructData.getClassName());
             e.printStackTrace();
         } catch (NoSuchFieldException e) {
-            SekCPhysics.logger.error("Field not found for "
+            SekCPhysics.LOGGER.error("Field not found for "
                     + modelConstructData.getClassName());
             e.printStackTrace();
         }
@@ -451,7 +451,7 @@ public class RagdollGenerator {
     }
 
     public void loadRagdolls() {
-        SekCPhysics.logger.debug("Loading ragdolls and checking for supported mods");
+        SekCPhysics.LOGGER.debug("Loading ragdolls and checking for supported mods");
         List<ModContainer> modlist = Loader.instance().getActiveModList();
         ProgressManager.ProgressBar bar = ProgressManager.push("SekCPhysics", modlist.size());
         for(ModContainer mod : modlist) {

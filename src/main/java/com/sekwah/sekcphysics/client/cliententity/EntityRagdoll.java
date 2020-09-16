@@ -3,19 +3,14 @@ package com.sekwah.sekcphysics.client.cliententity;
 import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.ragdoll.ragdolls.BaseRagdoll;
 import com.sekwah.sekcphysics.settings.RagdollConfig;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * Created by sekawh on 8/1/2015.
  */
-public class EntityRagdoll extends EntityLiving {
+public class EntityRagdoll extends LivingEntity {
 
     public BaseRagdoll ragdoll;
 

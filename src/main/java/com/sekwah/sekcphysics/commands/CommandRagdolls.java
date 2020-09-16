@@ -16,7 +16,7 @@ import java.util.List;
 public class CommandRagdolls extends CommandBase {
 
     private List<String> subcommands = Arrays.asList(new String[]{"reload", "remove"});
-    
+
     @Override
     public String getName() {
         return "ragdoll";
@@ -37,12 +37,12 @@ public class CommandRagdolls extends CommandBase {
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
         if(args.length > 0) {
             if(args[0].equalsIgnoreCase("reload")) {
-                SekCPhysics.ragdolls.reset();
+                SekCPhysics.RAGDOLLS.reset();
                 new RagdollGenerator().loadRagdolls();
                 sender.sendMessage(new TextComponentString("Reloaded ragdolls"));
             }
             else if(args[0].equalsIgnoreCase("remove") || args[0].equalsIgnoreCase("clear")) {
-                SekCPhysics.ragdolls.ragdolls.clear();
+                SekCPhysics.RAGDOLLS.ragdolls.clear();
                 sender.sendMessage(new TextComponentString("Removed ragdolls"));
             }
             else if(args[0].equalsIgnoreCase("help")) {
@@ -68,5 +68,5 @@ public class CommandRagdolls extends CommandBase {
             return Collections.<String>emptyList();
         }
     }
-    
+
 }

@@ -53,7 +53,7 @@ public class FromDataRagdoll extends BaseRagdoll {
                 }
             }
             else {
-                SekCPhysics.logger.error("Null triangle found for:" + triangleTrackerData.tracker);
+                SekCPhysics.LOGGER.error("Null triangle found for:" + triangleTrackerData.tracker);
             }
         }
 

@@ -9,8 +9,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.world.World;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -21,8 +19,6 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
-
-import java.util.List;
 
 /**
  * Client side event hook
@@ -64,7 +60,7 @@ public class EventHook {
             return;
         }
 
-        BaseRagdoll ragdoll = SekCPhysics.ragdolls.createRagdoll(deadEntity);
+        BaseRagdoll ragdoll = SekCPhysics.RAGDOLLS.createRagdoll(deadEntity);
         if(ragdoll != null) {
 
             EntityRagdoll entityRagdoll = new EntityRagdoll(deadEntity.world, ragdoll);
@@ -73,7 +69,7 @@ public class EventHook {
 
             entityRagdoll.setSpawnPosition(deadEntity.posX, deadEntity.posY, deadEntity.posZ);
 
-            SekCPhysics.ragdolls.spawnRagdoll(entityRagdoll);
+            SekCPhysics.RAGDOLLS.spawnRagdoll(entityRagdoll);
 
             entityRagdoll.ragdoll.rotateRagdoll(deadEntity.rotationYaw);
 
@@ -116,7 +112,7 @@ public class EventHook {
     @SubscribeEvent
     public void worldTicks(TickEvent.ClientTickEvent event) {
         if(event.side == Side.CLIENT && event.phase == TickEvent.Phase.END) {
-            SekCPhysics.ragdolls.updateRagdolls();
+            SekCPhysics.RAGDOLLS.updateRagdolls();
         }
     }
 
