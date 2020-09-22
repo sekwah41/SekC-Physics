@@ -1,9 +1,10 @@
 package com.sekwah.sekcphysics.ragdoll.parts.trackers;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.maths.RotateF;
-import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.model.ModelRenderer;
+import org.lwjgl.opengl.GL11;
 
 /**
  * Created by on 30/06/2016.
@@ -67,13 +68,14 @@ public abstract class Tracker {
         this.renderPart(partialTicks, 1);
     }
 
+    // TODO remake to get the matrix data needed to use the new rendering
     protected void renderPart(float partialTicks, float scale) {
-        GlStateManager.pushMatrix();
+        GL11.glPushMatrix();
         this.smoothLocation(partialTicks, scale);
         this.smoothRotation(partialTicks);
         this.applyOffset();
         this.part.render(0.0625f * scale);
-        GlStateManager.popMatrix();
+        GL11.glPopMatrix();
     }
 
     public void updateLastPos() {

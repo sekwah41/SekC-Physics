@@ -3,37 +3,21 @@ package com.sekwah.sekcphysics.client;
 import com.sekwah.sekcphysics.SekCPhysics;
 import com.sekwah.sekcphysics.client.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.ragdoll.ragdolls.BaseRagdoll;
-import com.sekwah.sekcphysics.settings.RagdollConfig;
-import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraftforge.common.config.Config;
-import net.minecraftforge.common.config.ConfigManager;
+import net.minecraft.entity.LivingEntity;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.fml.client.FMLClientHandler;
-import net.minecraftforge.fml.client.event.ConfigChangedEvent;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.LogicalSide;
+import net.minecraftforge.fml.common.Mod;
 
-/**
- * Client side event hook
- *
- * Created by sekwah on 8/1/2015.
- */
+@Mod.EventBusSubscriber(Dist.CLIENT)
 public class EventHook {
 
     @SubscribeEvent
-    public void onConfigurationChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
-        if (event.getModID().equals(SekCPhysics.MODID)) ConfigManager.sync(SekCPhysics.MODID, Config.Type.INSTANCE);
-    }
-
-    @SubscribeEvent
-    public void playerDeath(LivingEvent.LivingUpdateEvent event) {
+    public static void playerDeath(LivingEvent.LivingUpdateEvent event) {
         Entity entity = event.getEntity();
         if(entity instanceof EntityPlayer) {
             if(((EntityLivingBase) entity).deathTime > 0 && RagdollConfig.maxRagdolls != 0) {
@@ -47,14 +31,14 @@ public class EventHook {
      * @param event
      */
     @SubscribeEvent
-    public void deathEvent(LivingDeathEvent event) {
+    public static void deathEvent(LivingDeathEvent event) {
 
         if(FMLCommonHandler.instance().getEffectiveSide().isClient() && RagdollConfig.maxRagdolls != 0) {
             entityDied(event.getEntityLiving());
         }
     }
 
-    public void entityDied(EntityLivingBase deadEntity) {
+    public static void entityDied(LivingEntity deadEntity) {
 
         if(deadEntity.isChild()) {
             return;
@@ -110,8 +94,8 @@ public class EventHook {
     }*/
 
     @SubscribeEvent
-    public void worldTicks(TickEvent.ClientTickEvent event) {
-        if(event.side == Side.CLIENT && event.phase == TickEvent.Phase.END) {
+    public static void worldTicks(TickEvent.ClientTickEvent event) {
+        if(event.side == LogicalSide.CLIENT && event.phase == TickEvent.Phase.END) {
             SekCPhysics.RAGDOLLS.updateRagdolls();
         }
     }

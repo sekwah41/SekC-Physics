@@ -1,15 +1,16 @@
 package com.sekwah.sekcphysics.ragdoll.ragdolls;
 
 import com.sekwah.sekcphysics.client.cliententity.EntityRagdoll;
+import com.sekwah.sekcphysics.maths.PointD;
+import com.sekwah.sekcphysics.maths.VectorMaths;
 import com.sekwah.sekcphysics.ragdoll.parts.Skeleton;
 import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
 import com.sekwah.sekcphysics.ragdoll.parts.Triangle;
 import com.sekwah.sekcphysics.ragdoll.parts.trackers.*;
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.client.renderer.model.Model;
+import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.Vec3d;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +21,7 @@ import java.util.Map;
 public class BaseRagdoll {
 
 
-    public final ModelBase baseModel;
+    public final Model baseModel;
 
     public Map<ModelRenderer, Tracker> trackerHashmap = new HashMap<>();
 
@@ -34,7 +35,7 @@ public class BaseRagdoll {
 
     public ResourceLocation resourceLocation;
 
-    public BaseRagdoll(float centerHeightOffset, ModelBase baseModel) {
+    public BaseRagdoll(float centerHeightOffset, Model baseModel) {
 
         this.baseModel = baseModel;
 
@@ -59,18 +60,16 @@ public class BaseRagdoll {
         skeleton.shiftPos(x,y,z);
     }
 
-    public void setStanceToEntity(EntityLivingBase entity) {
+    public void setStanceToEntity(LivingEntity entity) {
         for(SkeletonPoint point : skeleton.points) {
-            // Finish rotation maths
-            //newPoint.translate(new Vector3f((float) point.posX, (float) point.posY, (float) point.posZ));
-            //SekCPhysics.logger.info(entity.rotationYaw);
-            Vec3d vec = new Vec3d(point.posX, point.posY, point.posZ);
-            vec.rotateYaw((float) Math.toRadians(-entity.rotationYaw));
+            PointD vec = new PointD(point.posX, point.posY, point.posZ);
+            VectorMaths.rotateOriginY(Math.toRadians(-entity.rotationYaw), vec);
+            //vec.rotateYaw((float) Math.toRadians(-entity.rotationYaw));
             point.setPosition(vec.x, vec.y, vec.z);
         }
     }
 
-    public void initTrackers(ModelBase model) {
+    public void initTrackers(Model model) {
         trackersRegistered = true;
     }
 
