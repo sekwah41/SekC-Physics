@@ -1,8 +1,10 @@
 package com.sekwah.sekcphysics.ragdoll.parts.trackers;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.ragdoll.parts.SkeletonPoint;
-import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.model.ModelRenderer;
 
 /**
  * Created by on 30/06/2016.
@@ -25,9 +27,9 @@ public class TrackerVertexScaled extends TrackerVertex {
     }
 
     @Override
-    public void render(float partialTicks) {
+    public void render(float partialTicks, MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn) {
 
-        this.renderPart(partialTicks, this.scale);
+        this.renderPart(partialTicks, this.scale, matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
 
         // TODO Look at the length in comparison (store it when calculating physics) and stretch it based on the percentage xD
         //GlStateManager.scale(1,scaleFactorStretch,0);
