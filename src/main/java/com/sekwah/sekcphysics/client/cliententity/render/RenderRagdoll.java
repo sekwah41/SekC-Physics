@@ -1,30 +1,37 @@
 package com.sekwah.sekcphysics.client.cliententity.render;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.sekwah.sekcphysics.client.cliententity.EntityRagdoll;
 import com.sekwah.sekcphysics.ragdoll.parts.trackers.Tracker;
 import com.sekwah.sekcphysics.ragdoll.ragdolls.BaseRagdoll;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.RenderLiving;
-import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.LivingRenderer;
+import net.minecraft.client.renderer.entity.model.BipedModel;
+import net.minecraft.client.renderer.entity.model.EntityModel;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 /**
  * Ragdoll renderer file
  */
-public class RenderRagdoll<T extends EntityRagdoll> extends RenderLiving<T> {
+public class RenderRagdoll<T extends EntityRagdoll> extends LivingRenderer<T, BipedModel<T>> {
 
-    private static Minecraft mc = Minecraft.getMinecraft();
+    //private static Minecraft mc = Minecraft.getInstance();
 
-    public RenderRagdoll(RenderManager renderManager) {
-        super(renderManager, new ModelBiped(), 0.0f);
-
+    public RenderRagdoll(EntityRendererManager renderManager) {
+        super(renderManager, new BipedModel(1.0f), 0.0f);
     }
 
     @Override
-    public void doRender(T entity, double x, double y, double z, float entityYaw, float partialTicks) {
+    public ResourceLocation getEntityTexture(T entityIn) {
+        return entityIn.ragdoll.resourceLocation;
+    }
+
+    @Override
+    public void render(T entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
 
         /**
          * TODO Check these locations on rendering armour
@@ -50,49 +57,41 @@ public class RenderRagdoll<T extends EntityRagdoll> extends RenderLiving<T> {
          * Possibly make it so there is a boolean instead some dont like being rendered directly as it for the layers
          */
 
-        GlStateManager.pushMatrix();
+        matrixStackIn.push();
 
-        // Sets the position offset for rendering
-        GlStateManager.translate(x, y, z);
+        BaseRagdoll baseRagdoll = entityIn.ragdoll;
 
-        BaseRagdoll baseRagdoll = entity.ragdoll;
-
-        ResourceLocation resourceLoc = baseRagdoll.resourceLocation;
-        if(resourceLoc != null) {
-            this.bindTexture(baseRagdoll.resourceLocation);
-        }
-
-        if(mc.gameSettings.showDebugInfo) {
+        /*if(mc.gameSettings.showDebugInfo) {
             GlStateManager.depthMask(false);
             GL11.glEnable(GL11.GL_BLEND);
             GL11.glAlphaFunc(GL11.GL_GREATER, 0.003921569F);
             GL11.glColor4f(1,1,1,0.5f);
-        }
+        }*/
 
-        GlStateManager.disableCull();
+        //GlStateManager.disableCull();
         for(Tracker tracker : baseRagdoll.trackerHashmap.values()) {
             //tracker.calcPosition();
             tracker.render(partialTicks);
         }
 
-        if(mc.gameSettings.showDebugInfo) {
+        /*if(mc.gameSettings.showDebugInfo) {
             GL11.glColor4f(1, 1, 1, 1);
 
             GlStateManager.depthMask(true);
-        }
+        }*/
 
-        this.renderHandItems(entity, baseRagdoll);
+        //this.renderHandItems(entityIn, baseRagdoll);
 
-        if(mc.gameSettings.showDebugInfo) {
+        /*if(mc.gameSettings.showDebugInfo) {
             GlStateManager.disableDepth();
-            entity.ragdoll.skeleton.renderSkeletonDebug(entity.ragdoll.activeStatus(), mc.getRenderManager().isDebugBoundingBox());
+            entityIn.ragdoll.skeleton.renderSkeletonDebug(entityIn.ragdoll.activeStatus(), mc.getRenderManager().isDebugBoundingBox());
             GlStateManager.enableDepth();
-        }
-        GlStateManager.popMatrix();
+        }*/
+        matrixStackIn.pop();
     }
 
-    private void renderHandItems(T entity, BaseRagdoll baseRagdoll) {
-        /*if(baseRagdoll.baseModel instanceof ModelBiped) {
+    /*private void renderHandItems(T entity, BaseRagdoll baseRagdoll) {
+        *//*if(baseRagdoll.baseModel instanceof ModelBiped) {
             ModelBiped modelBiped = (ModelBiped) baseRagdoll.baseModel;
             ItemStack leftHand = entity.getItemStackFromSlot(EntityEquipmentSlot.OFFHAND);
             ItemStack rightHand = entity.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
@@ -102,8 +101,8 @@ public class RenderRagdoll<T extends EntityRagdoll> extends RenderLiving<T> {
             if(!rightHand.isEmpty()) {
                 this.renderHeldItem(entity, modelBiped, rightHand, ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, EnumHandSide.RIGHT);
             }
-        }*/
-    }
+        }*//*
+    }*/
 
     /*private void renderHeldItem(T entity, ModelBiped modelBiped, ItemStack itemStack, ItemCameraTransforms.TransformType transformType, EnumHandSide handSide)
     {
@@ -126,9 +125,4 @@ public class RenderRagdoll<T extends EntityRagdoll> extends RenderLiving<T> {
     {
         modelBiped.postRenderArm(0.0625F, handSide);
     }*/
-
-    @Override
-    protected ResourceLocation getEntityTexture(T entity) {
-        return null;
-    }
 }

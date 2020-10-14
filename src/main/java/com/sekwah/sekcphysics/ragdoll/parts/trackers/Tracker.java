@@ -1,9 +1,11 @@
 package com.sekwah.sekcphysics.ragdoll.parts.trackers;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.maths.RotateF;
 import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.util.math.vector.Quaternion;
 import org.lwjgl.opengl.GL11;
 
 /**
@@ -60,22 +62,24 @@ public abstract class Tracker {
         this.rotationOffset = new RotateF(rotateOffsetX, rotateOffsetY, rotateOffsetZ);
     }
 
-    public void render() {
-        this.render(1);
+    @Deprecated
+    public void render(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn) {
+        this.render(1, matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
     }
 
-    protected void renderPart(float partialTicks) {
-        this.renderPart(partialTicks, 1);
+    protected void renderPart(float partialTicks, MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn) {
+        this.renderPart(partialTicks, 1, matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
     }
 
     // TODO remake to get the matrix data needed to use the new rendering
-    protected void renderPart(float partialTicks, float scale) {
-        GL11.glPushMatrix();
+    protected void renderPart(float partialTicks, float scale, MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn) {
+        matrixStackIn.push();
         this.smoothLocation(partialTicks, scale);
-        this.smoothRotation(partialTicks);
-        this.applyOffset();
-        this.part.render(0.0625f * scale);
-        GL11.glPopMatrix();
+        this.smoothRotation(partialTicks, matrixStackIn);
+        this.applyOffset(matrixStackIn);
+        // Maybe take a look at changing so that you add color effects e.g. burning or changing colors.
+        this.part.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
+        matrixStackIn.pop();
     }
 
     public void updateLastPos() {
@@ -103,7 +107,7 @@ public abstract class Tracker {
      * @param partialTicks
      */
     protected void smoothLocation(float partialTicks, float scale) {
-        GlStateManager.translate((float) (this.lastPosition.x + this.positionDiff.x * partialTicks) * scale,
+        GL11.glTranslatef((float) (this.lastPosition.x + this.positionDiff.x * partialTicks) * scale,
                 (float) (this.lastPosition.y + this.positionDiff.y * partialTicks) * scale,
                 (float) (this.lastPosition.z + this.positionDiff.z * partialTicks) * scale);
     }
@@ -111,35 +115,35 @@ public abstract class Tracker {
     /**
      * For rendering, not generally setting
      */
-    protected void smoothRotation(float partialTicks) {
+    protected void smoothRotation(float partialTicks, MatrixStack matrixStackIn) {
         applyRotation(this.lastRotation.z + this.rotationDiff.z * partialTicks,
                 this.lastRotation.y + this.rotationDiff.y * partialTicks,
-                this.lastRotation.x + this.rotationDiff.x * partialTicks);
+                this.lastRotation.x + this.rotationDiff.x * partialTicks, matrixStackIn);
     }
 
-    protected void applyOffset() {
+    protected void applyOffset(MatrixStack matrixStackIn) {
         applyRotation(this.rotationOffset.x,
                 this.rotationOffset.y,
-                this.rotationOffset.z);
+                this.rotationOffset.z, matrixStackIn);
     }
 
-    private void applyRotationDeg(float x, float y, float z) {
+    private void applyRotationDeg(float x, float y, float z, MatrixStack matrixStackIn) {
         if (z != 0.0F) {
-            GlStateManager.rotate(z, 0,0,1);
+            matrixStackIn.rotate(new Quaternion(0,0,1, z));
         }
 
         if (y != 0.0F) {
-            GlStateManager.rotate(y, 0,1,0);
+            matrixStackIn.rotate(new Quaternion(0,1,0, y));
         }
 
         if (x != 0.0F) {
-            GlStateManager.rotate(x, 1,0,0);
+            matrixStackIn.rotate(new Quaternion(1,0,0, x));
         }
     }
 
-    private void applyRotation(float x, float y, float z) {
-        this.applyRotationDeg(z * (180F / (float)Math.PI), y * (180F / (float)Math.PI),x * (180F / (float)Math.PI));
+    private void applyRotation(float x, float y, float z, MatrixStack matrixStackIn) {
+        this.applyRotationDeg(z * (180F / (float)Math.PI), y * (180F / (float)Math.PI),x * (180F / (float)Math.PI), matrixStackIn);
     }
-
-    public abstract void render(float partialTicks);
+ // , MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn
+    public abstract void render(float partialTicks, MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn);
 }

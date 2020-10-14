@@ -1,8 +1,10 @@
 package com.sekwah.sekcphysics.ragdoll.parts.trackers;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.ragdoll.parts.Triangle;
-import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.model.ModelRenderer;
 
 /**
  * Created by on 30/06/2016.
@@ -27,8 +29,8 @@ public class TrackerTriangleScaled extends TrackerTriangle {
         this.scaleInvert = 1f/scale;
     }
 
-    public void render(float partialTicks) {
-        this.renderPart(partialTicks, this.scale);
+    public void render(float partialTicks, MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn) {
+        this.renderPart(partialTicks, this.scale, matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
     }
 
     @Override

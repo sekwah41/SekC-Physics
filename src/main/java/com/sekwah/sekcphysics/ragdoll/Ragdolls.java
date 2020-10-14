@@ -24,11 +24,9 @@ public class Ragdolls {
     private static Map<String, RagdollData> entityToRagdollHashmap = new HashMap<String, RagdollData>();
 
 
-    private static Minecraft mc = Minecraft.getMinecraft();
+    private static Minecraft mc = Minecraft.getInstance();
 
     public List<EntityRagdoll> ragdolls = new ArrayList<>();
-
-    public final Object sync = new Object();
 
 
 
@@ -53,7 +51,7 @@ public class Ragdolls {
     }
 
     public void updateRagdolls() {
-        synchronized (this.sync) {
+        synchronized (this.ragdolls) {
             Entity player = FMLClientHandler.instance().getClientPlayerEntity();
             this.ragdolls.removeIf(ragdoll -> ragdoll.isDead || ragdoll.posY < -64 || ragdoll.getDistanceSq(player) > 64 * 64);
             if(RagdollConfig.maxRagdolls != -1) {
@@ -74,7 +72,7 @@ public class Ragdolls {
     }
 
     public void spawnRagdoll(EntityRagdoll ragdoll) {
-        synchronized (this.sync) {
+        synchronized (this.ragdolls) {
             this.ragdolls.add(ragdoll);
         }
     }

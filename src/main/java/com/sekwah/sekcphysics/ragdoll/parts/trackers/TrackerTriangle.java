@@ -1,9 +1,13 @@
 package com.sekwah.sekcphysics.ragdoll.parts.trackers;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.sekwah.sekcphysics.maths.PointD;
 import com.sekwah.sekcphysics.maths.VectorMaths;
 import com.sekwah.sekcphysics.ragdoll.parts.Triangle;
 import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.util.math.vector.Quaternion;
+import org.lwjgl.opengl.GL11;
 
 /**
  * Created by on 30/06/2016.
@@ -36,8 +40,8 @@ public class TrackerTriangle extends Tracker {
     }
 
     @Override
-    public void render(float partialTicks) {
-        this.renderPart(partialTicks);
+    public void render(float partialTicks, MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn) {
+        this.renderPart(partialTicks, matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
     }
 
     public void updateLastPos() {
@@ -86,9 +90,9 @@ public class TrackerTriangle extends Tracker {
     }
 
     @Override
-    protected void smoothRotation(float partialTicks) {
-        super.smoothRotation(partialTicks);
-        GlStateManager.rotate((float) Math.toDegrees(this.lastRotationAxis + this.rotationAxisDiff * partialTicks), 0,1,0);
+    protected void smoothRotation(float partialTicks, MatrixStack matrixStackIn) {
+        super.smoothRotation(partialTicks, matrixStackIn);
+        matrixStackIn.rotate(new Quaternion(0,1,0, (float) Math.toDegrees(this.lastRotationAxis + this.rotationAxisDiff * partialTicks)));
     }
 
     @Override
