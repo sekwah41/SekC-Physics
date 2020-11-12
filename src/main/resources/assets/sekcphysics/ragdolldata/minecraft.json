@@ -47,22 +47,22 @@
         ["int", 64]
       ],
       "vertexTrackers" : {
-        "armRight": {
+        "rightArm": {
           "anchor" : "rightShoulder",
           "pointTo" : "rightArm",
           "obfName" : "field_3401"
         },
-        "armLeft": {
+        "leftArm": {
           "anchor" : "leftShoulder",
           "pointTo" : "leftArm",
           "obfName" : "field_3390"
         },
-        "legRight": {
+        "rightLeg": {
           "anchor" : "rightLegTop",
           "pointTo" : "rightLegBot",
           "obfName" : "field_3392"
         },
-        "legLeft":{
+        "leftLeg":{
           "anchor" : "leftLegTop",
           "pointTo" : "leftLegBot",
           "obfName" : "field_3397"
