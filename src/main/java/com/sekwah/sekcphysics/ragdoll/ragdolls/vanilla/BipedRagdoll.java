@@ -108,35 +108,6 @@ public class BipedRagdoll extends BaseRagdoll {
 
         skeleton.triangles.add(bodyTriangle);
 
-        //skeleton.triangles.add(new Triangle(centerTorso, leftLegTop, leftShoulder));
-
-        //skeleton.triangles.add(new Triangle(centerTorso, rightLegTop, rightShoulder));
-
-        //trackers.add(new TrackerVertex())
-
-
-
-        // write code to add a list to the array, it makes it easier.
-
     }
-
-    /*public void initTrackers(ModelBase model) {
-        super.initTrackers(model);
-        if(model instanceof ModelBiped) {
-            ModelBiped modelBiped = (ModelBiped) model;
-            this.addVertexTracker(modelBiped.bipedRightArm, this.rightShoulder, this.rightArm, creationData.getScale());
-            this.addVertexTracker(modelBiped.bipedLeftArm, this.leftShoulder, this.leftArm, creationData.getScale());
-
-            this.addVertexTracker(modelBiped.bipedRightLeg, this.rightLegTop, this.rightLegBot, creationData.getScale());
-            this.addVertexTracker(modelBiped.bipedLeftLeg, this.leftLegTop, this.leftLegBot, creationData.getScale());
-
-            this.addTriangleTracker(modelBiped.bipedBody, this.bodyTriangle, 180f, 0, 0, creationData.getScale());
-            this.addTriangleTracker(modelBiped.bipedHead, this.headTriangle, 0, 0, 0, creationData.getScale());
-            //this.addTriangleTracker(modelBiped.bipedHead, this.headTriangle);
-        }
-        else{
-            SekCPhysics.logger.error("Model type invalid!");
-        }
-    }*/
 
 }

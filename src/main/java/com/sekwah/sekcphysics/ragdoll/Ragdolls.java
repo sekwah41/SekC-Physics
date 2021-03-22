@@ -28,13 +28,6 @@ public class Ragdolls {
 
     public List<EntityRagdoll> ragdolls = new ArrayList<>();
 
-
-
-    /**
-     * Need to add update counts to the ragdoll data rather than global also 10 is for cloths
-     */
-    //public static int maxUpdateCount = 10;
-
     public static float gravity = 0.045F; // alter till it looks the best, also maybe add material values as mods use stuff like
 
     public void registerRagdoll(Class<? extends Entity> entityClass, RagdollData ragdollData) {
@@ -52,7 +45,7 @@ public class Ragdolls {
 
     public void updateRagdolls() {
         synchronized (this.ragdolls) {
-            Entity player = FMLClientHandler.instance().getClientPlayerEntity();
+            Entity player = mc.player;
             this.ragdolls.removeIf(ragdoll -> ragdoll.isDead || ragdoll.posY < -64 || ragdoll.getDistanceSq(player) > 64 * 64);
             if(RagdollConfig.maxRagdolls != -1) {
                 int removeCount = this.ragdolls.size() - RagdollConfig.maxRagdolls;
