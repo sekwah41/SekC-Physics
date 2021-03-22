@@ -9,11 +9,7 @@ import com.sekwah.sekcphysics.ragdoll.generation.data.RagdollData;
 import com.sekwah.sekcphysics.ragdoll.generation.data.RagdollInvalidDataException;
 import com.sekwah.sekcphysics.ragdoll.generation.data.tracker.TriangleTrackerData;
 import com.sekwah.sekcphysics.ragdoll.generation.data.tracker.VertexTrackerData;
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelRenderer;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.ModContainer;
-import net.minecraftforge.fml.common.ProgressManager;
+import net.minecraftforge.fml.loading.progress.StartupMessageManager;
 import org.apache.logging.log4j.Level;
 
 import java.io.InputStreamReader;
@@ -31,15 +27,14 @@ import java.util.Set;
 public class RagdollGenerator {
 
     private void generateRagdollsFrom(String modid) {
-        // TODO check for the mod id and if not found then report false. If found generate ragdolls.
+
+        StartupMessageManager.addModMessage("Constructing ragdolls from : " + modid);
         try {
             Reader fileIn = new InputStreamReader(SekCPhysics.class.getResourceAsStream("/assets/sekcphysics/ragdolldata/" + modid + ".json"));
             Gson jsonFile = new Gson();
             JsonObject ragdollFileJson = jsonFile.fromJson(fileIn, JsonObject.class);
             Set<Map.Entry<String, JsonElement>> entityEnteries = ragdollFileJson.entrySet();
-            ProgressManager.ProgressBar bar = ProgressManager.push("Constructing", entityEnteries.size());
             for(Map.Entry<String, JsonElement> entry : entityEnteries) {
-                bar.step(entry.getKey());
                 try {
                     RagdollData ragdollData = new RagdollData();
                     addRagdollSkeletonPointData(entry.getValue().getAsJsonObject(), ragdollData, ragdollFileJson);
@@ -51,13 +46,16 @@ public class RagdollGenerator {
                     ModelData modelData = createModelAndAddTrackers(ragdollData, modelConstructData);
                     ragdollData.addModelData(modelData);
 
-                    if(SekCPhysics.IS_DEOBF || !entry.getValue().getAsJsonObject().has("entityObf")) {
-                        SekCPhysics.RAGDOLLS.registerRagdoll(entry.getKey(), ragdollData);
+
+                    SekCPhysics.RAGDOLLS.registerRagdoll(entry.getKey(), ragdollData);
+
+                    // TODO swap over so deobf is not needed.
+                    /*if(SekCPhysics.IS_DEOBF || !entry.getValue().getAsJsonObject().has("entityObf")) {
                     }
                     else {
                         SekCPhysics.RAGDOLLS.registerRagdoll(entry.getValue().getAsJsonObject().get("entityObf").getAsString(),
                                 ragdollData);
-                    }
+                    }*/
 
                 }
                 catch(ClassCastException | RagdollInvalidDataException | IllegalStateException
@@ -67,7 +65,6 @@ public class RagdollGenerator {
                     SekCPhysics.LOGGER.catching(Level.ERROR, e);
                 }
             }
-            ProgressManager.pop(bar);
             SekCPhysics.LOGGER.info("Data loaded for: " + modid);
         }
         catch(JsonSyntaxException | UnsupportedOperationException  e) {
@@ -76,8 +73,6 @@ public class RagdollGenerator {
         }
         catch(JsonIOException | NullPointerException e) {
             SekCPhysics.LOGGER.info("No ragdoll data found for: " + modid);
-            // Use for finding errors in program when file should be found
-            //e.printStackTrace();
         }
     }
 
