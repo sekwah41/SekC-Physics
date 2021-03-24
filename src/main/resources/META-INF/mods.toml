@@ -3,17 +3,17 @@ loaderVersion="[32,)"
 issueTrackerURL="https://github.com/sekwah41/SekC-Physics/issues"
 license="All rights reserved"
 [[mods]]
-    modId="reskin"
+    modId="sekcphysics"
     version="${file.jarVersion}"
-    displayName="Re:Skin"
+    displayName="SekC Physics"
     updateJSONURL="https://www.sekwah.com/modversions/sekcphysics.json"
     displayURL="https://www.curseforge.com/minecraft/mc-mods/sekc-physics"
     authors="Sekwah41"
     description='''
-        A skin editing mod for role plays, HD skins and whatever you can imagine!
-        '''
+    A ragdoll physics mod for Minecraft.
+    '''
 
-[[dependencies.reskin]]
+[[dependencies.sekcphysics]]
     modId="forge"
     mandatory=true
     versionRange="[32,)"
@@ -21,9 +21,9 @@ license="All rights reserved"
     side="BOTH"
 
 # https://maven.apache.org/enforcer/enforcer-rules/versionRanges.html
-[[dependencies.reskin]]
+[[dependencies.sekcphysics]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16,)"
+    versionRange="[1.16.1,)"
     ordering="NONE"
     side="BOTH"
