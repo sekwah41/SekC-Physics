@@ -9,9 +9,8 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '4.1.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.0.+', changing: true
         classpath "org.spongepowered:mixingradle:0.7-SNAPSHOT"
-        classpath "com.wynprice.cursemaven:CurseMaven:2.1.1"
     }
 }
 
@@ -22,7 +21,6 @@ apply plugin: 'maven-publish'
 
 // May be able to remove it
 apply plugin: "org.spongepowered.mixin"
-apply plugin: "com.wynprice.cursemaven"
 
 version = "${project.version}"
 group = project.package // http://maven.apache.org/guides/mini/guide-naming-conventions.html
@@ -111,15 +109,6 @@ minecraft {
                 }
             }
         }
-    }
-}
-
-configurations {
-    include {
-        compile.extendsFrom(include)
-    }
-    includePlusMeta {
-        include.extendsFrom(includePlusMeta)
     }
 }
 
