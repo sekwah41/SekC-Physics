@@ -6,6 +6,9 @@ bin
 .classpath
 .project
 
+.env
+node_modules/
+
 # idea
 out
 *.ipr
@@ -21,4 +24,4 @@ build
 eclipse
 run
 
-\classes/
+logs/

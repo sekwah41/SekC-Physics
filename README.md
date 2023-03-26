@@ -1,31 +1,22 @@
-# SekC-Physics
-A mod which will add various features simulating physics inside of mc.
+# SekC Physics
 
-Potentially will support addons so not all features have to be included and other modders can make features using available resources.
+A ragdoll physics mod for minecraft.
 
-Ragdolls will be generated on startup based on the mods installed. So if you are a mod author and want your mobs to work with this mod feel free to contact me or go ahead and add the data yourself if you want to.
+# SekCLib
+The main physics will be handled by sekclib. SekCPhysics just allows us to add vanilla ragdolls and other types.
 
-Run VM args `-Dfml.coreMods.load=com.sekwah.sekcphysics.asm.SekCore`
+# Contributing
+## Code
+Please ensure that your commits are in the following style for PR's
 
-Names for compiled http://export.mcpbot.bspk.rs/
+https://www.conventionalcommits.org/en/v1.0.0/
 
-MCPBot http://mcpbot.bspk.rs/help
+Accepted tags mostly follow the Angular style and are meant to only loosely be followed.
+When commits close an issue refer in the commit description in the following style (Refs #1, #2, #3)
 
-IRC https://esper.net/publicirc.php #mcpbot
+## Types available
+See the [Release please config](./release-please-config.json) for the types available.
 
-Todo (A list for me really also shows plans)
---------
-Rotation constraints (Just basic min angle between two points at least)
-
-Different point sizes in the ragdoll data to better suit stuff.
-
-Make tools as a plugin into the SekCAnims editor
-
-Armour tracking (check LayerBipedArmor) Need to find a way to render the armour with extra constructs and the ability for the custom forge model armour
-
-Update rotations based off model animations and not soley head rotation.
-
-Update for two things to name locations or a transfer for names because of dev environments changing to like field_178720_f
-
-Location of mappings
-~/.gradle/caches/minecraft/de/oceanlabs/mcp/mcp_snapshot/20171003/1.12.2/srgs
+## Using release-please-actions
+If you are wanting to use the same release configuration check out the [release-please-action](https://github.com/google-github-actions/release-please-action).
+You should be able to leave out the token part though if you also want testing snapshots to automatically post you will need to create a PAT and use that otherwise the actions will not trigger.

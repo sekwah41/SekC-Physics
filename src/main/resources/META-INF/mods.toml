@@ -1,0 +1,35 @@
+modLoader="javafml"
+loaderVersion="[42,)"
+issueTrackerURL="https://github.com/sekwah41/Re-Skin/issues"
+license="MIT"
+[[mods]] #mandatory
+    modId="sekcphysics"
+    version="${file.jarVersion}"
+    displayName="SekC Physics"
+    displayURL="https://www.curseforge.com/minecraft/mc-mods/sekc-physics"
+    authors="Sekwah41"
+    description='''
+    Adding ragdoll physics to mc!
+    '''
+
+[[dependencies.sekcphysics]]
+    modId="forge"
+    mandatory=true
+    versionRange="[42,)"
+    ordering="NONE"
+    side="BOTH"
+
+# https://maven.apache.org/enforcer/enforcer-rules/versionRanges.html
+[[dependencies.sekcphysics]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.19,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.sekcphysics]]
+    modId="sekclib"
+    mandatory=true
+    versionRange="[0.4.3,)"
+    ordering="NONE"
+    side="BOTH"
