@@ -1,53 +1,135 @@
 buildscript {
     repositories {
-        maven { url = 'https://files.minecraftforge.net/maven' }
-        maven { url = "https://plugins.gradle.org/m2/" }
-        maven { url = "https://maven.parchmentmc.org" }
+        gradlePluginPortal()
         mavenCentral()
+
+        maven {
+            url = 'https://maven.msrandom.net/repository/cloche'
+            metadataSources {
+                mavenPom()
+                artifact()
+            }
+        }
     }
+
     dependencies {
-        classpath "org.apache.httpcomponents:httpmime:4.5.14"
-        classpath "org.parchmentmc:librarian:1.+"
+        classpath 'earth.terrarium:cloche:0.18.10'
     }
 }
+
 plugins {
-    id 'earth.terrarium.cloche' version '[0.10.0,0.11.0)'
+    id 'java'
+    id 'eclipse'
+    id 'idea'
+    id 'maven-publish'
 }
 
-apply plugin: "java"
-apply plugin: 'eclipse'
-apply plugin: 'maven-publish'
+apply plugin: 'earth.terrarium.cloche'
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+group = 'com.sekwah'
+version = '0.2.0b1'
+
+base {
+    archivesName = 'sekcphysics'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+    withSourcesJar()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+def forge1122ClientExtraJar = layout.buildDirectory.file('minecraft/forge-1.12.2/forge-1.12.2-14.23.5.2864-client-extra.jar')
+
+def ensureForge1122ClientExtraJar = tasks.register('ensureForge1122ClientExtraJar', Jar) {
+    archiveFileName = forge1122ClientExtraJar.get().asFile.name
+    destinationDirectory = forge1122ClientExtraJar.get().asFile.parentFile
+}
+
+tasks.matching { it.name == 'accessWidenForge1122Minecraft' }.configureEach {
+    dependsOn(ensureForge1122ClientExtraJar)
+}
 
 repositories {
     cloche.librariesMinecraft()
 
     mavenCentral()
 
+    maven {
+        url = 'https://maven.minecraftforge.net'
+        metadataSources {
+            mavenPom()
+            artifact()
+        }
+    }
+
+    maven {
+        url = 'https://maven.neoforged.net/releases'
+        metadataSources {
+            mavenPom()
+            artifact()
+        }
+    }
+
+    maven {
+        url = 'https://repo1.maven.org/maven2'
+        metadataSources {
+            mavenPom()
+            artifact()
+        }
+    }
+
     cloche {
         main()
-
-        mavenFabric()
-        mavenNeoforgedMeta()
-        mavenNeoforged()
+        mavenForge()
     }
 }
 
-cloche {
-    forge("forge:1.12.2") {
-        minecraftVersion = "1.12.2"
-        loaderVersion = "14.23.5.2864"
+configurations.configureEach {
+    exclude group: 'org.lwjgl.lwjgl', module: 'lwjgl-platform'
+    exclude group: 'net.java.jinput', module: 'jinput-platform'
 
-        runs {
-            server()
-            client()
-            data()
+    resolutionStrategy.eachDependency { details ->
+        if (details.requested.group == 'org.scala-lang.plugins' &&
+                details.requested.name == 'scala-continuations-library_2.11' &&
+                details.requested.version == '1.0.2_mc') {
+            details.useVersion '1.0.2'
+        }
+
+        if (details.requested.group == 'org.scala-lang.plugins' &&
+                details.requested.name == 'scala-continuations-plugin_2.11.1' &&
+                details.requested.version == '1.0.2_mc') {
+            details.useVersion '1.0.2'
         }
     }
 }
 
+cloche {
+    metadata {
+        modId = 'sekcphysics'
+        name = 'SekC Physics'
+        license = 'ARR'
+        description = 'Adding realistic physics to mc'
+    }
 
+    forge('forge:1.12.2') {
+        minecraftVersion = '1.12.2'
+        loaderVersion = '14.23.5.2864'
+
+        mappings {
+            custom(project.dependencies.create(project.files('gradle/forge1122-mappings.tiny')))
+        }
+
+        runs {
+            server()
+            client()
+        }
+    }
+}
 
 idea {
     module {
@@ -55,4 +137,3 @@ idea {
         downloadJavadoc = true
     }
 }
-
